@@ -1,0 +1,2149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnAdd" xml:space="preserve">
+    <value>Tambah</value>
+  </data>
+  <data name="btnAddGroup" xml:space="preserve">
+    <value>Tambah Kumpulan</value>
+  </data>
+  <data name="btnAddLeave" xml:space="preserve">
+    <value>Tambah Jenis Cuti</value>
+  </data>
+  <data name="btnAddLeaveAllocation" xml:space="preserve">
+    <value>Tambah Peruntukan Cuti</value>
+  </data>
+  <data name="btnApply" xml:space="preserve">
+    <value>Mohon</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>Kembali</value>
+  </data>
+  <data name="btnBatch" xml:space="preserve">
+    <value>Batch Baru</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>Hapus</value>
+  </data>
+  <data name="btnDownloadExcel" xml:space="preserve">
+    <value>Muat Turun Excel</value>
+  </data>
+  <data name="btnDownloadPdf" xml:space="preserve">
+    <value>Muat Turun PDF</value>
+  </data>
+  <data name="btnGo" xml:space="preserve">
+    <value>Teruskan</value>
+  </data>
+  <data name="btnGroupManage" xml:space="preserve">
+    <value>Urus Kumpulan</value>
+  </data>
+  <data name="btnList" xml:space="preserve">
+    <value>Senarai Penuh</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>Masuk</value>
+  </data>
+  <data name="btnNo" xml:space="preserve">
+    <value>Tidak</value>
+  </data>
+  <data name="btnPrint" xml:space="preserve">
+    <value>Cetak</value>
+  </data>
+  <data name="btnSave" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>Cari</value>
+  </data>
+  <data name="btnSearchAdvance" xml:space="preserve">
+    <value>Carian Tambahan</value>
+  </data>
+  <data name="btnUploadFile" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="btnView" xml:space="preserve">
+    <value>Lihat</value>
+  </data>
+  <data name="btnViewReport" xml:space="preserve">
+    <value>Lihat Laporan</value>
+  </data>
+  <data name="btnWorkerRequest" xml:space="preserve">
+    <value>Permohonan Pekerja Baru</value>
+  </data>
+  <data name="btnWorkerTransfer" xml:space="preserve">
+    <value>Pindah Pekerja</value>
+  </data>
+  <data name="btnYes" xml:space="preserve">
+    <value>Ya</value>
+  </data>
+  <data name="chkAllSame" xml:space="preserve">
+    <value>Tanda untuk semua sama</value>
+  </data>
+  <data name="hdrAction" xml:space="preserve">
+    <value>Tindakan</value>
+  </data>
+  <data name="hdrActionPlan" xml:space="preserve">
+    <value>Pelan Tindakan</value>
+  </data>
+  <data name="hdrActvtCode" xml:space="preserve">
+    <value>Kod Aktiviti</value>
+  </data>
+  <data name="hdrAnnualLeavePayment" xml:space="preserve">
+    <value>Bayaran Cuti Tahunan</value>
+  </data>
+  <data name="hdrAttendance" xml:space="preserve">
+    <value>Kehadiran</value>
+  </data>
+  <data name="hdrAttendanceType" xml:space="preserve">
+    <value>Jenis Kehadiran</value>
+  </data>
+  <data name="hdrBilAhli" xml:space="preserve">
+    <value>Bilangan Ahli</value>
+  </data>
+  <data name="hdrCategory" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="hdrDebit" xml:space="preserve">
+    <value>Debit</value>
+  </data>
+  <data name="hdrDeduction" xml:space="preserve">
+    <value>Potongan</value>
+  </data>
+  <data name="hdrDesc" xml:space="preserve">
+    <value>Keterangan</value>
+  </data>
+  <data name="hdrEarning" xml:space="preserve">
+    <value>Pendapatan</value>
+  </data>
+  <data name="hdrEmployeeKwsp" xml:space="preserve">
+    <value>KWSP (P)</value>
+  </data>
+  <data name="hdrEmployeeSocso" xml:space="preserve">
+    <value>SOCSO (P)</value>
+  </data>
+  <data name="hdrEmployerKwsp" xml:space="preserve">
+    <value>KWSP (M)</value>
+  </data>
+  <data name="hdrEmployerSocso" xml:space="preserve">
+    <value>SOCSO (M)</value>
+  </data>
+  <data name="hdrExpiredMonth" xml:space="preserve">
+    <value>Tamat Tempoh</value>
+  </data>
+  <data name="hdrForMonth" xml:space="preserve">
+    <value>Bagi Bulan</value>
+  </data>
+  <data name="hdrGrossSalary" xml:space="preserve">
+    <value>Gaji Kasar</value>
+  </data>
+  <data name="hdrGroupCode" xml:space="preserve">
+    <value>Kod Kumpulan</value>
+  </data>
+  <data name="hdrKredit" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="hdrLeaveAllocation" xml:space="preserve">
+    <value>Peruntukan Cuti</value>
+  </data>
+  <data name="hdrLeaveCode" xml:space="preserve">
+    <value>Kod Cuti</value>
+  </data>
+  <data name="hdrLeaveDate" xml:space="preserve">
+    <value>Tarikh Cuti</value>
+  </data>
+  <data name="hdrLeavePayment" xml:space="preserve">
+    <value>Waktu Bayaran Cuti</value>
+  </data>
+  <data name="hdrLejar" xml:space="preserve">
+    <value>Lejar</value>
+  </data>
+  <data name="hdrMachineValue" xml:space="preserve">
+    <value>Harga: Mesin</value>
+  </data>
+  <data name="hdrManualValue" xml:space="preserve">
+    <value>Harga: Manual</value>
+  </data>
+  <data name="hdrMaxVal" xml:space="preserve">
+    <value>Nilai Maximum</value>
+  </data>
+  <data name="hdrMinVal" xml:space="preserve">
+    <value>Nilai Minimum</value>
+  </data>
+  <data name="hdrName" xml:space="preserve">
+    <value>Nama Pekerja</value>
+  </data>
+  <data name="hdrNetSalary" xml:space="preserve">
+    <value>Gaji Bersih</value>
+  </data>
+  <data name="hdrNo" xml:space="preserve">
+    <value>Bil.</value>
+  </data>
+  <data name="hdrNoKp" xml:space="preserve">
+    <value>No KP / Passport</value>
+  </data>
+  <data name="hdrNoPkj" xml:space="preserve">
+    <value>ID Pekerja</value>
+  </data>
+  <data name="hdrNote" xml:space="preserve">
+    <value>Catitan</value>
+  </data>
+  <data name="hdrOutcome" xml:space="preserve">
+    <value>Hasil</value>
+  </data>
+  <data name="hdrPercent" xml:space="preserve">
+    <value>Peratus</value>
+  </data>
+  <data name="hdrPercentAbsent" xml:space="preserve">
+    <value>Peratus Ponteng</value>
+  </data>
+  <data name="hdrPlant" xml:space="preserve">
+    <value>Tanaman</value>
+  </data>
+  <data name="hdrPrice" xml:space="preserve">
+    <value>Harga</value>
+  </data>
+  <data name="hdrProductvt" xml:space="preserve">
+    <value>Produktiviti</value>
+  </data>
+  <data name="hdrQuality" xml:space="preserve">
+    <value>Kualiti</value>
+  </data>
+  <data name="hdrQuantity" xml:space="preserve">
+    <value>Kuantiti</value>
+  </data>
+  <data name="hdrRate" xml:space="preserve">
+    <value>Kadar</value>
+  </data>
+  <data name="hdrRequestID" xml:space="preserve">
+    <value>ID Pemohon</value>
+  </data>
+  <data name="hdrStatusApp" xml:space="preserve">
+    <value>Status Permohonan</value>
+  </data>
+  <data name="hdrTarget" xml:space="preserve">
+    <value>Target Harian</value>
+  </data>
+  <data name="hdrTargetWorkingDay" xml:space="preserve">
+    <value>Target Hadir Kerja (Hari)</value>
+  </data>
+  <data name="hdrTotalOutcome" xml:space="preserve">
+    <value>Jumlah Hasil</value>
+  </data>
+  <data name="hdrTotalWorkingDay" xml:space="preserve">
+    <value>Jumlah Hari Bekerja (Hari)</value>
+  </data>
+  <data name="hdrUnit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="hdrWorkAktvt" xml:space="preserve">
+    <value>Aktiviti Kerja</value>
+  </data>
+  <data name="hdrWorkerAnnualLeave" xml:space="preserve">
+    <value>Layak Cuti Tahunan</value>
+  </data>
+  <data name="hdrWorkerWorkday" xml:space="preserve">
+    <value>Bil Hari Tawaran Kerja</value>
+  </data>
+  <data name="hdrYield" xml:space="preserve">
+    <value>Hasil Sawit Bulanan</value>
+  </data>
+  <data name="hdrZonHasil" xml:space="preserve">
+    <value>Zon Hasil</value>
+  </data>
+  <data name="lblAbsent" xml:space="preserve">
+    <value>Ponteng</value>
+  </data>
+  <data name="lblAccStatus" xml:space="preserve">
+    <value>Status Akaun</value>
+  </data>
+  <data name="lblAccType" xml:space="preserve">
+    <value>Jenis Akaun</value>
+  </data>
+  <data name="lblAccumulatedSalary" xml:space="preserve">
+    <value>Gaji Terkumpul</value>
+  </data>
+  <data name="lblAchieve" xml:space="preserve">
+    <value>Capai</value>
+  </data>
+  <data name="lblAchievement" xml:space="preserve">
+    <value>Capaian</value>
+  </data>
+  <data name="lblActualWorkingDay" xml:space="preserve">
+    <value>Bil Hari Bekerja Sebenar</value>
+  </data>
+  <data name="lblAddress" xml:space="preserve">
+    <value>Alamat</value>
+  </data>
+  <data name="lblAips" xml:space="preserve">
+    <value>Insentif AIPS</value>
+  </data>
+  <data name="lblAipsReport" xml:space="preserve">
+    <value>Laporan AIPS</value>
+  </data>
+  <data name="lblAktvtType" xml:space="preserve">
+    <value>Jenis Aktiviti</value>
+  </data>
+  <data name="lblAlert" xml:space="preserve">
+    <value>MAKLUMAN</value>
+  </data>
+  <data name="lblAlertIncentive1" xml:space="preserve">
+    <value>Kemasukan insentif hanya akan dilakukan kepada pekerja yang masih belum mempunyai rekod insentif</value>
+  </data>
+  <data name="lblAlertIncentive2" xml:space="preserve">
+    <value>Sila rujuk jadual dibawah bagi melihat maklumat pekerja yang sudah mempunyai insentif ini</value>
+  </data>
+  <data name="lblAlertProductvt1" xml:space="preserve">
+    <value>Kemasukan produktiviti hanya akan dilakukan kepada pekerja yang masih belum mempunyai rekod produktiviti</value>
+  </data>
+  <data name="lblAlertProductvt2" xml:space="preserve">
+    <value>Sila rujuk jadual dibawah bagi melihat maklumat pekerja yang sudah mempunyai rekod produktiviti</value>
+  </data>
+  <data name="lblAll" xml:space="preserve">
+    <value>Semua</value>
+  </data>
+  <data name="lblApprovedBy" xml:space="preserve">
+    <value>Disahkan Oleh</value>
+  </data>
+  <data name="lblAttend" xml:space="preserve">
+    <value>Hadir</value>
+  </data>
+  <data name="lblAttendanceInfo" xml:space="preserve">
+    <value>Maklumat Kehadiran</value>
+  </data>
+  <data name="lblAttendanceReport" xml:space="preserve">
+    <value>Laporan Kehadiran Pekerja</value>
+  </data>
+  <data name="lblAttendanceStatus" xml:space="preserve">
+    <value>Rekod Status Kehadiran</value>
+  </data>
+  <data name="lblAverage" xml:space="preserve">
+    <value>Purata</value>
+  </data>
+  <data name="lblAverageMonthlySalaryReport" xml:space="preserve">
+    <value>Laporan Purata Gaji Bulanan</value>
+  </data>
+  <data name="lblBalanceLoan" xml:space="preserve">
+    <value>Baki Pinjaman</value>
+  </data>
+  <data name="lblBankAcc" xml:space="preserve">
+    <value>MAKLUMAT ASAS AKAUN BANK LADANG</value>
+  </data>
+  <data name="lblBankCode" xml:space="preserve">
+    <value>Kod Bank</value>
+  </data>
+  <data name="lblBankName" xml:space="preserve">
+    <value>Nama Bank</value>
+  </data>
+  <data name="lblBAS" xml:space="preserve">
+    <value>BANK AUTOCREDIT SYSTEM</value>
+  </data>
+  <data name="lblBasicInfoList" xml:space="preserve">
+    <value>Senarai Maklumat Asas</value>
+  </data>
+  <data name="lblBlockArea" xml:space="preserve">
+    <value>Luas Blok</value>
+  </data>
+  <data name="lblBlockCode" xml:space="preserve">
+    <value>Kod Blok</value>
+  </data>
+  <data name="lblBlockName" xml:space="preserve">
+    <value>Nama Blok</value>
+  </data>
+  <data name="lblBonusMultiples" xml:space="preserve">
+    <value>Gandaan Bonus Harga</value>
+  </data>
+  <data name="lblBonusPrice" xml:space="preserve">
+    <value>Bonus Harga</value>
+  </data>
+  <data name="lblBranchCode" xml:space="preserve">
+    <value>Kod Cawangan</value>
+  </data>
+  <data name="lblBranchName" xml:space="preserve">
+    <value>Nama Cawangan</value>
+  </data>
+  <data name="lblChckAll" xml:space="preserve">
+    <value>Pilih Semua</value>
+  </data>
+  <data name="lblCheckrolRpt" xml:space="preserve">
+    <value>Laporan Cekrol Pekerja Bagi Bulan</value>
+  </data>
+  <data name="lblChoose" xml:space="preserve">
+    <value>Sila Pilih</value>
+  </data>
+  <data name="lblChooseAcc" xml:space="preserve">
+    <value>Sila pilih jenis akaun</value>
+  </data>
+  <data name="lblCitizen" xml:space="preserve">
+    <value>Warganegara</value>
+  </data>
+  <data name="lblCompanyID" xml:space="preserve">
+    <value>Syarikat ID</value>
+  </data>
+  <data name="lblCompanyName" xml:space="preserve">
+    <value>Nama Syarikat</value>
+  </data>
+  <data name="lblCompanyNo" xml:space="preserve">
+    <value>No Syarikat</value>
+  </data>
+  <data name="lblDailyBonus" xml:space="preserve">
+    <value>Bonus Harian</value>
+  </data>
+  <data name="lblDate" xml:space="preserve">
+    <value>Tarikh</value>
+  </data>
+  <data name="lblDateInfo" xml:space="preserve">
+    <value>MAKLUMAT TARIKH</value>
+  </data>
+  <data name="lblDateKLIA" xml:space="preserve">
+    <value>Tarikh Sampai KLIA / Lantikan</value>
+  </data>
+  <data name="lblDay" xml:space="preserve">
+    <value>Hari</value>
+  </data>
+  <data name="lblDeduction" xml:space="preserve">
+    <value>Maklumat Potongan</value>
+  </data>
+  <data name="lblDetail" xml:space="preserve">
+    <value>Perincian</value>
+  </data>
+  <data name="lblDistrict" xml:space="preserve">
+    <value>Daerah</value>
+  </data>
+  <data name="lblDOB" xml:space="preserve">
+    <value>Tarikh Lahir</value>
+  </data>
+  <data name="lblEarning" xml:space="preserve">
+    <value>Maklumat Pendapatan</value>
+  </data>
+  <data name="lblEmel" xml:space="preserve">
+    <value>Emel</value>
+  </data>
+  <data name="lblEmloyerShare" xml:space="preserve">
+    <value>Syer Majikan</value>
+  </data>
+  <data name="lblEmployeeShare" xml:space="preserve">
+    <value>Syer Pekerja</value>
+  </data>
+  <data name="lblEmployerContribution" xml:space="preserve">
+    <value>Sumbangan Majikan</value>
+  </data>
+  <data name="lblEmployerOnly" xml:space="preserve">
+    <value>Syer Majikan Sahaja</value>
+  </data>
+  <data name="lblEstateAccReport" xml:space="preserve">
+    <value>Laporan Akaun Bank Ladang</value>
+  </data>
+  <data name="lblEstateCode" xml:space="preserve">
+    <value>Kod Ladang</value>
+  </data>
+  <data name="lblEstateInfo" xml:space="preserve">
+    <value>MAKLUMAT ASAS LADANG</value>
+  </data>
+  <data name="lblEstateName" xml:space="preserve">
+    <value>Nama Ladang</value>
+  </data>
+  <data name="lblExpiredReport" xml:space="preserve">
+    <value>Laporan Tamat Permit / Passport</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>No Faks</value>
+  </data>
+  <data name="lblFooter1" xml:space="preserve">
+    <value>Hak Cipta</value>
+  </data>
+  <data name="lblFooter2" xml:space="preserve">
+    <value>Hak Cipta Terpelihara.</value>
+  </data>
+  <data name="lblGender" xml:space="preserve">
+    <value>Jantina</value>
+  </data>
+  <data name="lblGenerateFile" xml:space="preserve">
+    <value>Nama Fail Akan Dijana</value>
+  </data>
+  <data name="lblGenerateSalaryList" xml:space="preserve">
+    <value>Senarai Penjanaan Gaji</value>
+  </data>
+  <data name="lblGroup" xml:space="preserve">
+    <value>Kumpulan</value>
+  </data>
+  <data name="lblGroupIncentive" xml:space="preserve">
+    <value>MAKLUMAT INSENTIF KUMPULAN</value>
+  </data>
+  <data name="lblGroupInfo" xml:space="preserve">
+    <value>MAKLUMAT ASAS KUMPULAN</value>
+  </data>
+  <data name="lblGroupMember" xml:space="preserve">
+    <value>Ahli Kumpulan</value>
+  </data>
+  <data name="lblGroupProductvtInfo" xml:space="preserve">
+    <value>MAKLUMAT PRODUKTIVITI KUMPULAN</value>
+  </data>
+  <data name="lblGroupReport" xml:space="preserve">
+    <value>Laporan Kumpulan Kerja</value>
+  </data>
+  <data name="lblGroupSelection" xml:space="preserve">
+    <value>Pilihan Kumpulan</value>
+  </data>
+  <data name="lblHarvestMethod" xml:space="preserve">
+    <value>Kaedah Menuai</value>
+  </data>
+  <data name="lblHarvestType" xml:space="preserve">
+    <value>Jenis Menuai</value>
+  </data>
+  <data name="lblHasilEnd" xml:space="preserve">
+    <value>Hasil Sehingga</value>
+  </data>
+  <data name="lblHasilReport" xml:space="preserve">
+    <value>Laporan Hasil</value>
+  </data>
+  <data name="lblHasilStart" xml:space="preserve">
+    <value>Hasil Daripada</value>
+  </data>
+  <data name="lblhdrPersonalInfo" xml:space="preserve">
+    <value>MAKLUMAT PERIBADI</value>
+  </data>
+  <data name="lblID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="lblIncentive" xml:space="preserve">
+    <value>Insentif</value>
+  </data>
+  <data name="lblIncentiveReport" xml:space="preserve">
+    <value>Laporan Maklumat Insentif Pekerja</value>
+  </data>
+  <data name="lblIncentiveType" xml:space="preserve">
+    <value>Jenis Insentif</value>
+  </data>
+  <data name="lblIncentiveValue" xml:space="preserve">
+    <value>Nilai Insentif</value>
+  </data>
+  <data name="lblIndividuSelection" xml:space="preserve">
+    <value>Pilihan Individu</value>
+  </data>
+  <data name="lblInsentifInfo" xml:space="preserve">
+    <value>MAKLUMAT INSENTIF PEKERJA</value>
+  </data>
+  <data name="lblKong" xml:space="preserve">
+    <value>Kong</value>
+  </data>
+  <data name="lblKwsp" xml:space="preserve">
+    <value>JADUAL KWSP</value>
+  </data>
+  <data name="lblKwspContribution" xml:space="preserve">
+    <value>Caruman KWSP</value>
+  </data>
+  <data name="lblKwspSocsoReport" xml:space="preserve">
+    <value>Laporan Kwsp &amp; Socso Pekerja</value>
+  </data>
+  <data name="lblKwspSocsoStatus" xml:space="preserve">
+    <value>Status KWSP/Socso</value>
+  </data>
+  <data name="lblKwspType" xml:space="preserve">
+    <value>Jenis KWSP</value>
+  </data>
+  <data name="lblLanguage" xml:space="preserve">
+    <value>Bahasa</value>
+  </data>
+  <data name="lblLeave" xml:space="preserve">
+    <value>Cuti</value>
+  </data>
+  <data name="lblLeaveAllocation" xml:space="preserve">
+    <value>MAKLUMAT PERUNTUKAN CUTI BERBAYAR</value>
+  </data>
+  <data name="lblLeaveCategory" xml:space="preserve">
+    <value>Kategori Cuti</value>
+  </data>
+  <data name="lblLeaveInfo" xml:space="preserve">
+    <value>Maklumat Cuti</value>
+  </data>
+  <data name="lblLeaveReport" xml:space="preserve">
+    <value>Laporan Cuti Tahunan</value>
+  </data>
+  <data name="lblLeaveType" xml:space="preserve">
+    <value>Jenis Cuti</value>
+  </data>
+  <data name="lblLevel" xml:space="preserve">
+    <value>Peringkat</value>
+  </data>
+  <data name="lblLevelArea" xml:space="preserve">
+    <value>Luas Peringkat</value>
+  </data>
+  <data name="lblLevelAreaNoti" xml:space="preserve">
+    <value>*Harap masukkan bidang lebar yang sama dengan atau tidak terlampaui</value>
+  </data>
+  <data name="lblLevelCode" xml:space="preserve">
+    <value>Kod Peringkat</value>
+  </data>
+  <data name="lblLevelMain" xml:space="preserve">
+    <value>Peringkat Utama</value>
+  </data>
+  <data name="lblLevelMainArea" xml:space="preserve">
+    <value>Luas Peringkat Utama</value>
+  </data>
+  <data name="lblLevelMainCode" xml:space="preserve">
+    <value>Kod Peringkat Utama</value>
+  </data>
+  <data name="lblLevelMainName" xml:space="preserve">
+    <value>Nama Peringkat Utama</value>
+  </data>
+  <data name="lblLevelName" xml:space="preserve">
+    <value>Nama Peringkat</value>
+  </data>
+  <data name="lblLevelSelection" xml:space="preserve">
+    <value>Pilihan Peringkat</value>
+  </data>
+  <data name="lblLevelsInfo" xml:space="preserve">
+    <value>MAKLUMAT ASAS PERINGKAT</value>
+  </data>
+  <data name="lblLevelType" xml:space="preserve">
+    <value>Jenis Peringkat</value>
+  </data>
+  <data name="lblLoginHQMsg" xml:space="preserve">
+    <value>Sila daftar masuk mengunakan OPMS HQ</value>
+  </data>
+  <data name="lblLoginInvalid" xml:space="preserve">
+    <value>Percubaan masuk tidak sah</value>
+  </data>
+  <data name="lblLoginMsg" xml:space="preserve">
+    <value>Sila masukkan nama pengguna dan kata laluan</value>
+  </data>
+  <data name="lblMaintenanceList" xml:space="preserve">
+    <value>Senarai Maklumat Selenggara</value>
+  </data>
+  <data name="lblMaintenanceListSub" xml:space="preserve">
+    <value>Sub Senarai Maklumat Selenggara</value>
+  </data>
+  <data name="lblManager" xml:space="preserve">
+    <value>Pengurus</value>
+  </data>
+  <data name="lblManagerName" xml:space="preserve">
+    <value>Nama Pengurus</value>
+  </data>
+  <data name="lblManagerNameBefore" xml:space="preserve">
+    <value>Nama pengurus Sebelum</value>
+  </data>
+  <data name="lblMarriageStatus" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="lblMaxHasil" xml:space="preserve">
+    <value>Maximum hasil adalah</value>
+  </data>
+  <data name="lblMinimumWageReport" xml:space="preserve">
+    <value>Laporan Gaji Minima</value>
+  </data>
+  <data name="lblMinWage" xml:space="preserve">
+    <value>MAKLUMAT SEBAB GAJI MINIMUM</value>
+  </data>
+  <data name="lblMonth" xml:space="preserve">
+    <value>Bulan</value>
+  </data>
+  <data name="lblMultiples" xml:space="preserve">
+    <value>Gandaan</value>
+  </data>
+  <data name="lblName" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="lblNetTotal" xml:space="preserve">
+    <value>Jumlah Bersih</value>
+  </data>
+  <data name="lblNewLevel" xml:space="preserve">
+    <value>Peringkat Baru</value>
+  </data>
+  <data name="lblNoAbsent" xml:space="preserve">
+    <value>Bil Ponteng</value>
+  </data>
+  <data name="lblNoAcc" xml:space="preserve">
+    <value>No Akaun</value>
+  </data>
+  <data name="lblNoGroup" xml:space="preserve">
+    <value>Belum Mempunyai Kumpulan</value>
+  </data>
+  <data name="lblNoGroupAssign" xml:space="preserve">
+    <value>pekerja masih belum mempunyai kumpulan</value>
+  </data>
+  <data name="lblNoIncentive" xml:space="preserve">
+    <value>Tiada Insentif</value>
+  </data>
+  <data name="lblNoKwsp" xml:space="preserve">
+    <value>No KWSP</value>
+  </data>
+  <data name="lblNoSkb" xml:space="preserve">
+    <value>Tiada no skb pada bulan ini</value>
+  </data>
+  <data name="lblNoSocso" xml:space="preserve">
+    <value>No Socso</value>
+  </data>
+  <data name="lblNotActiveDate" xml:space="preserve">
+    <value>Tarikh Tidak Aktif</value>
+  </data>
+  <data name="lblNotActiveReason" xml:space="preserve">
+    <value>Sebab Tidak Aktif</value>
+  </data>
+  <data name="lblNoYield" xml:space="preserve">
+    <value>Tiada maklumat harga sawit semasa pada bulan ini</value>
+  </data>
+  <data name="lblOfferWorkingDay" xml:space="preserve">
+    <value>Bil Hari Bekerja Yang Ditawarkan</value>
+  </data>
+  <data name="lblOilPrice" xml:space="preserve">
+    <value>JADUAL HARGA MINYAK SEMASA </value>
+  </data>
+  <data name="lblOldLevel" xml:space="preserve">
+    <value>Peringkat lama</value>
+  </data>
+  <data name="lblOriginatorID" xml:space="preserve">
+    <value>ID Pemula</value>
+  </data>
+  <data name="lblOriginatorName" xml:space="preserve">
+    <value>Nama Pemula</value>
+  </data>
+  <data name="lblOthersDeduction" xml:space="preserve">
+    <value>Potongan Lain-lain</value>
+  </data>
+  <data name="lblOthersEarning" xml:space="preserve">
+    <value>Pendapatan Lain-lain</value>
+  </data>
+  <data name="lblOverall" xml:space="preserve">
+    <value>Keseluruhan</value>
+  </data>
+  <data name="lblOvertime" xml:space="preserve">
+    <value>Lebih Masa</value>
+  </data>
+  <data name="lblOvertimeHour" xml:space="preserve">
+    <value>Jam Lebih Masa</value>
+  </data>
+  <data name="lblPaidLeave" xml:space="preserve">
+    <value>MAKLUMAT CUTI BERBAYAR</value>
+  </data>
+  <data name="lblPalmPrice" xml:space="preserve">
+    <value>MAKLUMAT HARGA SAWIT SEMASA</value>
+  </data>
+  <data name="lblPassportEnd" xml:space="preserve">
+    <value>Tarikh Tamat Passport</value>
+  </data>
+  <data name="lblPassportExpiredMonth" xml:space="preserve">
+    <value>Bulan Tamat Passport</value>
+  </data>
+  <data name="lblPassportReport" xml:space="preserve">
+    <value>Laporan Tamat Passport</value>
+  </data>
+  <data name="lblPassportStart" xml:space="preserve">
+    <value>Tarikh Mula Passport</value>
+  </data>
+  <data name="lblPassword" xml:space="preserve">
+    <value>Kata Laluan</value>
+  </data>
+  <data name="lblPasswordMsg" xml:space="preserve">
+    <value>Kata laluan diperlukan</value>
+  </data>
+  <data name="lblPayer" xml:space="preserve">
+    <value>Pembayar</value>
+  </data>
+  <data name="lblPayrate" xml:space="preserve">
+    <value>JADUAL KADAR UPAH (MENUAI)</value>
+  </data>
+  <data name="lblPayrateAlert1" xml:space="preserve">
+    <value>1. Kadar Upah Asas menuai sawit dari Insentif Harian adalah bergantung pada harga minyak sawit dan potensi pengeluaran hasil ladang.</value>
+    <comment>#</comment>
+  </data>
+  <data name="lblPayrateAlert2" xml:space="preserve">
+    <value>2. Upah menuai bagi kawasan zon hasil adalah seperti jadual di bawah;</value>
+    <comment>#</comment>
+  </data>
+  <data name="lblPayrateAlert3" xml:space="preserve">
+    <value>3. Bagi penuai sawit menggunakan cantas adalah seperti berikut;</value>
+    <comment>#</comment>
+  </data>
+  <data name="lblPayrateFull" xml:space="preserve">
+    <value>JADUAL KADAR UPAH (AM)</value>
+  </data>
+  <data name="lblPayrateFullMaintenance" xml:space="preserve">
+    <value>KADAR UPAH (AM)</value>
+  </data>
+  <data name="lblPayrateMaintenance" xml:space="preserve">
+    <value>KADAR UPAH (MENUAI)</value>
+  </data>
+  <data name="lblPaysheetReport" xml:space="preserve">
+    <value>Laporan Paysheet</value>
+  </data>
+  <data name="lblPayslipReport" xml:space="preserve">
+    <value>Laporan Slip Gaji Pekerja</value>
+  </data>
+  <data name="lblPeneroka" xml:space="preserve">
+    <value>Keluarga Peneroka</value>
+  </data>
+  <data name="lblPermitEnd" xml:space="preserve">
+    <value>Tarikh Tamat Permit</value>
+  </data>
+  <data name="lblPermitNo" xml:space="preserve">
+    <value>No Permit</value>
+  </data>
+  <data name="lblPermitReport" xml:space="preserve">
+    <value>Laporan Tamat Permit</value>
+  </data>
+  <data name="lblPermitStart" xml:space="preserve">
+    <value>Tarikh Mula Permit</value>
+  </data>
+  <data name="lblPkjBaru" xml:space="preserve">
+    <value>ID Pekerja Baru</value>
+  </data>
+  <data name="lblPkjLama" xml:space="preserve">
+    <value>ID Pekerja Lama</value>
+  </data>
+  <data name="lblPkjLamaBaru" xml:space="preserve">
+    <value>ID Pekerja Lama/Baru</value>
+  </data>
+  <data name="lblPlantStatus" xml:space="preserve">
+    <value>Status Tanaman</value>
+  </data>
+  <data name="lblPlantType" xml:space="preserve">
+    <value>Jenis Tanaman</value>
+  </data>
+  <data name="lblPosition" xml:space="preserve">
+    <value>Jawatan</value>
+  </data>
+  <data name="lblPostcode" xml:space="preserve">
+    <value>Poskod</value>
+  </data>
+  <data name="lblPreparedBy" xml:space="preserve">
+    <value>Disediakan / Disemak Oleh</value>
+  </data>
+  <data name="lblPresentDay" xml:space="preserve">
+    <value>Hari Hadir</value>
+  </data>
+  <data name="lblProcessName" xml:space="preserve">
+    <value>Nama Proses</value>
+  </data>
+  <data name="lblProductvt" xml:space="preserve">
+    <value>JADUAL PRODUKTIVITI</value>
+  </data>
+  <data name="lblProductvtInfo" xml:space="preserve">
+    <value>MAKLUMAT PRODUKTIVITI PEKERJA</value>
+  </data>
+  <data name="lblPublicHoliday" xml:space="preserve">
+    <value>MAKLUMAT CUTI UMUM</value>
+  </data>
+  <data name="lblPublicHoliday2" xml:space="preserve">
+    <value>Cuti Umum</value>
+  </data>
+  <data name="lblQualify" xml:space="preserve">
+    <value>Layak</value>
+  </data>
+  <data name="lblRace" xml:space="preserve">
+    <value>Bangsa</value>
+  </data>
+  <data name="lblRaining" xml:space="preserve">
+    <value>Hujan</value>
+  </data>
+  <data name="lblReason" xml:space="preserve">
+    <value>Sebab</value>
+  </data>
+  <data name="lblRecordRead" xml:space="preserve">
+    <value>Bilangan Rekod Dibaca</value>
+  </data>
+  <data name="lblRegion" xml:space="preserve">
+    <value>Wilayah</value>
+  </data>
+  <data name="lblRegionName" xml:space="preserve">
+    <value>Nama Wilayah</value>
+  </data>
+  <data name="lblReligion" xml:space="preserve">
+    <value>Agama</value>
+  </data>
+  <data name="lblReportList" xml:space="preserve">
+    <value>Senarai Laporan</value>
+  </data>
+  <data name="lblRequestList" xml:space="preserve">
+    <value>Senarai Permohonan</value>
+  </data>
+  <data name="lblSalary" xml:space="preserve">
+    <value>Gaji</value>
+  </data>
+  <data name="lblSalaryPaid" xml:space="preserve">
+    <value>Jumlah Gaji Bersih Dibayar</value>
+  </data>
+  <data name="lblSalaryRange" xml:space="preserve">
+    <value>Kadar Gaji</value>
+  </data>
+  <data name="lblSearch" xml:space="preserve">
+    <value>Carian</value>
+  </data>
+  <data name="lblSearchAktvt" xml:space="preserve">
+    <value>Sila Masukkan Kod Aktiviti atau Keterangan</value>
+  </data>
+  <data name="lblSearchGroupInfo" xml:space="preserve">
+    <value>Sila Masukkan Kod Kumpulan, Jenis Kerja atau Keterangan Kumpulan</value>
+  </data>
+  <data name="lblSearchPkj" xml:space="preserve">
+    <value>Sila Masukkan No Pekerja atau Nama Pekerja</value>
+  </data>
+  <data name="lblSkb" xml:space="preserve">
+    <value>No Skb</value>
+  </data>
+  <data name="lblSkbInfo" xml:space="preserve">
+    <value>MAKLUMAT NO SKB (F-43)</value>
+  </data>
+  <data name="lblSocso" xml:space="preserve">
+    <value>JADUAL SOCSO</value>
+  </data>
+  <data name="lblSocsoType" xml:space="preserve">
+    <value>Jenis Socso</value>
+  </data>
+  <data name="lblSocsoType1" xml:space="preserve">
+    <value>Jenis Pertama (Skim Bencana Pekerjaan dan Skim Keilatan)</value>
+  </data>
+  <data name="lblSocsoType2" xml:space="preserve">
+    <value>Jenis Kedua (Skim Bencana Pekerjaan)</value>
+  </data>
+  <data name="lblStartWork" xml:space="preserve">
+    <value>Tarikh Mula Khidmat</value>
+  </data>
+  <data name="lblState" xml:space="preserve">
+    <value>Negeri</value>
+  </data>
+  <data name="lblStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblSupervisor" xml:space="preserve">
+    <value>Penyelia</value>
+  </data>
+  <data name="lblSupplier" xml:space="preserve">
+    <value>Nama Pembekal</value>
+  </data>
+  <data name="lblTabBlock" xml:space="preserve">
+    <value>Maklumat Blok</value>
+  </data>
+  <data name="lblTableInfoList" xml:space="preserve">
+    <value>Senarai Maklumat Jadual</value>
+  </data>
+  <data name="lblTabLevel" xml:space="preserve">
+    <value>Maklumat Peringkat</value>
+  </data>
+  <data name="lblTabLevelChange" xml:space="preserve">
+    <value>Penukaran Kod Peringkat</value>
+  </data>
+  <data name="lblTabLevelMain" xml:space="preserve">
+    <value>Maklumat Peringkat Utama</value>
+  </data>
+  <data name="lblTarget" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="lblTel" xml:space="preserve">
+    <value>No Tel</value>
+  </data>
+  <data name="lblTotal" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="lblTotalContribution" xml:space="preserve">
+    <value>Jumlah Caruman</value>
+  </data>
+  <data name="lblTotalDeduction" xml:space="preserve">
+    <value>Jumlah Potongan</value>
+  </data>
+  <data name="lblTotalEarning" xml:space="preserve">
+    <value>Jumlah Pendapatan</value>
+  </data>
+  <data name="lblTotalLoan" xml:space="preserve">
+    <value>Jumlah Pinjaman</value>
+  </data>
+  <data name="lblTotalOt" xml:space="preserve">
+    <value>Jumlah Lebih Masa</value>
+  </data>
+  <data name="lblTotalPaid" xml:space="preserve">
+    <value>Jumlah Dibayar</value>
+  </data>
+  <data name="lblTotalRecord" xml:space="preserve">
+    <value>Maklumat Pekerja</value>
+  </data>
+  <data name="lblTotalRecordGroup" xml:space="preserve">
+    <value>Maklumat Kumpulan</value>
+  </data>
+  <data name="lblTransactionListingReport" xml:space="preserve">
+    <value>Laporan Senarai Transaksi</value>
+  </data>
+  <data name="lblUpdateBy" xml:space="preserve">
+    <value>Dikemaskini Oleh</value>
+  </data>
+  <data name="lblUpdateDate" xml:space="preserve">
+    <value>Tarikh Kemaskini</value>
+  </data>
+  <data name="lblUserID" xml:space="preserve">
+    <value>ID Pengguna</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>Nama Pengguna</value>
+  </data>
+  <data name="lblUsernameMsg" xml:space="preserve">
+    <value>Nama pengguna diperlukan</value>
+  </data>
+  <data name="lblWeedays" xml:space="preserve">
+    <value>Hari Bekerja</value>
+  </data>
+  <data name="lblWeekend" xml:space="preserve">
+    <value>Hujung Minggu</value>
+  </data>
+  <data name="lblWeeklyLeave" xml:space="preserve">
+    <value>Cuti Mingguan</value>
+  </data>
+  <data name="lblWelcome" xml:space="preserve">
+    <value>Selamat Datang Ke</value>
+  </data>
+  <data name="lblWitness" xml:space="preserve">
+    <value>Saksi</value>
+  </data>
+  <data name="lblWork" xml:space="preserve">
+    <value>Kerja</value>
+  </data>
+  <data name="lblWorker" xml:space="preserve">
+    <value>Pekerja</value>
+  </data>
+  <data name="lblWorkerAcc" xml:space="preserve">
+    <value>MAKLUMAT AKAUN PEKERJA</value>
+  </data>
+  <data name="lblWorkerAktvt" xml:space="preserve">
+    <value>JADUAL AKTIVITI KERJA</value>
+  </data>
+  <data name="lblWorkerBankAcc" xml:space="preserve">
+    <value>MAKLUMAT AKAUN BANK PEKERJA</value>
+  </data>
+  <data name="lblWorkerCategoryMaintenance" xml:space="preserve">
+    <value>PENYELENGGARAAN KATEGORI PEKERJA</value>
+  </data>
+  <data name="lblWorkerGroupInfo" xml:space="preserve">
+    <value>MAKLUMAT KUMPULAN PEKERJA</value>
+  </data>
+  <data name="lblWorkerInfo" xml:space="preserve">
+    <value>MAKLUMAT ASAS PEKERJA</value>
+  </data>
+  <data name="lblWorkerInfoList" xml:space="preserve">
+    <value>Senarai Maklumat Pekerja</value>
+  </data>
+  <data name="lblWorkerKtgri" xml:space="preserve">
+    <value>Kategori Pekerja</value>
+  </data>
+  <data name="lblWorkerKwspAcc" xml:space="preserve">
+    <value>MAKLUMAT AKAUN KWSP SOCSO PEKERJA</value>
+  </data>
+  <data name="lblWorkerReport" xml:space="preserve">
+    <value>Laporan Maklumat Asas Pekerja</value>
+  </data>
+  <data name="lblWorkerSign" xml:space="preserve">
+    <value>Tandatangan Pekerja</value>
+  </data>
+  <data name="lblWorkerStatus" xml:space="preserve">
+    <value>Status Pekerja</value>
+  </data>
+  <data name="lblWorkerType" xml:space="preserve">
+    <value>Jenis Pekerja</value>
+  </data>
+  <data name="lblWorkInfoList" xml:space="preserve">
+    <value>Senarai Maklumat Kerja</value>
+  </data>
+  <data name="lblWorkRecordEntry" xml:space="preserve">
+    <value>Kemasukan Rekod Kerja</value>
+  </data>
+  <data name="lblWorkRecordInfo" xml:space="preserve">
+    <value>Maklumat Rekod Kerja</value>
+  </data>
+  <data name="lblWorkReport" xml:space="preserve">
+    <value>Laporan Kerja Harian</value>
+  </data>
+  <data name="lblYear" xml:space="preserve">
+    <value>Tahun</value>
+  </data>
+  <data name="lblYield" xml:space="preserve">
+    <value>Harga Semasa</value>
+  </data>
+  <data name="lblYieldBracket" xml:space="preserve">
+    <value>JADUAL YIELD BRACKET</value>
+  </data>
+  <data name="lblYieldInfo" xml:space="preserve">
+    <value>MAKLUMAT HASIL SAWIT BULANAN</value>
+  </data>
+  <data name="menuBasicInfo" xml:space="preserve">
+    <value>Maklumat Asas</value>
+  </data>
+  <data name="menuCloseTransaction" xml:space="preserve">
+    <value>Tutup Urusniaga</value>
+  </data>
+  <data name="menuGenerateMaybankFile" xml:space="preserve">
+    <value>Penjanaan Fail Maybank</value>
+  </data>
+  <data name="menuGenerateSalary" xml:space="preserve">
+    <value>Penjanaan Gaji</value>
+  </data>
+  <data name="menuHome" xml:space="preserve">
+    <value>Halaman Utama</value>
+  </data>
+  <data name="menuHQLink" xml:space="preserve">
+    <value>OPMS Corporate</value>
+  </data>
+  <data name="menuMaintenance" xml:space="preserve">
+    <value>Penyelenggaraan</value>
+  </data>
+  <data name="menuReport" xml:space="preserve">
+    <value>Laporan</value>
+  </data>
+  <data name="menuTableInfo" xml:space="preserve">
+    <value>Maklumat Jadual</value>
+  </data>
+  <data name="menuWorkInfo" xml:space="preserve">
+    <value>Maklumat Kerja</value>
+  </data>
+  <data name="msgAdd" xml:space="preserve">
+    <value>Maklumat telah berjaya ditambah</value>
+  </data>
+  <data name="msgArea" xml:space="preserve">
+    <value>Sila masukkan nilai luas sama atau tidak melebihi luas yang telah ditetapkan</value>
+  </data>
+  <data name="msgCategory" xml:space="preserve">
+    <value>Sila pilih kategori</value>
+  </data>
+  <data name="msgChooseAcc" xml:space="preserve">
+    <value>Sila pilih status akaun</value>
+  </data>
+  <data name="msgChooseAips" xml:space="preserve">
+    <value>Sila pilih tahun, kumpulan dan pekerja</value>
+  </data>
+  <data name="msgChooseCtgri" xml:space="preserve">
+    <value>Sila pilih kategori pilihan dahulu</value>
+  </data>
+  <data name="msgChooseGroup" xml:space="preserve">
+    <value>Sila pilih kumpulan</value>
+  </data>
+  <data name="msgChooseHarvest" xml:space="preserve">
+    <value>Sila pilih jenis menuai</value>
+  </data>
+  <data name="msgChooseKwsp" xml:space="preserve">
+    <value>Sila pilih jenis KWSP</value>
+  </data>
+  <data name="msgChooseMonthYear" xml:space="preserve">
+    <value>Sila pilih bulan dan tahun</value>
+  </data>
+  <data name="msgChoosePassportExpired" xml:space="preserve">
+    <value>Sila pilih bulan tamat passport</value>
+  </data>
+  <data name="msgChooseSocso" xml:space="preserve">
+    <value>Sila pilih jenis Socso</value>
+  </data>
+  <data name="msgChooseWork" xml:space="preserve">
+    <value>Sila pilih bulan, tahun dan pekerja</value>
+  </data>
+  <data name="msgChooseWorker" xml:space="preserve">
+    <value>Sila pilih status dan pekerja</value>
+  </data>
+  <data name="msgDataExist" xml:space="preserve">
+    <value>Maklumat telah wujud</value>
+  </data>
+  <data name="msgDelete" xml:space="preserve">
+    <value>Adakah anda pasti untuk menghapuskan maklumat berikut?</value>
+    <comment>#</comment>
+  </data>
+  <data name="msgDelete2" xml:space="preserve">
+    <value>Maklumat telah berjaya dihapus</value>
+  </data>
+  <data name="msgDeleteGroup" xml:space="preserve">
+    <value>Kumpulan yang masih mempunyai ahli tidak boleh dihapuskan</value>
+  </data>
+  <data name="msgDesc" xml:space="preserve">
+    <value>Sila isi bahagian keterangan</value>
+  </data>
+  <data name="msgError" xml:space="preserve">
+    <value>Sistem tergendala</value>
+  </data>
+  <data name="msgErrorData" xml:space="preserve">
+    <value>Sila semak maklumat yang diisi</value>
+  </data>
+  <data name="msgErrorSearch" xml:space="preserve">
+    <value>Tiada maklumat dijumpai</value>
+  </data>
+  <data name="msgErrorSubmit" xml:space="preserve">
+    <value>Maklumat Tidak Lengkap</value>
+  </data>
+  <data name="msgGenerateError1" xml:space="preserve">
+    <value>Urusniaga telah ditutup</value>
+  </data>
+  <data name="msgGenerateError2" xml:space="preserve">
+    <value>Urusniaga bulan sebelum belum ditutup</value>
+  </data>
+  <data name="msgGenerateFailed" xml:space="preserve">
+    <value>Fail gagal dijana</value>
+  </data>
+  <data name="msgGenerateSuccess" xml:space="preserve">
+    <value>Fail berjaya dijana</value>
+  </data>
+  <data name="msgGenMaybankFile" xml:space="preserve">
+    <value>SILA PASTIKAN MAKLUMAT AKAUN BANK PEKERJA DIKEMASKINI DAN DISAHKAN BETUL. HANYA NO AKAUN BANK YANG LENGKAP SAHAJA AKAN DIMUAT TURUN.</value>
+  </data>
+  <data name="msgGroupNoMember" xml:space="preserve">
+    <value>Tiada ahli kumpulan</value>
+  </data>
+  <data name="msgIncentive" xml:space="preserve">
+    <value>Sila pilih jenis insentif</value>
+  </data>
+  <data name="msgIncentiveValue" xml:space="preserve">
+    <value>Sila masukkan nilai insentif</value>
+  </data>
+  <data name="msgInfo" xml:space="preserve">
+    <value>Sila klik untuk melihat keterangan</value>
+  </data>
+  <data name="msgLeaveAllocation" xml:space="preserve">
+    <value>Sila masukkan peruntukan cuti</value>
+  </data>
+  <data name="msgMaxVal" xml:space="preserve">
+    <value>Sila msukkan nilai maksimum</value>
+  </data>
+  <data name="msgMinVal" xml:space="preserve">
+    <value>Sila masukkan nilai minimum</value>
+  </data>
+  <data name="msgNoRecord" xml:space="preserve">
+    <value>Tiada Rekod</value>
+  </data>
+  <data name="msgSubMenu" xml:space="preserve">
+    <value>Sila pilih sub menu untuk teruskan</value>
+  </data>
+  <data name="msgTarget" xml:space="preserve">
+    <value>Sila masukkan target harian</value>
+  </data>
+  <data name="msgUnit" xml:space="preserve">
+    <value>Sila pilih unit</value>
+  </data>
+  <data name="msgUpdate" xml:space="preserve">
+    <value>Maklumat telah berjaya dikemaskini</value>
+  </data>
+  <data name="msgWait" xml:space="preserve">
+    <value>Sila tunggu...</value>
+  </data>
+  <data name="msgWorkAktvt" xml:space="preserve">
+    <value>Sila pilih aktiviti kerja</value>
+  </data>
+  <data name="msgWorkerTransfer" xml:space="preserve">
+    <value>Pekerja Tidak Dijumpai</value>
+  </data>
+  <data name="titleDelete" xml:space="preserve">
+    <value>HAPUS MAKLUMAT</value>
+  </data>
+  <data name="titleDeleteGroup" xml:space="preserve">
+    <value>HAPUS KUMPULAN</value>
+  </data>
+  <data name="titleGroupMember" xml:space="preserve">
+    <value>MAKLUMAT AHLI KUMPULAN</value>
+  </data>
+  <data name="titleGroupRegister" xml:space="preserve">
+    <value>DAFTAR KUMPULAN</value>
+  </data>
+  <data name="titleIncentiveInfo" xml:space="preserve">
+    <value>MAKLUMAT INSENTIF AHLI KUMPULAN</value>
+  </data>
+  <data name="titleProductvtInfo" xml:space="preserve">
+    <value>MAKLUMAT PRODUKTIVITI AHLI KUMPULAN</value>
+  </data>
+  <data name="titleRegister" xml:space="preserve">
+    <value>DAFTAR MAKLUMAT BARU</value>
+  </data>
+  <data name="titleRegisterGroupIncentive" xml:space="preserve">
+    <value>DAFTAR INSENTIF KUMPULAN</value>
+  </data>
+  <data name="titleRegisterGroupProductvt" xml:space="preserve">
+    <value>DAFTAR PRODUKTIVTI KUMPULAN</value>
+  </data>
+  <data name="titleUpdate" xml:space="preserve">
+    <value>KEMASKINI MAKLUMAT</value>
+  </data>
+  <data name="titleWorkerRequest" xml:space="preserve">
+    <value>PERMOHONAN ASAS PEKERJA</value>
+  </data>
+  <data name="titleWorkerTransfer" xml:space="preserve">
+    <value>PERMOHONAN PINDAH PEKERJA</value>
+  </data>
+  <data name="titlteRegisterIncentive" xml:space="preserve">
+    <value>DAFTAR INSENTIF</value>
+  </data>
+  <data name="WorkerAccReport" xml:space="preserve">
+    <value>Laporan Akaun Pekerja</value>
+  </data>
+  <data name="btnViewAuditTrail" xml:space="preserve">
+    <value>Lihat Jejak Audit</value>
+  </data>
+  <data name="lblAuditTrailRpt" xml:space="preserve">
+    <value>Audit Trail Tutup Urusniaga Bagi Tahun</value>
+  </data>
+  <data name="lblTransactionStatus" xml:space="preserve">
+    <value>Status Urusniaga</value>
+  </data>
+  <data name="lblSelection" xml:space="preserve">
+    <value>Pilihan</value>
+  </data>
+  <data name="msgAddAttendance" xml:space="preserve">
+    <value>Maklumat kehadiran telah direkodkan.</value>
+  </data>
+  <data name="msgAttendanceLeave" xml:space="preserve">
+    <value>Baki cuti yang dipilih telah habis untuk pekerja</value>
+  </data>
+  <data name="msgBalance" xml:space="preserve">
+    <value>Kredit dan debit tidak seimbang.</value>
+  </data>
+  <data name="msgGenSalary" xml:space="preserve">
+    <value>Sila jana gaji sebelum tutup urusniaga.</value>
+  </data>
+  <data name="msgWorkerFound" xml:space="preserve">
+    <value>Pekerja ditemui</value>
+  </data>
+  <data name="msgWorkerGroup" xml:space="preserve">
+    <value>Sila pastikan pekerja ini mempunyai kumpulan</value>
+  </data>
+  <data name="msgWorkInfo" xml:space="preserve">
+    <value>Sila masukkan maklumat kerja</value>
+  </data>
+  <data name="msgYieldBracket" xml:space="preserve">
+    <value>Sila pastikan kadar yield bracket mencukupi 12 bulan ke belakang.</value>
+  </data>
+  <data name="msgDataFound" xml:space="preserve">
+    <value>Data ditemui</value>
+  </data>
+  <data name="msgDataNotFound" xml:space="preserve">
+    <value>Data tidak ditemui</value>
+  </data>
+  <data name="lblTblOptConfigsWebFldOptConfValue" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="btnUpdate" xml:space="preserve">
+    <value>Kemaskini</value>
+  </data>
+  <data name="lblCodeValue2" xml:space="preserve">
+    <value>Nilai Kod 2</value>
+  </data>
+  <data name="lblCodeValue3" xml:space="preserve">
+    <value>Nilai Kod 3</value>
+  </data>
+  <data name="lblCountryCode" xml:space="preserve">
+    <value>Kod Negara</value>
+  </data>
+  <data name="lblCountryInfo" xml:space="preserve">
+    <value>MAKLUMAT NEGARA</value>
+  </data>
+  <data name="lblCountryName" xml:space="preserve">
+    <value>Nama Negara</value>
+  </data>
+  <data name="lblCountrySearch" xml:space="preserve">
+    <value>Sila masukkan kod negara atau nama negara</value>
+  </data>
+  <data name="msgTblOptConfigsWebFldOptConfValue" xml:space="preserve">
+    <value>Sila masukkan kod</value>
+  </data>
+  <data name="lblCountryAdd" xml:space="preserve">
+    <value>TAMBAH NEGARA</value>
+  </data>
+  <data name="lblCountryCount" xml:space="preserve">
+    <value>maklumat negara</value>
+  </data>
+  <data name="lblCountryDelete" xml:space="preserve">
+    <value>HAPUS NEGARA</value>
+  </data>
+  <data name="lblCountryUpdate" xml:space="preserve">
+    <value>KEMASKINI NEGARA</value>
+  </data>
+  <data name="msgErrorDuplicateOptionConfigCode" xml:space="preserve">
+    <value>Kod telah wujud. Sila semak semula.</value>
+  </data>
+  <data name="msgModelValidation" xml:space="preserve">
+    <value>Ruangan ini perlu diisi</value>
+  </data>
+  <data name="lblDesignationInfo" xml:space="preserve">
+    <value>MAKLUMAT JAWATAN PEKERJA</value>
+  </data>
+  <data name="lblDesignationSearch" xml:space="preserve">
+    <value>Sila masukkan kod jawatan atau keterangan jawatan</value>
+  </data>
+  <data name="lblTitleCountryMaintenance" xml:space="preserve">
+    <value>Selenggara Negara</value>
+  </data>
+  <data name="lblTitleDesignationMaintenance" xml:space="preserve">
+    <value>Selenggara Jawatan Pekerja</value>
+  </data>
+  <data name="lblCalculationMethodAdd" xml:space="preserve">
+    <value>TAMBAH KAEDAH PENGIRAAN</value>
+  </data>
+  <data name="lblCalculationMethodCode" xml:space="preserve">
+    <value>Kod Kaedah Pengiraan</value>
+  </data>
+  <data name="lblCalculationMethodCount" xml:space="preserve">
+    <value>maklumat kaedah pengiraan</value>
+  </data>
+  <data name="lblCalculationMethodInfo" xml:space="preserve">
+    <value>MAKLUMAT KAEDAH PENGIRAAN</value>
+  </data>
+  <data name="lblCalculationMethodSearch" xml:space="preserve">
+    <value>Sila masukkan kod kaedah pengiraan atau keterangan kaedah pengiraan</value>
+  </data>
+  <data name="lblCountry" xml:space="preserve">
+    <value>Negara</value>
+  </data>
+  <data name="lblDescription" xml:space="preserve">
+    <value>Keterangan</value>
+  </data>
+  <data name="lblDesignationAdd" xml:space="preserve">
+    <value>TAMBAH JAWATAN</value>
+  </data>
+  <data name="lblDesignationCode" xml:space="preserve">
+    <value>Kod Jawatan</value>
+  </data>
+  <data name="lblDesignationCount" xml:space="preserve">
+    <value>maklumat jawatan</value>
+  </data>
+  <data name="lblDesignationDelete" xml:space="preserve">
+    <value>HAPUS JAWATAN</value>
+  </data>
+  <data name="lblDesignationUpdate" xml:space="preserve">
+    <value>KEMASKINI JAWATAN</value>
+  </data>
+  <data name="lblhdrWorkInfo" xml:space="preserve">
+    <value>MAKLUMAT KERJA</value>
+  </data>
+  <data name="lblPassportExpiryCount" xml:space="preserve">
+    <value>maklumat pilihan tamat tempoh passport</value>
+  </data>
+  <data name="lblPassportExpiryDelete" xml:space="preserve">
+    <value>HAPUS PILIHAN TAMAT TEMPOH PASSPORT</value>
+  </data>
+  <data name="lblPassportExpiryDuration" xml:space="preserve">
+    <value>Tempoh Tamat Passport (Bulan)</value>
+  </data>
+  <data name="lblPassportExpirySelectionAdd" xml:space="preserve">
+    <value>TAMBAH PILIHAN TAMAT TEMPOH PASSPORT</value>
+  </data>
+  <data name="lblPassportExpirySelectionInfo" xml:space="preserve">
+    <value>MAKLUMAT PILIHAN TAMAT TEMPOH PASSPORT</value>
+  </data>
+  <data name="lblPassportExpirySelectionSearch" xml:space="preserve">
+    <value>Sila masukkan tempoh tamat passport atau keterangan</value>
+  </data>
+  <data name="lblPassportExpiryUpdate" xml:space="preserve">
+    <value>KEMASKINI PILIHAN TAMAT TEMPOH PASSPORT</value>
+  </data>
+  <data name="lblTitleCalculationMethodMaintenance" xml:space="preserve">
+    <value>Selenggara Kaedah Pengiraan</value>
+  </data>
+  <data name="lblTitlePassportExpirySelectionMaintenance" xml:space="preserve">
+    <value>Selenggara Senarai Pilihan Tamat Tempoh Passport</value>
+  </data>
+  <data name="msgErrorOptionConfigNotANumber" xml:space="preserve">
+    <value>Sila isi nombor pada ruangan tempoh tamat passport</value>
+  </data>
+  <data name="lblBusinessNatureAdd" xml:space="preserve">
+    <value>TAMBAH KATEGORI PERNIAGAAN</value>
+  </data>
+  <data name="lblBusinessNatureCode" xml:space="preserve">
+    <value>Kod Kategori Perniagaan</value>
+  </data>
+  <data name="lblBusinessNatureCount" xml:space="preserve">
+    <value>maklumat kategori perniagaan</value>
+  </data>
+  <data name="lblBusinessNatureDelete" xml:space="preserve">
+    <value>HAPUS KATEGORI PERNIAGAAN</value>
+  </data>
+  <data name="lblBusinessNatureInfo" xml:space="preserve">
+    <value>MAKLUMAT KATEGORI PERNIAGAAN</value>
+  </data>
+  <data name="lblBusinessNatureSearch" xml:space="preserve">
+    <value>Sila masukkan kod kategori perniagaan atau keterangan kategori perniagaan</value>
+  </data>
+  <data name="lblBusinessNatureUpdate" xml:space="preserve">
+    <value>KEMASKINI KATEGORI PERNIAGAAN</value>
+  </data>
+  <data name="lblCalculationMethodDelete" xml:space="preserve">
+    <value>HAPUS KAEDAH PENGIRAAN</value>
+  </data>
+  <data name="lblCalculationMethodUpdate" xml:space="preserve">
+    <value>KEMASKINI KAEDAH PENGIRAAN</value>
+  </data>
+  <data name="lblCropStatusAdd" xml:space="preserve">
+    <value>TAMBAH STATUS TANAMAN</value>
+  </data>
+  <data name="lblCropStatusCode" xml:space="preserve">
+    <value>Kod Status Tanaman</value>
+  </data>
+  <data name="lblCropStatusCount" xml:space="preserve">
+    <value>maklumat status tanaman</value>
+  </data>
+  <data name="lblCropStatusDelete" xml:space="preserve">
+    <value>HAPUS STATUS TANAMAN</value>
+  </data>
+  <data name="lblCropStatusInfo" xml:space="preserve">
+    <value>MAKLUMAT STATUS TANAMAN</value>
+  </data>
+  <data name="lblCropStatusSearch" xml:space="preserve">
+    <value>Sila masukkan kod status tanaman atau keterangan status tanaman</value>
+  </data>
+  <data name="lblCropStatusUpdate" xml:space="preserve">
+    <value>KEMASKINI STATUS TANAMAN</value>
+  </data>
+  <data name="lblCropTypeAdd" xml:space="preserve">
+    <value>TAMBAH JENIS TANAMAN</value>
+  </data>
+  <data name="lblCropTypeCode" xml:space="preserve">
+    <value>Kod Tanaman</value>
+  </data>
+  <data name="lblCropTypeCount" xml:space="preserve">
+    <value>maklumat tanaman</value>
+  </data>
+  <data name="lblCropTypeDelete" xml:space="preserve">
+    <value>HAPUS JENIS TANAMAN</value>
+  </data>
+  <data name="lblCropTypeInfo" xml:space="preserve">
+    <value>MAKLUMAT TANAMAN</value>
+  </data>
+  <data name="lblCropTypeSearch" xml:space="preserve">
+    <value>Sila masukkan kod tanaman atau keterangan tanaman</value>
+  </data>
+  <data name="lblCropTypeUpdate" xml:space="preserve">
+    <value>KEMASKINI JENIS TANAMAN</value>
+  </data>
+  <data name="lblFamilyRelationshipAdd" xml:space="preserve">
+    <value>TAMBAH HUBUNGAN KEKELUARGAAN</value>
+  </data>
+  <data name="lblFamilyRelationshipCode" xml:space="preserve">
+    <value>Kod Hubungan Kekeluargaan</value>
+  </data>
+  <data name="lblFamilyRelationshipCount" xml:space="preserve">
+    <value>maklumat hubungan kekeluargaan</value>
+  </data>
+  <data name="lblFamilyRelationshipDelete" xml:space="preserve">
+    <value>HAPUS HUBUNGAN KEKELUARGAAN</value>
+  </data>
+  <data name="lblFamilyRelationshipInfo" xml:space="preserve">
+    <value>MAKLUMAT HUBUNGAN KEKELUARGAAN</value>
+  </data>
+  <data name="lblFamilyRelationshipSearch" xml:space="preserve">
+    <value>Sila masukkan kod hubungan kekeluargaan atau keterangan hubungan kekeluargaan</value>
+  </data>
+  <data name="lblFamilyRelationshipUpdate" xml:space="preserve">
+    <value>KEMASKINI HUBUNGAN KEKELUARGAAN</value>
+  </data>
+  <data name="lblHour" xml:space="preserve">
+    <value>JAM</value>
+  </data>
+  <data name="lblInactiveReasonAdd" xml:space="preserve">
+    <value>TAMBAH SEBAB TIDAK AKTIF</value>
+  </data>
+  <data name="lblInactiveReasonCode" xml:space="preserve">
+    <value>Kod Sebab Tidak Aktif</value>
+  </data>
+  <data name="lblInactiveReasonCount" xml:space="preserve">
+    <value>maklumat sebab tidak aktif</value>
+  </data>
+  <data name="lblInactiveReasonDelete" xml:space="preserve">
+    <value>HAPUS SEBAB TIDAK AKTIF</value>
+  </data>
+  <data name="lblInactiveReasonInfo" xml:space="preserve">
+    <value>MAKLUMAT SEBAB TIDAK AKTIF</value>
+  </data>
+  <data name="lblInactiveReasonMaintenance" xml:space="preserve">
+    <value>Selenggara Sebab Tidak Aktif</value>
+  </data>
+  <data name="lblInactiveReasonSearch" xml:space="preserve">
+    <value>Sila masukkan kod sebab tidak aktif atau keterangan sebab tidak aktif</value>
+  </data>
+  <data name="lblInactiveReasonUpdate" xml:space="preserve">
+    <value>KEMASKINI SEBAB TIDAK AKTIF</value>
+  </data>
+  <data name="lblRejectReasonAdd" xml:space="preserve">
+    <value>TAMBAH SEBAB TOLAK</value>
+  </data>
+  <data name="lblRejectReasonCode" xml:space="preserve">
+    <value>Kod Sebab Tolak</value>
+  </data>
+  <data name="lblRejectReasonCount" xml:space="preserve">
+    <value>maklumat sebab tolak</value>
+  </data>
+  <data name="lblRejectReasonDelete" xml:space="preserve">
+    <value>HAPUS SEBAB TOLAK</value>
+  </data>
+  <data name="lblRejectReasonInfo" xml:space="preserve">
+    <value>MAKLUMAT SEBAB TOLAK</value>
+  </data>
+  <data name="lblRejectReasonMaintenance" xml:space="preserve">
+    <value>Selenggara Sebab Tolak</value>
+  </data>
+  <data name="lblRejectReasonSearch" xml:space="preserve">
+    <value>Sila masukkan kod sebab tolak atau keterangan sebab tolak</value>
+  </data>
+  <data name="lblRejectReasonUpdate" xml:space="preserve">
+    <value>KEMASKINI SEBAB TOLAK</value>
+  </data>
+  <data name="lblStateAdd" xml:space="preserve">
+    <value>TAMBAH NEGERI</value>
+  </data>
+  <data name="lblStateCode" xml:space="preserve">
+    <value>Kod Negeri</value>
+  </data>
+  <data name="lblStateCount" xml:space="preserve">
+    <value>maklumat negeri</value>
+  </data>
+  <data name="lblStateDelete" xml:space="preserve">
+    <value>HAPUS NEGERI</value>
+  </data>
+  <data name="lblStateInfo" xml:space="preserve">
+    <value>MAKLUMAT NEGERI</value>
+  </data>
+  <data name="lblStateName" xml:space="preserve">
+    <value>Nama Negeri</value>
+  </data>
+  <data name="lblStateSearch" xml:space="preserve">
+    <value>Sila masukkan kod negeri atau nama negeri</value>
+  </data>
+  <data name="lblStateUpdate" xml:space="preserve">
+    <value>KEMASKINI NEGERI</value>
+  </data>
+  <data name="lblTitleBusinessnatureMaintenance" xml:space="preserve">
+    <value>Selenggara Kategori Perniagaaan</value>
+  </data>
+  <data name="lblTitleCropStatusMaintenance" xml:space="preserve">
+    <value>Selenggara Status Tanaman</value>
+  </data>
+  <data name="lblTitleFamilyRelationshipMaintenance" xml:space="preserve">
+    <value>Selenggara Hubungan Kekeluargaan </value>
+  </data>
+  <data name="lblTitleStateMaintenance" xml:space="preserve">
+    <value>Selenggara Negeri</value>
+  </data>
+  <data name="lblTitleWorkerTypeMaintenance" xml:space="preserve">
+    <value>Selenggara Jenis Pekerja</value>
+  </data>
+  <data name="lblTotalRainDay" xml:space="preserve">
+    <value>Jumlah Hari Hujan</value>
+  </data>
+  <data name="lblWorkerTypeAdd" xml:space="preserve">
+    <value>TAMBAH JENIS PEKERJA</value>
+  </data>
+  <data name="lblWorkerTypeCode" xml:space="preserve">
+    <value>Kod Jenis Pekerja</value>
+  </data>
+  <data name="lblWorkerTypeCount" xml:space="preserve">
+    <value>maklumat jenis pekerja</value>
+  </data>
+  <data name="lblWorkerTypeDelete" xml:space="preserve">
+    <value>HAPUS JENIS PEKERJA</value>
+  </data>
+  <data name="lblWorkerTypeInfo" xml:space="preserve">
+    <value>MAKLUMAT JENIS PEKERJA</value>
+  </data>
+  <data name="lblWorkerTypeSearch" xml:space="preserve">
+    <value>Sila masukkan kod jenis pekerja atau keterangan jenis pekerja</value>
+  </data>
+  <data name="lblWorkerTypeUpdate" xml:space="preserve">
+    <value>KEMASKINI JENIS PEKERJA</value>
+  </data>
+  <data name="lblContributedBy" xml:space="preserve">
+    <value>Caruman Oleh</value>
+  </data>
+  <data name="lblContributionCategoryAdd" xml:space="preserve">
+    <value>TAMBAH KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionCategoryCode" xml:space="preserve">
+    <value>Kod Kategori Caruman</value>
+  </data>
+  <data name="lblContributionCategoryCount" xml:space="preserve">
+    <value>maklumat kategori caruman</value>
+  </data>
+  <data name="lblContributionCategoryDelete" xml:space="preserve">
+    <value>HAPUS KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionCategoryDesc" xml:space="preserve">
+    <value>Nama Caruman</value>
+  </data>
+  <data name="lblContributionCategoryInfo" xml:space="preserve">
+    <value>MAKLUMAT KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionCategorySearch" xml:space="preserve">
+    <value>Sila masukkan kod kategori caruman atau nama kategori caruman</value>
+  </data>
+  <data name="lblContributionCategoryUpdate" xml:space="preserve">
+    <value>KEMASKINI KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionSubCategoryAdd" xml:space="preserve">
+    <value>TAMBAH SUB KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionSubCategoryCode" xml:space="preserve">
+    <value>Kod Sub Kategori Caruman</value>
+  </data>
+  <data name="lblContributionSubCategoryCount" xml:space="preserve">
+    <value>maklumat sub kategori caruman</value>
+  </data>
+  <data name="lblContributionSubCategoryDelete" xml:space="preserve">
+    <value>HAPUS SUB KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionSubCategoryDesc" xml:space="preserve">
+    <value>Keterangan Sub Caruman</value>
+  </data>
+  <data name="lblContributionSubCategoryEmpyeeCont" xml:space="preserve">
+    <value>Kadar Pekerja (Peratus)</value>
+  </data>
+  <data name="lblContributionSubCategoryEmpyerCont" xml:space="preserve">
+    <value>Kadar Majikan (Peratus)</value>
+  </data>
+  <data name="lblContributionSubCategoryInfo" xml:space="preserve">
+    <value>MAKLUMAT SUB KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionSubCategoryMaxAge" xml:space="preserve">
+    <value>Umur Maksima (Tahun)</value>
+  </data>
+  <data name="lblContributionSubCategoryMinAge" xml:space="preserve">
+    <value>Umur Minima (Tahun)</value>
+  </data>
+  <data name="lblContributionSubCategoryUpdate" xml:space="preserve">
+    <value>KEMASKINI SUB KATEGORI CARUMAN</value>
+  </data>
+  <data name="lblContributionTableAdd" xml:space="preserve">
+    <value>TAMBAH JADUAL CARUMAN</value>
+  </data>
+  <data name="lblContributionTableCount" xml:space="preserve">
+    <value>maklumat jadual caruman</value>
+  </data>
+  <data name="lblContributiontableDelete" xml:space="preserve">
+    <value>HAPUS JADUAL CARUMAN</value>
+  </data>
+  <data name="lblContributionTableEmpyeeCont" xml:space="preserve">
+    <value>Caruman Pekerja (RM)</value>
+  </data>
+  <data name="lblContributionTableEmpyerCont" xml:space="preserve">
+    <value>Caruman Majikan (RM)</value>
+  </data>
+  <data name="lblContributionTableInfo" xml:space="preserve">
+    <value>MAKLUMAT JADUAL CARUMAN</value>
+  </data>
+  <data name="lblContributionTableMaxWage" xml:space="preserve">
+    <value>Gaji Maksima (RM)</value>
+  </data>
+  <data name="lblContributionTableMinWage" xml:space="preserve">
+    <value>Gaji Minima (RM)</value>
+  </data>
+  <data name="lblContributionTableUpdate" xml:space="preserve">
+    <value>KEMASKINI JADUAL CARUMAN</value>
+  </data>
+  <data name="lblDefault" xml:space="preserve">
+    <value>Lalai</value>
+  </data>
+  <data name="lblScheduledContribution" xml:space="preserve">
+    <value>Caruman Berjadual</value>
+  </data>
+  <data name="lblTitleContributionCategoryMaintenance" xml:space="preserve">
+    <value>Selenggara Kategori Caruman</value>
+  </data>
+  <data name="lblTitleContributionSubCategoryMaintenance" xml:space="preserve">
+    <value>Selenggara Sub Kategori Caruman</value>
+  </data>
+  <data name="lblTitleContributionTableMaintenance" xml:space="preserve">
+    <value>Selenggara Jadual Caruman</value>
+  </data>
+  <data name="lblCutOffDateDesc" xml:space="preserve">
+    <value>Keterangan</value>
+  </data>
+  <data name="lblCutOffDateInfo" xml:space="preserve">
+    <value>MAKLUMAT HAD MASA</value>
+  </data>
+  <data name="lblCutOffDateUpdate" xml:space="preserve">
+    <value>KEMASKINI HAD MASA</value>
+  </data>
+  <data name="lblCutOffDateValue" xml:space="preserve">
+    <value>Had Masa (Hari)</value>
+  </data>
+  <data name="lblMinimumWageActionAdd" xml:space="preserve">
+    <value>TAMBAH TINDAKAN GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageActionCode" xml:space="preserve">
+    <value>Kod Tindakan Gaji Minima</value>
+  </data>
+  <data name="lblMinimumWageActionCount" xml:space="preserve">
+    <value>maklumats tindakan gaji minima</value>
+  </data>
+  <data name="lblMinimumWageActionDelete" xml:space="preserve">
+    <value>HAPUS TINDAKAN GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageActionInfo" xml:space="preserve">
+    <value>MAKLUMAT TINDAKAN GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageActionSearch" xml:space="preserve">
+    <value>Sila masukkan kod tindakan gaji minima atau keterangan tindakan gaji minima</value>
+  </data>
+  <data name="lblMinimumWageActionUpdate" xml:space="preserve">
+    <value>KEMASKINI TINDAKAN GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageReasonAdd" xml:space="preserve">
+    <value>TAMBAH SEBAB GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageReasonCode" xml:space="preserve">
+    <value>Kod Sebab Gaji Minima</value>
+  </data>
+  <data name="lblMinimumWageReasonCount" xml:space="preserve">
+    <value>maklumats sebab gaji minima</value>
+  </data>
+  <data name="lblMinimumWageReasonDelete" xml:space="preserve">
+    <value>HAPUS SEBAB GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageReasonInfo" xml:space="preserve">
+    <value>MAKLUMAT SEBAB GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageReasonSearch" xml:space="preserve">
+    <value>Sila masukkan kod sebab gaji minima atau keterangan sebab gaji minima</value>
+  </data>
+  <data name="lblMinimumWageReasonUpdate" xml:space="preserve">
+    <value>KEMASKINI SEBAB GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageValue" xml:space="preserve">
+    <value>Nilai Gaji Minima (RM)</value>
+  </data>
+  <data name="lblMinimumWageValueInfo" xml:space="preserve">
+    <value>MAKLUMAT NILAI GAJI MINIMA</value>
+  </data>
+  <data name="lblMinimumWageValueUpdate" xml:space="preserve">
+    <value>KEMASKINI NILAI GAJI MINIMA</value>
+  </data>
+  <data name="lblTitleCutOffDateMaintenance" xml:space="preserve">
+    <value>Selenggera Had Masa</value>
+  </data>
+  <data name="lblTitleMinimumWageActionMaintenance" xml:space="preserve">
+    <value>Selenggara Tindakan Gaji Minima</value>
+  </data>
+  <data name="lblTitleMinimumWageReasonMaintenance" xml:space="preserve">
+    <value>Selenggara Sebab Gaji Minima</value>
+  </data>
+  <data name="lblTitleMinimumWageValueMaintenance" xml:space="preserve">
+    <value>Selenggera Nilai Gaji Minima</value>
+  </data>
+  <data name="msgInvalidPDFConvert" xml:space="preserve">
+    <value>Fail tidak dapat dijana sila cuba sekali lagi</value>
+  </data>
+  <data name="lblHarvestDifficulty" xml:space="preserve">
+    <value>Tahap Kesukaran Menuai</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Tahap Kesukaran Membaja</value>
+  </data>
+  <data name="lblCodeIO" xml:space="preserve">
+    <value>Kod IO</value>
+  </data>
+  <data name="btnAddArea" xml:space="preserve">
+    <value>Tambah Kawasan</value>
+  </data>
+  <data name="lblArea" xml:space="preserve">
+    <value>Luas</value>
+  </data>
+  <data name="lblAreaType" xml:space="preserve">
+    <value>Jenis Kawasan</value>
+  </data>
+  <data name="lblNoPlantArea" xml:space="preserve">
+    <value>Luas Kawasan Tiada Tanaman</value>
+  </data>
+  <data name="lblNoPlantAreaInfo" xml:space="preserve">
+    <value>Maklumat Luas Kawasan Tiada Tanaman</value>
+  </data>
+  <data name="lblNotSucceedArea" xml:space="preserve">
+    <value>Luas Belum Berhasil</value>
+  </data>
+  <data name="lblPlantArea" xml:space="preserve">
+    <value>Luas Kawasan Tanam</value>
+  </data>
+  <data name="lblPlantAreaInfo" xml:space="preserve">
+    <value>Maklumat Luas Kawasan Tanaman</value>
+  </data>
+  <data name="lblPlantCount" xml:space="preserve">
+    <value>Bil Pokok</value>
+  </data>
+  <data name="lblPlantStand" xml:space="preserve">
+    <value>Dirian Pokok</value>
+  </data>
+  <data name="lblSucceedArea" xml:space="preserve">
+    <value>Luas Berhasil</value>
+  </data>
+  <data name="msgPlantCount" xml:space="preserve">
+    <value>*Nota: Bilangan pokok = Dirian pokok x Luas kawasan tanaman</value>
+  </data>
+  <data name="msgPktArea" xml:space="preserve">
+    <value>Sila masukkan luas peringkat</value>
+  </data>
+  <data name="lblBankAdd" xml:space="preserve">
+    <value>TAMBAH BANK</value>
+  </data>
+  <data name="lblBankCount" xml:space="preserve">
+    <value>maklumat bank</value>
+  </data>
+  <data name="lblBankDelete" xml:space="preserve">
+    <value>HAPUS BANK</value>
+  </data>
+  <data name="lblBankInfo" xml:space="preserve">
+    <value>MAKLUMAT BANK</value>
+  </data>
+  <data name="lblBankSearch" xml:space="preserve">
+    <value>Sila masukkan kod bank atau nama bank</value>
+  </data>
+  <data name="lblBankUpdate" xml:space="preserve">
+    <value>KEMASKINI BANK</value>
+  </data>
+  <data name="lblCompanyGroupAdd" xml:space="preserve">
+    <value>TAMBAH KUMPULAN SYARIKAT</value>
+  </data>
+  <data name="lblCompanyGroupCount" xml:space="preserve">
+    <value>maklumat kumpulan syarikat</value>
+  </data>
+  <data name="lblCompanyGroupDelete" xml:space="preserve">
+    <value>HAPUS KUMPULAN SYARIKAT</value>
+  </data>
+  <data name="lblCompanyGroupInfo" xml:space="preserve">
+    <value>MAKLUMAT KUMPULAN SYARIKAT</value>
+  </data>
+  <data name="lblCompanyGroupName" xml:space="preserve">
+    <value>Nama Kumpulan Syarikat</value>
+  </data>
+  <data name="lblCompanyGroupSearch" xml:space="preserve">
+    <value>Sila masukkan nama syarikat</value>
+  </data>
+  <data name="lblCompanyGroupUpdate" xml:space="preserve">
+    <value>KEMASKINI KUMPULAN SYARIKAT</value>
+  </data>
+  <data name="lblIncentiveAdd" xml:space="preserve">
+    <value>TAMBAH INSENTIF</value>
+  </data>
+  <data name="lblIncentiveCode" xml:space="preserve">
+    <value>Kod Insentif</value>
+  </data>
+  <data name="lblIncentiveCount" xml:space="preserve">
+    <value>maklumat insentif</value>
+  </data>
+  <data name="lblIncentiveDelete" xml:space="preserve">
+    <value>HAPUS INSENTIF</value>
+  </data>
+  <data name="lblIncentiveInfo" xml:space="preserve">
+    <value>MAKLUMAT INSENTIF</value>
+  </data>
+  <data name="lblIncentiveKodAktvt" xml:space="preserve">
+    <value>Kod Aktiviti Insentif</value>
+  </data>
+  <data name="lblIncentiveKodGL" xml:space="preserve">
+    <value>Kod GL Insentif</value>
+  </data>
+  <data name="lblIncentiveName" xml:space="preserve">
+    <value>Nama Insentif</value>
+  </data>
+  <data name="lblIncentiveUpdate" xml:space="preserve">
+    <value>KEMASKINI INSENTIF</value>
+  </data>
+  <data name="lblTitleBankMaintenance" xml:space="preserve">
+    <value>Selenggara Bank</value>
+  </data>
+  <data name="lblTitleCompanyGroupMaintenance" xml:space="preserve">
+    <value>Selenggara Kumpulan Syarikat</value>
+  </data>
+  <data name="lblTitleCropTypeMaintenance" xml:space="preserve">
+    <value>Selenggara Jenis Tanaman</value>
+  </data>
+  <data name="lblTitleIncentiveMaintenance" xml:space="preserve">
+    <value>Selenggara Insentif</value>
+  </data>
+  <data name="lblTitleRejectMaintenance" xml:space="preserve">
+    <value>Selenggara Sebab Tolak</value>
+  </data>
+  <data name="lblTitleUnitMaintenance" xml:space="preserve">
+    <value>Selenggara Unit</value>
+  </data>
+  <data name="lblUnitAdd" xml:space="preserve">
+    <value>TAMBAH UNIT</value>
+  </data>
+  <data name="lblUnitCode" xml:space="preserve">
+    <value>Kod Unit</value>
+  </data>
+  <data name="lblUnitCount" xml:space="preserve">
+    <value>maklumat unit</value>
+  </data>
+  <data name="lblUnitDelete" xml:space="preserve">
+    <value>HAPUS UNIT</value>
+  </data>
+  <data name="lblUnitInfo" xml:space="preserve">
+    <value>MAKLUMAT UNIT</value>
+  </data>
+  <data name="lblUnitSearch" xml:space="preserve">
+    <value>Sila masukkan kod unit atau keterangan unit</value>
+  </data>
+  <data name="lblUnitUpdate" xml:space="preserve">
+    <value>KEMASKINI UNIT</value>
+  </data>
+  <data name="lblTitleKiraanMaintenance" xml:space="preserve">
+    <value>Selenggara Kiraan (OT)</value>
+  </data>
+  <data name="lblTitleHargaMaintenance" xml:space="preserve">
+    <value>Kadar Harga (OT)</value>
+  </data>
+  <data name="lblTitlePmbhgiHargaMaintenance" xml:space="preserve">
+    <value>Pembahagian Harga OT</value>
+  </data>
+  <data name="lblTitleKmplnKategoriMaintenance" xml:space="preserve">
+    <value>Kategori Kerja Kumpulan</value>
+  </data>
+  <data name="lblKdrGanda" xml:space="preserve">
+    <value>KADAR (GANDAAN)</value>
+  </data>
+  <data name="lblharga" xml:space="preserve">
+    <value>HARGA (RM)</value>
+  </data>
+  <data name="lblCateKerja" xml:space="preserve">
+    <value>MAKLUMAT KATEGORI KERJA KUMPULAN</value>
+  </data>
+  <data name="lblCateKerjaAdd" xml:space="preserve">
+    <value>PENAMBAHAN KATEGORI KERJA KUMPULAN</value>
+  </data>
+  <data name="lblCateKerjaCount" xml:space="preserve">
+    <value>maklumat kategori kerja kumpulan</value>
+  </data>
+  <data name="lblCateKerjaDel" xml:space="preserve">
+    <value>HAPUS KATEGORI KERJA KUMPULAN</value>
+  </data>
+  <data name="lblCateKerjaUnDel" xml:space="preserve">
+    <value>GUNA SEMULA KATEGORI KERJA KUMPULAN</value>
+  </data>
+  <data name="lblCateKerjaUpdate" xml:space="preserve">
+    <value>KEMASKINI KATEGORI KERJA KUMPULAN</value>
+  </data>
+  <data name="lblJamKerja" xml:space="preserve">
+    <value>MAKLUMAT PEMBAHAGIAN HARGA OT</value>
+  </data>
+  <data name="lblJamKerjaCount" xml:space="preserve">
+    <value>maklumat pembahagian harga</value>
+  </data>
+  <data name="lblJamKerjaUpdate" xml:space="preserve">
+    <value>KEMASKINI MAKLUMAT PEMBAHAGIAN HARGA OT</value>
+  </data>
+  <data name="lblKdrHrga" xml:space="preserve">
+    <value>MAKLUMAT KADAR HARGA OT</value>
+  </data>
+  <data name="lblKdrHrgaCount" xml:space="preserve">
+    <value>maklumat kadar harga</value>
+  </data>
+  <data name="lblKdrHrgaUpdate" xml:space="preserve">
+    <value>KEMASKINI MAKLUMAT KADAR HARGA OT</value>
+  </data>
+  <data name="lblKiraan" xml:space="preserve">
+    <value>MAKLUMAT SELENGARA KIRAAN OT</value>
+  </data>
+  <data name="lblKiraanCount" xml:space="preserve">
+    <value>maklumat selengara kiraan</value>
+  </data>
+  <data name="lblKiraanUpdate" xml:space="preserve">
+    <value>KEMASKINI MAKLUMAT SELENGARA KIRAAN OT</value>
+  </data>
+</root>

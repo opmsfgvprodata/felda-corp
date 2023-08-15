@@ -1,0 +1,84 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_Insentif
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblIncentiveDelete</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblInsentifInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrNoPkj:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrName:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetPkjNameFromNoPkj(Model.fld_Nopkj, Model.fld_NegaraID, Model.fld_SyarikatID, Model.fld_WilayahID, Model.fld_LadangID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Year, null, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lblMonth:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Month, null, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveType:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_KodInsentif, null, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveName:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_KodInsentif, null, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetIncentiveDescFromCode(Model.fld_KodInsentif, Model.fld_NegaraID, Model.fld_SyarikatID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveValue (RM):</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NilaiInsentif, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_InsentifID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <h3>
+                            <span class="label label-danger">
+                                @GlobalResCorp.msgDelete
+                            </span>
+                        </h3>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>

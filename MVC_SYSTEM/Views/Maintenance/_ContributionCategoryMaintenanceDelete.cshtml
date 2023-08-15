@@ -1,0 +1,83 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CarumanTambahan
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    GetConfig config = new GetConfig();
+    var pencarum = config.GetWebConfigDesc(Model.fld_CarumanOleh.ToString(), "pencarum", Model.fld_NegaraID, Model.fld_SyarikatID);
+    var berjadual = config.GetWebConfigDescFromFlag2(Model.fld_Berjadual.ToString().ToLower(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID);
+    var compulsory = config.GetWebConfigDescFromFlag2(Model.fld_Default.ToString().ToLower(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID);
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @if (Model.fld_Deleted == false)
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblContributionCategoryDelete</h3>
+        }
+        else
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblContributionCategoryUnDelete</h3>
+        }
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblContributionCategoryInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionCategoryCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodCaruman, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionCategoryDesc:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_NamaCaruman, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributedBy:</label>
+                            <div class="col-sm-5">
+                                @Html.TextBoxFor(model => model.fld_CarumanOleh, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = pencarum })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblScheduledContribution:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Berjadual, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = berjadual })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_JenisCarumanID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.vw_DetailPekerja>
+@using MVC_SYSTEM.Class;
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
+    int bil = 0;
+}
+@foreach (var item in Model)
+{
+    bil = bil + 1;
+    string kerakyatan = GetConfig.GetData2(item.fld_Kdrkyt, "krytnlist"); //GetKerakyatan.KrakyatanName(item.fld_Kdrkyt);
+    string jantina = GetConfig.GetData2(item.fld_Kdjnt, "jantina");//GetJantina.Jantina(item.fld_Kdjnt);
+    <tr>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @bil
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @item.fld_Nama1
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @*@Html.DisplayFor(modelItem => item.fldTrkhDkmn)*@
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @item.fld_Nokp
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @Html.DisplayFor(modelItem => item.fld_Ttsplp)
+        </td>
+        @if (item.fld_BilBlnTmtPsprt >= 0)
+        {
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_BilBlnTmtPsprt
+            </td>
+        }
+        else
+        {
+            <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_BilBlnTmtPsprt
+            </td>
+        }
+
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @Html.DisplayFor(modelItem => item.fld_T2prmt)
+        </td>
+        @if (item.fld_BilBlnTmtPrmnt >= 0)
+        {
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_BilBlnTmtPrmnt
+            </td>
+        }
+        else
+        {
+            <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_BilBlnTmtPrmnt
+            </td>
+        }
+
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @kerakyatan
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @Html.DisplayFor(modelItem => item.fld_Trlhr)
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @jantina
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            FW
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @item.fld_LdgName
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+    </tr>
+}

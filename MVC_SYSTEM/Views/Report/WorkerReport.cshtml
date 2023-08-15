@@ -1,0 +1,354 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "WorkerReport";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+    GetPekerja GetPekerja = new GetPekerja();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "WorkerReport_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    int bill = 1;
+}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 20px;
+        border: 1px solid black;
+    }
+
+    .hover {
+        background: #b0b0b0;
+    }
+</style>
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("WorkerReport", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div id="progressmsg" class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResWorkerReport.WaitMsg</label>
+    </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerReport.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerReport.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerReport.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerReport.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerReport.lblNoPkj)
+                    @Html.DropDownList("NoPekerjaList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-2">
+                    @Html.Label(" ")
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerReport.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well">
+            <p style="text-align:center;"><label>@GlobalResWorkerReport.hdrReportTitle</label></p>
+            @if (ViewBag.getflag == 1)
+            {
+                <p style="color:red">Sila Pilih Bulan, Tahun, Wilayah Dan Ladang.</p>
+            }
+
+            else
+            {
+                <div id="scrollArea" class="modal-body">
+                    @if (ViewBag.PekerjaSelection == "0")
+                    {
+                        foreach (var nopkj in GetPekerja.NoPekerja(ViewBag.Month, ViewBag.Year, ViewBag.WilayahSelection, ViewBag.LadangSelection))
+                        {
+                            Html.RenderAction("WorkerReportDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, nopkj = nopkj });
+                        }
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="5" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GlobalResWorkerMyeg.hdrRumusan
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Bil.</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">No Pekerja</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Nama Pekerja</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Kumpulan</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var nopkj in GetPekerja.NoPekerja(ViewBag.Month, ViewBag.Year, ViewBag.WilayahSelection, ViewBag.LadangSelection))
+                                {
+                                    Html.RenderAction("WorkerReportSummary", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, nopkj = nopkj, bill = bill });
+                                    bill++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+                                    </td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@ViewBag.TotalJumlah</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <newpage />
+                    }
+                    else
+                    {
+                        Html.RenderAction("WorkerReportDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, nopkj = ViewBag.PekerjaSelection });
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="5" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GlobalResWorkerMyeg.hdrRumusan
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Bil.</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">No Pekerja</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Nama Pekerja</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Kumpulan</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    Html.RenderAction("WorkerReportSummary", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, nopkj = ViewBag.PekerjaSelection, bill = bill });
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+                                    </td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@ViewBag.TotalJumlah</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <newpage />
+                                    }
+
+
+                </div>
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+            }
+        </div>
+    </section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script type="text/javascript">
+        function findBlocks(theTable) {
+    if ($(theTable).data('hasblockrows') == null) {
+        console.log('findBlocks'); // to prove we only run this once
+
+        // we will loop through the rows but skip the ones not in a block
+        var rows = $(theTable).find('tr');
+        for (var i = 0; i < rows.length;) {
+
+            var firstRow = rows[i];
+
+            // find max rowspan in this row - this represents the size of the block
+            var maxRowspan = 1;
+            $(firstRow).find('td').each(function () {
+                var attr = parseInt($(this).attr('rowspan') || '1', 10)
+                if (attr > maxRowspan) maxRowspan = attr;
+            });
+
+            // set to the index in rows we want to go up to
+            maxRowspan += i;
+
+            // build up an array and store with each row in this block
+            // this is still memory-efficient, as we are just storing a pointer to the same array
+            // ... which is also nice becuase we can build the array up in the same loop
+            var blockRows = [];
+            for (; i < maxRowspan; i++) {
+                $(rows[i]).data('blockrows', blockRows);
+                blockRows.push(rows[i]);
+            }
+
+            // i is now the start of the next block
+        }
+
+        // set data against table so we know it has been inited (for if we call it in the hover event)
+        $(theTable).data('hasblockrows', 1);
+    }
+}
+
+$("td").hover(function () {
+    $el = $(this);
+    //findBlocks($el.closest('table')); // you can call it here or onload as below
+    $.each($el.parent().data('blockrows'), function () {
+        $(this).find('td').addClass('hover');
+    });
+}, function () {
+    $el = $(this);
+    $.each($el.parent().data('blockrows'), function () {
+        $(this).find('td').removeClass('hover');
+    });
+});
+
+findBlocks($('table'));
+</script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerReport" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            //alert(myHtml);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerReport" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry too many data', 'danger');
+                }
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+
+        $("#LadangIDList").change(function () {
+            var LadangIDList = {};
+            var disableoption = "";
+            LadangIDList.url = "@Url.Action("GetPekerja", "Report")";
+            LadangIDList.type = "POST";
+            LadangIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), LadangID: $("#LadangIDList").val() });
+            LadangIDList.datatype = "json";
+            LadangIDList.contentType = "application/json";
+            LadangIDList.success = function (pekerjalist) {
+                $("#NoPekerjaList").empty();
+                //$("#NoPekerjaList").append("<option value=0>@*@GlobalResWorkerTransac.sltAll*@</option>");
+                for (var i = 0; i < pekerjalist.length; i++) {
+                    if ($("#LadangIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#NoPekerjaList").append("<option value=" + pekerjalist[i].Value + " " + disableoption + ">" + pekerjalist[i].Text + "</option>");
+                }
+            };
+            LadangIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(LadangIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

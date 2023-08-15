@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+            @*<div class="submit-progress hidden">
+                <i class="fa fa-2x fa-spinner fa-spin"></i>
+                <label>@GlobalResReport.WaitMsg</label>
+            </div>*@
+            <!-- ** END POP-UP MESSAGE AREA ** -->
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@GlobalResReport.lblTitle</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="ListReport">@GlobalResReport.lblReportList</label>
+                                    @Html.DropDownList("ReportList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div id="subreport" class="col-sm-6">
+                                    <label for="ListReport">@GlobalResReport.lblReportList</label>
+                                    @Html.DropDownList("SubReportList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-report">
+                    <input class="btn btn-primary" type="submit" name="upload" id="upload" value="@GlobalResReport.btnViewReport" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+    $(document).ready(function () {
+        var SubReportList = {};
+        //var disableoption = "";
+        SubReportList.url = "@Url.Action("GetSubReportList", "Report")";
+        SubReportList.type = "POST";
+        SubReportList.data = JSON.stringify({ ReportList: $("#ReportList").val() });
+        SubReportList.datatype = "json";
+        SubReportList.contentType = "application/json";
+        SubReportList.success = function (getsubreportlist) {
+            $("#SubReportList").empty();
+            if (getsubreportlist.length != 0) {
+                $("#subreport").removeClass("hidden");
+                $.simplyToast('Sila pilih sub report untuk teruskan', 'success');
+                for (var i = 0; i < getsubreportlist.length; i++) {
+                    $("#SubReportList").append("<option value=" + getsubreportlist[i].Value + ">" + getsubreportlist[i].Text + "</option>");
+                }
+            }
+            else {
+                $("#SubReportList").append("<option value=0>No Data</option>");
+                $("#subreport").addClass("hidden");
+            }
+        };
+        SubReportList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+        $.ajax(SubReportList);
+
+        $("#ReportList").change(function () {
+            var SubReportList = {};
+            //var disableoption = "";
+            SubReportList.url = "@Url.Action("GetSubReportList", "Report")";
+            SubReportList.type = "POST";
+            SubReportList.data = JSON.stringify({ ReportList: $("#ReportList").val() });
+            SubReportList.datatype = "json";
+            SubReportList.contentType = "application/json";
+            SubReportList.success = function (getsubreportlist) {
+                $("#SubReportList").empty();
+                if (getsubreportlist.length != 0) {
+                    $("#subreport").removeClass("hidden");
+                    $.simplyToast('Sila pilih sub report untuk teruskan', 'success');
+                    for (var i = 0; i < getsubreportlist.length; i++) {
+                        $("#SubReportList").append("<option value=" + getsubreportlist[i].Value + ">" + getsubreportlist[i].Text + "</option>");
+                    }
+                }
+                else {
+                    $("#SubReportList").append("<option value=0>No Data</option>");
+                    $("#subreport").addClass("hidden");
+                }
+            };
+            SubReportList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(SubReportList);
+        });
+    });
+</script>

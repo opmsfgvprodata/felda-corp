@@ -1,0 +1,75 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_Socso
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "SocsoMaintenanceDelete";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetConfig GetConfig = new GetConfig();
+    string jnscaruman = GetConfig.GetKwspSocso(Model.fld_KodCaruman, Model.fld_SyarikatID.Value, Model.fld_NegaraID.Value);
+    string carumandesc = Model.fld_KodCaruman + " - " + jnscaruman;
+    string kadar = Model.fld_KdrLower + " - " + Model.fld_KdrUpper;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+        <h3 class="modal-title">@GlobalResCorp.titleDelete</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                @Html.HiddenFor(model => model.fld_ID)
+                @Html.HiddenFor(model => model.fld_NegaraID)
+                @Html.HiddenFor(model => model.fld_SyarikatID)
+                <label class="control-label col-md-2">@GlobalResCorp.lblSocsoType</label>
+                <div class="col-md-9">
+                    @Html.TextBox("fld_KodCaruman", carumandesc, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResCorp.lblSalaryRange (RM)</label>
+                <div class="col-md-9">
+                    @Html.TextBox("kadar", kadar, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResCorp.lblEmloyerShare (RM)</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_SocsoMjkn, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResCorp.lblEmployeeShare (RM)</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_SocsoPkj, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        <input class="btn btn-danger" type="submit" value=@GlobalResCorp.btnYes />
+    </div>
+}

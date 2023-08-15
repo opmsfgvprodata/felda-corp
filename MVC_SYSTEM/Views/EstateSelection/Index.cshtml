@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResLogin.WaitMsg
+        </label>
+    </div>
+</div>
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+<script>
+    function DisplayProgressMessage(ctl) {
+        if ($("#fldUserName").val() != "" && $("#fldUserPassword").val() != "") {
+            //$("body").addClass("submit-progress-bg");
+            //$(".submit-progress").removeClass("hidden");
+            $("#UpdateProgress1").css("display", "");
+            return true;
+        }
+        else {
+            $("#UpdateProgress1").css("display", "none");
+            return true;
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(window).on("load", function () {
+        $('#myModalContent').load("@Url.Action("EstateSelection", "EstateSelection", null, this.Request.Url.Scheme)", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+    });
+</script>
+

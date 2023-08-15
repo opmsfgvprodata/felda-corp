@@ -1,0 +1,77 @@
+﻿@* farahin modify whole page - 10/01/2023 *@
+@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_SAPLog>
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.ModelsCorporate
+
+@{
+    ViewBag.Title = "errorView";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    GetConfig getconfig = new GetConfig();
+    MVC_SYSTEM_ModelsCorporate db = new MVC_SYSTEM_ModelsCorporate();
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+
+    int bil = 0;
+
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well" style="margin-top: 7px">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div id="scrollArea" class="col-sm-12">
+                        <div class="col-sm-12" style="text-align:center;">
+                            @if (Model != null && Model.Count() != 0)
+                            {
+
+
+                                <table class="table table-hover">
+                                    <thead>
+
+                                        <tr>
+                                            <th bgcolor="#ffcc80" width="1%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Error Message</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Download Oleh</th>
+
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Module</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Where(w => w.fld_logDate == DateTime.Today))
+                                        {
+                                            bil = bil + 1;
+                                            <tr>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@item.fld_message</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@item.fld_msg4 </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@item.fld_system </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", item.fld_logDate) </td>
+
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            }
+                            else
+                            {
+                                @ViewBag.Message
+
+
+                            }
+                        </div>
+                    </div>
+                   </div>
+            </div>
+    </div>
+    </div>
+    <div class="col-sm-12" style="text-align:right;">
+        <a href="@Url.Action("IOList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+    </div>
+</section>

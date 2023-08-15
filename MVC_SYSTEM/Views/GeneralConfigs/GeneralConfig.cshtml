@@ -1,0 +1,120 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tblOptionConfigsWeb>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "GeneralConfig";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    GetLadang GetLadang = new GetLadang();
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    @using (Html.BeginForm("GeneralConfig", null, FormMethod.Get))
+    {
+        <div class="well bottom" style="padding-bottom:19px;">
+            <div class="row">
+                <div class="col-sm-5">
+                    @*@Html.Label("Carian")*@
+                    <div class="input-group">
+                        <input type="text" name="filter" value="@ViewBag.filter" class="form-control" style="display: inline" placeholder=@GlobalResConfig.lblSearch />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                @*@GlobalResEstateNeed.btnGo*@
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="well" style="margin-top:0px;">
+            <div class="row">
+                <div class="pull-left col-lg-1">
+                    <a class="btn btn-success" data-modal="" href="@Url.Action("ConfigInsert", "GeneralConfigs", new { id = 1, flag1 = ViewBag.Flag1 })" id="btnCreate">
+                        <span class="glyphicon glyphicon-plus"></span>  @GlobalResConfig.btnAdd
+                    </a>
+                </div>
+
+            </div>
+            @*sepul ubah 19/02/2021*@
+            @if (ViewBag.Flag1 != "monthlist")
+            {
+                <div style="margin-top:17px;">
+                    @{
+                        var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                        grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                        grid.Pager(WebGridPagerModes.All);
+
+                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                   fillEmptyRows: false,
+                   tableStyle: "table table-bordered table-hover",
+                   mode: WebGridPagerModes.All,
+                   columns: grid.Columns(
+                     grid.Column("fldOptConfValue", GlobalResConfig.hdrKod, style: "col-lg-2"),
+                       grid.Column("fldOptConfDesc", GlobalResConfig.hdrKeterangan, style: "col-lg-2"),
+                      grid.Column(GlobalResConfig.hdrAction, canSort: false, style: "col-lg-2",
+                      format: @<text>
+                                            @Html.Raw("<a data-modal='' href='" + @Url.Action("ConfigUpdate", "GeneralConfigs") + "/?id=" + item.fldOptConfID + "' title='ConfigUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                            @Html.Raw("<a data-modal='' href='" + @Url.Action("ConfigDelete", "GeneralConfigs") + "/?id=" + item.fldOptConfID + "' title='ConfigDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                                    </text>)
+
+                  ));
+                    }
+                </div>
+                        }
+                @if (ViewBag.Flag1 == "monthlist")
+                {
+                <div style="margin-top:17px;">
+                    @{
+                        var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                        grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                        grid.Pager(WebGridPagerModes.All);
+
+                        @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                                                   fillEmptyRows: false,
+                                                   tableStyle: "table table-bordered table-hover",
+                                                   mode: WebGridPagerModes.All,
+                                                   columns: grid.Columns(
+                                                     grid.Column("fldOptConfValue", GlobalResConfig.hdrKod, style: "col-lg-2"),
+                                                       grid.Column("fldOptConfDesc", GlobalResConfig.hdrKeterangan, style: "col-lg-2"),
+                                                       grid.Column("fldOptConfFlag2", "Nama Bulan", style: "col-lg-2"),
+                                                      grid.Column(GlobalResConfig.hdrAction, canSort: false, style: "col-lg-2",
+                                                      format: @<text>
+                                                @Html.Raw("<a data-modal='' href='" + @Url.Action("ConfigUpdate", "GeneralConfigs") + "/?id=" + item.fldOptConfID + "' title='ConfigUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                                @Html.Raw("<a data-modal='' href='" + @Url.Action("ConfigDelete", "GeneralConfigs") + "/?id=" + item.fldOptConfID + "' title='ConfigDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                                        </text>)
+
+                                                  ));
+                    }
+                    @*sampai sini*@
+
+                </div>
+                        }
+        </div>
+     }
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}
+
+
+

@@ -1,0 +1,220 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_CutiPeruntukanModelViewCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblEstateWorkerLeaveAllocationCreate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEstateWorkerLeaveAllocationInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_LadangID, new SelectList(ViewBag.LadangList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblWorker:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_NoPkj, new SelectList(ViewBag.PkjList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_NoPkj, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(model => model.fld_Tahun, new SelectList(ViewBag.YearList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_Tahun, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3 col-sm-offset-1">@GlobalResCorp.lblLeaveCategory:</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(model => model.fld_KodCuti, new SelectList(ViewBag.LeaveList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodCuti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLeaveCount:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_JumlahCuti, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_JumlahCuti, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3 col-sm-offset-1">@GlobalResCorp.lblLeaveTaken:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_JumlahCutiDiambil, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_JumlahCutiDiambil, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function() {
+        $("#fld_WilayahID").change(function () {
+            if ($("#fld_WilayahID").val() === '') {
+                $("#fld_LadangID").prop("disabled", true);
+                $("#fld_LadangID").val("");
+                $("#fld_Tahun").prop("disabled", true);
+                $("#fld_Tahun").val("");
+                $("#fld_NoPkj").prop("disabled", true);
+                $("#fld_NoPkj").val("");
+                $("#fld_KodCuti").prop("disabled", true);
+                $("#fld_KodCuti").val("");
+                $("#fld_JumlahCuti").prop("readonly", true);
+                $("#fld_JumlahCuti").val("");
+                $("#fld_JumlahCutiDiambil").prop("readonly", true);
+                $("#fld_JumlahCutiDiambil").val("");
+            } else {
+                $("#fld_LadangID").prop("disabled", false);
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#fld_LadangID").empty();
+                    $("#fld_LadangID").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+
+        $("#fld_LadangID").change(function() {
+            if ($("#fld_LadangID").val() === '') {
+                $("#fld_Tahun").prop("disabled", true);
+                $("#fld_Tahun").val("");
+                $("#fld_NoPkj").prop("disabled", true);
+                $("#fld_NoPkj").val("");
+                $("#fld_KodCuti").prop("disabled", true);
+                $("#fld_KodCuti").val("");
+                $("#fld_JumlahCuti").prop("readonly", true);
+                $("#fld_JumlahCuti").val("");
+                $("#fld_JumlahCutiDiambil").prop("readonly", true);
+                $("#fld_JumlahCutiDiambil").val("");
+            }
+
+            else {
+                var LadangList = {};
+                LadangList.url = "@Url.Action("GetPkj", "Maintenance")";
+                LadangList.type = "POST";
+                LadangList.data =
+                    JSON.stringify({ WilayahList: $("#fld_WilayahID").val(), LadangList: $("#fld_LadangID").val() });
+                LadangList.datatype = "json";
+                LadangList.contentType = "application/json";
+                LadangList.success = function(pkjList) {
+                    $("#fld_NoPkj").empty();
+                    $("#fld_NoPkj").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < pkjList.length; i++) {
+                        $("#fld_NoPkj").append("<option value=" + pkjList[i].Value + ">" + pkjList[i].Text + "</option>");
+                    }
+                    $("#fld_NoPkj").prop("disabled", false);
+                };
+                LadangList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(LadangList);
+            }
+
+            
+        });
+
+        $("#fld_NoPkj").change(function () {
+            if ($("#fld_NoPkj").val() === '') {
+                $("#fld_Tahun").prop("disabled", true);
+                $("#fld_Tahun").val("");
+                $("#fld_KodCuti").prop("disabled", true);
+                $("#fld_KodCuti").val("");
+                $("#fld_JumlahCuti").prop("readonly", true);
+                $("#fld_JumlahCuti").val("");
+                $("#fld_JumlahCutiDiambil").prop("readonly", true);
+                $("#fld_JumlahCutiDiambil").val("");
+            } else {
+                $("#fld_Tahun").prop("disabled", false);
+            }            
+        });
+
+        $("#fld_Tahun").change(function () {
+            if ($("#fld_NoPkj").val() === '') {
+                $("#fld_KodCuti").prop("disabled", true);
+                $("#fld_JumlahCuti").prop("readonly", true);
+                $("#fld_JumlahCutiDiambil").prop("readonly", true);
+            }
+
+            else {
+                var leaveList = {};
+                leaveList.url = "@Url.Action("GetAvailableLeaveSelection", "Maintenance")";
+                leaveList.type = "POST";
+                leaveList.data =
+                    JSON.stringify({ WilayahList: $("#fld_WilayahID").val(), LadangList: $("#fld_LadangID").val(), PkjList: $("#fld_NoPkj").val(), YearList: $("#fld_Tahun").val() });
+                leaveList.datatype = "json";
+                leaveList.contentType = "application/json";
+                leaveList.success = function (leaveList) {
+                    $("#fld_KodCuti").empty();
+                    if (leaveList.length !== 0) {
+                        $("#fld_KodCuti").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                        for (var i = 0; i < leaveList.length; i++) {
+                            $("#fld_KodCuti")
+                                .append("<option value=" + leaveList[i].Value + ">" + leaveList[i].Text + "</option>");
+                        }
+                        $("#fld_KodCuti").prop("disabled", false);
+                    } else {
+                        $("#fld_KodCuti").append("<option value=" + 0 + ">" + '@GlobalResCorp.msgEstateWorkerAllocationMsg1' + "</option>");
+                    }
+                
+                };
+                leaveList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(leaveList);
+            }
+        });
+
+        $("#fld_KodCuti").change(function () {
+            if ($("#fld_KodCuti").val() === '') {
+                $("#fld_JumlahCuti").prop("readonly", true);
+                $("#fld_JumlahCuti").val("");
+                $("#fld_JumlahCutiDiambil").prop("readonly", true);
+                $("#fld_JumlahCutiDiambil").val("");
+            } else {
+                $("#fld_JumlahCuti").prop("readonly", false);
+                $("#fld_JumlahCutiDiambil").prop("readonly", false);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,473 @@
+﻿
+@{
+    ViewBag.Title = "Permohonan ID";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@using (Html.BeginForm("Index", "IDApplication", FormMethod.Post, new { id = "Index" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="UpdateProgress1" style="display:none;">
+        <div class="progressTest">
+            <label>
+                Sila tunggu...
+            </label>
+        </div>
+    </div>
+    <div class="modal-body" style="padding-bottom:45px !important;">
+        <div class="form-horizontal">
+            <div class="modal-header-genesys">
+                <h3 class="modal-title">PERMOHONAN ID</h3>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Kod Permohonan</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @if (ViewBag.ApplyCode == "0")
+                        {
+                            <div class="col-sm-3">
+                                <label for="Kod Permohonan">Kod Permohonan</label>
+                                @*sepul comment 17/02/2021*@
+                                @*<input type="password" name="kdprmhnan" id="kdprmhnan" class="form-control" placeholder="Masukkan Kod Permohonan...">*@
+                                @*yana update 190623*@
+                                <input type="text" name="kdprmhnan" id="kdprmhnan" class="form-control" value="***" disabled>
+                            </div>
+                        }
+                        else
+                        {
+                            <input type="hidden" name="kdprmhnan" id="kdprmhnan" value="@ViewBag.ApplyCode" />
+                        }
+                        @*yana tambah 180623*@
+                        <div class="col-sm-2">
+                            <label>Kod Syarikat</label>
+                            @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        @*sepul tambah update 9/11/21*@
+                        <div class="col-sm-2">
+                            <label>Kod Wilayah</label>
+                            @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-sm-2">
+                            <label>Kod Ladang</label>
+                            @*sepul comment 17/02/2021*@
+                            @*<input type="text" name="kdldg" id="kdldg" class="form-control" placeholder="Masukkan Kod Ladang...">*@
+                            @*sepul tambah 17/02/2021*@
+                            @Html.DropDownList("kdldg", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-2" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-block" name="Sah" id="Sah" type="button">Sahkan</button>
+                        </div>
+                        <div class="col-sm-2" style="padding-top:25px;">
+                            <a href="@Url.Action("Index", "Login")" class="btn btn-success">Kembali Ke Daftar Masuk</a>
+                        </div>
+                    </div>
+                </div>
+                @*sepul comment 17/02/2021*@
+                @*<div class="panel-heading" id="selection">Permohonan User ID Untuk</div>*@
+                @*sepul tambah 17/02/2021*@
+                <div class="panel-heading" id="selection">User ID Application for</div>
+                <div class="panel-body" id="selection2">
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label>Pilih Batch</label>
+                            <select id="batch" name="batch" class="form-control"></select>
+                        </div>
+                        <div class="col-sm-2" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-block" name="CariBatch" id="CariBatch" type="button">Cari Batch</button>
+                        </div>
+                        <div class="col-sm-2" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-block" name="Baru" id="Baru" type="button">Baru</button>
+                        </div>
+                    </div>
+                    <div id="new">
+                        <div class="form-group">
+                            <div class="col-sm-1">
+                                <label>ID Penguna</label>
+                                <input type="text" id="headuseridreadonly" name="headuseridreadonly" class="form-control" readonly />
+                                <input type="hidden" id="headuserid" name="headuserid" class="form-control" readonly />
+                            </div>
+                            <div class="col-sm-2" id="usernameclass">
+                                <input type="text" id="Username" name="Username" class="form-control" placeholder="" />
+                                <div id="existing" style="color:red;margin-left:-80px;"></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Nama</label>
+                                <input type="text" id="Name" name="Name" class="form-control" />
+                            </div>
+                            <div class="col-sm-2">
+                                <label>No. Kad Pengenalan</label>
+                                <input type="number" id="IC" name="IC" class="form-control" />
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Jawatan</label>
+                                @Html.DropDownList("PositionList", null, htmlAttributes: new { @class = "form-control" })
+                                <input type="hidden" id="batchno" name="batchno" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>Nama Singkatan</label>
+                                <input type="text" id="shortname" name="shortname" class="form-control" />
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Email</label>
+                                <input type="text" id="email" name="email" class="form-control" />
+                            </div>
+                            @*sepul tambah 17/02/2021*@
+                            <div class="col-sm-2">
+                                <label>Password</label>
+                                <input type="text" id="password" name="password" value="init123" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group" style="float:right;">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success" type="button" id="Add" name="Add">Tambah</button>
+                                <button class="btn btn-primary" type="button" id="Save" name="Save">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="listdata">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-12" id="ListofDetail">
+
+                            </div>
+                        </div>
+                        <div class="form-group" style="float:right;margin-top:-15px;">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success" type="button" id="Submit" name="Save">Hantar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $("#existing").empty();
+    $('button[type!=submit]').click(function () {
+        // code to cancel changes
+        return false;
+    });
+    $("#listdata").hide();
+    $("#new").hide();
+    $("#selection").hide();
+    $("#selection2").hide();
+    $("#Name").prop("disabled", true);
+    $("#IC").prop("disabled", true);
+    $("#PositionList").prop("disabled", true);
+    $("#Add").prop("disabled", true);
+    $("#Save").prop("disabled", true);
+    $("#shortname").prop("disabled", true);
+    $("#email").prop("disabled", true);
+
+    $("#Username").change(function () {
+        if ($("#Username").val() != "") {
+            $("#UpdateProgress1").css("display", "");
+            var username = $("#headuserid").val() + $("#Username").val();
+            var CheckUserID = {};
+            CheckUserID.url = "@Url.Action("CheckUserID", "IDApplication")";
+            CheckUserID.type = "POST";
+            CheckUserID.data = JSON.stringify({ Username: username });
+            CheckUserID.datatype = "json";
+            CheckUserID.contentType = "application/json";
+            CheckUserID.success = function (returndata) {
+                if (returndata != 0) {
+                    $("#existing").empty();
+                    $("#existing").append("ID penguna telah wujud sila guna ID penguna lain...");
+                    $("#Name").prop("disabled", true);
+                    $("#IC").prop("disabled", true);
+                    $("#PositionList").prop("disabled", true);
+                    $("#Add").prop("disabled", true);
+                    $("#Save").prop("disabled", true);
+                    $("#shortname").prop("disabled", true);
+                    $("#email").prop("disabled", true);
+                }
+                else {
+                    $("#existing").empty();
+                    $("#Name").prop("disabled", false);
+                    $("#IC").prop("disabled", false);
+                    $("#PositionList").prop("disabled", false);
+                    //$("#Add").prop("disabled", false);
+                    $("#Save").prop("disabled", false);
+                    $("#shortname").prop("disabled", false);
+                    $("#email").prop("disabled", false);
+                }
+                $("#UpdateProgress1").css("display", "none");
+            }
+            CheckUserID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(CheckUserID);
+        }
+    });
+     //sepul tambah kamy update 9/11/21
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "IDApplication")";
+            WilayahIDList.type = "POST";
+            // yana update 180623
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatList: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#kdldg").empty();
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#kdldg").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    //
+    $("#CariBatch").click(function () {
+        $("#UpdateProgress1").css("display", "");
+        var batchno = $("#batch").val();
+        var kodladang = $("#kdldg").val();
+        //var kdprmhnan = $("#kdprmhnan").val();
+        var kdprmhnan = 'felda';
+        $("#batchno").val(batchno);
+        var SearchBatch = {};
+        SearchBatch.url = "@Url.Action("SearchBatch", "IDApplication")";
+        SearchBatch.type = "POST";
+        SearchBatch.data = JSON.stringify({ batchno: batchno, kodladang: kodladang, kdprmhnan: kdprmhnan });
+        SearchBatch.datatype = "json";
+        SearchBatch.contentType = "application/json";
+        SearchBatch.success = function (returndata) {
+            $("#batchno").val(returndata.batchno);
+            $('#ListofDetail').empty();
+            $('#ListofDetail').append('<table class="table table-hover table-bordered" style="font-size: 11px;" border="0"></table>');
+            var table = $('#ListofDetail').children();
+            table.append(returndata.tablelisting);
+            $.simplyToast(returndata.msg, returndata.statusmsg);
+            if (returndata.status) {
+                $("#Username").prop("disabled", true);
+            }
+            else {
+                $("#Username").prop("disabled", false);
+            }
+            $("#UpdateProgress1").css("display", "none");
+        }
+        SearchBatch.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SearchBatch);
+    });
+
+    $("#Save").click(function () {
+        $("#UpdateProgress1").css("display", "");
+        var frm = $("#Index");
+        var batchno = $("#batchno").val();
+        var kodladang = $("#kdldg").val();
+        //var kdprmhnan = $("#kdprmhnan").val(); //commented by faeza 09.07.2023
+        var kdprmhnan = 'felda';
+        var Username = $("#headuserid").val() + $("#Username").val();
+        var Name = $("#Name").val();
+        var IC = $("#IC").val();
+        var PositionList = $("#PositionList").val();
+        var shortname = $("#shortname").val();
+        var email = $("#email").val();
+        var getbatchno = "";
+        if (kodladang != "" && kdprmhnan != "" && Username != "" && Name != "" && IC != "" && shortname != "" && email != "") {
+            if (batchno == "") {
+                getbatchnofunc(kodladang, kdprmhnan);
+                getbatchno = getbatchno2();
+            }
+            else {
+                getbatchno = $("#batchno").val();
+            }
+            //alert(getbatchno);
+            if (getbatchno != "") {
+                adddata({
+                    batchno: getbatchno, kdldng: kodladang, kdprmhnan: kdprmhnan, Username: Username, Name: Name,
+                    IC: IC, PositionList: PositionList, shortname: shortname, email: email
+                })
+                $("#listdata").show();
+                $("#Save").prop("disabled", true);
+                $("#Add").prop("disabled", false);
+            }
+            else {
+                $.simplyToast('missing batch no', 'warning');
+            }
+
+        }
+        else {
+            $.simplyToast('Sila masukkan semua detail', 'warning');
+        }
+        $("#UpdateProgress1").css("display", "none");
+    });
+
+    function getbatchnofunc(kodladang, kdprmhnan) {
+        var batchno;
+        var GetBatchNo = {};
+        GetBatchNo.url = "@Url.Action("GetBatchNo", "IDApplication")";
+        GetBatchNo.type = "POST";
+        GetBatchNo.async = false,
+            GetBatchNo.data = JSON.stringify({ kodladang: kodladang, kdprmhnan: kdprmhnan });
+        GetBatchNo.datatype = "json";
+        GetBatchNo.contentType = "application/json";
+        GetBatchNo.success = function (returndata) {
+            $("#batchno").val(returndata);
+        }
+        GetBatchNo.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(GetBatchNo);
+        return batchno;
+    }
+
+    function adddata(data) {
+        var AddData = {};
+        AddData.url = "@Url.Action("AddData", "IDApplication")";
+        AddData.type = "POST";
+        AddData.data = JSON.stringify(data);
+        AddData.datatype = "json";
+        AddData.contentType = "application/json";
+        AddData.success = function (returndata) {
+            $('#ListofDetail').empty();
+            $('#ListofDetail').append('<table class="table table-hover table-bordered" style="font-size: 11px;" border="0"></table>');
+            var table = $('#ListofDetail').children();
+            table.append(returndata.tablelisting);
+        }
+        AddData.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(AddData);
+    }
+
+    function getbatchno2() {
+        var getbatchno = $("#batchno").val();
+        return getbatchno;
+    }
+
+    $("#Submit").click(function () {
+        $("#UpdateProgress1").css("display", "");
+        var batchid = $("#batchno").val();
+        var kdldg = $("#kdldg").val();
+        //var kdprmhnan = $("#kdprmhnan").val();
+        var kdprmhnan = 'felda';
+        var Submit = {};
+        Submit.url = "@Url.Action("SendEmailForAppNewUserID2", "SendEmail")";
+        Submit.type = "POST";
+        Submit.data = JSON.stringify({ kdldg: kdldg, filename: batchid, kdprmhnan: kdprmhnan  });
+        Submit.datatype = "json";
+        Submit.contentType = "application/json";
+        Submit.success = function (returndata) {
+            $.simplyToast(returndata.msg, returndata.statusmsg);
+            $("#UpdateProgress1").css("display", "none");
+        }
+        Submit.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(Submit);
+    });
+
+    $("#Baru").click(function () {
+        $("#batchno").val('');
+        $("#listdata").hide();
+        $("#new").show();
+        $("#CariBatch").prop("disabled", true);
+        $("#batch").prop("disabled", true);
+        $("#Username").prop("disabled", false);
+    });
+
+    $("#CariBatch").click(function () {
+        $("#new").show();
+        $("#listdata").show();
+    });
+
+    $("#Add").click(function () {
+        $("#Username").val("");
+        $("#Name").val("");
+        $("#IC").val("");
+        $("#shortname").val("");
+        $("#email").val("");
+        $("#Name").prop("disabled", true);
+        $("#IC").prop("disabled", true);
+        $("#PositionList").prop("disabled", true);
+        $("#Add").prop("disabled", true);
+        $("#Save").prop("disabled", true);
+        $("#shortname").prop("disabled", true);
+        $("#email").prop("disabled", true);
+    });
+
+    $("#Sah").click(function () {
+        $("#Name").prop("disabled", true);
+        $("#IC").prop("disabled", true);
+        $("#PositionList").prop("disabled", true);
+        $("#Add").prop("disabled", true);
+        $("#Save").prop("disabled", true);
+        $("#shortname").prop("disabled", true);
+        $("#email").prop("disabled", true);
+        $("#listdata").hide();
+        if ($("#kdprmhnan").val() != "" && $("#kdldg").val() != "") {
+            $("#UpdateProgress1").css("display", "");
+            var CheckKod = {};
+            CheckKod.url = "@Url.Action("GetDetail", "IDApplication")";
+            CheckKod.type = "POST";
+            //CheckKod.data = JSON.stringify({ kdprmhnan: $("#kdprmhnan").val(), kdldg: $("#kdldg").val() });
+            CheckKod.data = JSON.stringify({ kdprmhnan: 'felda', kdldg: $("#kdldg").val() });
+            CheckKod.datatype = "json";
+            CheckKod.contentType = "application/json";
+            CheckKod.success = function (returndata) {
+                if (returndata.detailexisting == 1) {
+                    $("#batch").empty();
+                    $("#PositionList").empty();
+                    for (var i = 0; i < returndata.PositionList.length; i++) {
+                        $("#PositionList").append("<option value=" + returndata.PositionList[i].Value + ">" + returndata.PositionList[i].Text + "</option>");
+                    }
+                    if (returndata.batchdetail == 1) {
+                        for (var i = 0; i < returndata.batchlist.length; i++) {
+                            $("#batch").append("<option value=" + returndata.batchlist[i].Value + ">" + returndata.batchlist[i].Text + "</option>");
+                        }
+                        $("#CariBatch").prop("disabled", false);
+                        $("#batch").prop("disabled", false);
+                    }
+                    else {
+                        $("#CariBatch").prop("disabled", true);
+                        $("#batch").prop("disabled", true);
+                        $("#batch").append("<option value=0>Tiada Batch</option>");
+                    }
+                    $("#new").hide();
+                    $("#selection").show();
+                    $("#selection2").show();
+                    $("#UpdateProgress1").css("display", "none");
+
+                    $("#selection").empty();
+                    //sepul comment 17/02/2021
+                    $("#selection").append("Permohonan User ID Untuk (" + returndata.getdetail.fld_LdgCode + " - " + returndata.getdetail.fld_NamaLadang + ")");
+                    //sepul tambah 17/02/2021
+                    //$("#selection").append("User ID Application for (" + returndata.getdetail.fld_LdgCode + " - " + returndata.getdetail.fld_NamaLadang + ")");
+                    $("#headuserid").empty();
+                    $("#headuserid").val(returndata.getdetail.fld_FrstNmeUsrNme);
+                    $("#headuseridreadonly").val(returndata.getdetail.fld_FrstNmeUsrNme);
+                    $("#Username").attr("placeholder", "Masukkan Tanpa " + returndata.getdetail.fld_FrstNmeUsrNme);
+                }
+                else {
+                    $("#selection").hide();
+                    $("#selection2").hide();
+                    $("#new").hide();
+                    $.simplyToast('Kod yang dimasukkan tidak wujud', 'warning');
+                    $("#UpdateProgress1").css("display", "none");
+                }
+                //alert(returndata.getdetail.fld_NamaLadang);
+            }
+            CheckKod.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(CheckKod);
+        }
+        else {
+            $("#selection").hide();
+            $("#selection2").hide();
+            $("#new").hide();
+            $.simplyToast('Sila Masukkan Kod Permohonan Dan Kod Ladang', 'warning');
+        }
+    });
+</script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs5.js")
+}

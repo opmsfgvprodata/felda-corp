@@ -1,0 +1,148 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_PoskodCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblDistinctAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblDistinctCount</div>
+                    <div class="panel-body" @*id="mklmtPeribadi"*@>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblCountry:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Region, new SelectList(ViewBag.Region, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Region, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="state">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblState:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_State, new SelectList(ViewBag.State, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_State, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="distinct">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblDistrict:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_DistrictArea, null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_DistrictArea, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="postcode">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblPostcode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Postcode, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Postcode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function () {
+
+        var personalInfo = $("#state").find(":input");
+        var workerlInfo = $("#distinct").find(":input");
+        var acclInfo = $("#postcode").find(":input");
+        //var heirslInfo = $("#mklmtWaris").find(":input");
+        personalInfo.prop("disabled", true);
+        workerlInfo.prop("disabled", true);
+        acclInfo.prop("disabled", true);
+        //heirslInfo.prop("disabled", true);
+
+        $("#fld_Region").change(function () {
+            if ($("#fld_Region").val() != "") {
+                document.getElementById('fld_State').disabled = false;
+                document.getElementById('fld_DistrictArea').disabled = true;
+                document.getElementById('fld_Postcode').disabled = true;
+                    //document.getElementById('fld_Kodbkl').disabled = true;
+                }
+                else {
+                document.getElementById('fld_State').disabled = true;
+                document.getElementById('fld_DistrictArea').disabled = true;
+                document.getElementById('fld_Postcode').disabled = true;
+                    //document.getElementById('fld_Kodbkl').disabled = false;
+                }
+        });
+
+        $("#fld_State").change(function () {
+            if ($("#fld_State").val() != "") {
+                //document.getElementById('fld_State').disabled = false;
+                document.getElementById('fld_DistrictArea').disabled = false;
+                document.getElementById('fld_Postcode').disabled = false;
+                //document.getElementById('fld_Kodbkl').disabled = true;
+            }
+            else {
+                //document.getElementById('fld_State').disabled = true;
+                document.getElementById('fld_DistrictArea').disabled = true;
+                document.getElementById('fld_Postcode').disabled = true;
+                //document.getElementById('fld_Kodbkl').disabled = false;
+            }
+        });
+
+        $("#fld_Region").change(function () {
+           var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetWilayahList", "Maintenance")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ /*syrktID: $("#fld_Region").val()*/});
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (StateList) {
+                $("#fld_State").empty();
+                for (var i = 0; i < StateList.length; i++) {
+                    $("#fld_State").append("<option value=" + StateList[i].Value + " " + disableoption + ">" + StateList[i].Text + "</option>");
+                }
+                if ($("#fld_State").val() == "") {
+                    document.getElementById('fld_DistrictArea').disabled = true;
+                    document.getElementById('fld_Postcode').disabled = true;
+                }
+                else {
+                    document.getElementById('fld_DistrictArea').disabled = false;
+                    document.getElementById('fld_Postcode').disabled = false;
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+        //$("#fld_DistrictArea").insert(function () {
+        //    if ($("#fld_DistrictArea").val() != null) {
+        //        //document.getElementById('fld_State').disabled = false;
+        //        //document.getElementById('fld_DistrictArea').disabled = false;
+        //        document.getElementById('fld_Postcode').disabled = false;
+        //        //document.getElementById('fld_Kodbkl').disabled = true;
+        //    }
+        //    else {
+        //        //document.getElementById('fld_State').disabled = true;
+        //        //document.getElementById('fld_DistrictArea').disabled = true;
+        //        document.getElementById('fld_Postcode').disabled = true;
+        //        //document.getElementById('fld_Kodbkl').disabled = false;
+        //    }
+        //});
+    });
+</script>

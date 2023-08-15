@@ -1,0 +1,587 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_PaymentModeReport_Result>
+
+@{ GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+    decimal? totaleachladang = 0;
+    decimal? totallastladang = 0;
+    decimal? grandtotal = 0;
+    decimal? totalcash = 0;
+    decimal? totalcheque = 0;
+    decimal? totalcdmas = 0;
+    decimal? totalewallet = 0;
+    decimal? totalM2U = 0;
+    decimal? totalM2E = 0;
+    decimal? totalkwsp = 0;
+    decimal? totalsocso = 0;
+    decimal? totalsbkp = 0;
+    decimal? totalsip = 0;
+    decimal? totallainpotongan = 0; //added by faeza 21.03.2022
+    decimal? totalgajibersih = 0;
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    DateTime Todaydate = ChangeTimeZone.gettimezone();
+    string uniquefilename = "LaporanBayaranGajiPekerja" + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+
+    //Added by Shazana 3/4/2023
+    int? totalcashpax = 0;
+    int? totalchequepax = 0;
+    int? totalcdmaspax = 0;
+    int? totalewalletpax = 0;
+    int? totalM2Upax = 0;
+    int? totalM2Epax = 0;
+    int? totalwilayah = 0;
+    int? wholewilayah = 0;
+    decimal? grandtotaleachladang = 0;
+    decimal? grandtotallastladang = 0;
+    decimal? grandtotalcash = 0;
+    decimal? grandtotalcheque = 0;
+    decimal? grandtotalcdmas = 0;
+    decimal? grandtotalewallet = 0;
+    decimal? grandtotalM2U = 0;
+    decimal? grandtotalM2E = 0;
+    decimal? grandtotalkwsp = 0;
+    decimal? grandtotalsocso = 0;
+    decimal? grandtotalsbkp = 0;
+    decimal? grandtotalsip = 0;
+    decimal? grandtotallainpotongan = 0;
+    decimal? grandtotalgajibersih = 0;
+    int? grandtotalcashpax = 0;
+    int? grandtotalchequepax = 0;
+    int? grandtotalcdmaspax = 0;
+    int? grandtotalewalletpax = 0;
+    int? grandtotalM2Upax = 0;
+    int? grandtotalM2Epax = 0;
+    decimal? grandgrandtotal = 0;
+
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    wholewilayah = Model.Select(s => s.fld_WilayahID).Distinct().Count(); /*//Added by Shazana 3/4/2023*/
+    <div id="scrollArea" class="modal-body">
+
+        @*//Added by Shazana 3/4/2023*@
+        @{
+            grandtotalcash = 0;
+            grandtotalcheque = 0;
+            grandtotalcdmas = 0;
+            grandtotalewallet = 0;
+            grandtotalM2U = 0;
+            grandtotalM2E = 0;
+            grandtotalgajibersih = 0;
+            grandtotalkwsp = 0;
+            grandtotalsocso = 0;
+            grandtotalsbkp = 0;
+            grandtotalsip = 0;
+            grandtotallainpotongan = 0;
+            grandtotalcashpax = 0;
+            grandtotalchequepax = 0;
+            grandtotalcdmaspax = 0;
+            grandtotalewalletpax = 0;
+            grandtotalM2Upax = 0;
+            grandtotalM2Epax = 0;
+            grandgrandtotal = 0;
+        }
+
+
+        @foreach (var wilayah in Model.Select(s => s.fld_WilayahID).Distinct())
+        {
+            bil = 0;
+            totalcash = 0;
+            totalcheque = 0;
+            totalcdmas = 0;
+            totalewallet = 0;
+            totalM2U = 0;
+            totalM2E = 0;
+            totalgajibersih = 0;
+            totalkwsp = 0;
+            totalsocso = 0;
+            totalsbkp = 0;
+            totalsip = 0;
+            totallainpotongan = 0; //added by faeza 21.03.2022
+
+            //added by Shazana 3/4/2023
+            totalcashpax = 0;
+            totalchequepax = 0;
+            totalcdmaspax = 0;
+            totalewalletpax = 0;
+            totalM2Upax = 0;
+            totalM2Epax = 0;
+
+
+
+
+            <table class="table table-hover" style="font-size: 11px;" border="0">
+                <thead>
+                    <tr>
+                        <th colspan="26" style="text-align:center;vertical-align:middle;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NoSyarikat
+                            <br />
+                            @*modified by Shazana 3/4/2023*@
+                            @*Laporan Bayaran Gaji Pekerja @ViewBag.Tajuk Bulan @ViewBag.MonthList/ @ViewBag.YearList*@
+                            PERMOHONAN WANG GAJI MAPA & PEKERJA TEMPATAN  @ViewBag.namabulan @ViewBag.YearList
+                            <br />
+                            WILAYAH @GetConfig.GetWilayahNameFromID(wilayah)
+                            @Html.TextBox("WilayahList", (int)ViewBag.WilayahList, new { @readonly = "readonly", @hidden = "true" })
+                            @Html.TextBox("LadangList", (int)ViewBag.LadangList, new { @readonly = "readonly", @hidden = "true" })
+
+                    </tr>
+                    <tr>
+                        @* modified by faeza 21.03.2022 - change colspan=13 to 14 *@
+                        @*//Modified by Shazana 3/4/2023*@
+                        <th colspan="26" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <font color="white">@GetConfig.GetWilayahNameFromID(wilayah)</font>
+                        </th>
+                    </tr>
+                    <tr>
+                        @*Modified by Shazana 3/4/2023*@
+                        <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KOD PROJEK</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">NAMA PROJEK</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">NAMA BANK PROJEK<br />UNTUK HANTARAN PDP</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">AKAUN NO. (M2E)</th>
+
+                        <th colspan="12" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">MOD BAYARAN</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH GAJI BERSIH(RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KWSP (RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">SOCSO (RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">SBKP (RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">SIP (RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">POTONGAN LAIN-LAIN (RM)</th> @* added by faeza 21.03.2022 *@
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH KESELURUHAN (RM)</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">TARIKH HANTARAN SAP</th>
+                        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">NO. DOKUMEN 34</th>
+                        @*<th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">TINDAKAN</th>*@
+                    </tr>
+                    <tr>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">TUNAI (RM)</th>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">CEK (RM)</th>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">CDMAS (RM)</th>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">EWALLET (RM)</th>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2U (RM)</th>
+                        <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E (RM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var paymentModeData in Model.Where(x => x.fld_WilayahID == wilayah).OrderBy(o => o.fld_LdgName))
+                    {
+                        bil += 1;
+                        totaleachladang = paymentModeData.fld_Cash + paymentModeData.fld_Cheque + paymentModeData.fld_Cdmas + paymentModeData.fld_Ewallet + paymentModeData.fld_M2U + paymentModeData.fld_M2E;
+                        totallastladang = totaleachladang + paymentModeData.fld_Kwsp + paymentModeData.fld_Socso + paymentModeData.fld_Sbkp + paymentModeData.fld_Sip + paymentModeData.fld_LainPotongan;@* modified by faeza 21.03.2022 *@
+
+
+                        ////Added by Shazana 3/4/2023
+                        grandtotaleachladang = paymentModeData.fld_Cash + paymentModeData.fld_Cheque + paymentModeData.fld_Cdmas + paymentModeData.fld_Ewallet + paymentModeData.fld_M2U + paymentModeData.fld_M2E;
+                        grandtotallastladang = grandtotaleachladang + paymentModeData.fld_Kwsp + paymentModeData.fld_Socso + paymentModeData.fld_Sbkp + paymentModeData.fld_Sip + paymentModeData.fld_LainPotongan;
+                        string NoDocSAP = "";
+                        string DisediakanOleh = "-";
+                        string DisahkanOleh = "-";
+                        string DisokongOleh = "-";
+                        string DiluluskanOleh = "-";
+                        if (paymentModeData.fld_NoDocSAP != null)
+                        {
+                            NoDocSAP = paymentModeData.fld_NoDocSAP.Replace("\\r\\n", "\r\n");
+                        }
+                        if (@paymentModeData.fld_Verify_Name != null && @paymentModeData.fld_Verify_Name != "")
+                        {
+                            DisediakanOleh = @paymentModeData.fld_Verify_Name;
+                        }
+                        if (@paymentModeData.fld_SemakWil_Name != null && @paymentModeData.fld_SemakWil_Name != "")
+                        {
+                            DisahkanOleh = @paymentModeData.fld_SemakWil_Name;
+                        }
+                        if (@paymentModeData.fld_SokongWilGM_Name != null && @paymentModeData.fld_SokongWilGM_Name != "")
+                        {
+                            DisokongOleh = @paymentModeData.fld_SokongWilGM_Name;
+                        }
+                        if (@paymentModeData.fld_TerimaHQ_Name != null && @paymentModeData.fld_TerimaHQ_Name != "")
+                        {
+                            DiluluskanOleh = @paymentModeData.fld_TerimaHQ_Name;
+                        }
+                        int? fld_CashPax = 0;
+                        int? fld_ChequePax = 0;
+                        int? fld_CdmasPax = 0;
+                        int? fld_EwalletPax = 0;
+                        int? fld_M2UPax = 0;
+                        int? fld_M2EPax = 0;
+                        DateTime? fld_PostingDate;
+                        if (@paymentModeData.fld_CashPax != null)
+                        {
+                            fld_CashPax = @paymentModeData.fld_CashPax;
+                        }
+                        if (@paymentModeData.fld_ChequePax != null)
+                        {
+                            fld_ChequePax = @paymentModeData.fld_ChequePax;
+                        }
+                        if (@paymentModeData.fld_CdmasPax != null)
+                        {
+                            fld_CdmasPax = @paymentModeData.fld_CdmasPax;
+                        }
+                        if (@paymentModeData.fld_EwalletPax != null)
+                        {
+                            fld_EwalletPax = @paymentModeData.fld_EwalletPax;
+                        }
+                        if (@paymentModeData.fld_M2UPax != null)
+                        {
+                            fld_M2UPax = @paymentModeData.fld_M2UPax;
+                        }
+                        if (@paymentModeData.fld_M2EPax != null)
+                        {
+                            fld_M2EPax = @paymentModeData.fld_M2EPax;
+                        }
+                        if (@paymentModeData.fld_PostingDate != null)
+                        {
+                            fld_PostingDate = @paymentModeData.fld_PostingDate;
+                        }
+
+                        <tr>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
+
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.fld_LdgCode
+                            </td>
+
+                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.fld_LdgName
+                            </td>
+
+                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.fld_BranchName
+                            </td>
+
+                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.fld_NoAcc
+                            </td>
+
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_CashPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Cash)
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_ChequePax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Cheque)
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_CdmasPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Cdmas)
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_EwalletPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Ewallet)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_M2UPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_M2U)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_M2EPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_M2E)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(totaleachladang)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Kwsp)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Socso)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Sbkp)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_Sip)
+                            </td>
+                            @* modified by faeza 21.03.2022*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.fld_LainPotongan)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(totallastladang)
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.fld_PostingDate
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @NoDocSAP
+                            </td>
+                            @*//Added by Shazana 3/4/2023*@
+                            @*<td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    Disediakan Oleh : @DisediakanOleh <br /><br /> Disahkan Oleh : @DisahkanOleh <br /><br /> Disokong Oleh :@DisokongOleh <br /><br /> Diluluskan Oleh : @DiluluskanOleh
+                                </td>*@
+
+                        </tr>
+                        totalcash = totalcash + paymentModeData.fld_Cash;
+                        totalcheque = totalcheque + paymentModeData.fld_Cheque;
+                        totalcdmas = totalcdmas + paymentModeData.fld_Cdmas;
+                        totalewallet = totalewallet + paymentModeData.fld_Ewallet;
+                        totalM2U = totalM2U + paymentModeData.fld_M2U;
+                        totalM2E = totalM2E + paymentModeData.fld_M2E;
+                        totalkwsp = totalkwsp + paymentModeData.fld_Kwsp;
+                        totalsocso = totalsocso + paymentModeData.fld_Socso;
+                        totalsbkp = totalsbkp + paymentModeData.fld_Sbkp;
+                        totalsip = totalsip + paymentModeData.fld_Sip;
+                        totallainpotongan = totallainpotongan + paymentModeData.fld_LainPotongan; @* added by faeza 21.03.2022*@
+
+                        @* added by Shazana 3/4/2023*@
+                        paymentModeData.fld_CashPax = paymentModeData.fld_CashPax == null ? 0 : paymentModeData.fld_CashPax;
+                        paymentModeData.fld_ChequePax = paymentModeData.fld_ChequePax == null ? 0 : paymentModeData.fld_ChequePax;
+                        paymentModeData.fld_CdmasPax = paymentModeData.fld_CdmasPax == null ? 0 : paymentModeData.fld_CdmasPax;
+                        paymentModeData.fld_EwalletPax = paymentModeData.fld_EwalletPax == null ? 0 : paymentModeData.fld_EwalletPax;
+                        paymentModeData.fld_M2UPax = paymentModeData.fld_M2UPax == null ? 0 : paymentModeData.fld_M2UPax;
+                        paymentModeData.fld_M2EPax = paymentModeData.fld_M2EPax == null ? 0 : paymentModeData.fld_M2EPax;
+                        totalcashpax = totalcashpax + paymentModeData.fld_CashPax;
+                        totalchequepax = totalchequepax + paymentModeData.fld_ChequePax;
+                        totalcdmaspax = totalcdmaspax + paymentModeData.fld_CdmasPax;
+                        totalewalletpax = totalewalletpax + paymentModeData.fld_EwalletPax;
+                        totalM2Upax = totalM2Upax + paymentModeData.fld_M2UPax;
+                        totalM2Epax = totalM2Epax + paymentModeData.fld_M2EPax;
+
+                        grandtotalcash = grandtotalcash + paymentModeData.fld_Cash;
+                        grandtotalcheque = grandtotalcheque + paymentModeData.fld_Cheque;
+                        grandtotalcdmas = grandtotalcdmas + paymentModeData.fld_Cdmas;
+                        grandtotalewallet = grandtotalewallet + paymentModeData.fld_Ewallet;
+                        grandtotalM2U = grandtotalM2U + paymentModeData.fld_M2U;
+                        grandtotalM2E = grandtotalM2E + paymentModeData.fld_M2E;
+                        grandtotalkwsp = grandtotalkwsp + paymentModeData.fld_Kwsp;
+                        grandtotalsocso = grandtotalsocso + paymentModeData.fld_Socso;
+                        grandtotalsbkp = grandtotalsbkp + paymentModeData.fld_Sbkp;
+                        grandtotalsip = grandtotalsip + paymentModeData.fld_Sip;
+                        grandtotallainpotongan = grandtotallainpotongan + paymentModeData.fld_LainPotongan;
+                        grandtotalcashpax = grandtotalcashpax + paymentModeData.fld_CashPax;
+                        grandtotalchequepax = grandtotalchequepax + paymentModeData.fld_ChequePax;
+                        grandtotalcdmaspax = grandtotalcdmaspax + paymentModeData.fld_CdmasPax;
+                        grandtotalewalletpax = grandtotalewalletpax + paymentModeData.fld_EwalletPax;
+                        grandtotalM2Upax = grandtotalM2Upax + paymentModeData.fld_M2UPax;
+                        grandtotalM2Epax = grandtotalM2Epax + paymentModeData.fld_M2EPax;
+
+
+                    }
+                    @{
+                        totalgajibersih = totalcash + totalcheque + totalcdmas + totalewallet + totalM2U + totalM2E;
+                        grandtotal = totalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan; @* modified by faeza 21.03.2022 *@
+
+                        ////Added by Shazana 3/4/2023
+                        grandtotalgajibersih = grandtotalcash + grandtotalcheque + grandtotalcdmas + grandtotalewallet + grandtotalM2U + grandtotalM2E;
+                        grandgrandtotal = grandtotalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan;
+                    }
+
+                </tbody>
+                <tfoot>
+
+                    @*//Added by Shazana 3/4/2023*@
+                    @{totalwilayah += 1;}
+
+                    <tr>
+                        <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah (RM)</th>
+                        @*//Added by Shazana 3/4/2023*@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcashpax</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalcash)</th>
+                        @*//Added by Shazana 3/4/2023*@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalchequepax </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalcheque) </th>
+                        @*//Added by Shazana 3/4/2023*@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalcdmaspax </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalcdmas) </th>
+                        @*//Added by Shazana 3/4/2023*@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalewalletpax </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalewallet) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalM2Upax </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalM2U) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalM2Epax </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalM2E) </th>
+
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalgajibersih) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalkwsp) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalsocso) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalsbkp) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalsip) </th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totallainpotongan) </th> @* added by faeza 21.03.2022 *@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotal) </th>
+                        @*//Added by Shazana 3/4/2023*@
+                        <th colspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                    </tr>
+
+                    @*//Added by Shazana 3/4/2023*@
+                    @if (totalwilayah == wholewilayah)
+                    {
+                        <tr>
+                            <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Keseluruhan(RM)</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotalcashpax</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalcash)</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalchequepax </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalcheque) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalcdmaspax </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalcdmas) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalewalletpax </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalewallet) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalM2Upax </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalM2U) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalM2Epax </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalM2E) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalgajibersih) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalkwsp) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalsocso) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalsbkp) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalsip) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotallainpotongan) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandgrandtotal) </th>
+                            <th colspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                        </tr>
+
+                    }
+
+                </tfoot>
+
+            </table>
+            @*}*@
+
+
+        }
+    </div>
+
+    <div style="text-align:right; margin-top:10px">
+        @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadPdf
+            </a>*@
+        <a class="btn btn-default btn-sm" href="#" id="Excelbtn" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> Excel
+        </a>
+
+
+
+
+        @*//Added by Shazana 3/4/2023*@
+        <a class="btn btn-default" href="#" id="downloadpdf" style="float: right;">
+            <img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /> Cetak/PDF
+        </a>
+    </div>
+
+}
+
+@*@if (Model.Count() == 0)*@
+else
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+
+@*<script>
+        $(document).ready(function () {
+            $("#printpage").click(function () {
+                var DivElement = document.getElementById("scrollArea2").innerHTML;
+                var oldPage = document.body.innerHTML;
+                document.body.innerHTML = DivElement;
+                window.print();
+                document.body.innerHTML = oldPage;
+            })
+
+    </script>*@
+
+
+
+
+@*Added by Shazana 3/4/2023*@
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>
+
+<script>
+    $("#downloadpdf").click(function () {
+            $("#Excelbtn").hide();
+      var MonthList =  '@ViewBag.MonthList';
+        var YearList = '@ViewBag.YearList';
+        var WilayahList = '@ViewBag.WilayahList';
+        var LadangList = '@ViewBag.LadangList';
+        var CompCode = '@ViewBag.CompCodeList';
+
+        var param = '/?WilayahList=' + WilayahList + "&LadangList=" + LadangList + "&YearList=" + YearList + "&MonthList=" + MonthList + "&CompCodeList=" + CompCodeList;
+         debugger
+        PDFObject.embed("@Url.Action("exportPDF", "Report")" + param, "#scrollArea", { height: "700px" });
+         return false;
+    });
+</script>
+
+
+

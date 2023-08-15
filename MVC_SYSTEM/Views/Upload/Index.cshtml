@@ -1,0 +1,172 @@
+﻿    
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label id="statusprecent"></label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+            @*<div class="submit-progress hidden">
+                <i class="fa fa-2x fa-spinner fa-spin"></i>
+                <label>@GlobalResUpload.WaitMsg</label><label id="statusprecent"></label>
+            </div>*@
+            <!-- ** END POP-UP MESSAGE AREA ** -->
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@GlobalResUpload.lblProcessUploadTitle</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label for="NamaProses">@GlobalResUpload.lblProcessName</label>
+                                    @Html.DropDownList("ProcessList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="BulanProses">@GlobalResUpload.lblMonthProcess</label>
+                                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="TahunProses">@GlobalResUpload.lblYearProcess</label>
+                                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label for="NamaWilayah">@GlobalResUpload.lblWilayahName</label>
+                                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="NamaLadang">@GlobalResUpload.lblLadangName</label>
+                                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-report">
+                    <input class="btn btn-primary" type="submit" name="upload" id="upload" value="@GlobalResUpload.btnUploadName" />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#upload").prop("disabled", true);
+
+        $("#upload").click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index", "Upload")',
+                data: $("form").serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        $("#upload").prop("disabled", true);
+                        $.simplyToast(result.msg, result.status);
+                        //} else {
+                        //    $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Upload")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResUpload.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        }
+        var callAjax = function () {
+            $.ajax({
+                method: 'get',
+                url: '@Url.Action("Index", "GetProcessStatus")',
+                success: function (data) {
+                    //$("#sample").html(data);
+                    if (data.status) {
+                        //$("#progress1").show();
+                        $("#upload").prop("disabled", true);
+                        return DisplayProgressMessage(this, 0, data.percentstatus);
+                    }
+                    else {
+                        //$("#progress1").hide();
+                        $("#upload").prop("disabled", false);
+                        return DisplayProgressMessage(this, 1, data.percentstatus);
+                    }
+
+                }
+            });
+        }
+
+        function DisplayProgressMessage(ctl, status, percentstatus) {
+            if (status == 0)
+            {
+                //$("body").addClass("submit-progress-bg");
+                //$(".submit-progress").removeClass("hidden");
+                $("#UpdateProgress1").css("display", "");
+                document.getElementById('statusprecent').innerHTML = '@GlobalResUpload.WaitMsg <br>' + percentstatus + '%';
+            }
+            else
+            {
+                //$("body").removeClass("submit-progress-bg");
+                //$(".submit-progress").addClass("hidden");
+                $("#upload").prop("disabled", false);
+                $("#UpdateProgress1").css("display", "none");
+            }
+
+        }
+
+        setInterval(callAjax, 2000);
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Upload")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResUpload.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>

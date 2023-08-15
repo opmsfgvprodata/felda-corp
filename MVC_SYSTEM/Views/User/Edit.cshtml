@@ -1,0 +1,173 @@
+﻿@model MVC_SYSTEM.AuthModels.tblUser
+@using MVC_SYSTEM.Class;
+
+@{
+
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+
+
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @*<h3 class="modal-title">Edit User Details</h3>*@
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Edit User Details</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @*<span id="progress" class="text-center" style="display: none;">
+                                    <img src="~/Asset/Images/wait.gif" alt="wait" />
+                                </span>*@
+                            @Html.HiddenFor(model => model.fldUserID)
+
+                            @*<div class="form-group">*@
+                            @Html.LabelFor(model => model.fldUserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldUserName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "true" } })
+                                @Html.ValidationMessageFor(model => model.fldUserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldUserPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldUserPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fldUserPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldUserFullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldUserFullName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fldUserFullName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldUserShortName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldUserShortName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fldUserShortName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldUserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldUserEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fldUserEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldRoleID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldRoleID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldRoleID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldWilayahID, "Region", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldWilayahID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldWilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldLadangID, "Estate", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldLadangID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldLadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldDeleted", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldDeleted, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary" type="submit" value="Save" />
+                    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    }
+</section>
+<script>
+                    $("form").removeData("validator");
+                    $("form").removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse("form");
+
+
+    @* added function to display ladang in dropdown - kamalia 19 / 11 / 20 *@
+    @* modified function to display ladang in dropdown based on ladang user display di atas- kamalia 27/4/2022 *@
+            if ($("#fldWilayahID").val() != 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "User")";
+            WilayahIDList.type = "POST";
+                WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), LadangID: $("#fldLadangID").val()});
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fldLadangID").empty();
+                for (var i = 0; i < ladanglist.length; i++) {
+
+                    $("#fldLadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+      $("#fldWilayahID").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetWilayahChange", "User")";
+            WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fldLadangID").empty();
+                if ($("#fldWilayahID").val() == 0) {
+                    $("#fldLadangID").append("<option value=0>All</option>");
+                }
+                else {
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        if ($("#fldWilayahID").val() == 0) {
+                            disableoption = "disabled";
+                        }
+                        else {
+                            $("#fldLadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                        }
+                    }
+                }
+               
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+    });
+
+    @* added function to display ladang in dropdown - kamalia 19 / 11 / 20 *@
+
+</script>

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "pwd";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well" style="padding-bottom: 0px">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Password</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label>Password</label>
+                                    @Html.TextBox("pswd", null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label>Encrypt/Decrypt</label>
+                                    @Html.TextBox("code", null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: -17px;">
+                <button class="btn btn-primary" id="btnEnc" onclick="Pswrdprcs(1)">Encrypt</button>
+                <button class="btn btn-primary" id="btnDec" onclick="Pswrdprcs(2);">Decrypt</button>
+                @*<a style="text-align:right" href="@Url.Action("Index", "BasicInfo")" class="btn btn-warning">@GlobalResEstate.btnBack</a>*@
+            </div>
+        }
+    </div>
+</section>
+<script>
+    function Pswrdprcs(processType) {
+        console.log(processType);
+        var pasword = $("#pswd").val();
+        console.log(pasword);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("pwdchnge", "Main")',
+            data: { 'pass': $("#pswd").val(), 'processType': processType },
+            success: function (result) {
+                $("#code").empty();
+                $("#code").val(result);
+                return false;
+                //$.simplyToast('Success!', 'warning');
+            },
+            error: function () {
+                $.simplyToast('Error!', 'danger');
+            }
+        });
+    }
+</script>

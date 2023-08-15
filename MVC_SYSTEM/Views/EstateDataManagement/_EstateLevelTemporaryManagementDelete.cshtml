@@ -1,0 +1,67 @@
+﻿
+@model MVC_SYSTEM.ModelsEstate.tbl_PktPinjam
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Hapus</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Level Detail</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Kod Peringkat:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodPkt, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Nama Peringkat:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_NamaPkt, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEmail:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_SAPCode, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+

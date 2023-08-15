@@ -1,0 +1,45 @@
+﻿@model MVC_SYSTEM.ConfigModels.tblSystemConfig
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">Edit System Config Details</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => model.fldConfigID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.fldConfigDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldConfigDesc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fldConfigDesc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.fldConfigValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldConfigValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fldConfigValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="modal-footer">
+                <span id="progress" class="text-center" style="display: none;">
+                    <img src="~/Asset/Images/wait.gif" alt="wait" />
+                    Wait..
+                </span>
+
+                <input class="btn btn-primary" type="submit" value="Save" />
+                <button class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+}
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

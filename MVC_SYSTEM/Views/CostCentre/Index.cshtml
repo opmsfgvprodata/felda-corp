@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_CostCentre>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_CostCentre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_KodKtgri)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_NegaraID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_SyarikatID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_WilayahID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_LadangID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fld_Deleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_CostCentre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_KodKtgri)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_NegaraID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_SyarikatID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_WilayahID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_LadangID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fld_Deleted)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id=item.fld_ID })
+        </td>
+    </tr>
+}
+
+</table>

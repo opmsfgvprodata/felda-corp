@@ -1,0 +1,152 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CutiUmumKelayakanViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblPublicHolidayAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblPublicHolidayInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_Year, new SelectList(ViewBag.YearList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-9">
+                                @Html.ListBoxFor(model => model.fld_LadangID, new MultiSelectList(ViewBag.LadangList, "Value", "Text"), new { @class = "form-control col-sm-2", multiple = "multiple", size = 10, disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">@GlobalResCorp.lblEstatePublicHolidayMsg1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblLeave:</label>
+                            <div class="col-sm-9">
+                                @Html.ListBoxFor(model => model.fld_CutiMasterID, new MultiSelectList(ViewBag.CutiList, "Value", "Text"), new { @class = "form-control col-sm-2", multiple = "multiple", size = 10, @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_CutiMasterID, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">@GlobalResCorp.lblEstatePublicHolidayMsg1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $("#fld_Year").change(function () {
+        if ($("#fld_Year").val() === "0") {
+            $("#fld_CutiMasterID").prop("disabled", true);
+        }
+
+        else {
+            $("#fld_CutiMasterID").prop("disabled", false);
+        }
+
+        var WilayahList = {};
+        var disableoption = "";
+        WilayahList.url = "@Url.Action("GetLeave", "Maintenance")";
+        WilayahList.type = "POST";
+        WilayahList.data = JSON.stringify({ year: $("#fld_Year").val() });
+        WilayahList.datatype = "json";
+        WilayahList.contentType = "application/json";
+        WilayahList.success = function (cutilist) {
+            $("#fld_CutiMasterID").empty();
+            if (cutilist.length == 0) {
+                $("#fld_CutiMasterID").append("<option value=0>@GlobalResCorp.msgErrorSearch</option>");
+                $("#fld_CutiMasterID").prop("disabled", true);
+            }
+
+            else {
+                for (var i = 0; i < cutilist.length; i++) {
+                    if ($("#fld_Year").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#fld_CutiMasterID").append("<option value=" + cutilist[i].Value + " " + disableoption + ">" + cutilist[i].Text + "</option>");
+                }
+            }
+
+        };
+        WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahList);
+    });
+
+    $("#fld_WilayahID").change(function () {
+        if ($("#fld_WilayahID").val() === "") {
+            $("#fld_LadangID").empty();
+            $("#fld_LadangID").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            $("#fld_LadangID").prop("disabled", true);
+            //$("#fld_Year").prop("disabled", true);
+        }
+
+        else {
+
+            var WilayahList = {};
+            WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+            WilayahList.type = "POST";
+            WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahList.datatype = "json";
+            WilayahList.contentType = "application/json";
+            WilayahList.success = function (ladanglist) {
+
+                console.log(ladanglist);
+
+                $("#fld_LadangID").empty();
+
+                if (ladanglist.length === 0) {
+                    $("#fld_LadangID").append("<option value=" +
+                        "" +
+                        ">" +
+                        '@GlobalResCorp.lblNoEstate' +
+                        "</option>");
+                }
+
+                else {
+                    $("#fld_LadangID").prop("disabled", false);
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                    //$("#fld_Year").val("");
+                }
+
+            };
+            WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahList);
+        }
+    });
+</script>

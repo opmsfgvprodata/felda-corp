@@ -1,0 +1,425 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptRumKedKepPekLad_Result>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Active Worker";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    int? jumldg = 0;
+    decimal? luastnh = 0M;
+    int? perluthn = 0;
+    int? perlusms = 0;
+    int? nisbah = 0;
+    int? tkt = 0;
+    int? tki = 0;
+    int? tkb = 0;
+    int? tkn = 0;
+    int? tkin = 0;
+    int? tkp = 0;
+    int? tkk = 0;
+    int? tkth = 0;
+    int? tkv = 0;
+    int? jumpkj = 0;
+    int? tkts = 0;
+    int? tkis = 0;
+    int? tkbs = 0;
+    int? tkns = 0;
+    int? tkins = 0;
+    int? tkps = 0;
+    int? tkks = 0;
+    int? tkths = 0;
+    int? tkvs = 0;
+    int? jumpkjs = 0;
+    int? kkrgnsms = 0;
+    int? bilpkjpmndu = 0;
+    int? bilpkjpnreh = 0;
+    int? bilpkjpnuai = 0;
+    int? bilpkjam = 0;
+    int? bilpkjops = 0;
+    int? bilpkjmndram = 0;
+    int? bilpkjinspkualiti = 0;
+    int? bilpkjloader = 0;
+    int? bilpkjpnymaian = 0;
+    int? jumbilpkj = 0;
+    int RowNo = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "ActiveWorker_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string status = "";
+    string selectionheader = "";
+    if (ViewBag.Status1 == 2)
+    {
+        status = GlobalResActiveWorker.hdrStatus2;
+    }
+    else if (ViewBag.Status1 == 1)
+    {
+        status = GlobalResActiveWorker.hdrStatus1;
+    }
+    else
+    {
+        status = GlobalResActiveWorker.hdrStatus0;
+    }
+    if (ViewBag.IncLdg2 == 1)
+    {
+        selectionheader = "";
+    }
+    else if (ViewBag.IncLdg2 == 2)
+    {
+        selectionheader = ViewBag.WilayahName;
+    }
+    else
+    {
+        selectionheader = ViewBag.WilayahName + " - (" + ViewBag.LadangCode + " - " + ViewBag.LadangName + ")";
+    }
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+@using (Html.BeginForm("ActiveWorkerGMN", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResActiveWorker.WaitMsg</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResActiveWorker.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResActiveWorker.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResActiveWorker.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResActiveWorker.lblStatus)
+                    @Html.DropDownList("Status", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top: 7px">
+            <p style="text-align:center;"><label>@GlobalResActiveWorker.hdrReportTitle</label></p>
+            @if (Model.Count() != 0)
+            {
+                <div id="scrollArea" class="modal-body">
+                    <logo />
+                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                        <thead>
+                            <tr>
+                                <th colspan="17" style="text-align:center;vertical-align:middle;">
+                                    @ViewBag.NamaSyarikat
+                                    <br />
+                                    (@ViewBag.NoSyarikat)
+                                    <br />
+                                    @GlobalResActiveWorker.hdrReportTitle (@status)
+                                    <br />
+                                    @ViewBag.Year
+                                </th>
+                            </tr>
+                            @if (ViewBag.IncLdg2 != 1)
+                            {
+                                <tr>
+                                    <th colspan="17" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @selectionheader
+                                    </th>
+                                </tr>
+                            }
+
+                            <tr>
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
+                                @if (ViewBag.Incldg == 0)
+                                {
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrProjectTotal</th>
+                                }
+                                else
+                                {
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrCodeLadang</th>
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrProjectName</th>
+                                }
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrWide</th>
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerlu @*@ViewBag.Year*@</th>
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerluSemasa</th>
+                                <th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrEstate</th>
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                <th rowspan="3" width="5%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrKrngSms</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKT</th>
+                                <th colspan="8" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrAsing</th>
+                            </tr>
+                            <tr>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKI</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKB</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKN</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKIN</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKP</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKK</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKTH</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKV</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @RowNo
+                                    </td>
+
+                                    @if (ViewBag.Incldg == 0)
+                                    {
+                                        <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_JumLdg</td>
+                                    }
+                                    else
+                                    {
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_KodLadang</td>
+                                        <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                    }
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForDec2(item.fld_LuasLadang)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_PerluThn)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_PerluSmsa)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKT)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKI)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKB)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKN)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKIN)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKP)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKK)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKTH)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_TKV)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_JumPkrja)
+                                    </td>
+                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @GetTriager.GetDashForInt(item.fld_KekurangSmsa)
+                                    </td>
+                                </tr>
+                                {
+                                    jumldg = jumldg + item.fld_JumLdg;
+                                    luastnh = luastnh + item.fld_LuasLadang;
+                                    perluthn = perluthn + item.fld_PerluThn;
+                                    perlusms = perlusms + item.fld_PerluSmsa;
+                                    nisbah = nisbah + item.fld_Nisbah;
+                                    tkt = tkt + item.fld_TKT;
+                                    tki = tki + item.fld_TKI;
+                                    tkb = tkb + item.fld_TKB;
+                                    tkn = tkn + item.fld_TKN;
+                                    tkin = tkin + item.fld_TKIN;
+                                    tkp = tkp + item.fld_TKP;
+                                    tkk = tkk + item.fld_TKK;
+                                    tkth = tkth + item.fld_TKTH;
+                                    tkv = tkv + item.fld_TKV;
+                                    jumpkj = jumpkj + item.fld_JumPkrja;
+                                    tkts = tkts + item.fld_TKTS;
+                                    tkis = tkis + item.fld_TKIS;
+                                    tkbs = tkbs + item.fld_TKBS;
+                                    tkns = tkns + item.fld_TKNS;
+                                    tkins = tkins + item.fld_TKINS;
+                                    tkps = tkps + item.fld_TKPS;
+                                    tkks = tkks + item.fld_TKKS;
+                                    tkths = tkths + item.fld_TKTHS;
+                                    tkvs = tkvs + item.fld_TKVS;
+                                    jumpkjs = jumpkjs + item.fld_JumPkrjaS;
+                                    kkrgnsms = kkrgnsms + item.fld_KekurangSmsa;
+                                    bilpkjpmndu = bilpkjpmndu + item.fld_BilPkjSmsPemandu;
+                                    bilpkjpnreh = bilpkjpnreh + item.fld_BilPkjSmsPenoreh;
+                                    bilpkjpnuai = bilpkjpnuai + item.fld_BilPkjSmsPenuai;
+                                    bilpkjam = bilpkjam + item.fld_BilPkjSmsPekerjaAm;
+                                    bilpkjops = bilpkjops + item.fld_BilPkjSmsOpOperasi;
+                                    bilpkjmndram = bilpkjmndram + item.fld_BilPkjSmsMandorAm;
+                                    bilpkjinspkualiti = bilpkjinspkualiti + item.fld_BilPkjSmsInpekKualiti;
+                                    bilpkjloader = bilpkjloader + item.fld_BilPkjSmsLoader;
+                                    bilpkjpnymaian = bilpkjpnymaian + item.fld_BilPkjSmsSemaian;
+                                    jumbilpkj = jumbilpkj + item.fld_JumBilPkjSms;
+
+                                }
+                                RowNo++;
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                @if (ViewBag.Incldg == 0)
+                                {
+                                    <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumldg</td>
+                                }
+                                else
+                                {
+                                    <td colspan="3" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                }
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@luastnh</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perluthn</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perlusms</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkt</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tki</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkb</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkn</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkin</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkp</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkk </td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkth</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkv</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumpkj</td>
+                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@kkrgnsms</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--<a href="#" id="downloadpdf">Download PDF</a>-->
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+            }
+            else
+            {
+                <p style="color:red">@GlobalResActiveWorker.lblSelectionNote</p>
+            }
+        </div>
+    </section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

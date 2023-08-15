@@ -1,0 +1,36 @@
+﻿@using MVC_SYSTEM.Helper
+<div id="UpdateProgress3" style="display:none;">
+    <div class="progressTest">
+        <label>
+            Sila Tunggu
+        </label>
+    </div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class='time-frame'>
+        <div id='date-part'></div>
+        <div id='time-part'></div>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>@GlobalResLogin.Language</strong> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    @Url.LangSwitcher("Bahasa Malaysia", ViewContext.RouteData, "ms")
+                    @Url.LangSwitcher("English", ViewContext.RouteData, "en")
+                    @Url.LangSwitcher("Indonesia", ViewContext.RouteData, "id")
+                </ul>
+
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<script>
+    function DisplayProgressMessage3(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress3").css("display", "");
+        return true;
+    }
+</script>

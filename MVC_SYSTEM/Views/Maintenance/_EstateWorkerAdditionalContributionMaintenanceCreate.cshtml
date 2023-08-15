@@ -1,0 +1,187 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_PkjCarumanTambahanViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblEstateWorkerAdditionalContributionCreate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEstateWorkerAdditionalContributionInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_LadangID, new SelectList(ViewBag.LadangList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblWorker:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_Nopkj, new SelectList(ViewBag.PkjList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_Nopkj, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionCategoryDesc:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodCaruman, new SelectList(ViewBag.ContributionList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodCaruman, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionSubCategoryCode:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodSubCaruman, new SelectList(ViewBag.SubContributionList, "Value", "Text"), new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodSubCaruman, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function() {
+        $("#fld_WilayahID").change(function () {
+            if ($("#fld_WilayahID").val() === '') {
+                $("#fld_LadangID").prop("disabled", true);
+                $("#fld_LadangID").val("");
+                $("#fld_Nopkj").prop("disabled", true);
+                $("#fld_Nopkj").val("");
+                $("#fld_KodCaruman").prop("disabled", true);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+            } else {
+                $("#fld_LadangID").prop("disabled", false);
+                $("#fld_Nopkj").prop("disabled", true);
+                $("#fld_Nopkj").val("");
+                $("#fld_KodCaruman").prop("disabled", true);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#fld_LadangID").empty();
+                    $("#fld_LadangID").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+
+        $("#fld_LadangID").change(function() {
+            if ($("#fld_LadangID").val() === '') {
+                $("#fld_Nopkj").prop("disabled", true);
+                $("#fld_Nopkj").val("");
+                $("#fld_KodCaruman").prop("disabled", true);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+            }
+
+            else {
+                $("#fld_Nopkj").prop("disabled", false);
+                $("#fld_KodCaruman").prop("disabled", true);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+                var LadangList = {};
+                LadangList.url = "@Url.Action("GetPkj", "Maintenance")";
+                LadangList.type = "POST";
+                LadangList.data =
+                    JSON.stringify({ WilayahList: $("#fld_WilayahID").val(), LadangList: $("#fld_LadangID").val() });
+                LadangList.datatype = "json";
+                LadangList.contentType = "application/json";
+                LadangList.success = function(pkjList) {
+                    $("#fld_Nopkj").empty();
+                    $("#fld_Nopkj").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < pkjList.length; i++) {
+                        $("#fld_Nopkj").append("<option value=" + pkjList[i].Value + ">" + pkjList[i].Text + "</option>");
+                    }
+                    $("#fld_Nopkj").prop("disabled", false);
+                };
+                LadangList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(LadangList);
+            }
+        });
+
+        $("#fld_Nopkj").change(function () {
+            if ($("#fld_NoPkj").val() === '') {
+                $("#fld_KodCaruman").prop("disabled", true);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+            } else {
+                $("#fld_KodCaruman").prop("disabled", false);
+                $("#fld_KodCaruman").val("");
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+            }
+        });
+
+        $("#fld_KodCaruman").change(function () {
+            if ($("#fld_KodCaruman").val() === '') {
+                $("#fld_KodSubCaruman").prop("disabled", true);
+                $("#fld_KodSubCaruman").val("");
+            } else {
+                var SubCarumanList = {};
+                SubCarumanList.url = "@Url.Action("GetSubContribution", "Maintenance")";
+                SubCarumanList.type = "POST";
+                SubCarumanList.data =
+                    JSON.stringify({ WilayahList: $("#fld_WilayahID").val(), LadangList: $("#fld_LadangID").val(), ContributionList: $("#fld_KodCaruman").val(), PkjList: $("#fld_Nopkj").val() });
+                SubCarumanList.datatype = "json";
+                SubCarumanList.contentType = "application/json";
+                SubCarumanList.success = function (kodSubCarumanList) {
+                    $("#fld_KodSubCaruman").empty();
+                    $("#fld_KodSubCaruman").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < kodSubCarumanList.length; i++) {
+                        $("#fld_KodSubCaruman").append("<option value=" + kodSubCarumanList[i].Value + ">" + kodSubCarumanList[i].Text + "</option>");
+                    }
+                    $("#fld_KodSubCaruman").prop("disabled", false);
+                };
+                SubCarumanList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(SubCarumanList);
+            }
+        });
+
+    });
+</script>

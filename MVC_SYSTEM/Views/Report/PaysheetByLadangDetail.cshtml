@@ -1,0 +1,106 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tbl_SokPermhnWang>
+@using MVC_SYSTEM.Class;
+
+@{
+    GetTriager GetTriager = new GetTriager();
+}
+
+@if (ViewBag.DataCount >= 1)
+{
+    foreach (var item in Model)
+    {
+        decimal? kwsp = ViewBag.KWSP;
+        decimal? socso = ViewBag.SOCSO;
+        decimal? kwspsocsoP = ViewBag.KwspSocsoP;
+        decimal? kwspsocsoM = ViewBag.KwspSocsoM;
+        decimal? jumlahPDP = item.fld_JumlahPDP;
+        string kwspsocso = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(kwsp) + GetTriager.GetTotalForMoney2(socso));
+        //decimal? pdpcittt = (item.fld_JumlahPDP) + (item.fld_JumlahCIT);
+        //string total = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(pdpcittt) + GetTriager.GetTotalForMoney2(kwspsocsoP) + GetTriager.GetTotalForMoney2(kwspsocsoM));
+
+        string totalPDP = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(kwspsocsoP) + GetTriager.GetTotalForMoney2(kwspsocsoM) + GetTriager.GetTotalForMoney2(jumlahPDP));
+        string DT = "";
+        decimal? totalCIT = item.fld_JumlahCIT + item.fld_JumlahManual;
+        string total = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(kwspsocsoP) + GetTriager.GetTotalForMoney2(kwspsocsoM) + GetTriager.GetTotalForMoney2(jumlahPDP) + GetTriager.GetTotalForMoney2(totalCIT));
+        <tr>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @ViewBag.Bill
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @ViewBag.NamaLadang
+            </td>
+            @*<td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>*@
+
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.GajiKasar)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(item.fld_JumlahManual)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.CheckrolPekerja)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.KWSP)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.SOCSO)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.Lain)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.GajiBersih)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_NoAcc
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(item.fld_JumlahPDP)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.KwspSocsoP)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(ViewBag.KwspSocsoM)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @totalPDP
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_NoGL
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(item.fld_JumlahCIT)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(totalCIT)
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fld_NoCIT
+            </td>
+            @*<td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    @kwspsocso
+                </td>*@
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @total
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @{ 
+                    if (ViewBag.Date != null)
+                    {
+                        DT = string.Format("{0:dd/MM/yyyy}", ViewBag.Date);
+                    }
+                    else
+                    {
+                        DT = "";
+                    }
+                }
+                @DT
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @ViewBag.Skb
+            </td>
+        </tr>
+    }
+}

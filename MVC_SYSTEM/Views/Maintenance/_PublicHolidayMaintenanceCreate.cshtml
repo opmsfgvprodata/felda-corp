@@ -1,0 +1,112 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CutiUmumMasterViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    var count = 1;
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblPublicHolidayAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblPublicHolidayInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_KeteranganCuti, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KeteranganCuti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrLeaveDate:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_TarikhCuti, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-8">
+                                @Html.ValidationMessageFor(model => model.fld_TarikhCuti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<Style>
+    table > thead > tr > th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    table {
+        vertical-align: middle !important;
+        font-size: 12px;
+    }
+</Style>
+
+<script>
+    $(document).ready(function () {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        $(function () {
+            $('#fld_TarikhCuti').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y'
+            });
+        });
+
+        // 1st replace first column header text with checkbox
+        $("#stateListTbl th").each(function () {
+            if ($.trim($(this).text().toString().toLowerCase()) === "{checkall}") {
+                $(this).text('');
+                $(this).append("<span>@GlobalResCorp.lblChckAll</span>");
+                $(this).append("<br><center><input type='checkbox' class='checkbox' value='' id='cbSelectAll'/></center>");
+            }
+        });
+
+        //2nd click event for header checkbox for select /deselect all
+        $("#cbSelectAll").on("click", function () {
+            var ischecked = this.checked;
+            $('#stateListTbl').find("input:checkbox").each(function () {
+                this.checked = ischecked;
+            });
+        });
+
+        //3rd click event for checkbox of each row
+        $("input[name='ids']").click(function () {
+            var totalRows = $("#stateListTbl td :checkbox").length;
+            var checked = $("#stateListTbl td :checkbox:checked").length;
+
+            if (checked == totalRows) {
+                $("#stateListTbl").find("input:checkbox").each(function () {
+                    this.checked = true;
+                });
+            }
+            else {
+                $("#cbSelectAll").removeAttr("checked");
+            }
+        });
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tblOptionConfigsWeb>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblTitleBlokMaintenance;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "BlokDataMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.titleWorkBlockDay</div>
+                <div class="panel-body">
+                    <div id="BlokDataMaintenanceDetails">
+                        @Html.Action("_BlokDataMaintenance")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' @*href=@Url.Action("_UnitMaintenanceCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd*@</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+</script>
+

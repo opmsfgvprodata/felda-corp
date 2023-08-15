@@ -1,0 +1,150 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tblUserIDApp>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Approval Detail";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    int bill = 1;
+    string checkboxstatus = "";
+    long? fileid = 0;
+    string checkbox = "";
+    string duplicationstatus = "";
+    long duplicatevalue = 0;
+    GetConfig GetConfig = new GetConfig();
+    GetIdentity GetIdentity = new GetIdentity();
+}
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            Proses kelulusan sedang dilakukan...
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Html.BeginForm("GetUserIDApprovalDetail", "Approval", FormMethod.Post, new { id = "GetWorkerApprovalDetail" }))
+    {
+        @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+        @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResApproval.msgWait</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+        <div id="DataTable" class="well" style="height:515px;">
+            <div id="scrollArea2" class="modal-body">
+                @if (ViewBag.Status != null)
+                {
+                    <p class="alert alert-@ViewBag.ClassStatus alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        @ViewBag.Status
+                    </p>
+                }
+                <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                    <thead>
+                        <tr>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrbil</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrNama</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrKP</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrJwtn</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrUserID</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrPasswrd</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrStatus</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrDuplicateStatus</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrTnda</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        checkboxstatus = "";
+
+                        if (GetIdentity.getExistingUserIDApp(item.fldUserid, item.fldNoKP, item.fldFileID, item.fldLadangID, item.fldWilayahID, item.fldSyarikatID, item.fldNegaraID))
+                        {
+                            checkbox = "disabled";
+                            duplicationstatus = "Kelulusan Telah Dilakukan Sebelum Ini";
+                            duplicatevalue = item.fldID;
+                        }
+                        else
+                        {
+                            checkbox = "";
+                            duplicationstatus = "";
+                            duplicatevalue = 0;
+                        }
+
+                        if (item.fldStatus == "1")
+                        {
+                            checkboxstatus = "checked";
+                            fileid = item.fldFileID;
+                        }
+                        <tr>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNama</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNoKP</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldJawatan</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldUserid</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldPassword</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GetConfig.GetData2(item.fldStatus.ToString(), "approvalstatus")</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @if (duplicatevalue != 0)
+                                {
+                                    <font color="red">@duplicationstatus</font>
+                                    <input name="duplicate" id="duplicate" type="hidden" value="@duplicatevalue" />
+                                }
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"><input type="checkbox" name="approval" id="approval" @checkboxstatus @checkbox value="@item.fldID" /></td>
+                        </tr>
+                        bill++;
+                    }
+                </table>
+            </div>
+            <input type="hidden" name="fileid" id="fileid" value="@ViewBag.fileid" />
+            <input class="btn btn-primary btn-block" type="submit" name="Tolak" id="Tolak" value="Tolak Semua" onclick="DisplayProgressMessage();" />
+            <input class="btn btn-primary btn-block" type="submit" name="Teruskan" id="Teruskan" value="@GlobalResApproval.btnProceed" onclick="DisplayProgressMessage();"/>
+            @if (ViewBag.getdata >= 1)
+            {
+                @*<input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResApproval.btnJanaFile" onclick="return GenFile(@fileid);" />*@
+            }
+            <input class="btn btn-primary btn-block" type="button" name="Kembali" id="Kembali" value="@GlobalResApproval.btnBack" onclick="Back();" />
+        </div>
+    }
+
+</section>
+<script>
+    function GenFile(id,data) {
+        DisplayProgressMessage();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GenUserIDApprovalFile", "Approval")',
+            data: { 'fileid': id },
+            success: function (result) {
+                if (result.success) {
+                    $.simplyToast(result.msg, result.status);
+                    HideDisplayProgressMessage();
+                } else {
+                    $.simplyToast(result.msg, result.status);
+                    HideDisplayProgressMessage();
+                }
+            },
+        });
+        return false;
+    }
+
+    function Back() {
+        var win = window.open('@Url.Action("ApprovalNewUserID", "Approval")', '_self');
+        win.focus();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+    }
+
+    function HideDisplayProgressMessage(ctl) {
+        //$("body").removeClass("submit-progress-bg");
+        //$(".submit-progress").addClass("hidden");
+        $("#UpdateProgress1").css("display", "none");
+    }
+</script>

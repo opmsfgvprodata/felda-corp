@@ -1,0 +1,100 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_GLSAP
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Tambah Specific GL</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblGLInfo</div>
+                    <div class="panel-body">
+                        <div  class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lbljnsAktiviti:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("JnisAktvt", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Jenis Aktiviti" })
+                                @Html.ValidationMessage("JnisAktvt", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="sublist" class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblAktivitiCode:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("KodAktvtList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Kod Aktiviti" })
+                                @Html.ValidationMessage("KodAktvtList", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lbljnslot:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("JnsLotList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Jenis Lot" })
+                                @Html.ValidationMessage("JnsLotList", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblPaysheet:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("PaysheetList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Paysheet" })
+                                @Html.ValidationMessage("PaysheetList", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblGLCode:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("KodGLList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Kod GL" })
+                                @Html.ValidationMessage("KodGLList", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+        $("#JnisAktvt").change(function () {
+            $("#UpdateProgress1").css("display", "");
+            $("#workdata").css("display", "none");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("GetAktvt", "SAPIntegration")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ JnisAktvt: $("#JnisAktvt").val() });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#ListofDetail3').empty();
+                $('#KodAktvtList').empty();
+                for (var i = 0; i < result.PilihAktiviti.length; i++) {
+                    $("#KodAktvtList").append("<option value=" + result.PilihAktiviti[i].Value + ">" + result.PilihAktiviti[i].Text + "</option>");
+                }
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        });
+    </script>

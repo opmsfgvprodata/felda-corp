@@ -1,0 +1,210 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.sp_RptLapMakKer_Result>
+@using MVC_SYSTEM.Class;
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
+    GetDataCount GetDataCount = new GetDataCount();
+    int bill = 0;
+    string kehadiran = "";
+    string pengiraan = "";
+    int samedatecount = 0;
+    int samedatecountbill = 1;
+    decimal? unit = 0;
+    decimal? task = 0;
+    decimal? kong = 0;
+    decimal? kdrot = 0;
+    decimal? ot = 0;
+    decimal? kuantiti = 0;
+    decimal? Amt = 0;
+    decimal? Jumlah = 0;
+    DateTime? samedatetriger = null;
+    DateTime? samedatetriger2 = null;
+}
+@if (ViewBag.DataCount >= 1)
+{
+    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+        <thead>
+            <tr>
+                <th colspan="21" style="text-align:center;vertical-align:middle;">
+                    @ViewBag.NamaSyarikat
+                    <br />
+                    (@GlobalResWorkerReport.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                    <br />
+                    @GlobalResWorkerReport.hdrReportTitle
+                    <br />
+                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                </th>
+            </tr>
+            <tr>
+                <th colspan="21" style="text-align:center;vertical-align:middle;">
+                    Ladang: @ViewBag.LadangCode @ViewBag.LadangName
+                </th>
+            </tr>
+            <tr>
+                <th colspan="21" style="text-align:left;vertical-align:middle;">
+                    No Pekerja: @ViewBag.NoPekerja
+                    <br />
+                    Nama Pekerja :@ViewBag.NamaPekerja
+                    <br />
+                    Kumpulan : @ViewBag.Kump
+                </th>
+            </tr>
+            <tr>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrBil</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrTarikh</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrHujan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKehadiran</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKumpulan</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrLejar</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrPeringkat</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrAktiviti</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrNoKontrak</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrPengiraan</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKgk</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrUnit</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrTask</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKong</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKdrLbhMasa</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrLbhMasa</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrKuantiti</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrAmt</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrJumlah</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrId</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerReport.hdrNama</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (bill == 0)
+                {
+                    samedatetriger2 = item.fld_Tarikh;
+                    samedatecount = GetDataCount.getSameDateWorkerReport(ViewBag.NegaraID, ViewBag.SyarikatID, ViewBag.WilayahID, ViewBag.LadangID, ViewBag.Month, ViewBag.Year, ViewBag.NoPekerja, item.fld_Tarikh); //Model.Where(x => x.fld_Tarikh == item.fld_Tarikh).Count();
+                }
+                kehadiran = GetConfig.GetData2(item.fld_Kdhdct, "cuti");
+                pengiraan = GetConfig.GetData2(item.fld_Kdhbyr, "kdhPengiraan");
+
+                //unit = unit + (item.fld_Kti1);
+                //task = task + (item.fld_Kti3);
+                //kong = kong + (item.fld_Kong);
+                //kdrot = kdrot + (item.fld_Kdrot);
+                //ot = ot + (item.fld_Jamot);
+                //kuantiti = kuantiti + (item.fld_Qty);
+                //Amt = Amt + (item.fld_Amt);
+                if(item.fld_Jumlah != null)
+                {
+                    Jumlah = Jumlah + (item.fld_Jumlah);
+                }
+                
+                if (samedatetriger2 != item.fld_Tarikh)
+                {
+                    samedatecount = GetDataCount.getSameDateWorkerReport(ViewBag.NegaraID, ViewBag.SyarikatID, ViewBag.WilayahID, ViewBag.LadangID, ViewBag.Month, ViewBag.Year, ViewBag.NoPekerja, item.fld_Tarikh); //Model.Where(x => x.fld_Tarikh == item.fld_Tarikh).Count();
+                }
+                if (samedatetriger != item.fld_Tarikh)
+                {
+                    samedatecountbill = 1;
+                }
+                <tr>
+                    @if (samedatecount > 1)
+                    {
+                        if (samedatecountbill == 1)
+                        {
+                            bill = bill + 1;
+                            samedatetriger = item.fld_Tarikh;
+                            <td rowspan="@samedatecount" valign="middle" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @bill
+                            </td>
+                            <td rowspan="@samedatecount" valign="middle" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.DisplayFor(modelItem => item.fld_Tarikh)
+                            </td>
+                        }
+                        samedatecountbill++;
+                    }
+                    else
+                    {
+                        bill = bill + 1;
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @bill
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @Html.DisplayFor(modelItem => item.fld_Tarikh)
+                        </td>
+                    }
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Hujan
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @kehadiran
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kum
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Glcd
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Pkt
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Aktvt
+                    </td>
+                    <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_No_Kontrak
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @pengiraan
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kgk
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kti1
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kti3
+                    </td>
+                    <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kong
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Kdrot
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Jamot
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Qty
+                    </td>
+                    <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Amt
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Jumlah
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_UserId
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_UserName
+                    </td>
+                </tr>
+                samedatetriger2 = item.fld_Tarikh;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="18" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                    <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+                </td>
+                <td colspan="3" bgcolor="#085480" style="color:white; text-align: left; vertical-align:middle !important;border:1px solid black;" border="1">
+                    <strong>@GetTriager.GetTotalForMoney(Jumlah)</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <newpage />
+}
+

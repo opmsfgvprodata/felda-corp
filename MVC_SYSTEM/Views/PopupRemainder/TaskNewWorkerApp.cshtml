@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tblTaskRemainder>
+@using MVC_SYSTEM.Class;
+@{
+    GetConfig GetConfig = new GetConfig();
+    int bil = 1;
+}
+@if (ViewBag.TotalCount > 0)
+{
+    <p>@GlobalResPermitPassportPopup.lblWilayahName : @ViewBag.WilayahName</p>
+    <p>@GlobalResPermitPassportPopup.lblLadangName : @ViewBag.LadangName</p>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center-0" width="5%">
+                    <b>@GlobalResPermitPassportPopup.No</b>
+                </th>
+                <th class="text-center" width="40%">
+                    <b>@GlobalResPermitPassportPopup.hdrTrkhMohon</b>
+                </th>
+                <th class="text-center" width="40%">
+                    <b>@GlobalResPermitPassportPopup.hdrNamaFile</b>
+                </th>
+                <th class="text-center" width="15%">
+                    <b>@GlobalResPermitPassportPopup.hdrStatus</b>
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td align="center" width="5%">
+                    @bil
+                </td>
+                <td align="center" width="40%">
+                    @Html.DisplayFor(modelItem => item.fldDateTimeStamp)
+                </td>
+                <td width="40%">
+                    @Html.DisplayFor(modelItem => item.fldFileName)
+                </td>
+                <td align="center" width="15%">
+                    @GetConfig.GetData2(item.fldStatus.ToString(), "permohanankelulusan")
+                </td>
+            </tr>
+            bil++;
+        }
+    </table>
+    <hr class="style6">
+}
+

@@ -1,0 +1,103 @@
+﻿<!-- Aini add file 14/3/2023 -->
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetIdentity getidentity = new GetIdentity();
+    GetConfig getconfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        <div class="container" style="max-width: 100%;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Jumlah Pekerja Mengikut Wilayah</div>
+                        <br />
+                        <div id="chartwilayah"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (!getidentity.NegaraSumber(User.Identity.Name))
+{
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="text/javascript">
+
+
+        var donutchart = function () {
+            dataLabel = [];
+            dataSeries = [];
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DashWilayah", "Dashboard")',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (dashwilayahresult) {
+                    $.each(dashwilayahresult, function (index, obj) {
+                        dataLabel.push(obj.fld_Wilayah);
+                    });
+
+                    $.each(dashwilayahresult, function (index, obj) {
+                        dataSeries.push(obj.fld_Jumlah);
+                    });
+
+                    var options = {
+                        series: [{
+                            name: 'Jumlah Pekerja',
+                            data: dataSeries
+                        }],
+                        dataSeries,
+                        chart: {
+                            type: 'bar',
+                            height: 450,
+                            events: {
+                                dataPointSelection: (event, chartContext, config) => {
+                                    window.location.href = "Dashboard/WilayahResult?wilayah=" + config.w.config.xaxis.categories[config.dataPointIndex];
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: '55%',
+                                endingShape: 'rounded'
+                            },
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ['transparent']
+                        },
+                        xaxis: {
+                            categories: dataLabel,
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return val
+                                }
+                            }
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chartwilayah"), options);
+                    chart.render();
+                },
+            });
+
+        };
+        donutchart();
+
+    </script>
+}

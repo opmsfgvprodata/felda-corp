@@ -1,0 +1,466 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Worker Myeg";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+    GetDataCount GetDataCount = new GetDataCount();
+    string ldgName = "";
+    string ldgcode = "";
+    int bill = 1;
+    int totalcount = 0;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "WorkerMyeg_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+}
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("WorkerMyeg", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div id="progressmsg" class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResWorkerMyeg.WaitMsg</label>
+    </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                @*<div class="col-sm-2">
+                        @Html.Label(GlobalResWorkerMyeg.lblBulan)
+                        @Html.RadioButton("PassportMonth","Semua")
+                    </div>*@
+                <div class="col-sm-2">
+                    @Html.RadioButton("PassportMonth", 0, new { @checked = "checked" })
+                    @Html.Label("Semua")<br />
+                    @Html.RadioButton("PassportMonth", 1)
+                    @Html.Label("Pilihan Bulan")
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerMyeg.lblBulan)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerMyeg.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerMyeg.lblLdg)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerMyeg.lblKrytn)
+                    @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerTransac.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well">
+            <p style="text-align:center;"><label>PERMOHONAN PLKS (MYEG)</label></p>
+            @if (ViewBag.getflag == 1)
+            {
+                <p style="color:red">Sila Pilih Bulan, Tahun, Wilayah Dan Ladang.</p>
+            }
+            else
+            {
+                <div id="scrollArea" class="modal-body">
+                    @if (ViewBag.WilayahSelection == 0)
+                    {
+                        foreach (var wlyh in GetWilayah.GetWilayahID(ViewBag.SyarikatID))
+                        {
+                            foreach (var ldg in GetLadang.GetCodeLadang(wlyh, "WorkerTransac", ViewBag.Year))
+                            {
+                                if (ViewBag.PassportMonth == 0)
+                                {
+                                    totalcount = GetDataCount.detailpkrjaCount2(wlyh, ldg, ViewBag.RakyatSelection);
+                                }
+                                else
+                                {
+                                    totalcount = GetDataCount.detailpkrjaCount(ViewBag.Month, wlyh, ldg, ViewBag.RakyatSelection);
+                                }
+
+                                if (totalcount >= 1)
+                                {
+                                    ldgcode = GetLadang.GetLadangCode(ldg);
+                                    ldgName = GetLadang.GetLadangName(ldg, wlyh);
+                                    <logo />
+                                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                        <thead>
+                                            @if (bill == 1)
+                                            {
+                                                <tr>
+                                                    <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                        @ViewBag.NamaSyarikat
+                                                        <br />
+                                                        (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                        <br />
+                                                        @GlobalResWorkerMyeg.hdrReportTitle
+
+                                                    </th>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <hide />
+                                                <tr style="display:none;">
+                                                    <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                        @ViewBag.NamaSyarikat
+                                                        <br />
+                                                        (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                        <br />
+                                                        @GlobalResWorkerMyeg.hdrReportTitle
+
+                                                    </th>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                    Ladang: @ldgcode @ldgName
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNo</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrName</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrOldPspt</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNewPspt</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptDate</th>
+
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptExprd</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPsptExprdDate</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPrmtExprd</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPrmtExprdDate</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSpExprd</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrKrytn</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTlahir</th>
+
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrJantina</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSticker</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrWorkerType</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBank</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukanSPPA</th>
+
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrLdg</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukan</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTahun</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRocPrmt</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNoCheck</th>
+                                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTemel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                Html.RenderAction("WorkerMyegDetail", "Report", new { radio = ViewBag.PassportMonth, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, month = ViewBag.Month, wilayahid = wlyh, ladangid = ldg, kerakyatan = ViewBag.RakyatSelection, incldg = ViewBag.IncLdg });
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <newpage />
+                                                                bill++;
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    if (ViewBag.LadangSelection == 0)
+                                                    {
+                                                        foreach (var ldg in GetLadang.GetCodeLadang(ViewBag.WilayahSelection, "WorkerTransac", ViewBag.Year))
+                                                        {
+                                                            if (ViewBag.PassportMonth == 0)
+                                                            {
+                                                                totalcount = GetDataCount.detailpkrjaCount2(ViewBag.WilayahSelection, ldg, ViewBag.RakyatSelection);
+                                                            }
+                                                            else
+                                                            {
+                                                                totalcount = GetDataCount.detailpkrjaCount(ViewBag.Month, ViewBag.WilayahSelection, ldg, ViewBag.RakyatSelection);
+                                                            }
+                                                            //int totalcount = GetDataCount.detailpkrjaCount(ViewBag.Month, ViewBag.WilayahSelection, ldg, ViewBag.RakyatSelection);
+                                                            if (totalcount >= 1)
+                                                            {
+                                                                ldgcode = GetLadang.GetLadangCode(ldg);
+                                                                ldgName = GetLadang.GetLadangName(ldg, ViewBag.WilayahSelection);
+                                                                <logo />
+                                                                <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                                                    <thead>
+                                                                        @if (bill == 1)
+                                                                        {
+                                                                            <tr>
+                                                                                <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                                                    @ViewBag.NamaSyarikat
+                                                                                    <br />
+                                                                                    (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                                                    <br />
+                                                                                    @GlobalResWorkerMyeg.hdrReportTitle
+                                                                                    <br />
+                                                                                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                                                                </th>
+                                                                            </tr>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <hide />
+                                                                            <tr style="display:none;">
+                                                                                <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                                                    @ViewBag.NamaSyarikat
+                                                                                    <br />
+                                                                                    (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                                                    <br />
+                                                                                    @GlobalResWorkerMyeg.hdrReportTitle
+                                                                                    <br />
+                                                                                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                                                                </th>
+                                                                            </tr>
+                                                                        }
+                                                                        <tr>
+                                                                            <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                                                Ladang: @ldgcode @ldgName
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNo</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrName</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrOldPspt</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNewPspt</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptDate</th>
+
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptExprd</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPsptExprdDate</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPrmtExprd</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPrmtExprdDate</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSpExprd</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrKrytn</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTlahir</th>
+
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrJantina</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSticker</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrWorkerType</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBank</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukanSPPA</th>
+
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.lblLdg</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukan</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTahun</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRocPrmt</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNoCheck</th>
+                                                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTemel</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @if (ldg >= 0)
+                                                                        {
+                                                                            Html.RenderAction("WorkerMyegDetail", "Report", new { radio = ViewBag.PassportMonth, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, month = ViewBag.Month, wilayahid = ViewBag.WilayahSelection, ladangid = ldg, kerakyatan = ViewBag.RakyatSelection, incldg = ViewBag.IncLdg });
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                                <newpage />
+                                                                bill++;
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (ViewBag.PassportMonth == 0)
+                                                        {
+                                                            totalcount = GetDataCount.detailpkrjaCount2(ViewBag.WilayahSelection, ViewBag.LadangSelection, ViewBag.RakyatSelection);
+                                                        }
+                                                        else
+                                                        {
+                                                            totalcount = GetDataCount.detailpkrjaCount(ViewBag.Month, ViewBag.WilayahSelection, ViewBag.LadangSelection, ViewBag.RakyatSelection);
+                                                        }
+                                                        //int totalcount = GetDataCount.detailpkrjaCount(ViewBag.Month, ViewBag.WilayahSelection, ViewBag.LadangSelection, ViewBag.RakyatSelection);
+                                                        if (totalcount >= 1)
+                                                        {
+                                                            ldgcode = GetLadang.GetLadangCode(ViewBag.LadangSelection);
+                                                            ldgName = GetLadang.GetLadangName(ViewBag.LadangSelection, ViewBag.WilayahSelection);
+                                                            <logo />
+                                                            <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                                            @ViewBag.NamaSyarikat
+                                                                            <br />
+                                                                            (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                                            <br />
+                                                                            @GlobalResWorkerMyeg.hdrReportTitle
+                                                                            <br />
+                                                                            @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th colspan="23" style="text-align:center;vertical-align:middle;">
+                                                                            Ladang: @ldgcode @ldgName
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNo</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrName</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrOldPspt</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNewPspt</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptDate</th>
+
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPsptExprd</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPsptExprdDate</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPrmtExprd</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBilPrmtExprdDate</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSpExprd</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrKrytn</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTlahir</th>
+
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrJantina</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrSticker</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrWorkerType</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrBank</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukanSPPA</th>
+
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.lblLdg</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRujukan</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTahun</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrRocPrmt</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrNoCheck</th>
+                                                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTemel</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @{
+                                                                        Html.RenderAction("WorkerMyegDetail", "Report", new { radio = ViewBag.PassportMonth, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, month = ViewBag.Month, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, kerakyatan = ViewBag.RakyatSelection, incldg = ViewBag.IncLdg });
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                            <newpage />
+                                                                                }
+                                                                            }
+                                                                        }
+                    <logo />
+                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                        @{
+                            Html.RenderAction("WorkerMyegSummary", "Report", new { radio = ViewBag.PassportMonth, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, month = ViewBag.Month, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, kerakyatan = ViewBag.RakyatSelection, incldg = ViewBag.IncLdg });
+                        }
+                    </table>
+                    <newpage />
+                </div>
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+                            }
+        </div>
+    </section>
+
+                            }
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerMyeg" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerMyeg" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

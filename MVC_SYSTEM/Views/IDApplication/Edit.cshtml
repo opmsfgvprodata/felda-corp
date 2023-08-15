@@ -1,0 +1,59 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.vw_UserIDDetail
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">ID Penguna : @Model.fldUserName</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Kemaskini Permohonan Penguna ID</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label>Nama</label>
+                            @Html.EditorFor(model => model.fldUserFullName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-sm-3">
+                            <label>No. Kad Pengenalan</label>
+                            @Html.EditorFor(model => model.fldNoKP, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Jawatan</label>
+                            @Html.DropDownList("PositionList", null, htmlAttributes: new { @class = "form-control" })
+                            <input type="hidden" id="batchno" name="batchno" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label>Nama Singkatan</label>
+                            @Html.EditorFor(model => model.fldUserShortName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Email</label>
+                            @Html.EditorFor(model => model.fldUserEmail, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @Html.Hidden("fldID", Model.fldID)
+        @Html.Hidden("BatchID", Model.fldFileID)
+        @if (ViewBag.submitstatus)
+        {
+            <p class="btn btn-danger">Telah dihantar ke HQ</p>
+        }
+        else
+        {
+            <input class="btn btn-primary" type="submit" value="Save" />
+        }
+        <button class="btn btn-warning" data-dismiss="modal">Close</button>
+    </div>
+}

@@ -1,0 +1,114 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_MapGL
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblGLUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblGLInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lbljnsAktiviti:</label>
+                            <div class="col-sm-4">
+                                
+                                @Html.DropDownList("fld_KodJnsAktvt", null, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                @*@Html.ValidationMessageFor(model => model.fld_KodJnsAktvt, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblAktivitiCode:</label>
+                            <div class="col-sm-4">
+                                
+                                @Html.DropDownList("fld_KodAktvt", null, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktvt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lbljnslot:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("fld_JnsLot", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_JnsLot, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblPaysheet:</label>
+                            <div class="col-sm-4">
+                               
+                                @*@Html.DropDownList("fld_Paysheet", new SelectList(ViewBag.fld_Paysheet, "Value", "Text", Model.fld_Paysheet.Trim()), new { @class = "form-control" })                             
+                                @Html.ValidationMessageFor(Model=>Model.fld_Paysheet,"", new { @class = "text-danger" })*@
+
+                                @Html.DropDownList("fld_Paysheet", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Paysheet, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblGLCode:</label>
+                            <div class="col-sm-4">
+                                @*@Html.DropDownList("fld_KodGL", new SelectList(ViewBag.fld_KodGL, "Value", "Text", Model.fld_KodGL.Trim()), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodGL, "", new { @class = "text-danger" })*@
+                                @Html.DropDownList("fld_KodGL", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodGL, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_Deleted)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+    $("#fld_KodJnsAktvt").change(function () {
+            $("#UpdateProgress1").css("display", "");
+            $("#workdata").css("display", "none");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("GetAktvt", "Maintenance")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ JnisAktvt: $("#fld_KodJnsAktvt").val() });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#ListofDetail3').empty();
+                $('#fld_KodAktvt').empty();
+                for (var i = 0; i < result.PilihAktiviti.length; i++) {
+                    $("#fld_KodAktvt").append("<option value=" + result.PilihAktiviti[i].Value + ">" + result.PilihAktiviti[i].Text + "</option>");
+                }
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        });
+</script>
+

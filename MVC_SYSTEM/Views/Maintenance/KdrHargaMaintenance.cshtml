@@ -1,0 +1,79 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tblOptionConfigsWeb>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblTitleHargaMaintenance;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "KdrHargaMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    @*<div class="well bottom" style="padding-bottom:16px;">
+            @using (Ajax.BeginForm("_KdrHargaMaintenance", "Maintenance", null, options, new { @id = "KdrHargaSearchDetails" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<div class="row">
+                    <div class="col-sm-4">
+                            @Html.Label(GlobalResCorp.lblSearch)
+                            @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control", placeholder = GlobalResCorp.lblUnitSearch, @id = "txtfilter", @value = "" })
+                        </div>
+                    <div class="col-sm-6 btn-group" style="padding-top:24px;">
+                        <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                        <input type="button" class="btn btn-primary col-sm-3" value=@GlobalResCorp.btnList onclick="javascript:resetSearch1();" />
+                    </div>
+                </div>
+            }
+        </div>*@
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblKdrHrga</div>
+                <div class="panel-body">
+                    <div id="KdrHargaMaintenanceDetails">
+                        @Html.Action("_KdrHargaMaintenance", "Maintenance", null)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' @*href=@Url.Action("_UnitMaintenanceCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd*@</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+</script>

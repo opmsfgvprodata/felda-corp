@@ -1,0 +1,62 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_JadualCarumanTambahan
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblContributionTableAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblContributionTableInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionSubCategoryCode:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodSubCaruman, new SelectList(ViewBag.SubContributionList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodSubCaruman, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionTableMinWage:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_GajiLower, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GajiLower, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lblContributionTableMaxWage:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_GajiUpper, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GajiUpper, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionTableEmpyeeCont:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_CarumanPekerja, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_CarumanPekerja, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lblContributionTableEmpyerCont:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_CarumanMajikan, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_CarumanMajikan, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>

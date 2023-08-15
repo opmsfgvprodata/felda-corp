@@ -1,0 +1,105 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_ProduktivitiGetah>
+
+
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "ProduktivitiGetahDetail";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+    string Tindakan = "";
+
+}
+
+@if (Model.Count() > 0)
+{
+    <div id="scrollArea2">
+        <logo />
+        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+            <thead>
+                <tr>
+                    <th colspan="5" style="text-align:center;vertical-align:middle;">
+
+                        <b style="font-size: 13px">PANDUAN KADAR BAYARAN UPAH ASAS DAN OUTPUT MINIMUM MENOREH</b>
+                        <br />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; width: 30px; border: 1px solid black;" border="1">@GlobalResCorp.hdrNo</th>
+                    <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; width: 150px; border: 1px solid black;" border="1">Produktiviti Cuplump Basah</th>
+                    <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; width: 150px; border: 1px solid black;" border="1">Upah Kadaran</th>
+                    <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; width: 150px; border: 1px solid black;" border="1">Insentif Kuantiti Cuplump</th>
+                    <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; width: 80px !important; border: 1px solid black;" border="1">Tindakan</th>
+
+                </tr>
+
+                @foreach (var tahun in Model.Select(s => new { s.fld_TahunToreh, s.fld_NegaraID, s.fld_SyarikatID }).OrderBy(o => o.fld_TahunToreh).Distinct())
+                {
+
+                    <tr>
+                        <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetConfig.GetWebConfigDesc(tahun.fld_TahunToreh.ToString(), "tahunTorehPrdktvt", tahun.fld_NegaraID, tahun.fld_SyarikatID)
+                        </th>
+                    </tr>
+
+                    foreach (var item in Model.Where(x => x.fld_TahunToreh == tahun.fld_TahunToreh))
+                    {
+                        bil += 1;
+            <tr>
+
+                <td align="center" style="vertical-align: middle !important; width: 30px; border: 1px solid black;" border="1">
+                    @bil
+                </td>
+                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                    @item.fld_PrdktvtCuplumpLower - @item.fld_PrdktvtCuplumpUpper
+                </td>
+                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                    @item.fld_KadarUpah
+                </td>
+                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                    @{var InsentifKuantiti = item.fld_InsentifKuantiti == null ? "-" : item.fld_InsentifKuantiti.ToString();}
+                    @InsentifKuantiti
+                </td>
+                <td align="center" style="vertical-align: middle !important; width: 80px !important; border: 1px solid black;" border="1">
+                    @{
+                        if (item.fld_Deleted == false)
+                        {
+                            Tindakan = "<a data-modal1='' href='" + @Url.Action("ProduktivitiGetahUpdate", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                            "<a data-modal1='' href='" + @Url.Action("ProduktivitiGetahDelete", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                        }
+
+                        else
+                        {
+                            Tindakan = "<a data-modal1='' href='" + @Url.Action("ProduktivitiGetahDelete", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                        }
+                    }
+                    @Html.Raw(Tindakan)
+
+                </td>
+
+            </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+        <newpage />
+    </div>
+
+
+}
+else
+{
+    <p style="color:red">@GlobalResCorp.msgErrorSearch</p>
+}
+
+
+
+
+
+
+

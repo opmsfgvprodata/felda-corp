@@ -1,0 +1,202 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_PerluLadang
+
+@{
+
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResEstateNeed.lblTitleUpdate</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateNeed.lblWilayah</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateNeed.lblLdg</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("fld_LadangID", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateNeed.lblYear</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("fld_Tahun", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.fld_Tahun, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateNeed.lblLuas</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_Luas, new { htmlAttributes = new { @class = "form-control required" } })
+                    @Html.ValidationMessageFor(model => model.fld_Luas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateNeed.lblPerlu</label>
+                <div class="col-md-9">
+                    <input type="hidden" id="qoutadata" name="qoutadata" value="" />
+                    @Html.EditorFor(model => model.fld_Perlu, new { htmlAttributes = new { @class = "form-control required", @onchange = "checkqouta(qoutadata,this)" } })
+                    @Html.ValidationMessageFor(model => model.fld_Perlu, "", new { @class = "text-danger" })
+                    <div id="qouta" style="color:red;"></div>
+                </div>
+            </div>
+            @if (ViewBag.DisableDataEdit == true)
+            {
+                <input type="hidden" id="disableform" name="disableform" value="1" />
+            }
+            else
+            {
+                <input type="hidden" id="disableform" name="disableform" value="0" />
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" id="save" name="save" value=@GlobalResEstateNeed.btnSave />
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResEstateNeed.btnBack</button>
+    </div>
+}
+<script>
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+</script>
+<script>
+    if ($("#WilayahIDList").val() == 0) {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "DataEntry")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    }
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "DataEntry")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+    @*var CheckQuotaAvailable = {};
+    CheckQuotaAvailable.url = "@Url.Action("GetQoutaAvailable", "DataEntry")";
+    CheckQuotaAvailable.type = "POST";
+    CheckQuotaAvailable.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), LadangID: $("#fld_LadangID").val(), Tahun: $("#fld_Tahun").val() });
+    CheckQuotaAvailable.datatype = "json";
+    CheckQuotaAvailable.contentType = "application/json";
+    CheckQuotaAvailable.success = function (result) {
+        if (result.noqouta) {
+            $("#fld_Luas").prop("disabled", false);
+            $("#fld_Perlu").prop("disabled", false);
+            $("#save").prop("disabled", false);
+            $.simplyToast('Sila masukkan keperluan, keperluan mestilah tidak melebihi daripada kouta yang telah ditetapkan', 'success');
+            $("#qouta").empty();
+            $("#qouta").append("*Pastikan keperluan buruh dimasukkan kurang atau sama dengan " + result.totalqouta);
+
+        }
+        else {
+            $("#fld_Luas").prop("disabled", true);
+            $("#fld_Perlu").prop("disabled", true);
+            $("#save").prop("disabled", true);
+            $.simplyToast('Kouta keperluan masih belum dimasukkan oleh pihak HQ', 'warning');
+            $("#qouta").empty();
+        }
+    };
+    CheckQuotaAvailable.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(CheckQuotaAvailable);*@
+
+    $(document).ready(function () {
+        var flagdisable = $("#disableform").val();
+        if (flagdisable == 1) {
+            $("#fld_Luas").prop("disabled", true);
+            $("#fld_Perlu").prop("disabled", true);
+            $("#save").prop("disabled", true);
+        }
+        else {
+            var CheckQuotaAvailable = {};
+            CheckQuotaAvailable.url = "@Url.Action("GetQoutaAvailable", "DataEntry")";
+            CheckQuotaAvailable.type = "POST";
+            CheckQuotaAvailable.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), LadangID: $("#fld_LadangID").val(), Tahun: $("#fld_Tahun").val() });
+            CheckQuotaAvailable.datatype = "json";
+            CheckQuotaAvailable.contentType = "application/json";
+            CheckQuotaAvailable.success = function (result) {
+                if (result.noqouta) {
+                    $("#fld_Luas").prop("disabled", false);
+                    $("#fld_Perlu").prop("disabled", false);
+                    $("#save").prop("disabled", false);
+                    $.simplyToast('Sila masukkan keperluan, keperluan mestilah tidak melebihi daripada kouta yang telah ditetapkan', 'success');
+                    $("#qouta").empty();
+                    $("#qouta").append("*Pastikan keperluan buruh dimasukkan kurang atau sama dengan " + result.totalqouta);
+                    $("#qoutadata").val(result.totalqouta)
+                }
+                else {
+                    $("#fld_Luas").prop("disabled", true);
+                    $("#fld_Perlu").prop("disabled", true);
+                    $("#save").prop("disabled", true);
+                    $.simplyToast('Kouta keperluan masih belum dimasukkan oleh pihak HQ', 'warning');
+                    $("#qouta").empty();
+                    $("#qoutadata").val("0")
+                }
+            };
+            CheckQuotaAvailable.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(CheckQuotaAvailable);
+        }
+    });
+    function checkqouta(qoutadata, insertdata) {
+        var getqoutadata = qoutadata.value;
+        var getinsertdata = insertdata.value;
+        if (parseInt(getinsertdata) > parseInt(getqoutadata)) {
+            $("#save").prop("disabled", true);
+            $.simplyToast('Pastikan keperluan buruh dimasukkan kurang atau sama dengan ' + getqoutadata, 'warning');
+        }
+        else {
+            $("#save").prop("disabled", false);
+        }
+    }
+</script>
+

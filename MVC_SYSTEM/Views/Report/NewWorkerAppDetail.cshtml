@@ -1,0 +1,149 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tblPkjmastApp>
+@using MVC_SYSTEM.Class;
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
+    GetFile GetFile = new GetFile();
+    GetIdentity GetIdentity = new GetIdentity();
+    int bill = 0;
+    string approval = "";
+    String kerakyatan = "";
+    string jenisPekerjaan = "";
+    string filename = "";
+    int id = 0;
+    string Approvedby = "";
+}
+
+@if (ViewBag.DataCount >= 1)
+{
+    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+        <thead>
+            <tr>
+                <th colspan="15" style="text-align:center;vertical-align:middle;">
+                    @ViewBag.NamaSyarikat
+                    <br />
+                    (@GlobalResNewWorkerApp.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                    <br />
+                    @GlobalResNewWorkerApp.hdrReportTitle
+                    <br />
+                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                </th>
+            </tr>
+            <tr>
+                <th colspan="15" style="text-align:center;vertical-align:middle;">
+                    Ladang: @ViewBag.LadangCode @ViewBag.LadangName
+                </th>
+            </tr>
+            <tr>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrBil</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrNoPekerja</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrKP</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrNama</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrJnsPkrjaan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrWarganegara</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrTrkhLantikan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrTrkhPermohonan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrSbbKemasukan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrCatatan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrTarikhKelulusan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrStatus</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrKeterangan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrNamaFail</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResNewWorkerApp.hdrApprvBy</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                kerakyatan = GetConfig.GetData2(item.fldKdRkyt, "krytnlist");
+                jenisPekerjaan = GetConfig.GetData2(item.fldKdJnsPkj, "designation");
+                id = Convert.ToInt32(item.fldFileID);
+                filename = GetFile.GetFileName(id);
+                if (item.fldActionBy != null)
+                {
+                    Approvedby = GetIdentity.MyNameFullName(item.fldActionBy.Value);
+                }
+                bill = bill + 1;
+                <tr>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @bill
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoPkj
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoKP
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNama1
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @jenisPekerjaan
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @kerakyatan
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Html.DisplayFor(modelItem => item.fldTtsplp)
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Html.DisplayFor(modelItem => item.fldTtplks)
+                    </td>
+                    <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldSbbMsk
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldAlsnMsk
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Html.DisplayFor(modelItem => item.fldDateTimeApprove)
+                    </td>
+                    @if (item.fldStatus == 1)
+                    {
+                        approval = "APPROVED";
+                        <td align="center" style="color:green;vertical-align:middle !important;border:1px solid black;" border="1">
+                            @approval
+                        </td>
+                    }
+                    else if (item.fldStatus == 2 || item.fldStatus == 3)
+                    {
+                        approval = "NOT APPROVE";
+                        <td align="center" style="color:red;vertical-align:middle !important;border:1px solid black;" border="1">
+                            @approval
+                        </td>
+                    }
+                    else
+                    {
+                        approval = "PENDING";
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @approval
+                        </td>
+                    }
+                    @if (item.fldStatus == 3)
+                    {
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            Pekerja Telah Diluluskan Sebelum Ini
+                        </td>
+                    }
+                    else
+                    {
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+                    }
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @filename
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Approvedby
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <newpage />
+}
+else
+{
+
+}

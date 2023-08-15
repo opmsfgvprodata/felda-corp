@@ -1,0 +1,76 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CarumanTambahan
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblContributionCategoryUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblContributionCategoryInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionCategoryCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodCaruman, htmlAttributes: new { @class = "form-control col-sm-2", @readonly = "true" })
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-8">
+                                @Html.ValidationMessageFor(model => model.fld_KodCaruman, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionCategoryDesc:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_NamaCaruman, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_NamaCaruman, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributedBy:</label>
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(model => model.fld_CarumanOleh, new SelectList(ViewBag.PencarumList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_CarumanOleh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributedByCitizenship:</label>
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(model => model.fld_Warganegara, new SelectList(ViewBag.WarganegaraList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Warganegara, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblScheduledContribution:</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(model => model.fld_Berjadual, new SelectList(ViewBag.PilihanList, "Value", "Text", Model.fld_Berjadual), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Berjadual, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_JenisCarumanID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

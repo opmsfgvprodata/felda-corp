@@ -1,0 +1,1279 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_Messaging>
+@using MVC_SYSTEM.Class
+@{ 
+    GetIdentity GetIdentity = new GetIdentity();
+    var UserList = GetIdentity.GetListUser();
+}
+<script src="~/Asset/Scripts/jquery.min.js"></script>
+
+<style type="text/css">
+
+    em {
+        font-style: italic;
+    }
+
+    img {
+        border: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    #fw-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        border-radius: 5px;
+        overflow: hidden;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    header {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        background-image: none;
+        font-size: 16px;
+    }
+
+        header .fw-feed-title {
+            margin: 0 20px;
+            padding: 20px 0 15px 0;
+            word-wrap: break-word;
+            border-bottom: 1px solid #dbdee1;
+        }
+
+            header .fw-feed-title a:link {
+                color: #505659;
+            }
+
+            header .fw-feed-title a:hover {
+                color: #505659;
+            }
+
+            header .fw-feed-title a:visited {
+                color: #505659;
+            }
+
+    #fw-feed-items-scroll-area {
+        background-image: none;
+        width: 1px;
+        min-width: 100%;
+        overflow: hidden;
+    }
+
+    #fw-feed-items {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+        #fw-feed-items .fw-feed-item {
+            margin: 0;
+            padding: 20px 0;
+            clear: both;
+            border-bottom: 1px dashed #CCCCCC;
+        }
+
+            #fw-feed-items .fw-feed-item:hover {
+                margin: 0;
+                padding: 20px 0;
+                ;
+                clear: both;
+            }
+
+        #fw-feed-items .fw-feed-item-url {
+            display: block;
+            overflow: hidden;
+        }
+
+            #fw-feed-items .fw-feed-item-url[onclick] {
+                cursor: pointer;
+            }
+
+        #fw-feed-items .fw-feed-multimediaplayer {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+        }
+
+            #fw-feed-items .fw-feed-multimediaplayer iframe {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100% !important;
+                height: 100% !important;
+            }
+
+    .fw-feed-item-image-module {
+        margin: 0 0 0 5px;
+        padding: 0;
+        float: left;
+    }
+
+    .fw-feed-title {
+        margin: 0 20px;
+        padding: 20px 0 15px 0;
+        word-wrap: break-word;
+        border-bottom: 1px solid #dbdee1;
+    }
+
+    #fw-feed-items .fw-feed-item-image {
+        margin: 0;
+        padding: 0;
+        width: 110px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    #fw-feed-items .fw-feed-item-content-module {
+        margin: 0 0 0 5px;
+        padding: 0 0 0 5px;
+        overflow: hidden;
+    }
+
+    #fw-feed-items .fw-feed-item-more-link {
+        margin: 0 2px 0 0;
+        padding: 0 2px 0 0;
+        color: #2e7ec8;
+        line-height: 1.5;
+        font-size: 12px;
+        overflow: hidden;
+    }
+
+    #fw-feed-items .fw-feed-item-title {
+        margin: 0 2px 0 0;
+        padding: 0 2px 0 0;
+        color: #2e7ec8;
+        line-height: 1.5;
+        font-size: 16px;
+        overflow: hidden;
+        display: block;
+    }
+
+    #fw-feed-items .fw-feed-item-description {
+        margin: 0 2px 0 0;
+        padding: 0 2px 0 0;
+        color: #505659;
+        word-wrap: break-word;
+        line-height: 1.5;
+        font-size: 12px;
+        overflow: hidden;
+        display: block;
+    }
+
+    #fw-feed-items .fw-feed-item-date {
+        margin: 5px 0 0 0;
+        padding: 0px;
+        font-size: 12px;
+        color: #505659;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    /***非表示の場合はdisplay:none***/
+    #fw-feed-items .fw-feed-item-link {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        color: #505659;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    /***非表示の場合はdisplay:none***/
+</style>
+
+<div id="fw-container" style="height: 417px;">
+    <div id="fw-feed-items-scroll-area" class="scroll-pane jspScrollable" style="height: 361px; overflow: hidden; padding: 0px; width: 1364px;" tabindex="0">
+        @*Aini modified height from 361px to 200px 21/03/2023*@
+        <div class="jspContainer" style="width: 1364px; height: 200px;">
+            <div class="jspPane" style="padding: 0px; top: 0px; width: 1350px;">
+                <div id="fw-feed-items" style="margin-top: 0px;">
+                    @foreach (var item in Model)
+                    {
+                        var Username = UserList.Where(x => x.fldUserID == item.fld_CreatedBy).Select(s => s.fldUserFullName).FirstOrDefault();
+                        <div class="fw-feed-item fw-item-">
+                            <div class="fw-feed-item-url" onclick="window.open('@Url.Action("Details","Messaging", new { id = item.fld_ID } , this.Request.Url.Scheme)', null, 'height=600,width=800,status=yes,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=no')">
+                                <div class="fw-feed-item-image-module">
+                                </div>
+                                <div class="fw-feed-item-content-module">
+                                    <span class="fw-feed-item-title">@item.fld_Title</span>
+                                    <span class="fw-feed-item-description">@Html.Raw(item.fld_Msg)</span>
+                                    <span class="fw-feed-item-date">Ditulis Oleh: @Username, Pada: @item.fld_CreatedDT</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!--fw-feed-item-->
+                </div>
+            </div>
+            <div class="jspVerticalBar" style="visibility: visible;">
+                <div class="jspCap jspCapTop"></div>
+                <div class="jspTrack" style="height: 361px;">
+                    <div class="jspDrag" style="height: 72px; top: 0px;">
+                        <div class="jspDragTop"></div>
+                        <div class="jspDragBottom"></div>
+                    </div>
+                </div>
+                <div class="jspCap jspCapBottom"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    /*
+         * CSS Styles that are needed by jScrollPane for it to operate correctly.
+         *
+         * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane
+         * may not operate correctly without them.
+         */
+    .jspContainer {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .jspPane {
+        position: absolute;
+    }
+
+    .jspVerticalBar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10px;
+        height: 100%;
+        background: red;
+    }
+
+    @@media screen and (-webkit-min-device-pixel-ratio:0) {
+        /*Chrome CSS here*/
+        .jspPane {
+            left: 0 !important;
+        }
+    }
+
+    .jspCap {
+        display: none;
+    }
+
+    .jspHorizontalBar .jspCap {
+        float: left;
+    }
+
+    .jspTrack {
+        background: #eee;
+        position: relative;
+    }
+
+    .jspDrag {
+        background: #ccc;
+        position: relative;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .jspHorizontalBar .jspTrack,
+    .jspHorizontalBar .jspDrag {
+        float: left;
+        height: 100%;
+    }
+
+    .jspArrow {
+        background: #50506d;
+        text-indent: -20000px;
+        display: block;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+
+        .jspArrow.jspDisabled {
+            cursor: default;
+            background: #80808d;
+        }
+
+    .jspVerticalBar .jspArrow {
+        height: 16px;
+    }
+
+    .jspHorizontalBar .jspArrow {
+        width: 10px;
+        float: left;
+        height: 100%;
+    }
+
+    .jspVerticalBar .jspArrow:focus {
+        outline: none;
+    }
+
+    .jspCorner {
+        background: #eeeef4;
+        float: left;
+        height: 100%;
+    }
+    /* Yuk! CSS Hack for IE6 3 pixel bug :( */
+    * html .jspCorner {
+        margin: 0 -3px 0 0;
+    }
+</style>
+
+<script type="text/javascript">
+    /*! Copyright (c) 2013 Brandon Aaron (http://brandon.aaron.sh)
+     * Licensed under the MIT License (LICENSE.txt).
+     *
+     * jquery.mousewheel.js
+     * Version: 3.1.9
+     *
+     * Requires: jQuery 1.2.2+
+     */
+
+    (function (factory) {
+        if (typeof define === 'function' && define.amd) {
+            // AMD. Register as an anonymous module.
+            define(['jquery'], factory);
+        } else if (typeof exports === 'object') {
+            // Node/CommonJS style for Browserify
+            module.exports = factory;
+        } else {
+            // Browser globals
+            factory(jQuery);
+        }
+    }(function ($) {
+
+        var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+            toBind = ('onwheel' in document || document.documentMode >= 9) ?
+                ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+            slice = Array.prototype.slice,
+            nullLowestDeltaTimeout, lowestDelta;
+
+        if ($.event.fixHooks) {
+            for (var i = toFix.length; i;) {
+                $.event.fixHooks[toFix[--i]] = $.event.mouseHooks;
+            }
+        }
+
+        var special = $.event.special.mousewheel = {
+            version: '3.1.9',
+
+            setup: function () {
+                if (this.addEventListener) {
+                    for (var i = toBind.length; i;) {
+                        this.addEventListener(toBind[--i], handler, false);
+                    }
+                } else {
+                    this.onmousewheel = handler;
+                }
+                // Store the line height and page height for this particular element
+                $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+                $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+            },
+
+            teardown: function () {
+                if (this.removeEventListener) {
+                    for (var i = toBind.length; i;) {
+                        this.removeEventListener(toBind[--i], handler, false);
+                    }
+                } else {
+                    this.onmousewheel = null;
+                }
+            },
+
+            getLineHeight: function (elem) {
+                return parseInt($(elem)['offsetParent' in $.fn ? 'offsetParent' : 'parent']().css('fontSize'), 10);
+            },
+
+            getPageHeight: function (elem) {
+                return $(elem).height();
+            },
+
+            settings: {
+                adjustOldDeltas: true
+            }
+        };
+
+        $.fn.extend({
+            mousewheel: function (fn) {
+                return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+            },
+
+            unmousewheel: function (fn) {
+                return this.unbind('mousewheel', fn);
+            }
+        });
+
+
+        function handler(event) {
+            var orgEvent = event || window.event,
+                args = slice.call(arguments, 1),
+                delta = 0,
+                deltaX = 0,
+                deltaY = 0,
+                absDelta = 0;
+            event = $.event.fix(orgEvent);
+            event.type = 'mousewheel';
+
+            // Old school scrollwheel delta
+            if ('detail' in orgEvent) { deltaY = orgEvent.detail * -1; }
+            if ('wheelDelta' in orgEvent) { deltaY = orgEvent.wheelDelta; }
+            if ('wheelDeltaY' in orgEvent) { deltaY = orgEvent.wheelDeltaY; }
+            if ('wheelDeltaX' in orgEvent) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+            // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+            if ('axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
+                deltaX = deltaY * -1;
+                deltaY = 0;
+            }
+
+            // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+            delta = deltaY === 0 ? deltaX : deltaY;
+
+            // New school wheel delta (wheel event)
+            if ('deltaY' in orgEvent) {
+                deltaY = orgEvent.deltaY * -1;
+                delta = deltaY;
+            }
+            if ('deltaX' in orgEvent) {
+                deltaX = orgEvent.deltaX;
+                if (deltaY === 0) { delta = deltaX * -1; }
+            }
+
+            // No change actually happened, no reason to go any further
+            if (deltaY === 0 && deltaX === 0) { return; }
+
+            // Need to convert lines and pages to pixels if we aren't already in pixels
+            // There are three delta modes:
+            //   * deltaMode 0 is by pixels, nothing to do
+            //   * deltaMode 1 is by lines
+            //   * deltaMode 2 is by pages
+            if (orgEvent.deltaMode === 1) {
+                var lineHeight = $.data(this, 'mousewheel-line-height');
+                delta *= lineHeight;
+                deltaY *= lineHeight;
+                deltaX *= lineHeight;
+            } else if (orgEvent.deltaMode === 2) {
+                var pageHeight = $.data(this, 'mousewheel-page-height');
+                delta *= pageHeight;
+                deltaY *= pageHeight;
+                deltaX *= pageHeight;
+            }
+
+            // Store lowest absolute delta to normalize the delta values
+            absDelta = Math.max(Math.abs(deltaY), Math.abs(deltaX));
+
+            if (!lowestDelta || absDelta < lowestDelta) {
+                lowestDelta = absDelta;
+
+                // Adjust older deltas if necessary
+                if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+                    lowestDelta /= 40;
+                }
+            }
+
+            // Adjust older deltas if necessary
+            if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+                // Divide all the things by 40!
+                delta /= 40;
+                deltaX /= 40;
+                deltaY /= 40;
+            }
+
+            // Get a whole, normalized value for the deltas
+            delta = Math[delta >= 1 ? 'floor' : 'ceil'](delta / lowestDelta);
+            deltaX = Math[deltaX >= 1 ? 'floor' : 'ceil'](deltaX / lowestDelta);
+            deltaY = Math[deltaY >= 1 ? 'floor' : 'ceil'](deltaY / lowestDelta);
+
+            // Add information to the event object
+            event.deltaX = deltaX;
+            event.deltaY = deltaY;
+            event.deltaFactor = lowestDelta;
+            // Go ahead and set deltaMode to 0 since we converted to pixels
+            // Although this is a little odd since we overwrite the deltaX/Y
+            // properties with normalized deltas.
+            event.deltaMode = 0;
+
+            // Add event and delta to the front of the arguments
+            args.unshift(event, delta, deltaX, deltaY);
+
+            // Clearout lowestDelta after sometime to better
+            // handle multiple device types that give different
+            // a different lowestDelta
+            // Ex: trackpad = 3 and mouse wheel = 120
+            if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+            nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+            return ($.event.dispatch || $.event.handle).apply(this, args);
+        }
+
+        function nullLowestDelta() {
+            lowestDelta = null;
+        }
+
+        function shouldAdjustOldDeltas(orgEvent, absDelta) {
+            // If this is an older event and the delta is divisable by 120,
+            // then we are assuming that the browser is treating this as an
+            // older mouse wheel event and that we should divide the deltas
+            // by 40 to try and get a more usable deltaFactor.
+            // Side note, this actually impacts the reported scroll distance
+            // in older browsers and can cause scrolling to be slower than native.
+            // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+            return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+        }
+
+    }));
+</script>
+<script type="text/javascript">
+    /*!
+     * jScrollPane - v2.0.19 - 2013-11-16
+     * http://jscrollpane.kelvinluck.com/
+     *
+     * Copyright (c) 2013 Kelvin Luck
+     * Dual licensed under the MIT or GPL licenses.
+     */
+    !function (a, b, c) { a.fn.jScrollPane = function (d) { function e(d, e) { function f(b) { var e, h, j, l, m, n, q = !1, r = !1; if (P = b, Q === c) m = d.scrollTop(), n = d.scrollLeft(), d.css({ overflow: "hidden", padding: 0 }), R = d.innerWidth() + tb, S = d.innerHeight(), d.width(R), Q = a('<div class="jspPane" ></div>').css("padding", sb).append(d.children()), T = a('<div class="jspContainer" ></div>').css({ width: R + "px", height: S + "px" }).append(Q).appendTo(d); else { if (d.css("width", ""), q = P.stickToBottom && C(), r = P.stickToRight && D(), l = d.innerWidth() + tb != R || d.outerHeight() != S, l && (R = d.innerWidth() + tb, S = d.innerHeight(), T.css({ width: R + "px", height: S + "px" })), !l && ub == U && Q.outerHeight() == V) return d.width(R), void 0; ub = U, Q.css("width", ""), d.width(R), T.find(">.jspVerticalBar,>.jspHorizontalBar").remove().end() } Q.css("overflow", "auto"), U = b.contentWidth ? b.contentWidth : Q[0].scrollWidth, V = Q[0].scrollHeight, Q.css("overflow", ""), W = U / R, X = V / S, Y = X > 1, Z = W > 1, Z || Y ? (d.addClass("jspScrollable"), e = P.maintainPosition && (ab || db), e && (h = A(), j = B()), g(), i(), k(), e && (y(r ? U - R : h, !1), x(q ? V - S : j, !1)), H(), E(), N(), P.enableKeyboardNavigation && J(), P.clickOnTrack && o(), L(), P.hijackInternalLinks && M()) : (d.removeClass("jspScrollable"), Q.css({ top: 0, left: 0, width: T.width() - tb }), F(), I(), K(), p()), P.autoReinitialise && !rb ? rb = setInterval(function () { f(P) }, P.autoReinitialiseDelay) : !P.autoReinitialise && rb && clearInterval(rb), m && d.scrollTop(0) && x(m, !1), n && d.scrollLeft(0) && y(n, !1), d.trigger("jsp-initialised", [Z || Y]) } function g() { Y && (T.append(a('<div class="jspVerticalBar" ></div>').append(a('<div class="jspCap jspCapTop" ></div>'), a('<div class="jspTrack" ></div>').append(a('<div class="jspDrag" ></div>').append(a('<div class="jspDragTop" ></div>'), a('<div class="jspDragBottom" ></div>'))), a('<div class="jspCap jspCapBottom" ></div>'))), eb = T.find(">.jspVerticalBar"), fb = eb.find(">.jspTrack"), $ = fb.find(">.jspDrag"), P.showArrows && (jb = a('<a class="jspArrow jspArrowUp" ></a>').bind("mousedown.jsp", m(0, -1)).bind("click.jsp", G), kb = a('<a class="jspArrow jspArrowDown" ></a>').bind("mousedown.jsp", m(0, 1)).bind("click.jsp", G), P.arrowScrollOnHover && (jb.bind("mouseover.jsp", m(0, -1, jb)), kb.bind("mouseover.jsp", m(0, 1, kb))), l(fb, P.verticalArrowPositions, jb, kb)), hb = S, T.find(">.jspVerticalBar>.jspCap:visible,>.jspVerticalBar>.jspArrow").each(function () { hb -= a(this).outerHeight() }), $.hover(function () { $.addClass("jspHover") }, function () { $.removeClass("jspHover") }).bind("mousedown.jsp", function (b) { a("html").bind("dragstart.jsp selectstart.jsp", G), $.addClass("jspActive"); var c = b.pageY - $.position().top; return a("html").bind("mousemove.jsp", function (a) { r(a.pageY - c, !1) }).bind("mouseup.jsp mouseleave.jsp", q), !1 }), h()) } function h() { fb.height(hb + "px"), ab = 0, gb = P.verticalGutter + fb.outerWidth(), Q.width(R - gb - tb); try { 0 === eb.position().left && Q.css("margin-left", gb + "px") } catch (a) { } } function i() { Z && (T.append(a('<div class="jspHorizontalBar" ></div>').append(a('<div class="jspCap jspCapLeft" ></div>'), a('<div class="jspTrack" ></div>').append(a('<div class="jspDrag" ></div>').append(a('<div class="jspDragLeft" ></div>'), a('<div class="jspDragRight" ></div>'))), a('<div class="jspCap jspCapRight" ></div>'))), lb = T.find(">.jspHorizontalBar"), mb = lb.find(">.jspTrack"), bb = mb.find(">.jspDrag"), P.showArrows && (pb = a('<a class="jspArrow jspArrowLeft" ></a>').bind("mousedown.jsp", m(-1, 0)).bind("click.jsp", G), qb = a('<a class="jspArrow jspArrowRight" ></a>').bind("mousedown.jsp", m(1, 0)).bind("click.jsp", G), P.arrowScrollOnHover && (pb.bind("mouseover.jsp", m(-1, 0, pb)), qb.bind("mouseover.jsp", m(1, 0, qb))), l(mb, P.horizontalArrowPositions, pb, qb)), bb.hover(function () { bb.addClass("jspHover") }, function () { bb.removeClass("jspHover") }).bind("mousedown.jsp", function (b) { a("html").bind("dragstart.jsp selectstart.jsp", G), bb.addClass("jspActive"); var c = b.pageX - bb.position().left; return a("html").bind("mousemove.jsp", function (a) { t(a.pageX - c, !1) }).bind("mouseup.jsp mouseleave.jsp", q), !1 }), nb = T.innerWidth(), j()) } function j() { T.find(">.jspHorizontalBar>.jspCap:visible,>.jspHorizontalBar>.jspArrow").each(function () { nb -= a(this).outerWidth() }), mb.width(nb + "px"), db = 0 } function k() { if (Z && Y) { var b = mb.outerHeight(), c = fb.outerWidth(); hb -= b, a(lb).find(">.jspCap:visible,>.jspArrow").each(function () { nb += a(this).outerWidth() }), nb -= c, S -= c, R -= b, mb.parent().append(a('<div class="jspCorner" ></div>').css("width", b + "px")), h(), j() } Z && Q.width(T.outerWidth() - tb + "px"), V = Q.outerHeight(), X = V / S, Z && (ob = Math.ceil(1 / W * nb), ob > P.horizontalDragMaxWidth ? ob = P.horizontalDragMaxWidth : ob < P.horizontalDragMinWidth && (ob = P.horizontalDragMinWidth), bb.width(ob + "px"), cb = nb - ob, u(db)), Y && (ib = Math.ceil(1 / X * hb), ib > P.verticalDragMaxHeight ? ib = P.verticalDragMaxHeight : ib < P.verticalDragMinHeight && (ib = P.verticalDragMinHeight), $.height(ib + "px"), _ = hb - ib, s(ab)) } function l(a, b, c, d) { var e, f = "before", g = "after"; "os" == b && (b = /Mac/.test(navigator.platform) ? "after" : "split"), b == f ? g = b : b == g && (f = b, e = c, c = d, d = e), a[f](c)[g](d) } function m(a, b, c) { return function () { return n(a, b, this, c), this.blur(), !1 } } function n(b, c, d, e) { d = a(d).addClass("jspActive"); var f, g, h = !0, i = function () { 0 !== b && vb.scrollByX(b * P.arrowButtonSpeed), 0 !== c && vb.scrollByY(c * P.arrowButtonSpeed), g = setTimeout(i, h ? P.initialDelay : P.arrowRepeatFreq), h = !1 }; i(), f = e ? "mouseout.jsp" : "mouseup.jsp", e = e || a("html"), e.bind(f, function () { d.removeClass("jspActive"), g && clearTimeout(g), g = null, e.unbind(f) }) } function o() { p(), Y && fb.bind("mousedown.jsp", function (b) { if (b.originalTarget === c || b.originalTarget == b.currentTarget) { var d, e = a(this), f = e.offset(), g = b.pageY - f.top - ab, h = !0, i = function () { var a = e.offset(), c = b.pageY - a.top - ib / 2, f = S * P.scrollPagePercent, k = _ * f / (V - S); if (0 > g) ab - k > c ? vb.scrollByY(-f) : r(c); else { if (!(g > 0)) return j(), void 0; c > ab + k ? vb.scrollByY(f) : r(c) } d = setTimeout(i, h ? P.initialDelay : P.trackClickRepeatFreq), h = !1 }, j = function () { d && clearTimeout(d), d = null, a(document).unbind("mouseup.jsp", j) }; return i(), a(document).bind("mouseup.jsp", j), !1 } }), Z && mb.bind("mousedown.jsp", function (b) { if (b.originalTarget === c || b.originalTarget == b.currentTarget) { var d, e = a(this), f = e.offset(), g = b.pageX - f.left - db, h = !0, i = function () { var a = e.offset(), c = b.pageX - a.left - ob / 2, f = R * P.scrollPagePercent, k = cb * f / (U - R); if (0 > g) db - k > c ? vb.scrollByX(-f) : t(c); else { if (!(g > 0)) return j(), void 0; c > db + k ? vb.scrollByX(f) : t(c) } d = setTimeout(i, h ? P.initialDelay : P.trackClickRepeatFreq), h = !1 }, j = function () { d && clearTimeout(d), d = null, a(document).unbind("mouseup.jsp", j) }; return i(), a(document).bind("mouseup.jsp", j), !1 } }) } function p() { mb && mb.unbind("mousedown.jsp"), fb && fb.unbind("mousedown.jsp") } function q() { a("html").unbind("dragstart.jsp selectstart.jsp mousemove.jsp mouseup.jsp mouseleave.jsp"), $ && $.removeClass("jspActive"), bb && bb.removeClass("jspActive") } function r(a, b) { Y && (0 > a ? a = 0 : a > _ && (a = _), b === c && (b = P.animateScroll), b ? vb.animate($, "top", a, s) : ($.css("top", a), s(a))) } function s(a) { a === c && (a = $.position().top), T.scrollTop(0), ab = a; var b = 0 === ab, e = ab == _, f = a / _, g = -f * (V - S); (wb != b || yb != e) && (wb = b, yb = e, d.trigger("jsp-arrow-change", [wb, yb, xb, zb])), v(b, e), Q.css("top", g), d.trigger("jsp-scroll-y", [-g, b, e]).trigger("scroll") } function t(a, b) { Z && (0 > a ? a = 0 : a > cb && (a = cb), b === c && (b = P.animateScroll), b ? vb.animate(bb, "left", a, u) : (bb.css("left", a), u(a))) } function u(a) { a === c && (a = bb.position().left), T.scrollTop(0), db = a; var b = 0 === db, e = db == cb, f = a / cb, g = -f * (U - R); (xb != b || zb != e) && (xb = b, zb = e, d.trigger("jsp-arrow-change", [wb, yb, xb, zb])), w(b, e), Q.css("left", g), d.trigger("jsp-scroll-x", [-g, b, e]).trigger("scroll") } function v(a, b) { P.showArrows && (jb[a ? "addClass" : "removeClass"]("jspDisabled"), kb[b ? "addClass" : "removeClass"]("jspDisabled")) } function w(a, b) { P.showArrows && (pb[a ? "addClass" : "removeClass"]("jspDisabled"), qb[b ? "addClass" : "removeClass"]("jspDisabled")) } function x(a, b) { var c = a / (V - S); r(c * _, b) } function y(a, b) { var c = a / (U - R); t(c * cb, b) } function z(b, c, d) { var e, f, g, h, i, j, k, l, m, n = 0, o = 0; try { e = a(b) } catch (p) { return } for (f = e.outerHeight(), g = e.outerWidth(), T.scrollTop(0), T.scrollLeft(0); !e.is(".jspPane");)if (n += e.position().top, o += e.position().left, e = e.offsetParent(), /^body|html$/i.test(e[0].nodeName)) return; h = B(), j = h + S, h > n || c ? l = n - P.horizontalGutter : n + f > j && (l = n - S + f + P.horizontalGutter), isNaN(l) || x(l, d), i = A(), k = i + R, i > o || c ? m = o - P.horizontalGutter : o + g > k && (m = o - R + g + P.horizontalGutter), isNaN(m) || y(m, d) } function A() { return -Q.position().left } function B() { return -Q.position().top } function C() { var a = V - S; return a > 20 && a - B() < 10 } function D() { var a = U - R; return a > 20 && a - A() < 10 } function E() { T.unbind(Bb).bind(Bb, function (a, b, c, d) { var e = db, f = ab, g = a.deltaFactor || P.mouseWheelSpeed; return vb.scrollBy(c * g, -d * g, !1), e == db && f == ab }) } function F() { T.unbind(Bb) } function G() { return !1 } function H() { Q.find(":input,a").unbind("focus.jsp").bind("focus.jsp", function (a) { z(a.target, !1) }) } function I() { Q.find(":input,a").unbind("focus.jsp") } function J() { function b() { var a = db, b = ab; switch (c) { case 40: vb.scrollByY(P.keyboardSpeed, !1); break; case 38: vb.scrollByY(-P.keyboardSpeed, !1); break; case 34: case 32: vb.scrollByY(S * P.scrollPagePercent, !1); break; case 33: vb.scrollByY(-S * P.scrollPagePercent, !1); break; case 39: vb.scrollByX(P.keyboardSpeed, !1); break; case 37: vb.scrollByX(-P.keyboardSpeed, !1) }return e = a != db || b != ab } var c, e, f = []; Z && f.push(lb[0]), Y && f.push(eb[0]), Q.focus(function () { d.focus() }), d.attr("tabindex", 0).unbind("keydown.jsp keypress.jsp").bind("keydown.jsp", function (d) { if (d.target === this || f.length && a(d.target).closest(f).length) { var g = db, h = ab; switch (d.keyCode) { case 40: case 38: case 34: case 32: case 33: case 39: case 37: c = d.keyCode, b(); break; case 35: x(V - S), c = null; break; case 36: x(0), c = null }return e = d.keyCode == c && g != db || h != ab, !e } }).bind("keypress.jsp", function (a) { return a.keyCode == c && b(), !e }), P.hideFocus ? (d.css("outline", "none"), "hideFocus" in T[0] && d.attr("hideFocus", !0)) : (d.css("outline", ""), "hideFocus" in T[0] && d.attr("hideFocus", !1)) } function K() { d.attr("tabindex", "-1").removeAttr("tabindex").unbind("keydown.jsp keypress.jsp") } function L() { if (location.hash && location.hash.length > 1) { var b, c, d = escape(location.hash.substr(1)); try { b = a("#" + d + ', a[name="' + d + '"]') } catch (e) { return } b.length && Q.find(d) && (0 === T.scrollTop() ? c = setInterval(function () { T.scrollTop() > 0 && (z(b, !0), a(document).scrollTop(T.position().top), clearInterval(c)) }, 50) : (z(b, !0), a(document).scrollTop(T.position().top))) } } function M() { a(document.body).data("jspHijack") || (a(document.body).data("jspHijack", !0), a(document.body).delegate("a[href*=#]", "click", function (c) { var d, e, f, g, h, i, j = this.href.substr(0, this.href.indexOf("#")), k = location.href; if (-1 !== location.href.indexOf("#") && (k = location.href.substr(0, location.href.indexOf("#"))), j === k) { d = escape(this.href.substr(this.href.indexOf("#") + 1)); try { e = a("#" + d + ', a[name="' + d + '"]') } catch (l) { return } e.length && (f = e.closest(".jspScrollable"), g = f.data("jsp"), g.scrollToElement(e, !0), f[0].scrollIntoView && (h = a(b).scrollTop(), i = e.offset().top, (h > i || i > h + a(b).height()) && f[0].scrollIntoView()), c.preventDefault()) } })) } function N() { var a, b, c, d, e, f = !1; T.unbind("touchstart.jsp touchmove.jsp touchend.jsp click.jsp-touchclick").bind("touchstart.jsp", function (g) { var h = g.originalEvent.touches[0]; a = A(), b = B(), c = h.pageX, d = h.pageY, e = !1, f = !0 }).bind("touchmove.jsp", function (g) { if (f) { var h = g.originalEvent.touches[0], i = db, j = ab; return vb.scrollTo(a + c - h.pageX, b + d - h.pageY), e = e || Math.abs(c - h.pageX) > 5 || Math.abs(d - h.pageY) > 5, i == db && j == ab } }).bind("touchend.jsp", function () { f = !1 }).bind("click.jsp-touchclick", function () { return e ? (e = !1, !1) : void 0 }) } function O() { var a = B(), b = A(); d.removeClass("jspScrollable").unbind(".jsp"), d.replaceWith(Ab.append(Q.children())), Ab.scrollTop(a), Ab.scrollLeft(b), rb && clearInterval(rb) } var P, Q, R, S, T, U, V, W, X, Y, Z, $, _, ab, bb, cb, db, eb, fb, gb, hb, ib, jb, kb, lb, mb, nb, ob, pb, qb, rb, sb, tb, ub, vb = this, wb = !0, xb = !0, yb = !1, zb = !1, Ab = d.clone(!1, !1).empty(), Bb = a.fn.mwheelIntent ? "mwheelIntent.jsp" : "mousewheel.jsp"; "border-box" === d.css("box-sizing") ? (sb = 0, tb = 0) : (sb = d.css("paddingTop") + " " + d.css("paddingRight") + " " + d.css("paddingBottom") + " " + d.css("paddingLeft"), tb = (parseInt(d.css("paddingLeft"), 10) || 0) + (parseInt(d.css("paddingRight"), 10) || 0)), a.extend(vb, { reinitialise: function (b) { b = a.extend({}, P, b), f(b) }, scrollToElement: function (a, b, c) { z(a, b, c) }, scrollTo: function (a, b, c) { y(a, c), x(b, c) }, scrollToX: function (a, b) { y(a, b) }, scrollToY: function (a, b) { x(a, b) }, scrollToPercentX: function (a, b) { y(a * (U - R), b) }, scrollToPercentY: function (a, b) { x(a * (V - S), b) }, scrollBy: function (a, b, c) { vb.scrollByX(a, c), vb.scrollByY(b, c) }, scrollByX: function (a, b) { var c = A() + Math[0 > a ? "floor" : "ceil"](a), d = c / (U - R); t(d * cb, b) }, scrollByY: function (a, b) { var c = B() + Math[0 > a ? "floor" : "ceil"](a), d = c / (V - S); r(d * _, b) }, positionDragX: function (a, b) { t(a, b) }, positionDragY: function (a, b) { r(a, b) }, animate: function (a, b, c, d) { var e = {}; e[b] = c, a.animate(e, { duration: P.animateDuration, easing: P.animateEase, queue: !1, step: d }) }, getContentPositionX: function () { return A() }, getContentPositionY: function () { return B() }, getContentWidth: function () { return U }, getContentHeight: function () { return V }, getPercentScrolledX: function () { return A() / (U - R) }, getPercentScrolledY: function () { return B() / (V - S) }, getIsScrollableH: function () { return Z }, getIsScrollableV: function () { return Y }, getContentPane: function () { return Q }, scrollToBottom: function (a) { r(_, a) }, hijackInternalLinks: a.noop, destroy: function () { O() } }), f(e) } return d = a.extend({}, a.fn.jScrollPane.defaults, d), a.each(["arrowButtonSpeed", "trackClickSpeed", "keyboardSpeed"], function () { d[this] = d[this] || d.speed }), this.each(function () { var b = a(this), c = b.data("jsp"); c ? c.reinitialise(d) : (a("script", b).filter('[type="text/javascript"],:not([type])').remove(), c = new e(b, d), b.data("jsp", c)) }) }, a.fn.jScrollPane.defaults = { showArrows: !1, maintainPosition: !0, stickToBottom: !1, stickToRight: !1, clickOnTrack: !0, autoReinitialise: !1, autoReinitialiseDelay: 500, verticalDragMinHeight: 0, verticalDragMaxHeight: 99999, horizontalDragMinWidth: 0, horizontalDragMaxWidth: 99999, contentWidth: c, animateScroll: !1, animateDuration: 300, animateEase: "linear", hijackInternalLinks: !1, verticalGutter: 4, horizontalGutter: 4, mouseWheelSpeed: 3, arrowButtonSpeed: 0, arrowRepeatFreq: 50, arrowScrollOnHover: !1, trackClickSpeed: 0, trackClickRepeatFreq: 70, verticalArrowPositions: "split", horizontalArrowPositions: "split", enableKeyboardNavigation: !0, hideFocus: !1, keyboardSpeed: 0, initialDelay: 300, speed: 30, scrollPagePercent: .8 } }(jQuery, this);
+</script>
+<script type="text/javascript">
+    var auto_scroll_timer;
+    var dom_items;
+    var dom_item;
+    if ($('#fw-feed-items').length) {
+        dom_items = $('#fw-feed-items');
+        dom_item = $('.fw-feed-item');
+    } else if ($('#fw-fb-feed-items').length) {
+        dom_items = $('#fw-fb-feed-items');
+        dom_item = $('.fw-fb-feed-item');
+    } else if ($('#fw-gc-feed-items').length) {
+        dom_items = $('#fw-gc-feed-items');
+        dom_item = $('.fw-gc-feed-item');
+    } else {
+        dom_items = $('#fw-tw-feed-items');
+        dom_item = $('.fw-tw-feed-item');
+    }
+
+    function auto_scroll_off() {
+        clearInterval(auto_scroll_timer);
+    }
+
+    function auto_scroll_on() {
+
+        $('.scroll-pane').jScrollPane().data().jsp.scrollTo(0, 0);
+
+        auto_scroll_timer = setInterval(function () { autoscroll() }, 4 * 1000);
+    }
+
+    var cnt = 0;
+    var mt = 0;
+    function autoscroll() {
+        var dom_items;
+        var dom_item;
+        if ($('#fw-feed-items').length) {
+            dom_items = $('#fw-feed-items');
+            dom_item = $('.fw-feed-item');
+        } else if ($('#fw-fb-feed-items').length) {
+            dom_items = $('#fw-fb-feed-items');
+            dom_item = $('.fw-fb-feed-item');
+        } else if ($('#fw-gc-feed-items').length) {
+            dom_items = $('#fw-gc-feed-items');
+            dom_item = $('.fw-gc-feed-item');
+        } else {
+            dom_items = $('#fw-tw-feed-items');
+            dom_item = $('.fw-tw-feed-item');
+        }
+
+
+        var item_height = dom_item.first().outerHeight(true);
+        dom_items.animate(
+            { 'marginTop': "-" + item_height + "px", },
+            {
+                complete: function () {
+                    dom_item.first().insertAfter(dom_item.last());
+                    dom_items.css({ 'marginTop': '0px' });
+                },
+                duration: 800,
+            }
+        );
+
+    }
+
+    // Auto scroll(movie credit)
+    function auto_scroll_mc_off() {
+        var dom_items;
+        if ($('#fw-feed-items').length) {
+            dom_items = $('#fw-feed-items');
+        } else if ($('#fw-fb-feed-items').length) {
+            dom_items = $('#fw-fb-feed-items');
+        } else if ($('#fw-gc-feed-items').length) {
+            dom_items = $('#fw-gc-feed-items');
+        } else {
+            dom_items = $('#fw-tw-feed-items');
+        }
+        dom_items.pause();
+    }
+
+    function auto_scroll_mc_on() {
+        var dom_items;
+        if ($('#fw-feed-items').length) {
+            dom_items = $('#fw-feed-items');
+        } else if ($('#fw-fb-feed-items').length) {
+            dom_items = $('#fw-fb-feed-items');
+        } else if ($('#fw-gc-feed-items').length) {
+            dom_items = $('#fw-gc-feed-items');
+        } else {
+            dom_items = $('#fw-tw-feed-items');
+        }
+        dom_items.resume();
+    }
+
+    function auto_scroll_mc_init() {
+        var list_height = 0;
+        var dom_items;
+        var dom_item;
+        if ($('#fw-feed-items').length) {
+            dom_items = $('#fw-feed-items');
+            dom_item = $('.fw-feed-item');
+        } else if ($('#fw-fb-feed-items').length) {
+            dom_items = $('#fw-fb-feed-items');
+            dom_item = $('.fw-fb-feed-item');
+        } else if ($('#fw-gc-feed-items').length) {
+            dom_items = $('#fw-gc-feed-items');
+            dom_item = $('.fw-gc-feed-item');
+        } else {
+            dom_items = $('#fw-tw-feed-items');
+            dom_item = $('.fw-tw-feed-item');
+        }
+        dom_item.each(function (i, elem) {
+            dom_items.append($(this).clone(true));
+            list_height = list_height + $(this).outerHeight(true);
+        });
+        mcscroll(list_height);
+    }
+
+    function mcscroll(list_height) {
+        var dur = list_height * 20;
+        var dom_items;
+        var dom_item;
+        if ($('#fw-feed-items').length) {
+            dom_items = $('#fw-feed-items');
+            dom_item = $('.fw-feed-item');
+        } else if ($('#fw-fb-feed-items').length) {
+            dom_items = $('#fw-fb-feed-items');
+            dom_item = $('.fw-fb-feed-item');
+        } else if ($('#fw-gc-feed-items').length) {
+            dom_items = $('#fw-gc-feed-items');
+            dom_item = $('.fw-gc-feed-item');
+        } else {
+            dom_items = $('#fw-tw-feed-items');
+            dom_item = $('.fw-tw-feed-item');
+        }
+
+        dom_items.css({ 'marginTop': '0px' });
+        dom_items.animate(
+            { 'marginTop': "-" + list_height + "px", },
+            {
+                complete: function () {
+                    dom_items.css({ 'marginTop': '0px' });
+                    mcscroll(list_height);
+                },
+                easing: 'linear',
+                duration: dur,
+            }
+        );
+
+    }
+
+</script>
+<script type="text/javascript">
+    /*!
+    imgLiquid v0.9.944 / 03-05-2013
+    jQuery plugin to resize images to fit in a container.
+    Copyright (c) 2012 Alejandro Emparan (karacas) @@krc_ale
+    Dual licensed under the MIT and GPL licenses
+    https://github.com/karacas/imgLiquid
+    **/
+    /*
+    ex:
+         $('.imgLiquid').imgLiquid({fill:true});
+
+         // OPTIONS:
+
+         > js:
+                   fill: true,
+                   verticalAlign:		// 'center' //	'top'	//	'bottom' // '50%'  // '10%'
+                   horizontalAlign:	// 'center' //	'left'	//	'right'  // '50%'  // '10%'
+
+         > CallBacks:
+                   onStart:		function(){},
+                   onFinish:		function(){},
+                   onItemStart:	function(index, container, img){},
+                   onItemFinish:	function(index, container, img){}
+
+         > hml5 data attr (overwrite all)
+                   data-imgLiquid-fill='true'
+                   data-imgLiquid-horizontalAlign='center'
+                   data-imgLiquid-verticalAlign='center'
+    */
+    //
+
+
+    var imgLiquid = imgLiquid || { VER: '0.9.944' };
+    imgLiquid.bgs_Available = false;
+    imgLiquid.bgs_CheckRunned = false;
+    imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
+
+
+    (function ($) {
+
+        // ___________________________________________________________________
+
+        function checkBgsIsavailable() {
+            if (imgLiquid.bgs_CheckRunned) return;
+            else imgLiquid.bgs_CheckRunned = true;
+
+            var spanBgs = $('<span style="background-size:cover" ></span>');
+            $('body').append(spanBgs);
+
+            !function () {
+                var bgs_Check = spanBgs[0];
+                if (!bgs_Check || !window.getComputedStyle) return;
+                var compStyle = window.getComputedStyle(bgs_Check, null);
+                if (!compStyle || !compStyle.backgroundSize) return;
+                imgLiquid.bgs_Available = (compStyle.backgroundSize === 'cover');
+            }();
+
+            spanBgs.remove();
+        }
+
+
+
+
+
+        // ___________________________________________________________________
+
+        $.fn.extend({
+            imgLiquid: function (options) {
+
+                this.defaults = {
+                    fill: true,
+                    verticalAlign: 'center',			//	'top'	//	'bottom' // '50%'  // '10%'
+                    horizontalAlign: 'center',			//	'left'	//	'right'  // '50%'  // '10%'
+                    useBackgroundSize: true,
+                    useDataHtmlAttr: true,
+
+                    responsive: true,					/* Only for use with BackgroundSize false (or old browsers) */
+                    delay: 0,							/* Only for use with BackgroundSize false (or old browsers) */
+                    fadeInTime: 0,						/* Only for use with BackgroundSize false (or old browsers) */
+                    removeBoxBackground: true,			/* Only for use with BackgroundSize false (or old browsers) */
+                    hardPixels: true,					/* Only for use with BackgroundSize false (or old browsers) */
+                    responsiveCheckTime: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to check div resize */
+                    timecheckvisibility: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
+
+                    // CALLBACKS
+                    onStart: null,						// no-params
+                    onFinish: null,						// no-params
+                    onItemStart: null,					// params: (index, container, img )
+                    onItemFinish: null,					// params: (index, container, img )
+                    onItemError: null					// params: (index, container, img )
+                };
+
+
+                checkBgsIsavailable();
+                var imgLiquidRoot = this;
+
+                // Extend global settings
+                this.options = options;
+                this.settings = $.extend({}, this.defaults, this.options);
+
+                // CallBack
+                if (this.settings.onStart) this.settings.onStart();
+
+
+
+
+                // ___________________________________________________________________
+
+                return this.each(function ($i) {
+
+                    // MAIN >> each for image
+
+                    var settings = imgLiquidRoot.settings,
+                        $imgBoxCont = $(this),
+                        $img = $('img:first', $imgBoxCont);
+                    if (!$img.length) { onError(); return; }
+
+
+                    // Extend settings
+                    if (!$img.data('imgLiquid_settings')) {
+                        // First time
+                        settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite());
+                    } else {
+                        // Recall
+                        // Remove Classes
+                        $imgBoxCont.removeClass('imgLiquid_error').removeClass('imgLiquid_ready');
+                        settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options);
+                    }
+                    $img.data('imgLiquid_settings', settings);
+
+
+                    // Start CallBack
+                    if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img); /* << CallBack */
+
+
+                    // Process
+                    if (imgLiquid.bgs_Available && settings.useBackgroundSize)
+                        processBgSize();
+                    else
+                        processOldMethod();
+
+
+                    // END MAIN <<
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function processBgSize() {
+
+                        var imgSrc = $img.attr('src');
+
+                        // Check change img src
+                        if ($imgBoxCont.css('background-image').indexOf(imgSrc) === -1) {
+                            // Change
+                            $imgBoxCont.css({ 'background-image': 'url("' + imgSrc + '")' });
+                        }
+
+                        $imgBoxCont.css({
+                            'background-size': (settings.fill) ? 'cover' : 'contain',
+                            'background-position': (settings.horizontalAlign + ' ' + settings.verticalAlign).toLowerCase(),
+                            'background-repeat': 'no-repeat'
+                        });
+
+                        $('a:first', $imgBoxCont).css({
+                            'display': 'block',
+                            'width': '100%',
+                            'height': '100%'
+                        });
+
+                        $('img', $imgBoxCont).css({ 'display': 'none' });
+
+                        if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack */
+
+                        $imgBoxCont.addClass('imgLiquid_bgSize');
+                        $imgBoxCont.addClass('imgLiquid_ready');
+                        checkFinish();
+                    }
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function processOldMethod() {
+
+                        // Check change img src
+                        if ($img.data('oldSrc') && $img.data('oldSrc') !== $img.attr('src')) {
+
+                            /* Clone & Reset img */
+                            var $imgCopy = $img.clone().removeAttr('style');
+                            $imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
+                            $img.parent().prepend($imgCopy);
+                            $img.remove();
+                            $img = $imgCopy;
+                            $img[0].width = 0;
+
+                            // Bug ie with > if (!$img[0].complete && $img[0].width) onError();
+                            setTimeout(processOldMethod, 10);
+                            return;
+                        }
+
+
+                        // Reproceess?
+                        if ($img.data('imgLiquid_oldProcessed')) {
+                            makeOldProcess(); return;
+                        }
+
+
+                        // Set data
+                        $img.data('imgLiquid_oldProcessed', false);
+                        $img.data('oldSrc', $img.attr('src'));
+
+
+                        // Hide others images
+                        $('img:not(:first)', $imgBoxCont).css('display', 'none');
+
+
+                        // CSSs
+                        $imgBoxCont.css({ 'overflow': 'hidden' });
+                        $img.fadeTo(0, 0).removeAttr('width').removeAttr('height').css({
+                            'visibility': 'visible',
+                            'max-width': 'none',
+                            'max-height': 'none',
+                            'width': 'auto',
+                            'height': 'auto',
+                            'display': 'block'
+                        });
+
+
+                        // CheckErrors
+                        $img.on('error', onError);
+                        $img[0].onerror = onError;
+
+
+                        // loop until load
+                        function onLoad() {
+                            if ($img.data('imgLiquid_error') || $img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
+                            if ($imgBoxCont.is(':visible') && $img[0].complete && $img[0].width > 0 && $img[0].height > 0) {
+                                $img.data('imgLiquid_loaded', true);
+                                setTimeout(makeOldProcess, $i * settings.delay);
+                            } else {
+                                setTimeout(onLoad, settings.timecheckvisibility);
+                            }
+                        }
+
+
+                        onLoad();
+                        checkResponsive();
+                    }
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function checkResponsive() {
+
+                        /* Only for oldProcessed method (background-size dont need) */
+
+                        if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
+                        if (!$img.data('imgLiquid_settings')) return;
+
+                        settings = $img.data('imgLiquid_settings');
+
+                        $imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight / 10000);
+                        if ($imgBoxCont.sizeOld && $imgBoxCont.actualSize !== $imgBoxCont.sizeOld) makeOldProcess();
+
+                        $imgBoxCont.sizeOld = $imgBoxCont.actualSize;
+                        setTimeout(checkResponsive, settings.responsiveCheckTime);
+                    }
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function onError() {
+                        $img.data('imgLiquid_error', true);
+                        $imgBoxCont.addClass('imgLiquid_error');
+                        if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack */
+                        checkFinish();
+                    }
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function getSettingsOverwrite() {
+                        var SettingsOverwrite = {};
+
+                        if (imgLiquidRoot.settings.useDataHtmlAttr) {
+                            var dif = $imgBoxCont.attr('data-imgLiquid-fill'),
+                                ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
+                                va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+
+                            if (dif === 'true' || dif === 'false') SettingsOverwrite.fill = Boolean(dif === 'true');
+                            if (ha !== undefined && (ha === 'left' || ha === 'center' || ha === 'right' || ha.indexOf('%') !== -1)) SettingsOverwrite.horizontalAlign = ha;
+                            if (va !== undefined && (va === 'top' || va === 'bottom' || va === 'center' || va.indexOf('%') !== -1)) SettingsOverwrite.verticalAlign = va;
+                        }
+
+                        if (imgLiquid.isIE && imgLiquidRoot.settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
+                        return SettingsOverwrite;
+                    }
+
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function makeOldProcess() { /* Only for old browsers, or useBackgroundSize seted false */
+
+                        // Calculate size
+                        var w, h, wn, hn, ha, va, hdif, vdif,
+                            margT = 0,
+                            margL = 0,
+                            $imgCW = $imgBoxCont.width(),
+                            $imgCH = $imgBoxCont.height();
+
+
+                        // Save original sizes
+                        if ($img.data('owidth') === undefined) $img.data('owidth', $img[0].width);
+                        if ($img.data('oheight') === undefined) $img.data('oheight', $img[0].height);
+
+
+                        // Compare ratio
+                        if (settings.fill === ($imgCW / $imgCH) >= ($img.data('owidth') / $img.data('oheight'))) {
+                            w = '100%';
+                            h = 'auto';
+                            wn = Math.floor($imgCW);
+                            hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
+                        } else {
+                            w = 'auto';
+                            h = '100%';
+                            wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
+                            hn = Math.floor($imgCH);
+                        }
+
+                        // Align X
+                        ha = settings.horizontalAlign.toLowerCase();
+                        hdif = $imgCW - wn;
+                        if (ha === 'left') margL = 0;
+                        if (ha === 'center') margL = hdif * 0.5;
+                        if (ha === 'right') margL = hdif;
+                        if (ha.indexOf('%') !== -1) {
+                            ha = parseInt(ha.replace('%', ''), 10);
+                            if (ha > 0) margL = hdif * ha * 0.01;
+                        }
+
+
+                        // Align Y
+                        va = settings.verticalAlign.toLowerCase();
+                        vdif = $imgCH - hn;
+                        if (va === 'top') margT = 0;
+                        if (va === 'center') margT = vdif * 0.5;
+                        if (va === 'bottom') margT = vdif;
+                        if (va.indexOf('%') !== -1) {
+                            va = parseInt(va.replace('%', ''), 10);
+                            if (va > 0) margT = vdif * va * 0.01;
+                        }
+
+
+                        // Add Css
+                        if (settings.hardPixels) { w = wn; h = hn; }
+                        $img.css({
+                            'width': w,
+                            'height': h,
+                            'margin-left': Math.floor(margL),
+                            'margin-top': Math.floor(margT)
+                        });
+
+
+                        // FadeIn > Only first time
+                        if (!$img.data('imgLiquid_oldProcessed')) {
+                            $img.fadeTo(settings.fadeInTime, 1);
+                            $img.data('imgLiquid_oldProcessed', true);
+                            if (settings.removeBoxBackground) $imgBoxCont.css('background-image', 'none');
+                            $imgBoxCont.addClass('imgLiquid_nobgSize');
+                            $imgBoxCont.addClass('imgLiquid_ready');
+                        }
+
+
+                        if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack */
+                        checkFinish();
+                    }
+
+
+
+
+                    // ___________________________________________________________________
+
+                    function checkFinish() { /* Check callBack */
+                        if ($i === imgLiquidRoot.length - 1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish();
+                    }
+
+
+                });
+            }
+        });
+    })(jQuery);
+
+
+
+    // Inject css styles ______________________________________________________
+    !function () {
+        var css = imgLiquid.injectCss,
+            head = document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+        style.type = 'text/css';
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+        head.appendChild(style);
+    }();
+</script>
+<script type="text/javascript">
+    /*
+     * Pause jQuery plugin v0.1
+     *
+     * Copyright 2010 by Tobia Conforto <tobia.conforto@gmail.com>
+     *
+     * Based on Pause-resume-animation jQuery plugin by Joe Weitzel
+     *
+     * This program is free software; you can redistribute it and/or modify it
+     * under the terms of the GNU General Public License as published by the Free
+     * Software Foundation; either version 2 of the License, or(at your option)
+     * any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT
+     * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+     * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+     * more details.
+     *
+     * You should have received a copy of the GNU General Public License along with
+     * this program; if not, write to the Free Software Foundation, Inc., 51
+     * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+     */
+    (function () { var e = jQuery, f = "jQuery.pause", d = 1, b = e.fn.animate, a = {}; function c() { return new Date().getTime() } e.fn.animate = function (k, h, j, i) { var g = e.speed(h, j, i); g.complete = g.old; return this.each(function () { if (!this[f]) { this[f] = d++ } var l = e.extend({}, g); b.apply(e(this), [k, e.extend({}, l)]); a[this[f]] = { run: true, prop: k, opt: l, start: c(), done: 0 } }) }; e.fn.pause = function () { return this.each(function () { if (!this[f]) { this[f] = d++ } var g = a[this[f]]; if (g && g.run) { g.done += c() - g.start; if (g.done > g.opt.duration) { delete a[this[f]] } else { e(this).stop(); g.run = false } } }) }; e.fn.resume = function () { return this.each(function () { if (!this[f]) { this[f] = d++ } var g = a[this[f]]; if (g && !g.run) { g.opt.duration -= g.done; g.done = 0; g.run = true; g.start = c(); b.apply(e(this), [g.prop, e.extend({}, g.opt)]) } }) } })();
+</script>
+<script type="text/javascript">
+    $(function () {
+        var ActionEnum = { C_OPEN_INIF: 'C_OPEN_INIF' };
+
+        var dom_title;
+        if ($('.fw-feed-title').length) {
+            dom_title = $('.fw-feed-title');
+        } else if ($('.fw-fb-feed-header-title').length) {
+            dom_title = $('.fw-fb-feed-header-title');
+        } else if ($('.fw-gc-feed-header-title').length) {
+            dom_title = $('.fw-gc-feed-header-title');
+        } else {
+            dom_title = $('.fw-tw-feed-header-title');
+        }
+
+        var dom_container;
+        if ($('#fw-container').length) {
+            dom_container = $('#fw-container');
+        } else if ($('#fw-fb-container').length) {
+            dom_container = $('#fw-fb-container');
+        } else if ($('#fw-gc-container').length) {
+            dom_container = $('#fw-gc-container');
+        } else {
+            dom_container = $('#fw-tw-container');
+        }
+
+        var dom_scroll_area;
+        if ($('#fw-feed-items-scroll-area').length) {
+            dom_scroll_area = $('#fw-feed-items-scroll-area');
+        } else if ($('#fw-fb-feed-items-scroll-area').length) {
+            dom_scroll_area = $('#fw-fb-feed-items-scroll-area');
+        } else if ($('#fw-gc-feed-items-scroll-area').length) {
+            dom_scroll_area = $('#fw-gc-feed-items-scroll-area');
+        } else {
+            dom_scroll_area = $('#fw-tw-feed-items-scroll-area');
+        }
+
+        var dom_item_image;
+        if ($('.fw-feed-item-image').length) {
+            dom_item_image = $('.fw-feed-item-image');
+        } else if ($('.fw-fb-feed-item-image').length) {
+            dom_item_image = $('.fw-fb-feed-item-image');
+        } else if ($('.fw-gc-feed-item-image').length) {
+            dom_item_image = $('.fw-gc-feed-item-image');
+        } else if ($('.fw-tw-feed-item-image').length) {
+            dom_item_image = $('.fw-tw-feed-item-image');
+        } else {
+            dom_item_image = $('.fw-tw-feed-item-image');
+        }
+
+
+
+        function postToParent(width, height) {
+            var message = {};
+            message.width = width;
+            message.height = height;
+            message.uri = window.location.href;
+
+            var sources = new Array();
+
+            var _s = {};
+            _s.source = 'https://www.flourish.org/flickr/daily-interesting-one.xml';
+            _s.type = 'RSS';
+            _s.title = '';
+            _s.replaceable = 'false';
+            sources.push(_s);
+
+            message.sources = sources;
+
+            var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+            if (typeof target != "undefined") {
+                target.postMessage(message, "*");
+            }
+        }
+
+        var init_slick = false;
+        function updateHeight() {
+            var items_height = 0; items_height = 415 - dom_title.outerHeight(true) - $('.fw-branding').outerHeight(true);
+            $('.scroll-pane').height(items_height); dom_container.height(415 - $('.fw-branding').outerHeight(true));
+        }
+
+        function getWidth() { return "100%"; }
+
+        function getHeight() {
+            var ifHeight = 0; ifHeight = 415; ifHeight = ifHeight + 2; return ifHeight + 'px';
+        }
+
+        $('.fw-feed-item a').not(".fw-feed-item-url").click(function (e) {
+            $(this).attr("target", "_blank");
+            e.stopPropagation();
+        });
+
+        openWithinIframe = function (thiss, url) {
+            var message = {};
+            message.width = getWidth();
+            message.height = getHeight();
+            message.uri = window.location.href;
+            message.linkUri = url;
+
+            message.action = ActionEnum.C_OPEN_INIF;
+            var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+            if (typeof target != "undefined") {
+                target.postMessage(message, "*");
+            }
+        }
+
+        updateHeight();
+        postToParent(getWidth(), 150);
+
+        setTimeout(function () {
+            updateHeight();
+            postToParent(getWidth(), getHeight());
+            dom_item_image.imgLiquid(); auto_scroll_on();
+            dom_container.hover(
+                function () {
+                    auto_scroll_off();
+                    $('.jspVerticalBar').css('visibility', 'visible');
+                },
+                function () {
+                    auto_scroll_on();
+                    $('.jspVerticalBar').css('visibility', 'hidden');
+                }
+            ); $('.scroll-pane').bind(
+                'jsp-initialised',
+                function (event, isScrollable) {
+                    $('.jspVerticalBar').ready(function () {
+                        $('.jspVerticalBar').css('visibility', 'hidden'); updateHeight();
+                        postToParent(getWidth(), getHeight());
+                    });
+                }
+            )
+                .jScrollPane({ contentWidth: '0px', autoReinitialise: true }); updateHeight();
+            postToParent(getWidth(), getHeight());
+            var wTime = 300;
+            for (var i = 1; i <= 7; i++) {
+                setTimeout(function () {
+                    updateHeight();
+                    postToParent(getWidth(), getHeight());
+                }, wTime);
+                wTime = wTime + 100;
+            }
+        }, 100);
+    });
+</script>

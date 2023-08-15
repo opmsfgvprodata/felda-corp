@@ -1,0 +1,82 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_Wilayah>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "Region";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    @using (Html.BeginForm("Region", null, FormMethod.Get))
+    {
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-5">
+                    @*@Html.Label("Carian")*@
+                    <div class="input-group">
+                        <input type="text" name="filter" value="@ViewBag.filter" class="form-control" style="display: inline" placeholder=@GlobalResRegion.lblSearch />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                @*@GlobalResEstateNeed.btnGo*@
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <div class="row">
+                <div class="pull-left col-lg-1">
+                    <a class="btn btn-success" data-modal="" href="@Url.Action("RegionInsert", "GeneralConfigs")" id="btnCreate">
+                        <span class="glyphicon glyphicon-plus"></span>  @GlobalResRegion.btnAdd
+                    </a>
+                </div>
+
+            </div>
+
+            <div style="margin-top:17px;">
+                @{
+                    var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                    grid.Pager(WebGridPagerModes.All);
+
+                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                         fillEmptyRows: false,
+                         tableStyle: "table table-bordered table-hover",
+                         mode: WebGridPagerModes.All,
+                         columns: grid.Columns(
+                           grid.Column("fld_WlyhName", GlobalResRegion.hdrRegion, style: "col-lg-2"),
+                             grid.Column("fld_WlyhEmail", GlobalResRegion.hdrEmel, style: "col-lg-2"),
+                            grid.Column(GlobalResRegion.hdrAction, canSort: false, style: "col-lg-2",
+                            format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("RegionUpdate", "GeneralConfigs") + "/?id=" + item.fld_ID + "' title='RegionUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("RegionDelete", "GeneralConfigs") + "/?id=" + item.fld_ID + "' title='RegionDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                            </text>)
+
+                        ));
+                }
+
+
+            </div>
+        </div>
+                    }
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}

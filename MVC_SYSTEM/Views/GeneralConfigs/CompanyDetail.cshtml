@@ -1,0 +1,146 @@
+﻿@*//13/01/2021 sepul ubah model*@
+@model MVC_SYSTEM.ModelsCorporate.tbl_Syarikat
+
+@{
+    ViewBag.Title = "CompanyDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @*<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">@GlobalResEstateNeed.lblTitleCreate</h3>
+            </div>*@
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="~/Asset/Images/wait.gif" alt="wait" />
+                    </span>
+
+                    <div class="modal-header">
+                        <h3 class="modal-title">@GlobalResCompanyDetail.lblTitleCompany</h3>
+                    </div>
+
+                    @*<div>
+                            <table style="font-size:medium">
+                                <tr>
+                                    <td>Nama Syarikat : </td>
+                                    <td width="50">@Model.fld_NamaSyarikat</td>
+                                </tr>
+                                <tr>
+                                    <td>Singkatan Nama Syarikat : </td>
+                                    <td>@Model.fld_NamaPndkSyarikat</td>
+                                </tr>
+                                <tr>
+                                    <td>No Syarikat : </td>
+                                    <td>@Model.fld_NoSyarikat</td>
+                                </tr>
+                                <tr>
+                                    <td>Emel Syarikat : </td>
+                                    <td>@Model.fld_SyarikatEmail</td>
+                                </tr>
+                            </table>
+                        </div>*@
+                    @*13/01/2021 sepul just ubah col dia je*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="text-align:left">@GlobalResCompanyDetail.lblCompany : </label>
+                        <label class="control-label col-md-9" style="text-align:left">@Model.fld_NamaSyarikat test</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="text-align:left">@GlobalResCompanyDetail.lblCompanyNickname : </label>
+                        <label class="control-label col-md-9" style="text-align:left">@Model.fld_NamaPndkSyarikat</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="text-align:left">@GlobalResCompanyDetail.lblCompanyNo : </label>
+                        <label class="control-label col-md-9" style="text-align:left">@Model.fld_NoSyarikat</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="text-align:left">@GlobalResCompanyDetail.lblCompanyEmail : </label>
+                        <label class="control-label col-md-9" style="text-align:left">@Model.fld_SyarikatEmail</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-modal="" href="@Url.Action("CompanyDetailUpdate", "GeneralConfigs")" id="btnSubmit">
+                    @GlobalResCompanyDetail.btnUpdate
+                </a>
+
+                @*<input class="btn btn-primary" type="submit" value=Kemaskini />*@
+                @*<button class="btn btn-warning" data-dismiss="modal">@GlobalResEstateNeed.btnBack</button>*@
+            </div>
+        }
+    </div>
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}
+
+
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+        if ($("#fld_WilayahID").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "DataEntry")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fld_LadangID").empty();
+                @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#fld_WilayahID").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#fld_WilayahID").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "DataEntry")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fld_LadangID").empty();
+                @*$("#LadangIDList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");*@
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#fld_WilayahID").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#fld_LadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+</script>
+

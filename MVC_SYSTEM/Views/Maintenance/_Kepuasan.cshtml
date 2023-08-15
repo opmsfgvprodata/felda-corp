@@ -1,0 +1,79 @@
+﻿@model MVC_SYSTEM.ModelsEstate.tbl_Kepuasan
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "CustomerMaintenance";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    @*<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="modal-title">@GlobalResCorp.lblWorkerTypeUpdate</h3>
+        </div>*@
+
+    @using (Html.BeginForm())
+    {
+        if (Model == null)
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+                <h3 class="modal-title">@GlobalResCorp.titleCust</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="~/Asset/Images/wait.gif" alt="wait" />
+                    </span>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">@GlobalResCorp.hdrCustLevel</label>
+                        <div class="col-sm-2">
+                            @Html.RadioButton("RadioGroup", 1, new { @checked = "checked" })
+                            @Html.Label(GlobalResCorp.lblMin)<br />
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.RadioButton("RadioGroup", 2)
+                            @Html.Label(GlobalResCorp.lblScd)
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.RadioButton("RadioGroup", 3)
+                            @Html.Label(GlobalResCorp.lblStd)
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.RadioButton("RadioGroup", 4)
+                            @Html.Label(GlobalResCorp.lblUp)
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.RadioButton("RadioGroup", 5)
+                            @Html.Label(GlobalResCorp.lblMax)
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrCatat</label>
+                            <div class="col-md-9">
+                                @Html.TextBox("fld_Catatan", "", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value=@GlobalResCorp.btnSave />
+                <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+            </div>
+        }
+        else
+        {
+            <div id="scrollArea2" class="modal-body" style="text-align: center">
+                <p style="color: red">@ViewBag.Message</p>
+
+            </div>
+        }
+    }
+
+</section>

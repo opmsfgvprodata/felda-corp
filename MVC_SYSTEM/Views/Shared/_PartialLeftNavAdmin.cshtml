@@ -1,0 +1,103 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <div id="UpdateProgress3" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <div id="UpdateProgress2" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <div id="UpdateProgress1" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <div id="UpdateProgress4" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default sidebar" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="glyphicon glyphicon-list"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li @ViewBag.User><a href="@Url.Action("Index", "User")" onclick="return DisplayProgressMessage2(this);">User <span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+                    <li @ViewBag.SystemConfig><a href="@Url.Action("Index", "SystemConfigs")" onclick="return DisplayProgressMessage2(this);">System Config <span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-edit"></span></a></li>
+                    <li @ViewBag.GeneralConfig><a href="@Url.Action("Index", "GeneralConfigs")" onclick="return DisplayProgressMessage2(this);">Maintanance <span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-save"></span></a></li>
+
+                    <li @ViewBag.GeneralConfig><a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);">Master Data SAP <span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-download"></span></a></li>
+
+                    <!--<li class="@ViewBag.Dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Agent Management <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list"></span></a>
+        <ul class="dropdown-menu forAnimate" role="menu">
+            <li @ViewBag.AgentManagement><a href="@Url.Action("Index", "AgentManagement")">Add/Update Agent Detail</a></li>
+            <li class="divider"></li>
+            <li @ViewBag.PersonalReport><a href="@Url.Action("Index", "Report")">Create ID Agent</a></li>
+            <!--<li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+
+        </ul>
+    </li>-->
+                    <!-- 13/01/2021 sepul buang redundant menu sb semak nak baca code -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+<script>
+    function DisplayProgressMessage3(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress3").css("display", "");
+        return true;
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+    function DisplayProgressMessage2(ctl) {
+        $("#UpdateProgress2").css("display", "");
+        return true;
+    }
+
+    function DisplayProgressMessage4(ctl) {
+        $("#UpdateProgress4").css("display", "");
+        return true;
+    }
+
+    $(document.body).on('shown.bs.modal', function () {
+        $("#UpdateProgress1").css("display", "none");
+        $("#UpdateProgress2").css("display", "none");
+    });
+
+    $(document.body).on('hidden.bs.modal', function () {
+        $("#UpdateProgress1").css("display", "none");
+        $("#UpdateProgress2").css("display", "none");
+    });
+</script>

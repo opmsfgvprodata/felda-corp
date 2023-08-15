@@ -1,0 +1,152 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.vw_SAPIODetails>
+@using MVC_SYSTEM.Class;
+
+@{
+    //ViewBag.Title = "IOList"; //Dania Comment
+    ViewBag.Title = "Master Data IO "; //Dania tambah
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int bil4 = 0;
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResultMasterDataReport",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResDataEntry.WaitMsg
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Ajax.BeginForm("_IOList", "SAPMasterData", null, options, new { @id = "masterDataReportSearch" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
+            <div class="row">
+                @*<div class="col-sm-2">
+                        @Html.Label("Syarikat")
+                        @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>*@
+
+                <div class="col-sm-2">
+                    @Html.Label("Kod IO")
+                    @Html.TextBox("IOCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblRegion)
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblEstate)
+                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <br />
+
+        <div class="well" style="margin-top: 7px">
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Data IO SAP</div>
+                    <div class="panel-body">
+                        <div class="col-sm-12" style="text-align:right;">
+                            <a href="@Url.Action("ioRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
+                        </div>
+                        <div id="searchResultMasterDataReport">
+                            <br />
+                            @Html.Action("_IOList")
+
+
+                        </div>
+                    </div>
+                            
+                </div>
+
+            </div>
+        </div>
+           
+            <div class="modal-footer">
+                <a href=@Url.Action("Index", "SAPMasterData") class="btn btn-warning" role="button">@GlobalResCorp.btnBack</a>
+            </div>
+
+      
+
+
+    }
+</section>
+
+<script>
+    $(document).ready(function () {
+        if ($("#WilayahList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+</script>

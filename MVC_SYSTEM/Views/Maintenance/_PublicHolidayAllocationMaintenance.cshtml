@@ -1,0 +1,304 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "Confirm",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<div class="well" style="margin-top: 7px;">
+    @*@using (Ajax.BeginForm("_AnnualLeaveAllocationMaintenanceEdit", "Maintenance", null, options, new { @id = "annualLeaveAllocationMaintenanceEditForm" }))
+    {*@
+    <div class="modal-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">@GlobalResCorp.lblPublicHolidayAllocationInfo</div>
+            <div class="panel-body">
+                @{
+                    GetConfig getConfig = new GetConfig();
+
+                    var grid = new WebGrid(
+                        canPage: false,
+                        rowsPerPage: Model.PageSize,
+                        canSort: false,
+                        ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+                    if (@grid.TotalRowCount > 0)
+                    {
+                        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblAnnualLeaveAllocationCount)</div>
+
+                        @grid.GetHtml(htmlAttributes: new { id = "publicHolidayAllocationGrid" }, // id for ajaxUpdateontainerId parameter
+                            tableStyle: "table table-bordered table-striped table-list table-hover",
+                            headerStyle: "header_table",
+                            alternatingRowStyle: "Grid-alt",
+                            selectedRowStyle: "Grid-selected",
+                            rowStyle: "Grid-rowstyle",
+                            footerStyle: "table-pager",
+                            mode: WebGridPagerModes.All,
+                            columns: grid.Columns(
+                                grid.Column(header: GlobalResCorp.hdrNo
+                                    , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                      + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                      * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                grid.Column(columnName: "fld_KeteranganCuti", header: GlobalResCorp.hdrDesc, style: "keterangan"),
+                                grid.Column(columnName: "fld_TarikhCuti", header: GlobalResCorp.hdrLeaveDate, format: (item) =>
+                                {
+                                    var date = String.Format("{0:dd/MM/yyyy}", item.fld_TarikhCuti);
+
+                                    return @Html.Raw(date);
+
+                                }, canSort: false, style: "tetapan1"),
+
+                                grid.Column(columnName: "fld_Tahun", header: GlobalResCorp.lblYear, style: "tetapan1"),
+                                grid.Column(header: "{checkall}", format: (item) =>
+                                {
+                                    var checkbox = "";
+                                    var kodNegeriHidden = "<input type='hidden' name='country' class='hiddenNegeriHidden' value='" + @item.fld_Negeri + "'>";
+                                    var tahunHidden = "<input type='hidden' name='country' class='tahunHidden' value='" + @item.fld_Tahun + "'>";
+
+                                    if (item.fld_IsSelected != null)
+                                    {
+                                        if (item.fld_IsSelected == true)
+                                        {
+                                            checkbox = "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_CutiUmumID + "' name='ids' id='ids' style='display:none' checked='true'/></center>";
+
+                                        }
+
+                                        else
+                                        {
+                                            checkbox = "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_CutiUmumID + "' name='ids' id='ids' style='display:none'/></center>";
+                                        }
+
+                                        var selected = Convert.ToInt32(item.fld_IsSelected);
+
+                                        var tindakan = "<span id='jenisPelan' class='display-mode'>" + getConfig.GetWebConfigDesc(selected.ToString(), "pilihanYaTidak", item.fld_NegaraID, item.fld_SyarikatID) + "</span>" +
+                                                       checkbox + kodNegeriHidden + tahunHidden;
+                                        return @Html.Raw(tindakan);
+                                    }
+
+                                    else
+                                    {
+                                        var tindakan = "<span id='jenisPelan' class='display-mode'>" + getConfig.GetWebConfigDesc("0", "pilihanYaTidak", item.fld_NegaraID, item.fld_SyarikatID) + "</span>" +
+                                                       "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_CutiUmumID + "' name='ids' id='ids' style='display:none'/></center>" +
+                                                       kodNegeriHidden + tahunHidden;
+                                        ;
+                                        return @Html.Raw(tindakan);
+                                    }
+                                }, canSort: false, style: "tetapan2")
+                                ))
+                    }
+                    else
+                    {
+                        <hr />
+                        <div class="text-center">
+                            @Html.Label("Message", (string)ViewBag.Message)
+                        </div>
+
+                        <hr />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer col-md-12">
+        @if (@ViewBag.TotalRecord != 0)
+        {
+            <button type="button" class="btn btn-success saveBtn edit-mode" style="display: none">@GlobalResCorp.btnSave</button>
+            <button type="button" class="btn btn-success updateBtn display-mode">@GlobalResCorp.btnUpdate</button>
+            <button type="button" class="btn btn-danger cancelBtn edit-mode" style="display: none">@GlobalResCorp.btnCancel</button>
+        }
+        <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+    </div>
+    @*}*@
+</div>
+
+@*<div id="progressBar" style="display:none;" class="progress">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>*@
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    }
+</style>
+
+<script>
+    //$(document).ready(function () {
+
+        $(".updateBtn").click(function () {
+            $(".edit-mode").css("display", "");
+            $(".display-mode").css("display", "none");
+
+        });
+
+        $(".cancelBtn").click(function () {
+            $(".edit-mode").css("display", "none");
+            $(".display-mode").css("display", "");
+
+        });
+
+        $(".saveBtn").click(function (e) {
+            $(".edit-mode").css("display", "none");
+            $(".display-mode").css("display", "");
+
+            $("#UpdateProgress1").css("display", "");
+
+            var selected = [];
+                $('#publicHolidayAllocationGrid input:checked').each(function () {
+                    selected.push($(this).attr('value'));
+                });
+
+                var kodNegeri = $(".hiddenNegeriHidden:first").val();
+                var tahun = $(".tahunHidden:first").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("_PublicHolidayAllocationMaintenanceEdit", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    traditional: true,
+                    data: JSON.stringify({ leaveID: selected, kodNegeri: kodNegeri, year: tahun }),
+                    success: function (result) {
+                        $("#UpdateProgress1").css("display", "none");
+                        $.simplyToast(result.msg, result.status);
+                        if (result.status == "success") {
+                            $("#publicHolidayAllocationMaintenanceDetails").load(
+                                '@Url.Action("_PublicHolidayAllocationMaintenance", "Maintenance")', {
+                                    YearList: result.year,
+                                    NegeriList: result.negeri
+                                });
+                            $('.edit-book').prop("disabled", false);
+                        }
+                    }
+                });
+
+        });
+
+        @*$('.saveBtn').on('click',
+            function () {
+                $("#UpdateProgress1").css("display", "");
+
+                @*var selected = [];
+                $('#publicHolidayAllocationGrid input:checked').each(function () {
+                    selected.push($(this).attr('value'));
+                });
+
+                var kodNegeri = $(".hiddenNegeriHidden:first").val();
+                var tahun = $(".tahunHidden:first").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("_PublicHolidayAllocationMaintenanceEdit", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    traditional: true,
+                    data: JSON.stringify({ leaveID: selected, kodNegeri: kodNegeri, year: tahun }),
+                    success: function (result) {
+                        $("#UpdateProgress1").css("display", "none");
+                        $.simplyToast(result.msg, result.status);
+                        if (result.status == "success") {
+                            $("#publicHolidayAllocationMaintenanceDetails").load(
+                                '@Url.Action("_PublicHolidayAllocationMaintenance", "Maintenance")', {
+                                    YearList: result.year,
+                                    NegeriList: result.negeri
+                                });
+                            $('.edit-book').prop("disabled", false);
+                        }
+                    }
+                });
+            });*@
+
+        // 1st replace first column header text with checkbox
+        $("#publicHolidayAllocationGrid th").each(function () {
+            if ($.trim($(this).text().toString().toLowerCase()) === "{checkall}") {
+                $(this).text('');
+                $(this).append("<span class='display-mode'>@GlobalResCorp.lblPublicHolidayAllocationInd</span>");
+                $(this).append("<span class='edit-mode' style='display:none'>@GlobalResCorp.lblChckAll</span>");
+                $(this).append("<br><center><input type='checkbox' class='checkbox edit-mode' value='' id='cbSelectAll' style='display:none'/></center>");
+            }
+        });
+
+        //2nd click event for header checkbox for select /deselect all
+        $("#cbSelectAll").on("click", function () {
+            var ischecked = this.checked;
+            $('#publicHolidayAllocationGrid').find("input:checkbox").each(function () {
+                this.checked = ischecked;
+            });
+        });
+
+        //3rd click event for checkbox of each row
+        $("input[name='ids']").click(function () {
+            var totalRows = $("#publicHolidayAllocationGrid td :checkbox").length;
+            var checked = $("#publicHolidayAllocationGrid td :checkbox:checked").length;
+
+            if (checked == totalRows) {
+                $("#publicHolidayAllocationGrid").find("input:checkbox").each(function () {
+                    this.checked = true;
+                });
+            }
+            else {
+                $("#cbSelectAll").removeAttr("checked");
+            }
+        });
+
+    //});
+</script>

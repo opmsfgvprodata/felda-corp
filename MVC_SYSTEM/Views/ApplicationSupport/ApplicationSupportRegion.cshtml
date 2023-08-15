@@ -1,0 +1,305 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Application Support Region";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    GetIDDataFromDatabase GetIDDataFromDatabase = new GetIDDataFromDatabase();
+    var DataID = new List<long>();
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResDataEntry.WaitMsg
+        </label>
+    </div>
+</div>
+
+@*Added by kamalia 24/11/21*@
+<style>
+    #myModal1 .modal-dialog {
+        width: 90% !important;
+    }
+</style>
+
+@using (Html.BeginForm("ApplicationSupportRegion", "ApplicationSupport", FormMethod.Post, new { id = "ApplicationSupport" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResApproval.msgWait</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom:16px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4">
+                    <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="Lihat" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top:7px;">
+            @if (ViewBag.GetView != 1)
+            {
+                foreach (var wilayahid in ViewBag.WilayahSelection)
+                {
+                    if (ViewBag.LadangID == 0)
+                    {
+                        DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, 0, "ApplicationSupportAllLadang", ViewBag.Month, ViewBag.Year);
+                    }
+                    else
+                    {
+                        DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, ViewBag.LadangID, "ApplicationSupportSelectedLadang", ViewBag.Month, ViewBag.Year);
+                    }
+                    Html.RenderAction("ApplicationSupportRegionDetail", "ApplicationSupport", new { eachid = DataID });
+                }
+            }
+            else
+            {
+                <p style="color:red"> Sila Pilih Wilayah Dan Ladang </p>
+            }
+        </div>
+    </section>
+
+}
+@*Added by kamalia 24/11/21*@
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+@*end*@
+<script src="~/Asset/Scripts/jquery.stickytableheaders2.js" type="text/javascript"></script>
+<script src="~/Asset/Scripts/bootpopup.js" type="text/javascript"></script>
+<script>
+    $("table").stickyTableHeaders();
+</script>
+<script>
+    if ($("#WilayahIDList").val() == 0) {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "ApplicationSupport")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    }
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "ApplicationSupport")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+    function EmailToGM(wlyhid) {
+        var NegaraID = '@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+        var Year = '@ViewBag.Year';
+
+        var AcknowlagdeEmailGM = {};
+        AcknowlagdeEmailGM.url = "@Url.Action("AcknowlagdeEmail", "ApplicationSupport")";
+        AcknowlagdeEmailGM.type = "POST";
+        AcknowlagdeEmailGM.data = JSON.stringify({ NegaraId: NegaraID, SyarikatId: SyarikatID, WilayahId: wlyhid, Month: Month, Year: Year });
+        AcknowlagdeEmailGM.datatype = "json";
+        AcknowlagdeEmailGM.contentType = "application/json";
+        AcknowlagdeEmailGM.success = function (returndata) {
+            $.simplyToast(returndata.msg, returndata.statusmsg);
+        };
+        AcknowlagdeEmailGM.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(AcknowlagdeEmailGM);
+        //alert('Telah disemak');
+    }
+
+    //added by kamalia 24/11/21
+        function ScTran(LdgID, wlyhid, id) {
+        var NegaraID = '@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+            var Year = '@ViewBag.Year';
+            var paymentmode = '@ViewBag.PaymentMode';
+        //modal popup utk TL
+            $('#myModalContent').load("@Url.Action("TransactionListingRptSearch", "ApplicationSupport")?NegaraID=" + NegaraID + "&SyarikatID=" + SyarikatID + "&WilayahID=" + wlyhid + "&LadangID=" + LdgID + "&paymentmode=" + paymentmode +"&Month="+Month+"&Year="+Year+"", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+      function Paysheet(LdgID, wlyhid, id) {
+        var NegaraID = '@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+          var Year = '@ViewBag.Year';
+           var paymentmode = '@ViewBag.PaymentMode';
+        //modal popup utk paysheet
+          $('#myModalContent').load("@Url.Action("WorkerPaySheetRptSearch", "ApplicationSupport")?NegaraID=" + NegaraID + "&SyarikatID=" + SyarikatID + "&WilayahID=" + wlyhid + "&LadangID=" + LdgID+ "&paymentmode=" + paymentmode +"&Month="+Month+"&Year="+Year+"", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+    function UpdateStatus(gethis, id, flag, btnid, wlyhid, jmlhwang, jmlhcash,jmlhcheque,jmlhewallet,jmlhcdmas,NoAcc, NoGL, NoCIT, ldgName, skbno) {
+        var value = gethis.parentNode.parentNode.children[1].innerHTML;
+        //var totalkaedahbyran = 0;
+        var NegaraID='@ViewBag.NegaraID';
+        var SyarikatID= '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+        var Year='@ViewBag.Year';
+        switch(flag) {
+            case 'SemakWil':
+                bootpopup({
+                    title: "Kaedah Bayaran " + ldgName,
+                    content: [
+                        //{ p: { text: "F43 : " + skbno } },
+                        //{ p: { text: "GL Bank : " + NoGL} },
+                        //{ p: { text: "Zon CIT : " + NoCIT } },
+                        { p: { text: "No Akaun : " + NoAcc } },
+                        //{ input: { type: "text", label: "GL Bank", name: "GLBank", id: "GLBank", placeholder: "GL Bank", value: NoGL } },
+                        { p: { text: "Jumlah Permohonan : RM " + jmlhwang.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } },
+                        { input: { type: "text", label: "Cash (RM)", name: "Cash", id: "Cash", value: jmlhcash.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), disabled: "TRUE" } },
+                        { input: { type: "text", label: "Cheque (RM)", name: "Cheque", id: "Cheque", value: jmlhcheque.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), disabled: "TRUE" } },
+                        { input: { type: "text", label: "CDMAS (RM)", name: "CDMAS", id: "CDMAS", value: jmlhcdmas.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), disabled: "TRUE" } },
+                        { input: { type: "text", label: "EWallet (RM)", name: "EWallet", id: "EWallet", value: jmlhewallet.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), disabled: "TRUE" } },
+
+						],
+                    cancel: function (data, array, event) { },
+                    ok: function (data, array, event) {
+                        //totalkaedahbyran = parseFloat(data.PDP.replace(',', '')) + parseFloat(data.CIT.replace(',', ''))
+                        //if (totalkaedahbyran.toFixed(2) == jmlhwang)
+                        //{
+                            $(gethis).attr("disabled", "disabled");
+                            $('#btntlk' + id).removeAttr('disabled', false);
+
+                            var PermohonanUpdateUpdate = {};
+                            PermohonanUpdateUpdate.url = "@Url.Action("UpdateData", "ApplicationSupport")";
+                            PermohonanUpdateUpdate.type = "POST";
+                            //PermohonanUpdateUpdate.data = JSON.stringify({ DataID: id, UpdateFlag: flag, PDP: data.PDP.replace(',', ''), CIT: data.CIT.replace(',', ''), NegaraId: NegaraID, SyarikatId: SyarikatID, WilayahId: tblid, JumlahWang: jmlhwang, Month: Month, Year: Year, NoAcc: NoAcc, NoGL: data.GLBank, NoCIT: NoCIT, Manual: data.MANUAL, GLBank: GLBank });
+                        PermohonanUpdateUpdate.data = JSON.stringify({ DataID: id, UpdateFlag: flag, NegaraId: NegaraID, SyarikatId: SyarikatID, WilayahId: wlyhid, JumlahWang: jmlhwang, Month: Month, Year: Year, NoAcc: NoAcc, NoCIT: NoCIT, NoAcc: NoAcc });
+                            PermohonanUpdateUpdate.datatype = "json";
+                            PermohonanUpdateUpdate.contentType = "application/json";
+                            PermohonanUpdateUpdate.success = function (returndata) {
+                                var tableData = $("#" + wlyhid + " td:contains(" + value + ")").parent().find('td:eq(5)'),
+                            span = $('<p><font color="green">' + returndata.DescStatus + ' oleh ' + returndata.ActionBy + ' pada ' + ToJavaScriptDate(returndata.getdatetime) + '</font></p>');
+                                tableData.append(span);
+                            };
+                            PermohonanUpdateUpdate.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                            $.ajax(PermohonanUpdateUpdate);
+                            //alert('Telah disemak');
+
+                            bootpopup({
+                                title: "Action",
+                                content: [
+                                    { p: { text: "Permohonan telah disemak " } },
+
+                                ],
+                             });
+
+                    },
+                    complete: function () { },
+                });
+                break;
+            case 'TolakWil':
+                bootpopup({
+                    title: "Permohonan Ditolak",
+                    content: [
+                        { input: { type: "text", label: "Sebab", name: "SebabTolak", id: "SebabTolak", placeholder: "SebabTolak", value: "" } },
+                    ],
+                    cancel: function (data, array, event) { },
+                    ok: function (data, array, event) {
+                        $(gethis).attr("disabled", "disabled");
+                        $('#btnskg' + id).removeAttr('disabled', false);
+
+                        var PermohonanUpdateUpdate = {};
+                        PermohonanUpdateUpdate.url = "@Url.Action("UpdateData", "ApplicationSupport")";
+                        PermohonanUpdateUpdate.type = "POST";
+                        //PermohonanUpdateUpdate.data = JSON.stringify({ DataID: id, UpdateFlag: flag, PDP: 0, TT: 0, CIT: 0, NegaraId: NegaraID, SyarikatId: SyarikatID, WilayahId: tblid, JumlahWang: jmlhwang, Month: Month, Year: Year, NoAcc: 0, NoGL: 0, NoCIT: 0, Manual: 0, SebabTolak: data.SebabTolak });
+                        PermohonanUpdateUpdate.data = JSON.stringify({ DataID: id, UpdateFlag: flag, NegaraId: NegaraID, SyarikatId: SyarikatID, WilayahId: wlyhid, JumlahWang: jmlhwang, Month: Month, Year: Year, NoAcc: 0, NoCIT: 0, SebabTolak: data.SebabTolak });
+                        PermohonanUpdateUpdate.datatype = "json";
+                        PermohonanUpdateUpdate.contentType = "application/json";
+                        PermohonanUpdateUpdate.success = function (returndata) {
+                            var tableData = $("#" + wlyhid + " td:contains(" + value + ")").parent().find('td:eq(5)'),
+                                span = $('<p><font color="red">' + returndata.DescStatus + ' oleh ' + returndata.ActionBy + ' pada ' + ToJavaScriptDate(returndata.getdatetime) + ' Reason : ' + returndata.SebabTolak + '</font></p>');
+                            tableData.append(span);
+                        };
+                        PermohonanUpdateUpdate.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                        $.ajax(PermohonanUpdateUpdate);
+                        //alert('Telah ditolak');
+                        bootpopup({
+                            title: "Action",
+                            content: [
+                            { p: { text: "Permohonan telah ditolak " } },
+
+                            ],
+                        });
+                    },
+                    complete: function () { },
+                });
+                break;
+        }
+        return false;
+    }
+    //end
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

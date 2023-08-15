@@ -1,0 +1,137 @@
+﻿@*@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.MasterModels.tbl_BlckKmskknDataKerja>*@
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.menuCheckrollUnblock;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "UnblockCheckrollDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_UnblockCheckroll", "UnblockCheckroll", null, options, new { @id = "UnblockCheckrollSearchDetails" }))
+        {
+            @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblMonth)
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblYear)
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblRegion)
+                @Html.DropDownList("WlyhList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblEstate)
+                @Html.DropDownList("EstList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2" style="padding-top:25px;">
+                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.UnblockCheckrollData</div>
+                <div class="panel-body">
+                    <div id="UnblockCheckrollDetails">
+                        @Html.Action("_UnblockCheckroll")
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="modal-footer col-md-12">
+            <a data-modal1='' @*href=@Url.Action("_UnitMaintenanceCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResEstate.btnAdd</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResEstate.btnBack</a>
+        </div>*@
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //function resetSearch1() {
+    //    document.getElementById("txtfilter").value = "";
+    //    document.getElementById('btnCari').click();
+    //}
+
+    $(document).ready(function () {
+        $("#WlyhList").change(function () {
+            var Wlyhlist = {};
+            var disableoption = "";
+            Wlyhlist.url = "@Url.Action("GetSubEst", "UnblockCheckroll")";
+            Wlyhlist.type = "POST";
+            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val() });
+            Wlyhlist.datatype = "json";
+            Wlyhlist.contentType = "application/json";
+            Wlyhlist.success = function (result) {
+                $("#EstList").empty();
+                $("#EstList").append("<option value='0'>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < result.length; i++) {
+                    if ($("#WlyhList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#EstList").append("<option value=" + result[i].Value + " " + disableoption + ">" + result[i].Text + "</option>");
+                }
+            };
+            Wlyhlist.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(Wlyhlist);
+        });
+
+        if ($("#WlyhList").val() == 1) {
+            var Wlyhlist = {};
+            var disableoption = "";
+            Wlyhlist.url = "@Url.Action("GetSubEst", "UnblockCheckroll")";
+            Wlyhlist.type = "POST";
+            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val() });
+            Wlyhlist.datatype = "json";
+            Wlyhlist.contentType = "application/json";
+            Wlyhlist.success = function (result) {
+                $("#EstList").empty();
+                $("#EstList").append("<option value='0'>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < result.length; i++) {
+                    if ($("#WlyhList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#EstList").append("<option value=" + result[i].Value + " " + disableoption + ">" + result[i].Text + "</option>");
+                }
+            };
+            Wlyhlist.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(Wlyhlist);
+        }
+    });
+
+</script>

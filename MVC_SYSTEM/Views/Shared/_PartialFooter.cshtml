@@ -1,0 +1,10 @@
+﻿@using MVC_SYSTEM.Class
+@{
+    GetConfig getconfig = new GetConfig();
+    ChangeTimeZone timezone = new ChangeTimeZone();
+}
+<footer class="footer">
+    <div class="container1">
+        <p>Copyright @getconfig.GetData("comname") @timezone.gettimezone().Year. All Rights Reserved.</p>
+    </div>
+</footer>

@@ -1,0 +1,137 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    GetConfig GetConfig = new GetConfig();
+}
+
+@{
+    var grid = new WebGrid(
+        canPage: true,
+        rowsPerPage: Model.PageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "grid");
+
+    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+    if (@grid.TotalRowCount > 0)
+    {
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.UnblockCheckrollData)</div>
+
+        @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+                                          tableStyle: "table table-bordered table-striped table-list table-hover",
+                                          headerStyle: "header_table",
+                                          alternatingRowStyle: "Grid-alt",
+                                          selectedRowStyle: "Grid-selected",
+                                          rowStyle: "Grid-rowstyle",
+                                          footerStyle: "table-pager",
+                                          mode: WebGridPagerModes.All,
+                                          columns: grid.Columns(
+                                              grid.Column(header: "No."
+                                                  , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                                    + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                                    * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                              //grid.Column(columnName: "fld_ValidDT", header: GlobalResCorp.lblValidDT, style: "kod"),
+                                              grid.Column(GlobalResCorp.lblValidDT, format: (item) =>
+                                              {
+                                                  if (item.fld_ValidDT != null)
+                                                  {
+                                                      var tindakan = String.Format("{0:dd/MM/yyyy}", item.fld_ValidDT);
+                                                      return @Html.Raw(tindakan);
+                                                  }
+
+                                                  else
+                                                  {
+                                                      var tindakan = "";
+                                                      return @Html.Raw(tindakan);
+                                                  }
+                                              }, canSort: false, style: "kod"),
+                                              //grid.Column(columnName: "fld_BlokStatus", header: GlobalResEstate.lblDescription, style: "keterangan"),
+                                              grid.Column(columnName: "fld_Month", header: GlobalResCorp.lblMonth, style: "tetapan1"),
+                                              grid.Column(columnName: "fld_Year", header: GlobalResCorp.lblYear, style: "tetapan1"),
+                                              grid.Column(columnName: "fld_Reason", header: GlobalResCorp.lblReason, style: "tetapan1"),
+                                              grid.Column(columnName: "fld_BilHariXKyIn", header: GlobalResCorp.lblDayKeyin, style: "tetapan1"),
+                                              grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                                              {
+                                                  var tindakan = "<a data-modal1='' href='" + @Url.Action("_UnblockCheckrollEdit", "UnblockCheckroll") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;";
+                                                  return @Html.Raw(tindakan);
+
+                                              }, canSort: false, style: "tetapan2")
+                                              //grid.Column(GlobalResEstate.hdrAction, format: (item) =>
+                                              //{
+                                              //    if (item.fld_BlokStatus == false)
+                                              //    {
+                                              //        var tindakan = "<a data-modal='' href='" + @Url.Action("_BlokDataVldMaintenanceEdit", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResEstate.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;";
+                                              //        //"<a data-modal1='' href='" + @Url.Action("_KategoriAktiMaintenanceDelete", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResEstate.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                                              //        return @Html.Raw(tindakan);
+                                              //    }
+
+                                              //    else
+                                              //    {
+                                              //        var tindakan = "<a data-modal1='' href='" + @Url.Action("_KategoriAktiMaintenanceDelete", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResEstate.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                                              //        return @Html.Raw(tindakan);
+                                              //    }
+                                              //}, canSort: false, style: "tindakan")
+                                              ))
+    }
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label(GlobalResCorp.msgErrorSearch)
+        </div>
+
+        <hr />
+    }
+}
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>
+
+
+
+

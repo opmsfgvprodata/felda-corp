@@ -1,0 +1,117 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    GetIdentity GetIdentity = new GetIdentity();
+
+
+}
+@if (Request.IsAuthenticated)
+{
+    <div id="UpdateProgress2" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <div id="UpdateProgress1" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <div id="UpdateProgress4" style="display:none;">
+        <div class="progressTest">
+            <label>
+                @GlobalResCorp.msgWait
+            </label>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default sidebar" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="glyphicon glyphicon-list"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    @* //role id authorization ( remove super power user)  - modified by farahin - 17/06/2022 *@
+                    @if (GetIdentity.SuperUser(User.Identity.Name))
+                    {
+
+                    }
+                    else
+                    {
+                        <li @ViewBag.Main><a href="@Url.Action("Index", "Main")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.Home<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                        if (!GetIdentity.NegaraSumber(User.Identity.Name))
+                        {
+                            <li @ViewBag.AuditTrail><a href="@Url.Action("Index", "AuditTrail")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.AuditTrail<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-record"></span></a></li>
+                            @*<li @ViewBag.Upload><a href="@Url.Action("Index", "Upload")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.UploadData<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-upload"></span></a></li>*@
+                            <li @ViewBag.Approval><a href="@Url.Action("Index", "Approval")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.Approval<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-bell"></span></a></li>
+                            //tambah condition untk role id authorization(super power user)  - by farahin -17 / 06 / 2022
+                            //Modified by Shazana 31/3/2023
+                            if (!GetIdentity.SuperUser(User.Identity.Name) && GetIdentity.getRoleIDbyUsername(User.Identity.Name) != 5)
+                            {
+
+                                <li @ViewBag.ApplicationSupport><a href="@Url.Action("Index", "ApplicationSupport")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.ApplicationSupport<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-bookmark"></span></a></li>
+
+                            }
+                            <li @ViewBag.DataEntry><a href="@Url.Action("Index", "DataEntry")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.DataEntry<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
+                        }
+                        else
+                        {
+                            <li @ViewBag.DataNegaraSumber><a href="@Url.Action("Index", "Resource")" onclick="return DisplayProgressMessage2(this);"> Kemasukkan Data <span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+                        }
+                        <li @ViewBag.UnblockCheckroll><a href="@Url.Action("Index", "UnblockCheckroll")" onclick="return DisplayProgressMessage2(this);">@GlobalResCorp.menuUnblockCheckroll<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity"><i class='fa fa-ban'></i></span></a></li>
+                        <li @ViewBag.Report><a href="@Url.Action("Index", "Report")" onclick="return DisplayProgressMessage2(this);">@GlobalResLeftNav.Report<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-list"></span></a></li>
+                        <li @ViewBag.EstateSelection><a href="@Url.Action("Index", "EstateSelection")" onclick="return DisplayProgressMessage2(this);">Daftar Masuk Projek<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-open"></span></a></li>
+
+
+                        <li @ViewBag.Messaging><a href="@Url.Action("Index", "SAPIntegration")" onclick="return DisplayProgressMessage2(this);">Data Integration<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity"><i class='glyphicon glyphicon-download'></i></span></a></li>
+
+                        <li @ViewBag.Maintenance><a href="@Url.Action("Index", "Maintenance")" onclick="return DisplayProgressMessage2(this);">@GlobalResCorp.menuMaintenance<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity"><i class='fa fa-cogs'></i></span></a></li>
+                        <li @ViewBag.EstateDataManage><a href="@Url.Action("Index", "EstateDataManagement")" onclick="return DisplayProgressMessage2(this);">Selenggara Data Ladang<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity"><i class='fa fa-cogs'></i></span></a></li>
+                        <li @ViewBag.Messaging><a href="@Url.Action("Index", "Messaging")" onclick="return DisplayProgressMessage2(this);">Broadcast Message<span style="font-size:16px;padding-left:10px" class="pull-right hidden-xs showopacity"><i class='glyphicon glyphicon-share'></i></span></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+    function DisplayProgressMessage2(ctl) {
+        $("#UpdateProgress2").css("display", "");
+        return true;
+    }
+
+    function DisplayProgressMessage4(ctl) {
+        $("#UpdateProgress4").css("display", "");
+        return true;
+    }
+
+    $(document.body).on('shown.bs.modal', function () {
+        $("#UpdateProgress1").css("display", "none");
+        $("#UpdateProgress2").css("display", "none");
+    });
+
+    $(document.body).on('hidden.bs.modal', function () {
+        $("#UpdateProgress1").css("display", "none");
+        $("#UpdateProgress2").css("display", "none");
+    });
+
+    //$(document.body).on('shown.bs.modal', function () {
+    //    $("#UpdateProgress1").css("display", "none");
+    //});
+</script>

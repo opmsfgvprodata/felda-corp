@@ -1,0 +1,114 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_GLSAP>
+
+@{
+    ViewBag.Title = "Master Data GL";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+@*<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>*@
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-heading">GL SAP Inbound : @ViewBag.Date</div>
+            <div class="panel panel-body">
+                @if (Model != null && Model.Count() != 0)
+                {
+                    int? bil = 0;
+
+                    <div id="scrollArea" class="col-sm-12">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th bgcolor="#ffcc80" width="2%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+
+                                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                        GL No
+                                    </th>
+                                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                        Keterangan
+                                    </th>
+
+                                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                        Tarikh
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    bil = bil + 1;
+                                    <tr>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            @Html.DisplayFor(modelItem => item.fld_GLcode)
+                                        </td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            @Html.DisplayFor(modelItem => item.fld_Desc)
+                                        </td>
+
+
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            @if (item.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                            {
+                                                @String.Format("{0:dd/MM/yyyy}", item.fld_DTCreated.Date)
+                                            }
+                                            else
+                                            {
+                                                @String.Format("{0:dd/MM/yyyy}", item.fld_DTModified.Date)
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                }
+                else
+                {
+                    @Html.Action("glList")
+                }
+            </div>
+            <div class="col-sm-12" style="text-align:right;">
+                <a href="@Url.Action("glList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+@*<script type="text/javascript">
+    $(window).on("load", function () {
+        $('#myModalContent').load("@Url.Action("glTodayDate", "SAPMasterData", null, this.Request.Url.Scheme)", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+    });
+</script>*@

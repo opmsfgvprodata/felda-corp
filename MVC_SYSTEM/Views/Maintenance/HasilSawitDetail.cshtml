@@ -1,0 +1,66 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_HasilSawit>
+@{
+    ViewBag.Title = "HasilSawitDetail";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    @using (Html.BeginForm("EstateDetail", null, FormMethod.Get))
+    {
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label("Bulan")
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label("Tahun")
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResCorp.btnView" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <div class="row">
+                <div class="pull-left col-lg-1">
+                    <a class="btn btn-success" data-modal="" href="@Url.Action("HasilSawitInsert", "Maintenance")" id="btnCreate">
+                        <span class="glyphicon glyphicon-plus"></span> @GlobalResCorp.btnAdd
+                    </a>
+                </div>
+            </div>
+
+            <div style="margin-top:17px;">
+                @{
+                    var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                    grid.Pager(WebGridPagerModes.All);
+
+                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                         fillEmptyRows: false,
+                         tableStyle: "table table-bordered table-hover",
+                         mode: WebGridPagerModes.All,
+                         columns: grid.Columns(
+                           grid.Column("fld_kum", "Kumpulan", style: "col-lg-2"),
+                           grid.Column("fld_pkt", "Peringkat", style: "col-lg-2"),
+                             grid.Column("fld_hsltan", "Hasil Sawit (Tan/Hektar)", style: "col-lg-2"),
+                             grid.Column("fld_luas_hek", "Luas Berhasil Sawit (Hektar)", style: "col-lg-2"),
+                             grid.Column("fld_jumlah", "Jumlah Luas", style: "col-lg-2"),
+                            grid.Column(GlobalResCorp.hdrAction, canSort: false, style: "col-lg-2",
+                            format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("HasilSawitUpdate", "Maintenance") + "/?id=" + item.fld_LdgCode + "&wlyh=" + item.fld_WlyhID + "' title='HasilSawitUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("HasilSawitDelete", "Maintenance") + "/?id=" + item.fld_LdgCode + "&wlyh=" + item.fld_WlyhID + "' title='HasilSawitDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                            </text>)
+                        ));
+                }
+            </div>
+        </div>
+                    }
+</section>

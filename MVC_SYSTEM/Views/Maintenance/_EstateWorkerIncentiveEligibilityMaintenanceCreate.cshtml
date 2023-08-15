@@ -1,0 +1,365 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_KelayakanInsentifPkjLdgViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblEstateWorkerIncentiveEligibilityAdd</h3>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEstateWorkerIncentiveEligibilityInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), new { @class = "form-control col-sm-2 wilayahSelection" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_LadangID, new MultiSelectList(ViewBag.LadangList, "Value", "Text"), new { @class = "form-control col-sm-2 estateSelection", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveType:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_JenisInsentif, new SelectList(ViewBag.IncentiveTypeList, "Value", "Text"), new { @class = "form-control selectionSelection", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_JenisInsentif, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_KodInsentif, new SelectList(ViewBag.IncentiveList, "Value", "Text"), new { @class = "form-control incentiveSelection", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodInsentif, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblPosition:</label>
+                            <div class="col-sm-8">
+                                @Html.ListBoxFor(model => model.fld_KodJawatan, new MultiSelectList(ViewBag.DesignationList, "Value", "Text"), new { @class = "form-control col-sm-2 designationSelection", multiple = "multiple", size = 10, @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodJawatan, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">Sila tekan butang "Ctrl" atau "Shift" pada papan kekunci semasa memilih</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(".wilayahSelection").change(
+        function() {
+            var selectedVal = $(this).val();
+            console.log(selectedVal);
+
+            if (selectedVal === '' || selectedVal === null) {
+                $('.selectionSelection').prop("disabled", true);
+                $('.selectionSelection').val("");
+
+                $('.incentiveSelection').prop("disabled", true);
+                $('.incentiveSelection').empty();
+                $('.incentiveSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $('.designationSelection').prop("disabled", true);
+                $('.designationSelection').empty();
+                $('.designationSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $('.estateSelection').prop("disabled", true);
+                $('.estateSelection').empty();
+                $('.estateSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+            }
+
+            else {
+                $('.estateSelection').prop("disabled", false);
+                $('.estateSelection').empty();
+
+                $('.selectionSelection').prop("disabled", true);
+                //$('.selectionSelection').empty();
+                $('.selectionSelection').val("");
+
+                $('.incentiveSelection').prop("disabled", true);
+                $('.incentiveSelection').empty();
+                $('.incentiveSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $('.designationSelection').prop("disabled", true);
+                $('.designationSelection').empty();
+                $('.designationSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetLadangList", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ id: selectedVal }),
+                    success: function (result) {
+                        if (result.length != 0) {
+                            $('.estateSelection').append("<option value=" +
+                                "" +
+                                ">" +
+                                "@GlobalResCorp.lblChoose" +
+                                "</option>");
+
+                            for (var i = 0; i < result.length; i++) {
+                                //alert(result[i].Value + "" + result[i].Text);
+                                //alert(result[i].Value + "" + result[i].Text);
+                                $('.estateSelection').append("<option value=" +
+                                    result[i].Value +
+                                    ">" +
+                                    result[i].Text +
+                                    "</option>");
+                            }
+                        }
+
+                        else {
+                            $('.estateSelection').append("<option value=" +
+                                "" +
+                                ">" +
+                                "@GlobalResCorp.msgErrorSearch" +
+                                "</option>");
+                        }
+                    }
+                });
+            }
+        });
+
+    $(".estateSelection").change(
+        function() {
+            var selectedVal = $(this).val();
+            console.log(selectedVal);
+
+            if (selectedVal === '' || selectedVal === null) {
+                $('.selectionSelection').prop("disabled", true);
+                $('.selectionSelection').val('');
+
+                $('.incentiveSelection').prop("disabled", true);
+                $('.incentiveSelection').empty();
+                $('.incentiveSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $('.designationSelection').prop("disabled", true);
+                $('.designationSelection').empty();
+                $('.designationSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+            }
+
+            else {
+                $('.selectionSelection').prop("disabled", false);
+            }
+        });
+
+    $(".selectionSelection").change(
+        function() {
+            var selectedVal = $(this).val();
+            var wilayah = $(".wilayahSelection").val();
+            var ladang = $(".estateSelection").val();
+
+            if (selectedVal === '' || selectedVal === null) {
+                $('.designationSelection').prop("disabled", true);
+                $('.designationSelection').empty();
+                $('.designationSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+
+                $('.incentiveSelection').prop("disabled", true);
+                $('.incentiveSelection').empty();
+                $('.incentiveSelection').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+            }
+
+            else {
+                console.log(selectedVal);
+
+                $('.selectionSelection').prop("disabled", false);
+                $('.incentiveSelection').prop("disabled", false);
+                $('.incentiveSelection').empty();
+                $('.designationSelection').prop("disabled", true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetEstateIncentiveEligibilityList", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ incentiveType: selectedVal, wilayah: wilayah, ladang: ladang }),
+                    success: function (result) {
+                        if (result.length != 0) {
+                            $('.incentiveSelection').append("<option value=" +
+                                "" +
+                                ">" +
+                                "@GlobalResCorp.lblChoose" +
+                                "</option>");
+
+                            for (var i = 0; i < result.length; i++) {
+                                $('.incentiveSelection').append("<option value=" +
+                                    result[i].Value +
+                                    ">" +
+                                    result[i].Text +
+                                    "</option>");
+                            }
+                        }
+
+                        else {
+                            $('.incentiveSelection').append("<option value=" +
+                                "" +
+                                ">" +
+                                "@GlobalResCorp.msgErrorSearch" +
+                                "</option>");
+                        }
+                    }
+                });
+            }
+        });
+
+    $(".incentiveSelection").change(
+        function() {
+            var selectedVal = $(this).val();
+            var wilayah = $(".wilayahSelection").val();
+            var ladang = $(".estateSelection").val();
+
+            console.log(selectedVal);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetEstateWorkerIncentiveEligibilityList", "Maintenance")',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ insentifCode: selectedVal, wilayah: wilayah, ladang: ladang }),
+                success: function(result) {
+                    if (selectedVal === '' || selectedVal === null) {
+                        $('.designationSelection').prop("disabled", true);
+                        $('.designationSelection').empty();
+                        $('.designationSelection').append("<option value=" +
+                            "" +
+                            ">" +
+                            "@GlobalResCorp.lblChoose" +
+                            "</option>");
+                    }
+
+                    else if (result.length === 0){
+                        $('.designationSelection').prop("disabled", true);
+                        $('.designationSelection').empty();
+                        $('.designationSelection').append("<option value=" +
+                            "" +
+                            ">" +
+                            "@GlobalResCorp.msgIncentiveExistForAllDesignation" +
+                            "</option>");
+                    }
+
+                    else {
+                        $('.selectionSelection').prop("disabled", false);
+                        $('.designationSelection').prop("disabled", false);
+                        $('.designationSelection').empty();
+                        for (var i = 0; i < result.length; i++) {
+                            $('.designationSelection').append("<option value=" +
+                                result[i].Value +
+                                ">" +
+                                result[i].Text +
+                                "</option>");
+                        }
+                    }
+                }
+            });
+        });
+
+    @*$(".selectionList").on("change",
+        function () {
+            var selectedVal = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetIncentiveList", "Maintenance")',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ incentiveType: selectedVal }),
+                success: function (result) {
+                    if (selectedVal === '' || selectedVal === null) {
+                        $('.incentiveList').prop("disabled", true);
+                        $('.estateList').prop("disabled", true);
+                        $('.designationList').prop("disabled", true);
+
+                        //alert("");
+                        $('.incentiveList').empty();
+                        @*$('.incentiveList').append("<option value=" +
+                    "" +
+                    ">" +
+                    "@GlobalResCorp.lblChoose" +
+                    "</option>");
+                    }
+
+                    else {
+                        console.log()
+                        $('.incentiveList').prop("disabled", false);
+                        $('.estateList').prop("disabled", false);
+                        $('.designationList').prop("disabled", false);
+                        $('.incentiveList').empty();
+                        for (var i = 0; i < result.length; i++) {
+                            $('.incentiveList').append("<option value=" +
+                                result[i].Value +
+                                ">" +
+                                result[i].Text +
+                                "</option>");
+                        }
+                    }
+                }
+            });
+        });*@
+</script>

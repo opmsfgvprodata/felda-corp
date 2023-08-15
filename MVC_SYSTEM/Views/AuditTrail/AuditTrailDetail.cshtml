@@ -1,0 +1,151 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.vw_AuditTrail>
+@{ 
+    string divstatus = "";
+}
+@foreach (var item in Model) {
+<tr>
+    <td align="center">
+        @ViewBag.bil
+    </td>
+    <td align="center">
+        @Html.DisplayFor(modelItem => item.fld_LdgCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fld_LdgName)
+    </td>
+    <td align="center">
+        @if (item.fld_Bln1 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln2 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln3 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln4 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln5 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln6 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln7 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln8 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln9 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln10 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln11 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+    <td align="center">
+        @if (item.fld_Bln12 == 1)
+        {
+            divstatus = "okstatus";
+        }
+        else
+        {
+            divstatus = "kostatus";
+        }
+        <div class="@divstatus">&nbsp;</div>
+    </td>
+
+</tr>
+}
+

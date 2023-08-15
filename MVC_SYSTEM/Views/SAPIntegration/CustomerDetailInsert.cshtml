@@ -1,0 +1,55 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_CMSAP
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResSupplierDetail.lblTitleCreate</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblCountry</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("fld_NegaraID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.fld_NegaraID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblCompany</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("fld_SyarikatID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblSupplierName</label>
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.fld_CustomerNo, ViewBag.CustomerList as List<SelectListItem>, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.fld_CustomerNo, "", new { @class = "text-danger" })
+                </div>
+            </div> 
+
+
+            @*@Html.Hidden("Test", ViewData["Flag1"])*@
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value=@GlobalResSupplierDetail.btnSave />
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResSupplierDetail.btnBack</button>
+    </div>
+}
+<script>
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+</script>

@@ -1,0 +1,85 @@
+﻿@model MVC_SYSTEM.Models.MDRequest
+
+@{
+    ViewBag.Title = "SAPRequest";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-primary">
+        <div class="panel-heading">SAP Master Data</div>
+        <div class="panel-body">
+            <div class="modal-body">
+                <div class="panel with-nav-tabs panel-info">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="li1" onclick="getheading(this.id)"><a href="#tab1primary" data-toggle="tab">GL Request</a></li>
+                            <li class="" id="li2" onclick="getheading(this.id)"><a href="#tab2primary" data-toggle="tab">Cost Center Request</a></li>
+                            <li class="" id="li4" onclick="getheading(this.id)"><a href="#tab4primary" data-toggle="tab">Vendor Request</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1primary">
+                                @* tab content *@
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2 ">Date:</label>
+                                    <div class="col-sm-4">
+                                        @Html.TextBox("dateStart", "", new { @class = "form-control" })
+                                        @Html.HiddenFor(Model => Model.dateStart)
+                                        @*@Html.TextBox("dateStart", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.TextBoxFor(model => model.dateStart, null, htmlAttributes: new { @class = "form-control" })*@
+                                        @*<input id="dateStart" type="datetime" class="col-sm-2 form-control" />*@
+                                    </div>
+
+                                    <div class="col-sm-1 text-center">
+                                        -
+                                    </div>
+
+                                    <div class="col-sm-4 ">
+                                        <input id="dateEnd" type="datetime" class="col-sm-2 form-control " />
+                                    </div>
+                                </div>
+                                <div class="text-right col-sm-11">
+
+                                    <label class="control-label col-sm-2"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">GL Number:</label>
+                                    <div class="col-sm-4">
+                                        <input id="glStart" type="text" class="col-sm-2 form-control" />
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        -
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input id="glEnd" type="text" class="col-sm-2 form-control" />
+                                    </div>
+                                </div>
+                                <div class="text-right col-sm-11">
+                                    <label class="control-label col-sm-2"></label>
+
+                                </div>
+                                <div class="text-right col-sm-11">
+                                    <a href=@Url.Action("GLRequest", "SpecificSAPData") class="btn btn-warning" role="button" type="submit" onclick="return DisplayProgressMessage(this);">Request GL</a>
+
+                                    <input class="btn btn-primary" type="submit" value="test" />
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

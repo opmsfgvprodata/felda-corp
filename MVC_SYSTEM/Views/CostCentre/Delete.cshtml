@@ -1,0 +1,81 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_CostCentre
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_CostCentre</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_CostCentre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_CostCentre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_KodKtgri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_KodKtgri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_NegaraID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_NegaraID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_SyarikatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_SyarikatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_WilayahID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_WilayahID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_LadangID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_LadangID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_Deleted)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

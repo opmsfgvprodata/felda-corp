@@ -1,0 +1,187 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_CCSAP>
+@using MVC_SYSTEM.Class;
+
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "CostCenterMaintenance";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "CostCentMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+
+
+    string uniquefilename = "Master Data CC" + ViewBag.UserID + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Html.BeginForm("CostCenterMaintenance", null, FormMethod.Get))
+
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-4">
+                    @Html.Label(GlobalResCorp.lblSearch)
+                    @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control", placeholder = "Kod Cost Center @ Keterangan", @id = "txtfilter", @value = "" })
+                </div>
+
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="text-right">
+                <a href=@Url.Action("_CostCenterSAPIntegration", "SAPIntegration") class="btn btn-danger" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnMdSAP</a>
+
+            </div>
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblCcAktivitiInfo</div>
+                <div class="panel-body">
+                    <div id="scrollArea2">
+                        <div id="CostCentMaintenanceDetails">
+                            @{
+                                var grid = new WebGrid(
+                                            canPage: true,
+                                            rowsPerPage: 15,
+                                            canSort: false,
+                                            ajaxUpdateContainerId: "grid");
+
+                                grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                                if (@grid.TotalRowCount > 0)
+                                {
+
+                                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                                                     tableStyle: "table table-bordered table-striped table-list table-hover",
+                                                     headerStyle: "header_table",
+                                                     alternatingRowStyle: "Grid-alt",
+                                                     selectedRowStyle: "Grid-selected",
+                                                     rowStyle: "Grid-rowstyle",
+                                                     footerStyle: "table-pager",
+                                                     mode: WebGridPagerModes.All,
+                                                     columns: grid.Columns(
+                                                        grid.Column(header: "No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                                        grid.Column("fld_CstCnter", "Kod Cost Center", style: "kod"),
+                                                        grid.Column("fld_Desc", "Pelanggan", style: "kod"),
+                                                        grid.Column("fld_CreatedBy", "Tindakan Oleh", style: "kod"),
+                                                        grid.Column("fld_DTCreated", "Tarikh Download", style: "kod"),
+                                                        grid.Column("fld_DTModified", "Last Modified", style: "kod")
+                    @*grid.Column(GlobalResSupplierDetail.hdrAction, canSort: false, style: "tindakan",
+                        format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("CustomerDetailUpdate", "SAPIntegration") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("CustomerDetailDelete", "SAPIntegration") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;")
+                        </text>)*@
+
+));
+
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="#" id="printpage">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px"  </span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>*@
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcelGL('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            @*<a data-modal1='' href=@Url.Action("_CostCenterMaintenanceCreate", "SAPIntegration") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>*@
+            <a href=@Url.Action("Index", "SAPIntegration" ) class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+
+
+
+
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea2').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SAPIntegration")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "CCMasterData" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+

@@ -1,0 +1,230 @@
+﻿@using MVC_SYSTEM.Class
+@{
+    GetConfig getconfig = new GetConfig();
+    string dateformat = getconfig.GetData("dateformat");
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Pinjam Peringkat</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Pinjam Peringkat</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Wilayah Pinjam:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("wilayahList1", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Ladang Pinjam:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("ladangList1", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Jenis Aktiviti:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("JnisAktvt", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Jenis Peringkat:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("JnisPkt", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Peringkat:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("PilihanPkt", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Wilayah Asal:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("wilayahList2", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Ladang Asal:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("ladangList2", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Tarikh Akhir:</label>
+                            <div class="col-sm-8">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type="date" class="form-control" name="DateEnd" id="DateEnd" onkeydown="return false" required/>
+                                    <span class="input-group-addon">
+                                        @*<span class="glyphicon glyphicon-calendar"></span>*@
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+
+    $(document).ready(function () {
+
+       @*$('#datetimepicker1').datetimepicker({
+            //defaultDate: new Date(),
+            format: '@dateformat',
+            useCurrent: false
+        });*@
+
+        $("#ladangList1").prop("disabled", true);
+        $("#JnisAktvt").prop("disabled", true);
+        $("#JnisPkt").prop("disabled", true);
+        $("#PilihanPkt").prop("disabled", true);
+        $("#wilayahList2").prop("disabled", true);
+        $("#ladangList2").prop("disabled", true);
+        $("#wilayahList1").change(function () {
+            if ($("#wilayahList1").val() === '') {
+                $("#JnisAktvt").prop("disabled", true);
+                $("#JnisPkt").prop("disabled", true);
+                $("#PilihanPkt").empty();
+                $("#PilihanPkt").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#PilihanPkt").prop("disabled", true);
+                $("#wilayahList2").prop("disabled", true);
+                $("#ladangList1").prop("disabled", true);
+                $("#ladangList1").empty();
+                $("#ladangList1").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#ladangList2").prop("disabled", true);
+                $("#ladangList2").empty();
+                $("#ladangList2").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            } else {
+                $("#ladangList1").prop("disabled", false);
+                $("#JnisAktvt").prop("disabled", true);
+                $("#JnisPkt").prop("disabled", true);
+                $("#PilihanPkt").empty();
+                $("#PilihanPkt").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#PilihanPkt").prop("disabled", true);
+                $("#wilayahList2").prop("disabled", true);
+                $("#ladangList2").prop("disabled", true);
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "EstateDataManagement")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#wilayahList1").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function (ladanglist) {
+                    $("#ladangList1").empty();
+                    $("#ladangList1").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#ladangList1")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                };
+                WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+
+        $("#ladangList1").change(function () {
+            if ($("#ladangList1").val() === '') {
+                $("#JnisPkt").prop("disabled", true);
+                $("#JnisAktvt").prop("disabled", true);
+                $("#JnisPkt").prop("disabled", true);
+                $("#PilihanPkt").empty();
+                $("#PilihanPkt").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#PilihanPkt").prop("disabled", true);
+                $("#wilayahList2").prop("disabled", true);
+                $("#ladangList2").prop("disabled", true);
+                $("#ladangList2").empty();
+                $("#ladangList2").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#ladangList1").empty();
+                $("#ladangList1").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            }
+            else {
+                $("#JnisAktvt").prop("disabled", false);
+                $("#JnisPkt").prop("disabled", false);
+                $("#PilihanPkt").empty();
+                $("#PilihanPkt").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#PilihanPkt").prop("disabled", true);
+                $("#wilayahList2").prop("disabled", true);
+                $("#ladangList2").prop("disabled", true);
+            }
+        });
+
+        $("#JnisPkt").change(function () {
+            if ($("#JnisPkt").val() === '' || $("#JnisAktvt").val() === '') {
+                $("#PilihanPkt").prop("disabled", true);
+                $('#PilihanPkt').empty();
+                $("#PilihanPkt").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                $("#wilayahList2").prop("disabled", true);
+            }
+            else {
+                var ajxfn = {};
+                ajxfn.url = "@Url.Action("GetPkt", "EstateDataManagement")";
+                ajxfn.type = "POST";
+                ajxfn.data = JSON.stringify({ JnisAktvt: $("#JnisAktvt").val(), JnsPkt: $("#JnisPkt").val(), WilayahList: $("#wilayahList1").val(), LadangList: $("#ladangList1").val() });
+                ajxfn.datatype = "json";
+                ajxfn.contentType = "application/json";
+                ajxfn.success = function (result) {
+                    $("#PilihanPkt").prop("disabled", false);
+                    $('#PilihanPkt').empty();
+                    $("#wilayahList2").prop("disabled", false);
+                    for (var i = 0; i < result.PilihPeringkat.length; i++) {
+                        $("#PilihanPkt").append("<option value=" + result.PilihPeringkat[i].Value + ">" + result.PilihPeringkat[i].Text + "</option>");
+                    }
+                };
+                ajxfn.error = function () {
+                    $.simplyToast('Please contact developer', 'danger');
+                };
+                $.ajax(ajxfn);
+            }
+        });
+
+        $("#wilayahList2").change(function () {
+            if ($("#wilayahList2").val() === '') {
+                $("#ladangList2").prop("disabled", true);
+                $("#ladangList2").empty();
+                $("#ladangList2").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            } else {
+                $("#ladangList2").prop("disabled", false);
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "EstateDataManagement")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#wilayahList2").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function (ladanglist) {
+                    $("#ladangList2").empty();
+                    $("#ladangList2").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#ladangList2")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                };
+                WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+    });
+</script>

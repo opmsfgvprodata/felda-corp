@@ -1,0 +1,381 @@
+﻿
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ViewingModelsOPMS.vw_PaySlipPekerja>
+
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetGroup GetGroup = new GetGroup();
+
+    int? month = ViewBag.MonthList;
+    int? year = ViewBag.YearList;
+    string worker = ViewBag.WorkerList;
+    int bil = 0;
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea2" class="modal-body">
+        @foreach (var item in Model)
+        {
+            <p style="font-size: 11px" align="right">Tarikh : @ViewBag.Date</p>
+
+            <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
+                <thead>
+                    <tr>
+                        <th colspan="18" style="text-align: center; vertical-align: middle; border: none;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            (@GlobalResNoSkb.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                            <br />
+                            Slip Gaji Pekerja Bagi Bulan @ViewBag.MonthList/@ViewBag.YearList
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">No Pekerja</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @item.Pkjmast.fld_Nopkj</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Nama Pekerja</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @item.Pkjmast.fld_Nama</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">No Akaun KWSP</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @item.Pkjmast.fld_Nokwsp</td>
+                    </tr>
+                    <tr>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Kod Kumpulan</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @GetGroup.GroupCode(item.Pkjmast.fld_KumpulanID, ViewBag.UserID, ViewBag.UserName, ViewBag.WilayahIDList, ViewBag.LadangIDList)</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Jawatan</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @GetTriager.GetWorkerRole(item.Pkjmast.fld_Ktgpkj, ViewBag.NegaraID, ViewBag.SyarikatID)</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">No Akaun Perkeso</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @item.Pkjmast.fld_Noperkeso</td>
+                    </tr>
+                    <tr>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Jantina</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @GetTriager.GetGender(item.Pkjmast.fld_Kdjnt, ViewBag.NegaraID, ViewBag.SyarikatID)</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">IC/Passport</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;">: @item.Pkjmast.fld_Nokp</td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;"></td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">&nbsp;</td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;"></td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;"></td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;"></td>
+                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;"></td>
+                        <td width="4%" style="vertical-align: middle !important; border:none;"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            if (item.GajiBulanan != null)
+            {
+                <logo />
+
+                <table style="float: left; width: 65%; font-size: 11px; margin-bottom: 10px" class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="6" width="1%" style="margin: 2px !important; margin: !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Pendapatan</th>
+                        </tr>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Keterangan</th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Kuantiti</th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Unit</th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Kadar (RM)</th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Gandaan</th>
+                            <th width="1.5%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Jumlah (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">KWSP (M)</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            @if (item.GajiBulanan != null && item.GajiBulanan.fld_KWSPMjk != null)
+                        {
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.GajiBulanan.fld_KWSPMjk</td>
+                            }
+                            else
+                            {
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">0.00</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">SOCSO (M)</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                            @if (item.GajiBulanan != null && item.GajiBulanan.fld_SocsoMjk != null)
+                        {
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.GajiBulanan.fld_SocsoMjk</td>
+                            }
+                            else
+                            {
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">0.00</td>
+                            }
+                        </tr>
+
+                        @if (item.GajiBulanan != null && item.GajiBulanan.fld_AIPS != null && item.GajiBulanan.fld_AIPS != 0)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">Insentif AIPS</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.GajiBulanan.fld_AIPS</td>
+                            </tr>
+                        }
+
+                        @foreach (var insentif in item.InsentifPekerja)
+                        {
+                            if (insentif.fld_KodInsentif.Contains("P"))
+                            {
+                                <tr>
+                                    <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">@insentif.fld_Keterangan</td>
+                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                    <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@insentif.fld_NilaiInsentif</td>
+                                </tr>
+                            }
+                        }
+
+                        @foreach (var kerja in item.KerjaPekerja)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">@kerja.fld_Desc - @kerja.fld_KodPkt</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@kerja.fld_JumlahHasil</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@kerja.fld_Unit</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@kerja.fld_KadarByr</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@kerja.fld_Gandaan</td>
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@kerja.fld_TotalAmount</td>
+                            </tr>
+                        }
+
+                        @foreach (var ot in item.OTPekerja)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">@ot.fld_Desc</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@ot.fld_JumlahJamOT</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@ot.fld_Unit</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@ot.fld_KadarByr</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@ot.fld_TotalAmount</td>
+                            </tr>
+                        }
+                        @foreach (var bonus in item.BonusPekerja)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">Bonus Harga - @bonus.fld_Desc - @bonus.fld_KodPkt</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bonus.fld_BilanganHari</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">HARI</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bonus.fld_KadarByr</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@GetTriager.GetPercentageDivision(bonus.fld_Bonus)</td>
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bonus.fld_TotalAmount</td>
+                            </tr>
+                        }
+
+                        @foreach (var cuti in item.CutiPekerja)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">@cuti.fld_Desc</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@cuti.fld_BilanganHari</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">HARI</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@cuti.fld_KadarByr</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">-</td>
+                                <td width="1.5%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@cuti.fld_TotalAmount</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                <table style="float: left; width: 35%; font-size: 11px; margin-bottom: 10px" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th colspan="2" width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Potongan</th>
+                        </tr>
+                        <tr>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;">Keterangan</th>
+                            <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;">Jumlah (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-right: none; border-left: none">KWSP (P)</td>
+                            @if (item.GajiBulanan != null && item.GajiBulanan.fld_KWSPPkj != null)
+                        {
+                                <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.GajiBulanan.fld_KWSPPkj</td>
+                            }
+                            else
+                            {
+                                <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">0.00</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td width="4%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">SOCSO (P)</td>
+                            @if (item.GajiBulanan != null && item.GajiBulanan.fld_SocsoPkj != null)
+                        {
+                                <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.GajiBulanan.fld_SocsoPkj</td>
+                            }
+                            else
+                            {
+                                <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-left: none">0.00</td>
+                            }
+                        </tr>
+                        @foreach (var insentif in item.InsentifPekerja)
+                        {
+                            if (insentif.fld_KodInsentif.Contains("T"))
+                            {
+                                <tr>
+                                    <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; border-right: none; border-left: none">@insentif.fld_Keterangan</td>
+                                    <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@insentif.fld_NilaiInsentif</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+                <table style="float: left; width: 65%; font-size: 11px;" class="table" border="0">
+                    <thead>
+
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none;"></th>
+                            <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none;">Jumlah Pendapatan</th>
+                            @if (item.GajiBulanan != null && item.GajiBulanan.fld_GajiKasar != null)
+                        {
+                                <th width="1.5%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: 1px double red; border-right: none;">@item.GajiBulanan.fld_GajiKasar</th>
+                            }
+                            else
+                            {
+                                <th width="1.5%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: 1px double red; border-right: none;">0.00</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <table style="float: left; width: 35%; font-size: 11px;" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: none; border-left: none;">Jumlah Potongan</th>
+                            @if (item.GajiBulanan != null)
+                        {
+                            decimal? jumlahPotongan = 0;
+
+                            jumlahPotongan = item.GajiBulanan.fld_LainPotongan + item.GajiBulanan.fld_KWSPPkj + item.GajiBulanan.fld_SocsoPkj;
+                                <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: 1px double red; border-right: none;">@jumlahPotongan</th>
+                            }
+
+                            else
+                            {
+                                <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red; border-bottom: 1px double red; border-right: none;">0.00</th>
+
+                            }
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <table style="float: left; width: 65%; font-size: 11px;" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                            <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                            <th width="1.5%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: none;"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <table style="float: left; width: 35%; font-size: 11px; margin-bottom: 10px" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border: none;">Gaji Bersih</th>
+                            <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 1px double red; border-right: none;">@item.GajiBulanan.fld_GajiBersih</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <div class="clearfix"></div>
+
+                <table style="float: left; width: 100%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 2px solid gray; border-bottom: none; border-left: none;"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <table style="float: left; width: 80%; font-size: 11px;" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border: none;">*Gandaan : 1 = Hari Biasa, 2 = Hari Minggu, 3 = Cuti Umum</th>
+                        </tr>
+                        <tr>
+                            <th width="4%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border: none;">*Gandaan Bonus Harga : 0.5 = 50% Capaian, 1 = 100% Capaian</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <table style="float: left; width: 20%; font-size: 11px; border-top: 1px solid red; ; border-bottom: 1px solid red; border-left: 1px solid red; ; border-right: 1px solid red;" class="table" border="0">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important;  border-bottom: 1px solid red">Perincian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var footnote in item.FootNote)
+                        {
+                            <tr>
+                                <td width="4%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important;">Jumlah @footnote.fld_Desc</td>
+                                <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important;">@footnote.fld_Bilangan</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            else
+            {
+                <p align="center" style="color: red; font-size: 11px">Tiada Data Gaji</p>
+                <br />
+                <br />
+            }
+            <newpage />
+        }
+    </div>
+}
+
+@if (Model.Count() == 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>

@@ -1,0 +1,239 @@
+﻿@* kamalia - 18.02.2021 *@
+@model MVC_SYSTEM.ModelsCustom.CustMod_GajiMinima
+<script src="~/Asset/Scripts/jquery.selectlistactions.js"></script>
+<style>
+    #StaffList {
+        height: 350px;
+        m argin-bottom: 10px;
+    }
+
+    #PresenterList,
+    #ContactList,
+    #FacilitatorList {
+        height: 95px;
+        margin-bottom: 10px;
+    }
+
+    .style-select select {
+        padding: 0;
+    }
+
+        .style-select select option {
+            padding: 4px 10px 4px 10px;
+        }
+
+            .style-select select option:hover {
+                background: #EEEEEE;
+            }
+
+    .add-btns {
+        padding: 0;
+    }
+
+        .add-btns input {
+            margin-top: 25px;
+            width: 100%;
+        }
+
+    .selected-left {
+        float: left;
+        width: 88%;
+    }
+
+    .selected-right {
+        float: left;
+    }
+
+        .selected-right button {
+            display: block;
+            margin-left: 4px;
+            margin-bottom: 2px;
+        }
+
+    @@media (max-width: 517px) {
+        .selected-right button {
+            display: inline;
+            margin-bottom: 5px;
+        }
+    }
+
+    .subject-info-box-1,
+    .subject-info-box-2 {
+        float: left;
+        width: 45%;
+    }
+
+        .subject-info-box-1 select,
+        .subject-info-box-2 select {
+            height: 200px;
+            padding: 0;
+        }
+
+            .subject-info-box-1 select option,
+            .subject-info-box-2 select option {
+                padding: 4px 10px 4px 10px;
+            }
+
+                .subject-info-box-1 select option:hover,
+                .subject-info-box-2 select option:hover {
+                    background: #EEEEEE;
+                }
+
+    .subject-info-arrows {
+        float: left;
+        width: 10%;
+    }
+
+        .subject-info-arrows input {
+            width: 70%;
+            margin-bottom: 5px;
+        }
+</style>
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Agihan Gaji Minima RM @ViewBag.ValueGajiMinima</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblMinimumWageValueInfo</div>
+                    <div class="panel-body">
+                        <div class="row style-select">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">@GlobalResCorp.lblRegion:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                        @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @Html.TextBoxFor(model => model.fld_OptConfigID, htmlAttributes: new { @class = "form-control", style = "display: none;" })
+
+                                <div class="subject-info-box-1">
+                                    <label>Ladang Tiada Gaji Minima</label>
+                                    <select multiple class="form-control" id="lstBox1">
+                                        @foreach (var item in Model.TiadaGajiMinima)
+                                        {
+                                            <option value=@item.LadangID>@item.NamaLadang</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="subject-info-arrows text-center">
+                                    <br /><br />
+                                    <input type='button' id='btnAllRight' value='>>' class="btn btn-default" /><br />
+                                    <input type='button' id='btnRight' value='>' class="btn btn-default" /><br />
+                                    <input type='button' id='btnLeft' value='<' class="btn btn-default" /><br />
+                                    <input type='button' id='btnAllLeft' value='<<' class="btn btn-default" />
+                                </div>
+
+                                <div class="subject-info-box-2">
+                                    <label>Ladang Dengan Gaji Minima RM @ViewBag.ValueGajiMinima</label>
+                                    <select multiple class="form-control" id="PilihGajiMinima" name="PilihGajiMinima">
+                                        @foreach (var item in Model.AdaGajiMinima)
+                                        {
+                                            <option value=@item.LadangID>@item.NamaLadang</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" onclick="selectAll();" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+<script>
+    function selectAll() {
+        options = document.getElementById("PilihGajiMinima");
+        for (i = 0; i < options.length; i++) {
+            options[i].selected = "true";
+        }
+    }
+    $('#btnRight').click(function (e) {
+        $('select').moveToListAndDelete('#lstBox1', '#PilihGajiMinima');
+        e.preventDefault();
+    });
+
+    $('#btnAllRight').click(function (e) {
+        $('select').moveAllToListAndDelete('#lstBox1', '#PilihGajiMinima');
+        e.preventDefault();
+    });
+
+    $('#btnLeft').click(function (e) {
+        $('select').moveToListAndDelete('#PilihGajiMinima', '#lstBox1');
+        e.preventDefault();
+    });
+
+    $('#btnAllLeft').click(function (e) {
+        $('select').moveAllToListAndDelete('#PilihGajiMinima', '#lstBox1');
+        e.preventDefault();
+    });
+</script>
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+<script>
+
+    $("#fld_WilayahID").change(function () {
+
+            $("#lstBox1").empty();
+            $("#lstBox1").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            $("#lstBox1").prop("disabled", true);
+
+
+        if ($("#fld_WilayahID").val() !="") {
+
+            var WilayahList = {};
+            WilayahList.url = "@Url.Action("GetLadang", "Maintenance2")";
+            WilayahList.type = "POST";
+            WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), id: $("#fld_OptConfigID").val() });
+            WilayahList.datatype = "json";
+            WilayahList.contentType = "application/json";
+            WilayahList.success = function (ladanglist) {
+
+                console.log(ladanglist);
+
+                $("#lstBox1").empty();
+
+                if (ladanglist.length === 0) {
+                    $("#lstBox1").append("<option value=" +
+                        "" +
+                        ">" +
+                        '@GlobalResCorp.lblNoEstate' +
+                        "</option>");
+                }
+
+                else {
+                    $("#lstBox1").prop("disabled", false);
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#lstBox1").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                    //$("#fld_Year").val("");
+                }
+
+            };
+            WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahList);
+        }
+    });
+
+</script>

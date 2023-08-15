@@ -1,0 +1,96 @@
+﻿@*@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.Models.tbl_Pkjmast>*@
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "MyegReport";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    //string aktvtselection = "";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "MyegReport",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+   @using (Ajax.BeginForm("_MyegReport", "Report", null, options, new { @id = "MyegReportDetails" }))
+   {
+        @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.RadioButton("RadioGroup", 0, new { @checked = "checked" })
+                    @Html.Label(GlobalResCorp.lblAll)<br />
+                    @Html.RadioButton("RadioGroup", 1)
+                    @Html.Label(GlobalResCorp.lblMonthSelection)
+                </div>
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.lblPassportExpiredMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.lblRegion)
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.hdrLdg)
+                    @Html.DropDownList("LdgList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.hdrKrytn)
+                    @Html.DropDownList("KrytnList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="@GlobalResCorp.btnView" />
+                    @*<input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="@GlobalResNoSkb.btnViewName" />*@
+                </div>
+        </div>
+   }
+        </div>
+    <div class="well" style="margin-top: 7px">
+        <div class="panel panel-primary">
+            @*<div id="divheader" class="panel-heading">@GlobalResCorp.lblPayrateFullMaintenance</div>*@
+            <div class="panel-body">
+                <div id="MyegReport">
+                    @Html.Action("_MyegReport")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* modal placeholder*@
+@*<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>*@
+
+
+

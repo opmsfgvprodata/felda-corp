@@ -1,0 +1,116 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_Messaging>
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetIdentity GetIdentity = new GetIdentity();
+    var UserList = GetIdentity.GetListUser();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                <div class="col-sm-5">
+                    @Html.Label("Carian")
+                    @Html.Editor("FindText", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-sm-5">
+                    @Html.Label("Status")
+                    @Html.DropDownList("Status", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="@GlobalResCorp.btnView" />
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="well" style="margin-top: 7px">
+        <div class="panel panel-primary">
+            <div id="divheader" class="panel-heading">Mesej</div>
+            <div class="panel-body" id="content">
+                <table class="table table-bordered table-striped table-list table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_Msg)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_CreatedDT)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_ModifiedDT)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fld_Active)
+                            </th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var GetUserCreate = UserList.Where(x => x.fldUserID == item.fld_CreatedBy).Select(s => s.fldUserName).FirstOrDefault();
+                            var GetUserModify = UserList.Where(x => x.fldUserID == item.fld_ModifiedBy).Select(s => s.fldUserName).FirstOrDefault() == null ? "" : UserList.Where(x => x.fldUserID == item.fld_ModifiedBy).Select(s => s.fldUserName).FirstOrDefault();
+                            string ActiveStatus = "Aktif";
+                            switch (item.fld_Active)
+                            {
+                                case true:
+                                    ActiveStatus = "AKTIF";
+                                    break;
+                                case false:
+                                    ActiveStatus = "TIDAK AKTIF";
+                                    break;
+                            }
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.fld_Title)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.fld_Msg)
+                                </td>
+                                <td>
+                                    @GetUserCreate
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.fld_CreatedDT)
+                                </td>
+                                <td>
+                                    @GetUserModify
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.fld_ModifiedDT)
+                                </td>
+                                <td>
+                                    @ActiveStatus
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.fld_ID }, new { @class = "btn btn-warning" })
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.fld_ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.fld_ID })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a href=@Url.Action("Create", "Messaging") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>
+           @* <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>*@
+        </div>
+    </div>
+    @*</div>*@
+</section>

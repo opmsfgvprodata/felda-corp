@@ -1,0 +1,127 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.vw_SAPIODetailsCreate
+
+@{
+    ViewBag.Title = "ioRequest";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @*<h3 class="modal-title">Add New User</h3>*@
+    </div>
+
+    @using (Html.BeginForm("_ioRequest", "SAPMasterData", new { id = "" }))
+    {
+
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Request New Vendor</div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.fld_CompanyCode, "SAP Company Code", htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.Label(GlobalResCorp.lblRegion)
+                                @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.Label(GlobalResCorp.lblEstate)
+                                @Html.DropDownList("fld_LadangID", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.Label("Indikator Rancangan", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.fld_LdgIndicator, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "1", @readonly = true } })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.fld_LdgIndicator2, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "9", @readonly = true } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.Label("Peringkat Rancangan", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.fld_PktCode, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "001", @readonly = true } })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.fld_PktCode2, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "999", @readonly = true } })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9 right">
+
+                            <input class="btn btn-success right" type="submit" value="Sent" />
+
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+    }
+
+</section>
+
+<script>
+    $(document).ready(function () {
+      if ($("#fld_WilayahID").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "SAPMasterData")";
+            WilayahIDList.type = "POST";
+          WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fld_LadangID").empty();
+                $("#fld_LadangID").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#fld_WilayahID").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#fld_LadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#fld_WilayahID").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "SAPMasterData")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#fld_LadangID").empty();
+                $("#fld_LadangID").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#fld_WilayahID").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#fld_LadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>

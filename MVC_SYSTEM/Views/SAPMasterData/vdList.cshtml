@@ -1,0 +1,104 @@
+﻿@model IEnumerable < MVC_SYSTEM.ModelsCorporate.tbl_VDSAP>
+
+
+@{
+    ViewBag.Title = "vdList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    int? bil = 0;
+}
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Html.BeginForm("vdList", "SAPMasterData", new { id = "" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label("Kod Vendor")
+                    @Html.TextBox("vdCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label("Keterangan")
+                    @Html.TextBox("vdDesc", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+
+                </div>
+            </div>
+            <br />
+        </div>
+    }
+    <br />
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Data VD SAP</div>
+        <div class="panel-body">
+
+
+            @if (Model != null && Model.Count() != 0)
+            {
+
+                <div class="col-sm-12" style="text-align:right;">
+                    <a href="@Url.Action("vdRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
+                </div>
+
+                <br />
+
+                <div class="col-sm-12" style="text-align:center;">
+                    <div id="scrollArea" class="col-sm-12">
+
+                        <div class="CCList">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Vendor</th>
+                                        <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var vdDetails in Model)
+                                    {
+                                        bil = bil + 1;
+                                        <tr @if (vdDetails.fld_DTCreated == DateTime.Today || vdDetails.fld_DTModified == DateTime.Today)
+                                     { <text> style="background-color:lightgrey;" </text>  }>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_VendorNo</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_Desc </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_CreatedBy </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @vdDetails.fld_DTCreated) </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @vdDetails.fld_DTModified)</td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                <div id="scrollArea" class="col-sm-12">
+                    @GlobalResCorp.msgDataNotFound
+                </div>
+            }
+
+
+            <div class="col-sm-12" style="text-align:right;">
+                <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

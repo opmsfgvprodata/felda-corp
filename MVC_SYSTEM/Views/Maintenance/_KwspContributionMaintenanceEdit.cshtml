@@ -1,0 +1,81 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_JenisCarumanKWSPViewModelEdit
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblKwspContributionEdit</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblKwspContributionInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblKwspContributionCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodCaruman, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Keterangan, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionSubCategoryMinAge:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_UmurLower, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_UmurLower, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lblContributionSubCategoryMaxAge:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_UmurUpper, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_UmurUpper, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionSubCategoryEmpyeeCont:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_PeratusCarumanPekerja, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PeratusCarumanPekerja, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lbllKwspContributionBelow5000:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_PeratusCarumanMajikanBawah5000, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PeratusCarumanMajikanBawah5000, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lbllKwspContributionAbove5000:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_PeratusCarumanMajikanAtas5000, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PeratusCarumanMajikanAtas5000, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_JenisCarumanID)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

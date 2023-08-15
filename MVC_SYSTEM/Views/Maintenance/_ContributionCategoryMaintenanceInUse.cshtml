@@ -1,0 +1,245 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "Confirm",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<div class="well" style="margin-top: 7px;">
+    @*@using (Ajax.BeginForm("_AnnualLeaveAllocationMaintenanceEdit", "Maintenance", null, options, new { @id = "annualLeaveAllocationMaintenanceEditForm" }))
+        {*@
+    <div class="modal-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">@GlobalResCorp.lblPublicHolidayAllocationInfo</div>
+            <div class="panel-body">
+                @{
+                    GetConfig getConfig = new GetConfig();
+
+                    var grid = new WebGrid(
+                        canPage: false,
+                        rowsPerPage: Model.PageSize,
+                        canSort: false,
+                        ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+                    if (@grid.TotalRowCount > 0)
+                    {
+                        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblAnnualLeaveAllocationCount)</div>
+
+                        @grid.GetHtml(htmlAttributes: new { id = "contributionCategoryGrid" }, // id for ajaxUpdateontainerId parameter
+                            tableStyle: "table table-bordered table-striped table-list table-hover",
+                            headerStyle: "header_table",
+                            alternatingRowStyle: "Grid-alt",
+                            selectedRowStyle: "Grid-selected",
+                            rowStyle: "Grid-rowstyle",
+                            footerStyle: "table-pager",
+                            mode: WebGridPagerModes.All,
+                            columns: grid.Columns(
+                                grid.Column(header: "No."
+                                    , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                      + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                      * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                grid.Column(columnName: "fld_KodCaruman", header: GlobalResCorp.lblContributionCategoryCode, style: "kod"),
+                                grid.Column(columnName: "fld_NamaCaruman", header: GlobalResCorp.lblContributionCategoryDesc, style: "keterangan"),
+                                grid.Column(GlobalResCorp.lblActiveContribution, format: (item) =>
+                                {
+                                    var checkbox = "";
+
+                                    if (item.fld_Default != null)
+                                    {
+                                        if (item.fld_Default == true)
+                                        {
+                                            checkbox = "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_JenisCarumanID + "' name='ids' id='ids' style='display:none' checked='true'/></center>";
+
+                                        }
+
+                                        else
+                                        {
+                                            checkbox = "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_JenisCarumanID + "' name='ids' id='ids' style='display:none'/></center>";
+                                        }
+
+                                        var selected = Convert.ToInt32(item.fld_Default);
+
+                                        var tindakan = "<span class='display-mode'>" + getConfig.GetWebConfigDesc(selected.ToString(), "pilihanYaTidak", item.fld_NegaraID, item.fld_SyarikatID) + "</span>" +
+                                                       checkbox;
+                                        return @Html.Raw(tindakan);
+                                    }
+
+                                    else
+                                    {
+                                        var tindakan = "<span class='display-mode'>" + getConfig.GetWebConfigDesc("0", "pilihanYaTidak", item.fld_NegaraID, item.fld_SyarikatID) + "</span>" +
+                                                       "<center><input type='checkbox' class='checkbox edit-mode' value='" + @item.fld_JenisCarumanID + "' name='ids' id='ids' style='display:none'/></center>";
+                                        ;
+                                        return @Html.Raw(tindakan);
+                                    }
+                                }, canSort: false, style: "tetapan2")
+                                ))
+                    }
+                    else
+                    {
+                        <hr />
+                        <div class="text-center">
+                            @Html.Label("Message", (string)ViewBag.Message)
+                        </div>
+
+                        <hr />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer col-md-12">
+        @if (@ViewBag.TotalRecord != 0)
+        {
+            <button type="button" class="btn btn-success saveBtn edit-mode" style="display: none">@GlobalResCorp.btnSave</button>
+            <button type="button" class="btn btn-success updateBtn display-mode">@GlobalResCorp.btnUpdate</button>
+            <button type="button" class="btn btn-danger cancelBtn edit-mode" style="display: none">@GlobalResCorp.btnCancel</button>
+        }
+        <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+    </div>
+    @*}*@
+</div>
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        $(".updateBtn").click(function () {
+            $(".edit-mode").css("display", "");
+            $(".display-mode").css("display", "none");
+
+        });
+
+        $(".cancelBtn").click(function () {
+            $(".edit-mode").css("display", "none");
+            $(".display-mode").css("display", "");
+
+        });
+
+        $(".saveBtn").click(function () {
+            $(".edit-mode").css("display", "none");
+            $(".display-mode").css("display", "");
+
+        });
+
+        $('.saveBtn').on('click',
+            function () {
+
+                var selected = [];
+                $('#contributionCategoryGrid input:checked').each(function () {
+                    selected.push($(this).attr('value'));
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("_ContributionCategoryMaintenanceInUseEdit", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    traditional: true,
+                    data: JSON.stringify({ carumanTambahanID: selected}),
+                    success: function (result) {
+                        $.simplyToast(result.msg, result.status);
+                        if (result.status == "success") {
+                            $("#contributionCategoryMaintenanceInUseDetails").load(
+                                '@Url.Action("_ContributionCategoryMaintenanceInUse", "Maintenance")');
+                            $('.edit-book').prop("disabled", false);
+                        }
+                    }
+                });
+            });
+
+        // 1st replace first column header text with checkbox
+        $("#contributionCategoryGrid th").each(function () {
+            if ($.trim($(this).text().toString().toLowerCase()) === "{checkall}") {
+                $(this).text('');
+                $(this).append("<span class='display-mode'>@GlobalResCorp.lblActiveContribution</span>");
+                $(this).append("<span class='edit-mode' style='display:none'>@GlobalResCorp.lblChckAll</span>");
+                $(this).append("<br><center><input type='checkbox' class='checkbox edit-mode' value='' id='cbSelectAll' style='display:none'/></center>");
+            }
+        });
+
+        //2nd click event for header checkbox for select /deselect all
+        $("#cbSelectAll").on("click", function () {
+            var ischecked = this.checked;
+            $('#contributionCategoryGrid').find("input:checkbox").each(function () {
+                this.checked = ischecked;
+            });
+        });
+
+        //3rd click event for checkbox of each row
+        $("input[name='ids']").click(function () {
+            var totalRows = $("#contributionCategoryGrid td :checkbox").length;
+            var checked = $("#contributionCategoryGrid td :checkbox:checked").length;
+
+            if (checked == totalRows) {
+                $("#contributionCategoryGrid").find("input:checkbox").each(function () {
+                    this.checked = true;
+                });
+            }
+            else {
+                $("#cbSelectAll").removeAttr("checked");
+            }
+        });
+
+    });
+</script>

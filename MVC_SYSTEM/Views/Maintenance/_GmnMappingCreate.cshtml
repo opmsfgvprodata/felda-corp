@@ -1,0 +1,117 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_MapGL
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblGmnAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblGmnInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblkatAktiviti:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("KategoriAktiviti", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Jenis Aktiviti" })
+                                @Html.ValidationMessage("KategoriAktiviti", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="sublist" class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblAktivitiCode:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("KodAktvtList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Kod Aktiviti" })
+                                @Html.ValidationMessage("KodAktvtList", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblJnsGL:</label>
+                                <div class="col-sm-4">
+                                    @Html.DropDownList("JnsGL", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Jenis GL" })
+                                    @Html.ValidationMessage("JnsGL", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        <div id="sublist" class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3"></label>
+                            <div class="col-sm-4">
+                               @Html.DropDownList("KodJnsGL", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "" })
+                            @Html.ValidationMessage("KodJnsGL", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+    $("#KategoriAktiviti").change(function () {
+            $("#UpdateProgress1").css("display", "");
+            $("#workdata").css("display", "none");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("GetAktvtGMN", "Maintenance")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ KategoriAktiviti: $("#KategoriAktiviti").val() });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#ListofDetail3').empty();
+                $('#KodAktvtList').empty();
+                for (var i = 0; i < result.PilihAktiviti.length; i++) {
+                    $("#KodAktvtList").append("<option value=" + result.PilihAktiviti[i].Value + ">" + result.PilihAktiviti[i].Text + "</option>");
+                }
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        });
+</script>
+
+<script>
+    $("#JnsGL").change(function () {
+            $("#UpdateProgress1").css("display", "");
+            $("#workdata").css("display", "none");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("GetGLGMN", "Maintenance")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ JnsGL: $("#JnsGL").val() });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#ListofDetail3').empty();
+                $('#KodJnsGL').empty();
+                for (var i = 0; i < result.PilihGL.length; i++) {
+                    $("#KodJnsGL").append("<option value=" + result.PilihGL[i].Value + ">" + result.PilihGL[i].Text + "</option>");
+                }
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        });
+</script>
+

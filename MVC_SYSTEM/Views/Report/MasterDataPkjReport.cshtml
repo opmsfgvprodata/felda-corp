@@ -1,0 +1,159 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblTitleWorkerMasterDataReport;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResultWorkerMasterDataReport",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResDataEntry.WaitMsg
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        @using (Ajax.BeginForm("_MasterDataPkjReport", "Report", null, options, new { @id = "masterDataPkjReportSearch" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblActiveStatus)
+                    @Html.DropDownList("StatusList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblRegion)
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblEstate)
+                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblWorkCategory)
+                    @Html.DropDownList("KategoriPekerjaList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCitizen)
+                    @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.btnSearch)
+                    @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top: 24px">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top: 7px">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.titleWorkerMasterDataReport</div>
+                <div class="panel-body">
+                    <div id="searchResultWorkerMasterDataReport">
+                        @Html.Action("_MasterDataPkjReport")
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href=@Url.Action("Index", "Report") class="btn btn-warning" role="button">@GlobalResCorp.btnBack</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ($("#WilayahList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+</script>
+
+

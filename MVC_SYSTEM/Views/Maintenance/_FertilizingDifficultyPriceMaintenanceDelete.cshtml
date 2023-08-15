@@ -1,0 +1,73 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tblOptionConfigsWeb
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    GetConfig config = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @if (Model.fldDeleted == false)
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblFertilizingDifficultyPriceDelete</h3>
+        }
+        else
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblFertilizingDifficultyPriceUnDelete</h3>
+        }
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblFertilizingDifficultyPriceInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblFertilizingDifficultyPriceCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fldOptConfValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fldOptConfDesc, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblFertilizingDifficultyPrice:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fldOptConfFlag2, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fldOptConfID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

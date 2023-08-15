@@ -1,0 +1,382 @@
+﻿@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "PaysheetByLadang";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetTriager GetTriager = new GetTriager();
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+    GetDataCount GetDataCount = new GetDataCount();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    string wlyhName = "";
+    int bill = 0;
+    int check = 0;
+    int checkLulus = 0;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "PaysheetByLadang_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+}
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("PaysheetByLadang", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    <div id="progressmsg" class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResPaysheetByLadang.WaitMsg</label>
+    </div>
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResPaysheetByLadang.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResPaysheetByLadang.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResPaysheetByLadang.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResPaysheetByLadang.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-2">
+                    @Html.Label(" ")
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResPaysheetByLadang.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well">
+            <p style="text-align:center;"><label>LAPORAN PERMOHONAN WANG</label></p>
+            @if (ViewBag.getflag == 1)
+            {
+                <p style="color:red">@GlobalResPaysheetByLadang.lbltxt</p>
+            }
+            else
+            {
+                <div id="scrollArea" class="modal-body">
+                    @if (ViewBag.Wilayahselection == 0)
+                    {
+                        foreach (var wlyh in GetWilayah.GetWilayahID(ViewBag.SyarikatID))
+                        {
+                            bill = 0;
+                            checkLulus = 0;
+                            wlyhName = GetWilayah.GetWilayahName(wlyh);
+                            checkLulus = GetDataCount.countGajiByLadang(ViewBag.Month, ViewBag.Year, wlyh, 0);
+                            <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                <thead>
+                                    <tr>
+                                        <th colspan="21" style="text-align:center;vertical-align:middle;">
+                                            @ViewBag.NamaSyarikat
+                                            <br />
+                                            (@GlobalResPaysheetByLadang.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                            <br />
+                                            @GlobalResPaysheetByLadang.hdrReportTitle
+                                            <br />
+                                            @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="21" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @wlyhName
+                                        </th>
+                                    </tr>
+                                    @if (checkLulus >= 1)
+                                    {
+                                        <tr>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNo</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNamaLdg</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Kasar Keseluruhan (Gaji Kasar + KWSP + SOCSO (M))</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrManual</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Kasar (Pekerja Sahaja)</th>
+                                            <th colspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPtgn</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Bersih (Pekerja Sahaja)</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNoAkaun</th>
+                                            <th colspan="8" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNilaiPecahan</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Hantaran Wang</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPostingDate</th>
+                                            <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNoDkmn</th>
+                                        </tr>
+                                        <tr>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP (P)</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">SOCSO (P)</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrLain2</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPdp</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP+SOCSO (P)</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP+SOCSO (M)</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total PDP (PDP + KWSP + SOCSO(P+M))</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrGlBank</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrCit</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total CIT</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrCitZone</th>
+
+                                        </tr>
+                                    }
+                                </thead>
+                                <tbody>
+                                    @if (checkLulus <= 0)
+                                    {
+                                        <tr>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                data belum disemak
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var ldg in GetLadang.GetCodeLadang(wlyh, "WorkerTransac", ViewBag.Year))
+                                        {
+                                            check = GetDataCount.countGajiByLadang(ViewBag.Month, ViewBag.Year, wlyh, ldg);
+                                            if (check >= 1)
+                                            {
+                                                bill = bill + 1;
+                                                Html.RenderAction("PaysheetByLadangDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = wlyh, ladangid = ldg, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, bill = bill });
+
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    @if (checkLulus >= 1)
+                                    {
+                                        Html.RenderAction("PaysheetByLadangSummary", "Report", new { ldgid = ViewBag.LadangSelection, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = wlyh, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg });
+                                    }
+                                </tfoot>
+                            </table>
+                        }
+                    }
+                    else
+                    {
+                        checkLulus = 0;
+                        wlyhName = GetWilayah.GetWilayahName(ViewBag.Wilayahselection);
+                        checkLulus = GetDataCount.countGajiByLadang(ViewBag.Month, ViewBag.Year, ViewBag.Wilayahselection, 0);
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="21" style="text-align:center;vertical-align:middle;">
+                                        @ViewBag.NamaSyarikat
+                                        <br />
+                                        (@GlobalResPaysheetByLadang.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                        <br />
+                                        @GlobalResPaysheetByLadang.hdrReportTitle
+                                        <br />
+                                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="21" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @wlyhName
+                                    </th>
+                                </tr>
+                                @if (checkLulus >= 1)
+                                {
+                                    <tr>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNo</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNamaLdg</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Kasar Keseluruhan (Gaji Kasar + KWSP + SOCSO (M))</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrManual</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Kasar (Pekerja Sahaja)</th>
+                                        <th colspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPtgn</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Pendapatan Bersih (Pekerja Sahaja)</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNoAkaun</th>
+                                        <th colspan="8" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNilaiPecahan</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Hantaran Wang</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPostingDate</th>
+                                        <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrNoDkmn</th>
+                                    </tr>
+                                    <tr>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP (P)</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">SOCSO (P)</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrLain2</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrPdp</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP+SOCSO (P)</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KWSP+SOCSO (M)</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total PDP (PDP + KWSP + SOCSO(P+M))</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrGlBank</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrCit</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total CIT</th>
+                                        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResPaysheetByLadang.hdrCitZone</th>
+
+                                    </tr>
+                                }
+                            </thead>
+                            <tbody>
+                                @if (checkLulus >= 1)
+                                {
+                                    if (ViewBag.LadangSelection == 0)
+                                    {
+                                        foreach (var ldg in GetLadang.GetCodeLadang(ViewBag.WilayahSelection, "WorkerTransac", ViewBag.Year))
+                                        {
+                                            check = GetDataCount.countGajiByLadang(ViewBag.Month, ViewBag.Year, ViewBag.WilayahSelection, ldg);
+                                            if (check >= 1)
+                                            {
+                                                bill = bill + 1;
+                                                Html.RenderAction("PaysheetByLadangDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ldg, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, bill = bill });
+
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        check = GetDataCount.countGajiByLadang(ViewBag.Month, ViewBag.Year, ViewBag.WilayahSelection, ViewBag.LadangSelection);
+                                        if (check >= 1)
+                                        {
+                                            bill = bill + 1;
+                                            Html.RenderAction("PaysheetByLadangDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, ladangid = ViewBag.LadangSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg, bill = bill });
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            data belum disemak
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                @if (ViewBag.LadangSelection == 0)
+                                {
+                                    Html.RenderAction("PaysheetByLadangSummary", "Report", new { ldgid = ViewBag.LadangSelection, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg });
+                                }
+                                else
+                                {
+                                    Html.RenderAction("PaysheetByLadangSummary", "Report", new { ldgid = ViewBag.LadangSelection, negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = ViewBag.WilayahSelection, month = ViewBag.Month, year = ViewBag.Year, incldg = ViewBag.IncLdg });
+                                }
+
+                            </tfoot>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+                        <newpage />
+                    }
+                </div>
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+            }
+        </div>
+    </section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "PaysheetByLadang" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            //alert(myHtml);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "PaysheetByLadang" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry too many data', 'danger');
+                }
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResPaysheetByLadang.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResPaysheetByLadang.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

@@ -1,0 +1,161 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_IOSAPModelViewEdit
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblIOEdit</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblIOInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text", Model.fld_WilayahID), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_LadangID, new SelectList(ViewBag.LadangList, "Value", "Text", Model.fld_LadangID), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstateCode:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_LdgKod, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LdgKod, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblCodeIO:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_IOcode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_IOcode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLevel:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_PktCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PktCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblSubPkt:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_SubPktCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_SubPktCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLevelArea:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_LuasPkt, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_LuasPkt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblPlantArea:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_LuasKawTnmn, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_LuasKawTnmn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLuasHasil:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_LuasKawBerhasil, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_LuasKawBerhasil, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblSAPIndicator:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_LdgIndicator, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_LdgIndicator, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblUsageStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Deleted, new SelectList(ViewBag.SelectionList, "Value", "Text", Model.fld_Deleted), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Deleted, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_ID)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function() {
+        $("#fld_LadangID").change(function () {
+            if ($("#fld_LadangID").val() === '') {
+                $("#fld_LdgKod").empty();
+            } else {
+                var LadangKod = {};
+                LadangKod.url = "@Url.Action("GetLadangCode", "Maintenance")";
+                LadangKod.type = "POST";
+                LadangKod.data = JSON.stringify({ LadangList: $("#fld_LadangID").val() });
+                LadangKod.datatype = "json";
+                LadangKod.contentType = "application/json";
+                LadangKod.success = function (ladangCode) {
+                    $("#fld_LdgKod").empty();
+                    $("#fld_LdgKod").val(ladangCode);
+                };
+                LadangKod.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(LadangKod);
+            }
+        });
+
+        $("#fld_WilayahID").change(function () {
+            if ($("#fld_WilayahID").val() === '') {
+                $("#fld_LadangID").prop("disabled", true);
+            } else {
+
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#fld_LadangID").empty();
+                    $("#fld_LadangID").append("<option value=" + '' + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                    $("#fld_LadangID").prop("disabled", false);
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+    });
+</script>

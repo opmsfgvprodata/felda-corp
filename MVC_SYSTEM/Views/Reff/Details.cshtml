@@ -1,0 +1,99 @@
+﻿@model MVC_SYSTEM.SystemModels.tblAgentDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblAgentDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fldAgentFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldAgentFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldDesignation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldDesignation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldICNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldICNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldStaffNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldStaffNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldDatetimeCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldDatetimeCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldCreateBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldCreateBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldDatetimeModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldDatetimeModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fldDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fldDeleted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.fldAgentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

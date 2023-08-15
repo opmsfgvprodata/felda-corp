@@ -1,0 +1,118 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tblPkjmastApp>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Report Approval Detail";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    int bill = 1;
+    string checkboxstatus = "";
+    long? fileid = 0;
+    string checkbox = "";
+    string duplicationstatus = "";
+    long duplicatevalue = 0;
+    GetConfig GetConfig = new GetConfig();
+    GetPekerja GetPekerja = new GetPekerja();
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            Proses sedang dilakukan...
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Html.BeginForm("GetRejectWorkerApprovalDetail", "Approval", FormMethod.Post, new { id = "GetRejectWorkerApprovalDetail" }))
+    {
+        @Html.AntiForgeryToken()
+        <div id="DataTable" class="well" style="height:515px;">
+            <div id="scrollArea2" class="modal-body">
+                @if (ViewBag.Status != null)
+                {
+                    <p class="alert alert-@ViewBag.ClassStatus alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        @ViewBag.Status
+                    </p>
+                }
+                <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                    <thead>
+                        <tr>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrbil</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrNoPkj</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrKP</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrNama</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrJwtn</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrKrytn</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrTrkhSmpai</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrAlsnMsk</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrStatus</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrDuplicateStatus</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrTnda</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        checkboxstatus = "";
+                        if (GetPekerja.getExistingWorkerApp(item.fldNoPkj, item.fldNoKP, item.fldFileID, item.fldLadangID, item.fldWilayahID, item.fldSyarikatID, item.fldNegaraID))
+                        {
+                            duplicationstatus = "Kelulusan Telah Dilakukan Sebelum Ini";
+                            duplicatevalue = item.fldID;
+                        }
+                        else
+                        {
+                            checkbox = "";
+                            duplicationstatus = "";
+                            duplicatevalue = 0;
+                        }
+
+                        if (item.fldStatus == 1)
+                        {
+                            checkboxstatus = "checked";
+                            fileid = item.fldFileID;
+                        }
+                        <tr>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNoPkj</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNoKP</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNama1</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GetConfig.GetData2(item.fldKdJnsPkj, "designation")</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GetConfig.GetData2(item.fldKdRkyt, "krytnlist")</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@Html.DisplayFor(modelItem => item.fldTtsplp)</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldAlsnMsk</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GetConfig.GetData2(item.fldStatus.ToString(), "approvalstatus")</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @if (duplicatevalue != 0)
+                                {
+                                    <font color="red">@duplicationstatus</font>
+                                }
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <input type="checkbox" name="approval" id="approval" value="@item.fldID" />
+                            </td>
+                        </tr>
+                        bill++;
+                    }
+                </table>
+            </div>
+            <input type="hidden" name="fileid" id="fileid" value="@ViewBag.getdata" />
+            <input class="btn btn-primary btn-block" type="submit" name="Teruskan" id="Teruskan" value="Tolak Yang Bertanda" onclick="DisplayProgressMessage();" />
+            <input class="btn btn-primary btn-block" type="submit" name="Tolak" id="Tolak" value="Tolak Semua" onclick="DisplayProgressMessage();" />
+            <input class="btn btn-primary btn-block" type="button" name="Kembali" id="Kembali" value="@GlobalResApproval.btnBack" onclick="Back();" />
+        </div>
+    }
+
+</section>
+<script>
+    function Back(){
+        var win = window.open('@Url.Action("RejectApprovalWorker", "Approval")', '_self');
+        win.focus();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        $("#UpdateProgress1").css("display", "");
+    }
+
+    function HideDisplayProgressMessage(ctl) {
+        $("#UpdateProgress1").css("display", "none");
+    }
+</script>

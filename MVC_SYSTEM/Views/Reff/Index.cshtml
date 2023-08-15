@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MVC_SYSTEM.SystemModels.tblAgentDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fldAgentFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldDesignation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldICNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldStaffNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldDatetimeCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldCreateBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldDatetimeModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fldDeleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldAgentFullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldDesignation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldICNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldStaffNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldDatetimeCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldCreateBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldDatetimeModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fldDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.fldAgentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.fldAgentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.fldAgentID })
+        </td>
+    </tr>
+}
+
+</table>

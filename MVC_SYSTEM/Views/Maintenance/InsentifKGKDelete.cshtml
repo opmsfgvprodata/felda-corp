@@ -1,0 +1,65 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_InsentifKGK
+
+@{
+    ViewBag.Title = "InsentifKGKDelete";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    string kgk = Model.fld_KGKLower + " - " + Model.fld_KGKUpper;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+        @if (Model.fld_Deleted == false)
+        {
+            <h3 class="modal-title">@GlobalResCorp.titleDelete</h3>
+        }
+        else
+        {
+            <h3 class="modal-title">Guna Semula Maklumat</h3>
+        }
+
+    </div>
+
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                @Html.HiddenFor(model => model.fld_ID)
+                @Html.HiddenFor(model => model.fld_NegaraID)
+                @Html.HiddenFor(model => model.fld_SyarikatID)
+                <label class="control-label col-md-2">% KGK</label>
+                <div class="col-md-9">
+                    @Html.TextBox("fld_KGK", kgk, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Kadar</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_KadarUpah, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        <input class="btn btn-danger" type="submit" value=@GlobalResCorp.btnYes />
+    </div>
+}

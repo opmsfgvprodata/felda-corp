@@ -1,0 +1,240 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_InsentifViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.titlteRegisterIncentive</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblInsentifInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrNoPkj:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "fld_nopkj form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrName:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetPkjNameFromNoPkj(Model.fld_Nopkj, Model.fld_NegaraID, Model.fld_SyarikatID, Model.fld_WilayahID, Model.fld_LadangID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Year, null, new { @class = "fld_Year form-control", @readonly = "true" })
+                            </div>
+                            <label class="control-label col-sm-offset-1 col-sm-3">@GlobalResCorp.lblMonth:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Month, null, new { @class = "fld_Month form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveType:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_JenisInsentif, new SelectList(ViewBag.IncentiveTypeList, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_JenisInsentif, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveType:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodInsentif, new SelectList(ViewBag.IncentiveList, "Value", "Text"), new { @class = "incentiveCode form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodInsentif, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="fixedValueDiv form-group" style="display: none">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveValue (RM):</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NilaiTetap, htmlAttributes: new { @class = "fixedValue form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_NilaiTetap, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="rangeValueDiv form-group" style="display: none">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveValue (RM):</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NilaiTidakTetap, htmlAttributes: new { @class = "rangeValue form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_NilaiTidakTetap, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="dailyValueDiv form-group" style="display: none">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveValue (RM):</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NilaiHarian, htmlAttributes: new { @class = "dailyValue form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-3">
+                            @Html.ValidationMessageFor(model => model.fld_NilaiHarian, "", new { @class = "text-danger dailyValueInfo" })
+                        </div>
+                        @Html.HiddenFor(model => model.fld_TetapanNilai, new { @class = "fld_TetapanNilai" })
+                        @Html.HiddenFor(model => model.fld_WilayahID, new { @class = "fld_WilayahID" })
+                        @Html.HiddenFor(model => model.fld_LadangID, new { @class = "fld_LadangID" })
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer" style="margin-top: -20px;">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave />
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(".selectionList").on("change",
+        function () {
+            $(".fixedValueDiv").css("display", "none");
+            $(".rangeValueDiv").css("display", "none");
+            $(".dailyValueDiv").css("display", "none");
+            $(".fixedValue").attr("readonly", true);
+            $(".rangeValue").attr("readonly", true);
+            $(".dailyValue").attr("readonly", true);
+            $(".fixedValue").val("");
+            $(".rangeValue").val("");
+            $(".dailyValue").val("");
+            var disableoption = "";
+            $('#divLoading').show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("checkIncentiveRecord", "Maintenance")',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ incentiveCategoryType: $(this).val(), nopkj: $(".fld_nopkj").val(), wilayahID: $(".fld_WilayahID").val(), ladangID: $(".fld_LadangID").val(), year: $(".fld_Year").val(), month: $(".fld_Month").val()}),
+                success: function(result) {
+                    $(".incentiveCode").empty();
+                    for (var i = 0; i < result.incentiveAvailableForWorkerList.length; i++) {
+                        $(".incentiveCode").append("<option value=" +
+                            result.incentiveAvailableForWorkerList[i].Value +
+                            " " +
+                            disableoption +
+                            ">" +
+                            result.incentiveAvailableForWorkerList[i].Text +
+                            "</option>");
+                    }
+                    if (result.noData === true) {
+                        $(".incentiveCode").attr("readonly", true);
+                    } else {
+                        $(".incentiveCode").attr("readonly", false);
+                    }
+                    $('#divLoading').hide();
+                }
+            });
+        });
+
+    $(".incentiveCode").on("change",
+        function() {
+            var disableoption = "";
+            $('#divLoading').show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getIncentiveLimit", "Maintenance")',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ incentiveCode: $(this).val() }),
+                success: function (result) {
+                    $(".fld_TetapanNilai").val("");
+                    $(".fld_TetapanNilai").val(result.incentiveData.fld_TetapanNilai);
+                    $(".fixedValueDiv").css("display", "none");
+                    $(".rangeValueDiv").css("display", "none");
+                    $(".dailyValueDiv").css("display", "none");
+                    $(".dailyValueInfo").css("display", "none");
+                    $(".fixedValue").val("");
+                    $(".rangeValue").val("");
+                    $(".dailyValue").val("");
+                    $(".dailyValueInfo").val("");
+                    $(".fixedValue").attr("readonly", true);
+                    $(".rangeValue").attr("readonly", true);
+                    $(".dailyValue").attr("readonly", true);
+                    if (result.noData === false) {
+                        if (result.incentiveData.fld_TetapanNilai === 1) {
+                            $(".fixedValueDiv").css("display", "block");
+                            $(".rangeValueDiv").css("display", "none");
+                            $(".dailyValueDiv").css("display", "none");
+                            $(".fixedValue").attr("readonly", true);
+                            $(".rangeValue").attr("readonly", true);
+                            $(".dailyValue").attr("readonly", true);
+                            $(".fixedValue").val(result.incentiveData.fld_FixedValue);
+                            $(".rangeValue").val("0");
+                            $(".dailyValue").val("0");
+                        } else if (result.incentiveData.fld_TetapanNilai === 0) {
+                            $(".fixedValueDiv").css("display", "none");
+                            $(".rangeValueDiv").css("display", "block");
+                            $(".dailyValueDiv").css("display", "none");
+                            $(".fixedValue").attr("readonly", true);
+                            $(".rangeValue").attr("readonly", false);
+                            $(".dailyValue").attr("readonly", true);
+                            $(".fixedValue").val("0");
+                            $(".rangeValue").val("");
+                            $(".dailyValue").val("0");
+                        } else if (result.incentiveData.fld_TetapanNilai === 2) {
+                            $(".fixedValueDiv").css("display", "none");
+                            $(".rangeValueDiv").css("display", "none");
+                            $(".dailyValueDiv").css("display", "block");
+                            $(".fixedValue").attr("readonly", true);
+                            $(".rangeValue").attr("readonly", true);
+                            $(".dailyValue").attr("readonly", true);
+                            $(".fixedValue").val("0");
+                            $(".rangeValue").val("0");
+                            $(".dailyValue").val("0");
+                        } else {
+                            $(".fixedValueDiv").css("display", "none");
+                            $(".rangeValueDiv").css("display", "none");
+                            $(".dailyValueDiv").css("display", "none");
+                            $(".fixedValue").attr("readonly", true);
+                            $(".rangeValue").attr("readonly", true);
+                            $(".dailyValue").attr("readonly", true);
+                            $(".fixedValue").val("");
+                            $(".rangeValue").val("");
+                            $(".dailyValue").val("");
+                        }
+                    }
+                    $('#divLoading').hide();
+                }
+            }).done(function(result) {
+                if (result.incentiveData.fld_TetapanNilai === 2) {
+                    $(".rateSummary").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("getDailyIncentiveAmount", "Maintenance")',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        async: false,
+                        data: JSON.stringify({ incentiveCode: $(".incentiveCode").val(), nopkj: $(".fld_nopkj").val() }),
+                        success: function(result) {
+                            console.log(result);
+                            if (result.noData === false) {
+                                $(".dailyValue").val(result.maxIncentive);
+                                $(".dailyValueInfo").empty();
+                                $(".dailyValueInfo").css("display", "");
+                                $(".dailyValueInfo").append('&nbsp;' + '&nbsp;' + "*" + result.msg1 + result.ratePerDay + " " + result.msg2);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+</script>
+
+

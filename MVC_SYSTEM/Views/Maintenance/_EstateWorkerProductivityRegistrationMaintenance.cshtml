@@ -1,0 +1,155 @@
+﻿@using MVC_SYSTEM.Class
+@{
+
+    GetConfig getConfig = new GetConfig();
+
+    var estateAccountStatus = (bool)ViewBag.EstateAccountStatus;
+    var month = ViewBag.Month;
+    var year = ViewBag.Year;
+
+    var grid = new WebGrid(
+        source: Model,
+        canPage: true,
+        rowsPerPage: @ViewBag.pageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "gridT");
+
+    grid.Pager(WebGridPagerModes.All);
+
+    if (@grid.TotalRowCount > 0)
+    {
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblEstateWorkerProductivityRegistrationInfo1)</div>
+
+        @grid.GetHtml(
+                 htmlAttributes: new { id = "gridT" },
+                 tableStyle: "table table-striped table-bordered table-list table-hover",
+                 headerStyle: "header_table",
+                 alternatingRowStyle: "Grid-alt",
+                 selectedRowStyle: "Grid-selected",
+                 rowStyle: "Grid-rowstyle",
+                 mode: WebGridPagerModes.All,
+                 columns: grid.Columns(
+                     grid.Column(header: GlobalResCorp.hdrNo
+                         , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                           + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                           * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                     grid.Column(GlobalResCorp.lblEstateName, format: (item) =>
+                     {
+                         return getConfig.GetLadangNameFromID(item.fld_LadangID);
+                     }, canSort: false, style: "kod"),
+                     grid.Column("fld_NoPkj", GlobalResCorp.hdrNoPkj, style: "kod"),
+                     grid.Column(GlobalResCorp.hdrName, format: (item) =>
+                     {
+                         return getConfig.GetPkjNameFromNoPkj(item.fld_Nopkj, item.fld_NegaraID, item.fld_SyarikatID, item.fld_WilayahID, item.fld_LadangID);
+                     }, canSort: false, style: "kod"),
+                     grid.Column("fld_JenisPelan", GlobalResCorp.hdrCategory, style: "kod"),
+                     grid.Column("fld_TargetHarian", GlobalResCorp.hdrTarget, style: "kod"),
+                     grid.Column("fld_HadirKerja", GlobalResCorp.hdrTargetWorkingDay, style: "kod"),
+                     grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                     {
+                         if (estateAccountStatus == false)
+                         {
+                             if (item.fld_Deleted == null)
+                             {
+                                 var tindakan = "<a data-modal1='' href='" + @Url.Action("_EstateWorkerProductivityRegistrationMaintenanceCreate", "Maintenance") + "/?nopkj=" + item.fld_Nopkj + "&EstateWilayahID=" + item.fld_WilayahID + "&EstateLadangID=" + item.fld_LadangID + "&Year=" + year + "&Month=" + month + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnAdd + "' onclick='return DisplayProgressMessage2(this);'><i class='fa fa-plus fa-lg'></i></a>";
+                                 return @Html.Raw(tindakan);
+                             }
+
+                             else
+                             {
+                                 var tindakan = "<a data-modal1='' href='" + @Url.Action("_EstateWorkerProductivityRegistrationMaintenanceEdit", "Maintenance") + "/?produktivitiID=" + item.fld_ProduktivitifID + "&EstateWIlayahID=" + item.fld_WilayahID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage2(this);'><i class='fa fa-pencil-square-o fa-lg'></i></a> &nbsp;" + 
+                                                "<a data-modal1='' href='" + @Url.Action("_EstateWorkerProductivityRegistrationMaintenanceDelete", "Maintenance") + "/?produktivitiID=" + item.fld_ProduktivitifID + "&EstateWIlayahID=" + item.fld_WilayahID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage2(this);'><i class='fa fa-trash fa-lg'></i></a>";
+                                 return @Html.Raw(tindakan);
+                             }
+                         }
+
+                         else
+                         {
+                             var tindakan = "<button type='button' class='btn btn-warning' onclick='return DisplayExist(this);'><i class='fa fa-plus fa-lg'></i></button>";
+                             return @Html.Raw(tindakan);
+                         }
+                     }, canSort: false, style: "tindakan")
+
+
+                     )
+                 )
+    }
+
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label((string)@ViewBag.Message)
+        </div>
+        <hr />
+    }
+}
+
+<script>
+    function DisplayExist() {
+        $.simplyToast('@GlobalResCorp.msgAlert4', 'danger');
+    }
+</script>
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 200px !important;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 30px !important;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan2 {
+        width: 80px !important;
+        text-align: right;
+        vertical-align: middle !important;
+    }
+
+    .rmind {
+        width: 20px;
+        font-size: 12px;
+        text-align: right;
+        vertical-align: middle !important;
+    }
+</style>
+
+

@@ -1,0 +1,122 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_MyegDetail_Result>
+@{
+    ViewBag.Title = "MyegReport";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    //GetConfig GetConfig = new GetConfig();
+    //GetIdentity GetIdentity = new GetIdentity();
+    //GetEstateDetail GetGroup = new GetEstateDetail();
+    //ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    //string namaKump = "";
+    //int? getuserid = GetIdentity.ID(User.Identity.Name);
+    //string getusername = User.Identity.Name;
+    //int year = ChangeTimeZone.gettimezone().Year;
+    //int month = ChangeTimeZone.gettimezone().Month;
+    //int day = ChangeTimeZone.gettimezone().Day;
+    //int hour = ChangeTimeZone.gettimezone().Hour;
+    //int minute = ChangeTimeZone.gettimezone().Minute;
+    //int second = ChangeTimeZone.gettimezone().Second;
+    //string uniquefilename = "GroupReport_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    int bil = 0;
+    //int? SelectionList = ViewBag.GroupList;
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea2" class="modal-body">
+        <logo />
+        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+            <thead>
+                @*<tr>
+                        <th colspan="18" style="text-align: center; vertical-align: middle; border: none;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            (@GlobalResEstate.lblCompanyNo : @ViewBag.NoSyarikat)
+                            <br />
+                        </th>
+                    </tr>*@
+                <tr>
+                    <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrNo</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrName</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrNoPkj</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrNoKp</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPassportEnd</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPassportExpiredMonth</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitNo</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitEnd</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitExpiredMonth</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrKrytn</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblDOB</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblGender</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblWorkerType</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrLdg</th>
+                    @*<th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitEnd</th>
+        <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitEnd</th>*@
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    bil = bil + 1;
+
+                <tr>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@bil</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_Nama</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_Nopkj</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_NoPassport</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@String.Format("{0:d/M/yyyy}", item.fld_TarkhTPssport)</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_BilBlnTmtPsprt</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_NoPrmt</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@String.Format("{0:d/M/yyyy}", item.fld_TarkhTPrmt)</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_BilBlnTmtPrmt</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_KrytanName</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@String.Format("{0:d/M/yyyy}", item.fld_Trlhr)</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_Kdjnt</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_NamaJnsPkj</td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@item.fld_LdgCode</td>
+                </tr>
+
+                }
+
+
+
+            </tbody>
+        </table>
+        <newpage />
+    </div>
+    if (ViewBag.Print == null)
+    {
+        <div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>
+    }
+}
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+
+
+
+

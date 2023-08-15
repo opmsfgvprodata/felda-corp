@@ -1,0 +1,31 @@
+﻿@using MVC_SYSTEM.Class
+@{
+    GetConfig getconfig = new GetConfig();
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>@ViewBag.Title - @getconfig.GetData("sysname")</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/Modernizrjquery")
+    @Styles.Render("~/Content/jqueryui")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/DateTimePickerJS")
+    @Styles.Render("~/Content/DateTimePickerCSS")
+    @Scripts.Render("~/bundles/CheckingJS")
+</head>
+<body>
+@Html.Partial("_PartialLoginHeader")
+    @RenderBody()
+@Html.Partial("_PartialFooter")
+</body>
+@Scripts.Render("~/bundles/MyCustomeJs")
+@RenderSection("scripts", required: false)
+</html>

@@ -1,0 +1,47 @@
+﻿@using MVC_SYSTEM.Class
+@{ 
+    GetConfig getconfig = new GetConfig();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>@ViewBag.Title - @getconfig.GetData("sysname")</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/Modernizrjquery")
+    @Styles.Render("~/Content/jqueryui")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/DateTimePickerJS")
+    @Styles.Render("~/Content/DateTimePickerCSS")
+    @Scripts.Render("~/bundles/CheckingJS")
+
+    <link href="~/Asset/Flag/css/flag-icon.css" rel="stylesheet" />
+    <link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Asset/MultiSelect/css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
+
+    <script src="~/Asset/Scripts/pdfobject.js"></script>
+    <script src="~/Asset/MultiSelect/js/jquery.multi-select.js" type="text/javascript"></script>
+
+    @*mas tambah 18/9/2020*@
+    <link href="~/Asset/Content/sweetalert.min.css" rel="stylesheet" />
+    <script src="~/Asset/Scripts/sweetalert.min.js"></script>
+    @*mas end here*@
+
+</head>
+<body onload="StartTimers('@Url.Action("Logout", "Login", null, "http")',@getconfig.GetData("timeoutwarningtime"),@getconfig.GetData("timeouttime"));" onmousemove="ResetTimers('@Url.Action("Logout", "Login", null, "http")',@getconfig.GetData("timeoutwarningtime"),@getconfig.GetData("timeouttime"));" onkeypress="ResetTimers('@Url.Action("Logout", "Login", null, "http")',@getconfig.GetData("timeoutwarningtime"),@getconfig.GetData("timeouttime"));">
+    @Html.Partial("_PartialHeader")
+    @Html.Partial("_PartialLeftNav")
+    <div class="maincontent animated fadeInRight">
+        @RenderBody()
+    </div>
+    @Html.Partial("_PartialFooter")
+</body>
+@Scripts.Render("~/bundles/MyCustomeJs")
+@RenderSection("scripts", required: false)
+</html>

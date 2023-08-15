@@ -1,0 +1,85 @@
+﻿
+@model MVC_SYSTEM.ModelsCorporate.tbl_Ladang
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">Aktifkan Ladang</h3>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrName</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_LdgName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrEmail</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_LdgEmail, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrAcc</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_NoAcc, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrGL</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_NoGL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrCIT</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_NoCIT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResEstateDetail.hdrCPD</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fld_CustCPD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.fld_Deleted, new { Value = "0" }) @*sepul add 12/04/2023*@
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <h3>
+                        <span class="label label-danger">
+                            Aktifkan semula ladang?
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal">@GlobalResEstateDetail.btnNo</button>
+        <input class="btn btn-danger" type="submit" value=@GlobalResEstateDetail.btnYes />
+    </div>
+}
+

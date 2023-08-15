@@ -1,0 +1,170 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.vw_DetailPekerja>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "WorkerListDetail";
+    GetTriager GetTriager = new GetTriager();
+    GetPembekal GetPembekal = new GetPembekal();
+    GetConfig GetConfig = new GetConfig();
+    int bil = 0;
+    string statusaktif = "";
+    double totalprmtdays = 0;
+    double totalpsptdays = 0;
+    string pembekal = "";
+    string warganegara = "";
+
+}
+
+@if (ViewBag.DataCount >= 1)
+{
+    <logo />
+    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+        <thead>
+            <tr>
+                <th colspan="14" style="text-align:center;vertical-align:middle;">
+                    @ViewBag.NamaSyarikat
+                    <br />
+                    (@GlobalResWorkerList.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                    <br />
+                    @GlobalResWorkerList.hdrReportTitle
+                    <br />
+                    @*@GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year*@
+                </th>
+            </tr>
+            <tr>
+                <th colspan="14" style="text-align:center;vertical-align:middle;">
+                    Ladang: @ViewBag.LadangCode @ViewBag.LadangName
+                </th>
+            </tr>
+            <tr>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrNo</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrNoPkj</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrNamaPkj</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrWarganegara</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrKP</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Kategori Pekerja</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrPembekal</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrTrkhKrja</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrKodLdg</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrNamaLdg</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrKeaktifan</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrSbbTkAktf</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrPermitExprdDate</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerList.hdrPassportExprdDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                bil = bil + 1;
+                if (item.fld_T2prmt != null)
+                {
+                    totalprmtdays = (item.fld_T2prmt.Value - DateTime.Now).TotalDays;
+                }
+                if (item.fld_Ttsplp != null)
+                {
+                    totalpsptdays = (item.fld_Ttsplp.Value - DateTime.Now).TotalDays;
+                }
+
+
+                if (item.fld_Kdaktf == "0")
+                {
+                    statusaktif = "AKTIF";
+                }
+                else
+                {
+                    statusaktif = "TIDAK AKTIF";
+                }
+
+                pembekal = GetPembekal.GetNamaPembekal(item.fld_Kodbkl);
+                warganegara = GetConfig.GetData2(item.fld_Kdrkyt, "krytnlist");
+                <tr>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @bil
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Nopkj
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Nama1
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @warganegara
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_Nokp
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @GetConfig.GetData2(item.fld_Ktgpkj, "designation") 
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @pembekal
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Html.DisplayFor(modelItem => item.fld_Trmlkj)
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_LdgCode
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fld_LdgName
+                    </td>
+                    @if (item.fld_Kdaktf == "0")
+                    {
+                        statusaktif = "AKTIF";
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @statusaktif
+                        </td>
+                        <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetConfig.GetData2(item.fld_Kodtakf, "kodtidakaktif")
+                        </td>
+                        if (totalprmtdays >= 1)
+                        {
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.DisplayFor(modelItem => item.fld_T2prmt)
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.DisplayFor(modelItem => item.fld_T2prmt)
+                            </td>
+                        }
+                        if (totalpsptdays >= 1)
+                        {
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.DisplayFor(modelItem => item.fld_Ttsplp)
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.DisplayFor(modelItem => item.fld_Ttsplp)
+                            </td>
+                        }
+
+                    }
+                    else
+                    {
+                        statusaktif = "TIDAK AKTIF";
+                        <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @statusaktif
+                        </td>
+                        <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetConfig.GetData2(item.fld_Kodtakf, "kodtidakaktif")
+                        </td>
+                        <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @Html.DisplayFor(modelItem => item.fld_T2prmt)
+                        </td>
+                        <td align="center" style="color:red; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @Html.DisplayFor(modelItem => item.fld_Ttsplp)
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <newpage />
+}

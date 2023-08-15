@@ -1,0 +1,113 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_Messaging
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_Messaging</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_Msg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_Msg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_CreatedDT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_CreatedDT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_ModifiedDT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_ModifiedDT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_Purpose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_Purpose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_NegaraID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_NegaraID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_SyarikatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_SyarikatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_WilayahID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_WilayahID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_LadangID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_LadangID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

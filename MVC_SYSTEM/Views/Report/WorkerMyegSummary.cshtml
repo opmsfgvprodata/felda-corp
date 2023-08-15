@@ -1,0 +1,84 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tblOptionConfigsWeb>
+@using MVC_SYSTEM.Class;
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetDataCount GetDataCount = new GetDataCount();
+    int workercount = 0;
+    int salary = 0;
+    int salarycount = 0;
+    int totalworker = 0;
+    int totalsalary = 0;
+    string SalaryCount = "";
+    string TotalSalary = "";
+}
+<thead>
+    <tr>
+        <th colspan="4" style="text-align:center;vertical-align:middle;">
+            @ViewBag.NamaSyarikat
+            <br />
+            (@GlobalResWorkerMyeg.hdrCmpnyNo : @ViewBag.NoSyarikat)
+            <br />
+            @GlobalResWorkerMyeg.hdrReportTitle
+        </th>
+    </tr>
+    <tr>
+        <th colspan="4" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+            @GlobalResWorkerMyeg.hdrRumusan
+        </th>
+    </tr>
+    <tr>
+        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrKrytn2</th>
+        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrPrice</th>
+        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrWorker</th>
+        <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerMyeg.hdrTotalSalary</th>
+
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        if (ViewBag.RadioSelect == 0)
+        {
+            workercount = GetDataCount.detailpkrjaCount2(ViewBag.WilayahID, ViewBag.LadangID, item.fldOptConfValue);
+        }
+        else
+        {
+            workercount = GetDataCount.detailpkrjaCount(ViewBag.Month, ViewBag.WilayahID, ViewBag.LadangID, item.fldOptConfValue);
+        }
+
+        salary = int.Parse(item.fldOptConfFlag2);
+        salarycount = salary * workercount;
+        totalworker = totalworker + workercount;
+        totalsalary = totalsalary + salarycount;
+        SalaryCount = salarycount.ToString("N");
+        TotalSalary = totalsalary.ToString("N");
+        <tr>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fldOptConfDesc
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @item.fldOptConfFlag2
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @workercount
+            </td>
+            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @SalaryCount
+            </td>
+
+        </tr>
+    }
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="2" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+            <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+        </td>
+        <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+            <strong>@totalworker</strong>
+        </td>
+        <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+            <strong>@TotalSalary</strong>
+        </td>
+    </tr>
+</tfoot>

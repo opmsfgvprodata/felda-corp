@@ -1,0 +1,62 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CostCentre
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblccUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblccInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblCostCenter:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("fld_CCcode", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_CostCentre, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="sublist" class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblAktivitiCode:</label>
+                            <div class="col-sm-4">
+
+                                @Html.DropDownList("fld_KodKategori", null, htmlAttributes: new { @class = "form-control" })
+                                
+                            </div>
+                        </div>
+                        
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_Deleted)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+

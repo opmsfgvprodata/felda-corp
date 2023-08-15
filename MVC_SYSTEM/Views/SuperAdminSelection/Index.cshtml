@@ -1,0 +1,25 @@
+﻿@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Super Admin Selection";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    GetConfig getconfig = new GetConfig();
+}
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(window).on("load", function () {
+        $('#myModalContent').load("@Url.Action("SuperAdminSelection", "SuperAdminSelection", null, "http")", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+    });
+</script>
+

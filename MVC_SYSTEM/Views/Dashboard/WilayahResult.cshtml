@@ -1,0 +1,364 @@
+﻿<!-- Add file by aini 14/3/2023 -->
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetIdentity getidentity = new GetIdentity();
+    GetConfig getconfig = new GetConfig();
+}
+
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"> @*aini add css datatable*@
+<input type="hidden" id="wilayahname" value="@ViewBag.WilayahName" />
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        <div class="container" style="max-width: 100%;">
+            <h2><font color="black">Dashboard @ViewBag.WilayahName</font></h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Jumlah Pekerja Mengikut Kerakyatan</div>
+                        <br />
+                        <div id="chartkerakyatan"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Jumlah Pekerja Mengikut Jantina</div>
+                        <br />
+                        <div id="chartjantina"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Jumlah Pekerja Mengikut Ladang</div>
+                        <br />
+                        <div id="chartladang"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*aini modified to add button back 24/3/2023*@
+        <br />
+        <div class="modal-footer">
+            <a style="text-align:right" href="@Url.Action("Index", "Main")" class="btn btn-warning">@GlobalResEstateDetail.btnBack</a>
+        </div>
+    </div>
+
+
+
+    <div class="modal inmodal fade " id="modalTable" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="width:80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="modalwindow" width="100%"></table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (!getidentity.NegaraSumber(User.Identity.Name))
+{
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    //aini add js datatable
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var wilayah = $('#wilayahname').val();
+            console.log(wilayah);
+
+            function destroyDataTable() {
+                if ($.fn.DataTable.isDataTable("#modalwindow")) {
+                    $('#modalwindow').DataTable().destroy();
+                }
+            }
+
+            var kerakyatanchart = function () {
+                wilayah = $('#wilayahname').val();
+                dataLabel = [];
+                dataSeries = [];
+                $.ajax({
+                    type: 'POST',
+                    data: "{wilayah:'" + wilayah + "'}",
+                    url: '@Url.Action("DashKerakyatan", "Dashboard")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (dashkerakyatanresult) {
+                        console.log(dashkerakyatanresult);
+                        $.each(dashkerakyatanresult, function (index, obj) {
+                            dataLabel.push(obj.fld_Kerakyatan);
+                        });
+
+                        $.each(dashkerakyatanresult, function (index, obj) {
+                            dataSeries.push(obj.fld_Jumlah);
+                        });
+
+
+                        var options = {
+                            series: dataSeries, //count kerakyatan
+                            labels: dataLabel, //kerakyatan
+                            colors: ["#EC7063", "#A569BD", "#3498DB", "#1ABC9C", "#2ECC71", "#F4D03F", "#F39C12", "#D35400", "#95A5A6", "#2C3E50"],
+                            chart: {
+                                type: 'donut',
+                                height: 300,
+                                events: {
+                                    dataPointSelection: (event, chartContext, config) => {
+                                        datatableKerakyatan('Pekerja mengikut kerakyatan ' + config.w.config.labels[config.dataPointIndex], wilayah, config.w.config.labels[config.dataPointIndex]);
+                                    }
+                                }
+                            },
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }]
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#chartkerakyatan"), options);
+                        chart.render();
+                    },
+                });
+
+            };
+            kerakyatanchart();
+
+            function datatableKerakyatan(title, wilayah, kerakyatan) {
+                destroyDataTable();
+                $('.modal-title').html(title);
+                $.ajax({
+                    url: 'DatatableKerakyatan?wilayah=' + wilayah + '&kerakyatan=' + kerakyatan,
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (datatablekerakyatanresult) {
+
+                        $("#modalwindow").DataTable({
+                            data: datatablekerakyatanresult,
+                            columns: [
+                                { "data": 'fld_Nopkj', title: 'No' },
+                                { "data": 'fld_Nopkj', title: 'No Pekerja' },
+                                { "data": 'fld_Nokp', title: 'No Kad Pengenalan' },
+                                { "data": 'fld_Nama', title: 'Nama' },
+                                { "data": 'fld_WlyhName', title: 'Wilayah' },
+                                { "data": 'fld_Krkytn', title: 'Kerakyatan' },
+                                { "data": 'fld_LdgName', title: 'Ladang' }
+                                // { "data": 'fld_DateApply', title: 'Apply Date' }
+                            ],
+                            columnDefs: [
+                                {
+                                    targets: 0,
+                                    render: function (data, type, row, meta) {
+                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                });
+
+                $('#modalTable').modal('show');
+            };
+
+            var jantinachart = function () {
+                wilayah2 = $('#wilayahname').val();
+                dataLabel2 = [];
+                dataSeries2 = [];
+                $.ajax({
+                    type: 'POST',
+                    data: "{wilayah:'" + wilayah2 + "'}",
+                    url: '@Url.Action("DashJantina", "Dashboard")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (dashjantinaresult) {
+                        console.log(dashjantinaresult);
+                        $.each(dashjantinaresult, function (index, obj) {
+                            dataLabel2.push(obj.fld_Jantina);
+                        });
+
+                        $.each(dashjantinaresult, function (index, obj) {
+                            dataSeries2.push(obj.fld_Jumlah);
+                        });
+
+
+                        var options = {
+                            series: dataSeries2, //count jantina
+                            labels: dataLabel2, //jantina
+                            colors: ["#3498DB", "#EC7063", "#F1C40F"],
+                            chart: {
+                                type: 'donut',
+                                //aini modified to add event point selection 24/3/2023
+                                height: 300,
+                                events: {
+                                    dataPointSelection: (event, chartContext, config) => {
+                                        datatableJantina('Pekerja mengikut jantina ' + config.w.config.labels[config.dataPointIndex], wilayah, config.w.config.labels[config.dataPointIndex]);
+                                    }
+                                }
+                            },
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }]
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#chartjantina"), options);
+                        chart.render();
+                    },
+                });
+
+            };
+            jantinachart();
+
+            //aini add function datatableJantina 24/3/2023
+            function datatableJantina(title, wilayah, jantina) {
+                destroyDataTable();
+                $('.modal-title').html(title);
+                $.ajax({
+                    url: 'DatatableJantina?wilayah=' + wilayah + '&jantina=' + jantina,
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (datatablejantinaresult) {
+
+                        $("#modalwindow").DataTable({
+                            data: datatablejantinaresult,
+                            columns: [
+                                { "data": 'fld_Nopkj', title: 'No' },
+                                { "data": 'fld_Nopkj', title: 'No Pekerja' },
+                                { "data": 'fld_Nokp', title: 'No Kad Pengenalan' },
+                                { "data": 'fld_Nama', title: 'Nama' },
+                                { "data": 'fld_WlyhName', title: 'Wilayah' },
+                                { "data": 'fld_Jantina', title: 'Jantina' },
+                                { "data": 'fld_LdgName', title: 'Ladang' }
+                                // { "data": 'fld_DateApply', title: 'Apply Date' }
+                            ],
+                            columnDefs: [
+                                {
+                                    targets: 0,
+                                    render: function (data, type, row, meta) {
+                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                });
+
+                $('#modalTable').modal('show');
+            };
+
+            var ladangchart = function () {
+                wilayah3 = $('#wilayahname').val();
+                dataLabel3 = [];
+                dataSeries3 = [];
+                $.ajax({
+                    type: 'POST',
+                    data: "{wilayah:'" + wilayah3 + "'}",
+                    url: '@Url.Action("DashLadang", "Dashboard")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (dashladangresult) {
+                        console.log(dashladangresult);
+                        $.each(dashladangresult, function (index, obj) {
+                            dataLabel3.push(obj.fld_LadangName);
+                        });
+
+                        $.each(dashladangresult, function (index, obj) {
+                            dataSeries3.push(obj.fld_Jumlah);
+                        });
+
+
+                        var options = {
+                            series: dataSeries3, //count ladang
+                            labels: dataLabel3, //ladang
+                            chart: {
+                                type: 'donut',
+                                //aini modified to add event point selection 24/3/2023
+                                height: 300,
+                                events: {
+                                    dataPointSelection: (event, chartContext, config) => {
+                                        datatableLadang('Pekerja mengikut ladang ' + config.w.config.labels[config.dataPointIndex], wilayah, config.w.config.labels[config.dataPointIndex]);
+                                    }
+                                }
+                            },
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }]
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#chartladang"), options);
+                        chart.render();
+                    },
+                });
+
+            };
+            ladangchart();
+
+            //aini add function datatableLadang 24/3/2023
+            function datatableLadang(title, wilayah, ladang) {
+                destroyDataTable();
+                $('.modal-title').html(title);
+                $.ajax({
+                    url: 'DatatableLadang?wilayah=' + wilayah + '&ladang=' + ladang,
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (datatableladangresult) {
+
+                        $("#modalwindow").DataTable({
+                            data: datatableladangresult,
+                            columns: [
+                                { "data": 'fld_Nopkj', title: 'No' },
+                                { "data": 'fld_Nopkj', title: 'No Pekerja' },
+                                { "data": 'fld_Nokp', title: 'No Kad Pengenalan' },
+                                { "data": 'fld_Nama', title: 'Nama' },
+                                { "data": 'fld_WlyhName', title: 'Wilayah' },
+                                { "data": 'fld_Jantina', title: 'Jantina' },
+                                { "data": 'fld_LdgName', title: 'Ladang' }
+                                // { "data": 'fld_DateApply', title: 'Apply Date' }
+                            ],
+                            columnDefs: [
+                                {
+                                    targets: 0,
+                                    render: function (data, type, row, meta) {
+                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                });
+
+                $('#modalTable').modal('show');
+            };
+        });
+
+    </script>
+}

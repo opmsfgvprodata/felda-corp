@@ -1,0 +1,162 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.sp_RptTransPek_Result>
+
+@using MVC_SYSTEM.Class;
+@{
+    GetTriager GetTriager = new GetTriager();
+    GetActivityDetail GetActivityDetail = new GetActivityDetail();
+    int headercolspan1 = 15;
+    decimal? SumDebit = 0;
+    decimal? SumKredit = 0;
+
+}
+@if (ViewBag.DataCount >= 1)
+{
+    <logo />
+    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+        <thead>
+            @if (ViewBag.Bill == 0)
+            {
+                <tr>
+                    <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (@GlobalResWorkerTransac.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                        <br />
+                        @GlobalResWorkerTransac.hdrReportTitle
+                        <br />
+                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                    </th>
+                </tr>
+            }
+            else
+            {
+                <hide />
+                <tr style="display:none;">
+                    <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (@GlobalResWorkerTransac.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                        <br />
+                        @GlobalResWorkerTransac.hdrReportTitle
+                        <br />
+                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                    </th>
+                </tr>
+            }
+            <tr>
+                <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
+                    Ladang: @ViewBag.LadangCode @ViewBag.LadangName
+                </th>
+            </tr>
+            <tr>
+                <th colspan="@headercolspan1" style="text-align:left;vertical-align:middle;">
+                    No. Dokumen F-43 (SKB): @ViewBag.SkbNo
+                </th>
+            </tr>
+            <tr>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrNo</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrTrkhDkmn</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrNoDkmn</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrNoCek</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrLejar</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrPrgkt</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrAktvt</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrKtrgn</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrNoKntrk</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrInvois</th>
+
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrKodStok</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrKuantiti</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrNoA</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrDbt</th>
+                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransac.hdrKrdt</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                decimal debit = item.fldDebit.GetValueOrDefault();
+                decimal kredit = item.fldKredit.GetValueOrDefault();
+                string newdebit = debit.ToString("N");
+                string newkredit = kredit.ToString("N");
+                <tr>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNo
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @Html.DisplayFor(modelItem => item.fldTrkhDkmn)
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoDkmn
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoCek
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldLejar
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldPrgkt
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldAktiviti
+                    </td>
+                    <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @GetActivityDetail.getKeteranganAktiviti(item.fldLejar, item.fldAktiviti)
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoKontrakKP
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldInvois
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldKodStok
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldKuantiti
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @item.fldNoA
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @newdebit
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @newkredit
+                    </td>
+                </tr>
+                if (item.fldDebit != null)
+                {
+                    SumDebit = SumDebit + item.fldDebit;
+                }
+                if (item.fldKredit != null)
+                {
+                    SumKredit = SumKredit + item.fldKredit;
+                }
+            }
+        </tbody>
+        <tfoot>
+            @{
+                string newsumdebit = SumDebit.GetValueOrDefault().ToString("N");
+                string newsumkredit = SumKredit.GetValueOrDefault().ToString("N");
+            }
+            <tr>
+                <td colspan="13" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                    <b>JUMLAH</b>
+                </td>
+                <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                    <b>@newsumdebit</b>
+                </td>
+                <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                    <b>@newsumkredit</b>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <newpage />
+}
+
+

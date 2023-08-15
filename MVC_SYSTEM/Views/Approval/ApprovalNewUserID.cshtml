@@ -1,0 +1,143 @@
+﻿@model IEnumerable<FileInfo>
+@{
+    ViewBag.Title = "Approval New UserID";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    float tokb = 0;
+    int bill = 1;
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResApproval.msgWait
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("ApprovalNewUserID", "Approval", FormMethod.Post, new { id = "Approval" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResApproval.msgWait</label>
+    </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="TahunProses">@GlobalResApproval.lblYear</label>
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4">
+                    <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4">
+                    <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="Lihat" onclick="return DisplayProgressMessage(this);" />
+                    <input class="btn btn-primary btn-block" type="button" name="CarianPantas" id="CarianPantas" value="@GlobalResApproval.btnFastSearch" data-toggle="modal" data-target="#FastSearchModal" />
+                </div>
+            </div>
+        </div>
+        <div id="Disposition" class="well">
+            <div id="scrollArea" class="modal-body">
+                <table class="table table-hover table-bordered" id="filetable">
+                    <thead>
+                        <tr>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrbil</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrNamaFile</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrDateCreated</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrSizeFile</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrSelection</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        {
+                            tokb = item.Length / 1024f;
+                        }
+                        <tr>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.Name
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.CreationTime)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Math.Round((double)tokb, 2)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <button type="button" class="btn btn-primary btn-lg" style="font-size:9px;" onclick="GetTdValue(this);">@GlobalResApproval.btnSelect</button>
+                            </td>
+                        </tr>
+                        bill++;
+                    }
+                </table>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("FastSearch")
+}
+<script>
+    $(document).ready(function () {
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Approval")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                for (var i = 0; i < ladanglist.length; i++) {
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+    }
+
+    function HideDisplayProgressMessage(ctl) {
+        //$("body").removeClass("submit-progress-bg");
+        //$(".submit-progress").addClass("hidden");
+        $("#UpdateProgress1").css("display", "none");
+    }
+
+    function GetTdValue(rowno) {
+        var value = rowno.parentNode.parentNode.children[1].innerHTML;
+        DisplayProgressMessage(rowno);
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetUserIDApprovalFile", "Approval")',
+            data: { 'filename': value.trim(), 'ladangid': $("#LadangIDList").val(), 'wilayahid': $("#WilayahIDList").val() },
+            success: function (result) {
+                if (result.success) {
+                    var win = window.open(result.id, '_self');
+                    win.focus();
+                } else {
+                    $.simplyToast(result.msg, result.status);
+                    HideDisplayProgressMessage(rowno);
+                }
+            },
+        });
+        return false;
+    }
+</script>
+

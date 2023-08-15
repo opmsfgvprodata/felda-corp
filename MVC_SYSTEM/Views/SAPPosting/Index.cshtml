@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    <input name="SAPUsername" id="SAPUsername" type="text" value="" />
+    <input name="SAPPassword" id="SAPPassword" type="password" value="" />
+    <input name="Month" id="Month" type="number" value=0 />
+    <input name="Year" id="Year" type="number" value=0 />
+
+    <input name="submit" id="submit" type="submit" value="POST" />
+}

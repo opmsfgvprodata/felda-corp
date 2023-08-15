@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.sp_RptLapMakKer_Result>
+@using MVC_SYSTEM.Class;
+
+@{
+    GetTriager GetTriager = new GetTriager();
+}
+<tr>
+    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+        @ViewBag.Bill
+    </td>
+    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+        @ViewBag.NoPekerja
+    </td>
+    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+        @ViewBag.NamaPekerja
+    </td>
+    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+        @ViewBag.Kump
+    </td>
+    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+        @GetTriager.GetTotalForMoney(ViewBag.TotalJumlah)
+    </td>
+</tr>
+
+@*<tfoot>
+        <tr>
+            <td colspan="2" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@totalworker</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@TotalSalary</strong>
+            </td>
+        </tr>
+    </tfoot>*@

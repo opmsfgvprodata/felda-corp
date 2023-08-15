@@ -1,0 +1,75 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_CostCentre
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_CostCentre</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_CostCentre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_CostCentre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_KodKtgri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_KodKtgri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_NegaraID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_NegaraID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_SyarikatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_SyarikatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_WilayahID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_WilayahID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_LadangID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_LadangID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fld_Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fld_Deleted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.fld_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

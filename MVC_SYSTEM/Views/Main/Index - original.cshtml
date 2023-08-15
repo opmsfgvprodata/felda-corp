@@ -1,0 +1,34 @@
+﻿@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetIdentity getidentity = new GetIdentity();
+    GetConfig getconfig = new GetConfig();
+}
+
+@*<h2><font color="black">@GlobalResMain.Welcome @getconfig.GetData("sysname")</font></h2>*@
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        <div class="panel panel-primary">
+            <div id="divheader" class="panel-heading">Mesej</div>
+                @Html.Action("_ShowBroadcast", "Messaging")
+            </div>
+        </div>
+</section>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+@if (!getidentity.NegaraSumber(User.Identity.Name))
+{
+    <script type="text/javascript">
+    $(window).on("load", function () {
+        window.open("@Url.Action("Index", "PopupRemainder", null, this.Request.Url.Scheme)", null, "height=600,width=800,status=yes,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=no");
+    });
+    </script>
+}
+

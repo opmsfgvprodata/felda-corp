@@ -1,0 +1,46 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_UpahAktiviti>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "PayrateFullDetail";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    string aktvt = @ViewBag.AktvtList;
+}
+@if (ViewBag.Datacount < 1)
+{
+    <p>Sila pilih jenis maklumat</p>
+}
+else
+{
+    <div style="margin-top:17px;">
+        @{
+            var grid = new WebGrid(
+                canPage: true,
+                rowsPerPage: Model.PageSize,
+                canSort: true,
+                ajaxUpdateContainerId: "grid");
+
+            grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+            @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                         fillEmptyRows: false,
+                         tableStyle: "table table-bordered table-hover",
+                         mode: WebGridPagerModes.All,
+                         columns: grid.Columns(
+                             grid.Column("No.", style: "col-lg-1", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                           grid.Column("fld_KodAktvt", "Kod Aktiviti", style: "col-lg-2"),
+                           grid.Column("fld_Desc", "Keterangan", style: "col-lg-2"),
+                             grid.Column("fld_Harga", "Harga (RM)", style: "col-lg-2"),
+                            grid.Column(GlobalResCorp.hdrAction, canSort: false, style: "col-lg-2",
+                            format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("PayrateFullUpdate", "Maintenance") + "/?id=" + item.fld_ID + "' title='Update'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("PayrateFullDelete", "Maintenance") + "/?id=" + item.fld_ID + "' title='Delete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                            </text>)
+
+                        ));
+        }
+
+
+    </div>
+
+            }

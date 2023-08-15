@@ -1,0 +1,185 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsCorporate.vw_CutiUmumKelayakanDetails>
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResCorp.lblPublicHolidayEligibilityDelete</h3>
+</div>
+<section class="content-wrapper main-content clear-fix">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblLeaveInfo</div>
+                <div class="panel-body">
+                    @{
+                        var grid = new WebGrid(
+                            canPage: false,
+                            rowsPerPage: Model.PageSize,
+                            canSort: false,
+                            ajaxUpdateContainerId: "grid");
+
+                        grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+                        if (@grid.TotalRowCount > 0)
+                        {
+                            <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblLeaveInfo)</div>
+
+                            @grid.GetHtml(htmlAttributes: new { id = "publicHolidayAllocationGrid" }, // id for ajaxUpdateontainerId parameter
+                                     tableStyle: "table table-bordered table-striped table-list table-hover",
+                                     headerStyle: "header_table",
+                                     alternatingRowStyle: "Grid-alt",
+                                     selectedRowStyle: "Grid-selected",
+                                     rowStyle: "Grid-rowstyle",
+                                     footerStyle: "table-pager",
+                                     mode: WebGridPagerModes.All,
+                                     columns: grid.Columns(
+                                         grid.Column(header: "No."
+                                             , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                               + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                               * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                         grid.Column(columnName: "fld_LadangID", header: GlobalResCorp.lblEstate, format: (item) =>
+                                         {
+                                             var estateName = getConfig.GetLadangKodFromID(item.fld_LadangID);
+
+                                             return @Html.Raw(estateName);
+
+                                         }, canSort: false, style: "kod"),
+                                         grid.Column(columnName: "fld_LadangID", header: GlobalResCorp.lblEstate, format: (item) =>
+                                         {
+                                             var estateName = getConfig.GetLadangNameFromID(item.fld_LadangID);
+
+                                             return @Html.Raw(estateName);
+
+                                         }, canSort: false, style: "kod"),
+                                         grid.Column(columnName: "fld_KeteranganCuti", header: GlobalResCorp.lblDescription, style: "keterangan"),
+                                         grid.Column(columnName: "fld_TarikhCuti", header: GlobalResCorp.hdrLeaveDate, format: (item) =>
+                                         {
+                                             var date = String.Format("{0:dd/MM/yyyy}", item.fld_TarikhCuti);
+
+                                             return @Html.Raw(date);
+
+                                         }, canSort: false, style: "kod"),
+                                         grid.Column(header: "{checkall}", format: (item) =>
+                                         {
+                                             var checkbox = "";
+                                             var tahunHidden = "<input type='hidden' name='country' class='tahunHidden' value='" + @item.fld_Tahun + "'>";
+                                             var ladangHidden = "<input type='hidden' name='country' class='ladangHidden' value='" + @item.fld_LadangID + "'>";
+
+                                             checkbox = "<center><input type='checkbox' class='checkbox' value='" + @item.fld_CutiMasterID + "' name='ids' id='ids'/></center>" + tahunHidden + ladangHidden;
+
+                                             return @Html.Raw(checkbox);
+                                         }, canSort: false, style: "tetapan2")
+                                         ))
+                        }
+                        else
+                        {
+                            <hr />
+                            <div class="text-center">
+                                @Html.Label((string)@ViewBag.Message)
+                            </div>
+
+                            <hr />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger saveBtn">@GlobalResCorp.btnDelete</button>
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+    </div>
+
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+<script>
+    // 1st replace first column header text with checkbox
+    $("#publicHolidayAllocationGrid th").each(function () {
+        if ($.trim($(this).text().toString().toLowerCase()) === "{checkall}") {
+            $(this).text('');
+            $(this).append("<span class='display-mode'>@GlobalResCorp.lblChoose</span>");
+            $(this).append("<span class='edit-mode' style='display:none'>@GlobalResCorp.lblChckAll</span>");
+            $(this).append("<br><center><input type='checkbox' class='checkbox edit-mode' value='' id='cbSelectAll' style='display:none'/></center>");
+        }
+    });
+
+    //2nd click event for header checkbox for select /deselect all
+    $("#cbSelectAll").on("click", function () {
+        var ischecked = this.checked;
+        $('#publicHolidayAllocationGrid').find("input:checkbox").each(function () {
+            this.checked = ischecked;
+        });
+    });
+
+    //3rd click event for checkbox of each row
+    $("input[name='ids']").click(function () {
+        var totalRows = $("#publicHolidayAllocationGrid td :checkbox").length;
+        var checked = $("#publicHolidayAllocationGrid td :checkbox:checked").length;
+
+        if (checked == totalRows) {
+            $("#publicHolidayAllocationGrid").find("input:checkbox").each(function () {
+                this.checked = true;
+            });
+        }
+        else {
+            $("#cbSelectAll").removeAttr("checked");
+        }
+    });
+
+    $(".saveBtn").click(function (e) {
+
+        $("#UpdateProgress1").css("display", "");
+
+        var selected = [];
+        $('#publicHolidayAllocationGrid input:checked').each(function () {
+            selected.push($(this).attr('value'));
+        });
+
+        var tahun = $(".tahunHidden:first").val();
+        var ladang = $(".ladangHidden:first").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("_EstatePublicHolidayEligibilityMaintenanceDeletePost", "Maintenance")',
+            dataType: 'json',
+            contentType: 'application/json',
+            async: false,
+            traditional: true,
+            data: JSON.stringify({ leaveID: selected, year: tahun, ladang: ladang }),
+            success: function (result) {
+                $("#UpdateProgress1").css("display", "none");
+                $.simplyToast(result.msg, result.status);
+                if (result.status == "success") {
+                    $("#publicHolidayEligibilityMaintenanceDetails").load(
+                        '@Url.Action("_EstatePublicHolidayEligibilityMaintenance", "Maintenance")', {
+                            YearList: result.year, WilayahList: result.wilayah, LadangList: result.ladang
+                        });
+                }
+                $('#myModal1').modal('hide');
+            }
+        });
+
+    });
+</script>
+
+<style>
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    }
+</style>

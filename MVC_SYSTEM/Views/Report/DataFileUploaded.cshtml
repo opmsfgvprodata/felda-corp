@@ -1,0 +1,128 @@
+﻿@model IEnumerable<MVC_SYSTEM.TrickModel.FileUploadedData>
+@{
+    ViewBag.Title = "Uploaded Data File";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    float tokb = 0;
+    int bill = 1;
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResApproval.msgWait
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("DataFileUploaded", "Report", FormMethod.Post, new { id = "DataFileUploaded" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResSysVersion.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResSysVersion.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResSysVersion.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResSysVersion.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResNoSkb.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="Disposition" class="well">
+            <div id="scrollArea" class="modal-body">
+                <table class="table table-hover table-bordered" id="filetable">
+                    <thead>
+                        <tr>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrbil</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">KOD LADANG</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">NAMA LADANG</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrNamaFile</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrDateCreated</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrSizeFile</th>
+                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">MUAT TURUN</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        {
+                            tokb = item.SizeFile / 1024f;
+                        }
+                        <tr>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_LdgCode
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_LdgName
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.FileName
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.DateTimeCreated)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Math.Round((double)tokb, 2)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @Html.ActionLink("Muat Turun", "Download", new { file = item.FileName, from = ViewBag.FolderSelected }, new { @class = "btn btn-primary btn-lg" })
+                                @*<button type="button" class="btn btn-primary btn-lg" style="font-size:9px;" onclick="GetTdValue(this);">Muat Turun</button>*@
+                            </td>
+                        </tr>
+                        bill++;
+                    }
+
+                </table>
+            </div>
+        </div>
+    </section>
+    @*@Html.Partial("FastSearch")*@
+}
+<script>
+    $(document).ready(function () {
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+
+    function DisplayProgressMessage(ctl) {
+        $("#UpdateProgress1").css("display", "");
+    }
+
+    function HideDisplayProgressMessage(ctl) {
+        $("#UpdateProgress1").css("display", "none");
+    }
+
+</script>
+

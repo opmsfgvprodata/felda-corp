@@ -1,0 +1,33 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tblOptionConfigsWeb
+
+@{
+    ViewBag.Title = "WorkerKategoryMaintenanceInsert";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+        <h3 class="modal-title">@GlobalResCorp.titleRegister</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResCorp.lblWorkerKtgri</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldOptConfDesc, new { htmlAttributes = new { @class = "form-control required" } })
+                    @Html.ValidationMessageFor(model => model.fldOptConfDesc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value=@GlobalResCorp.btnSave />
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+    </div>
+}

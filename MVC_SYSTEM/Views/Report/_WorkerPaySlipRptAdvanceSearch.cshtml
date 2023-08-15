@@ -1,0 +1,87 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Carian Tambahan</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            @Html.RadioButton("RadioGroup", 0, new { @checked = "checked" })
+            @Html.Label("Individu")<br />
+            @Html.RadioButton("RadioGroup", 1)
+            @Html.Label("Pilihan Kumpulan")
+        </div>
+        <div class="form-group">
+            <label id="SelectionLabel">Pekerja</label>
+            @Html.DropDownList("SelectionList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            @Html.DropDownList("StatusList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Kategori Kerja</label>
+            @Html.DropDownList("WorkCategoryList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="LihatRekodAttendanceAdvance">@GlobalResApproval.btnCari</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">@GlobalResApproval.btnTutup</button>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('input[name="RadioGroup"]').on("click", function (e) {
+            console.log($('input[name=RadioGroup]:checked').val());
+            var Radiogrp = $('input[name=RadioGroup]:checked').val();
+            var radiogroup = {};
+            var disableoption = "";
+            $('#divLoading').show();
+            radiogroup.url = "@Url.Action("GetList", "Report")";
+            radiogroup.type = "POST";
+            radiogroup.data = JSON.stringify({ wlyh: $("#WilayahIDList").val(), ldg: $("#LadangIDList").val(), RadioGroup: Radiogrp, StatusList: $("#StatusList").val() });
+            radiogroup.datatype = "json";
+            radiogroup.contentType = "application/json";
+            radiogroup.success = function (result) {
+                document.getElementById("SelectionLabel").innerText = result.SelectionLabel;
+                $("#SelectionList").empty();
+                for (var i = 0; i < result.SelectionList.length; i++) {
+                    $("#SelectionList").append("<option value=" + result.SelectionList[i].Value + " " + disableoption + ">" + result.SelectionList[i].Text + "</option>");
+                }
+                $('#divLoading').hide();
+            };
+            radiogroup.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(radiogroup);
+        });
+
+        $('#LihatRekodAttendanceAdvance').on("click", function (e) {
+            $('#divLoading').show();
+            var Radiogrp = $('input[name=RadioGroup]:checked').val();
+            console.log(Radiogrp);
+            var month = $("#MonthList").val();
+            console.log(month);
+            var year = $("#YearList").val();
+            console.log(year);
+            var selection = $("#SelectionList").val();
+            console.log(selection);
+            var status = $("#StatusList").val();
+            console.log(status);
+            var workCategory = $("#WorkCategoryList").val();
+            console.log(workCategory);
+            var wlyh = $("#WilayahIDList").val();
+            var ldg = $("#LadangIDList").val();
+
+            $('#searchResultWorkerPaySlipRptInfo').load('@Url.Action("_WorkerPaySlipRptSearch", "Report")', { WilayahIDList: wlyh, LadangIDList: ldg , RadioGroup: Radiogrp, MonthList: month, YearList: year, SelectionList: selection, StatusList: status, WorkCategoryList: workCategory });
+            $('#myModal1').modal('hide');
+            $('#divLoading').hide();
+        });
+    });
+</script>

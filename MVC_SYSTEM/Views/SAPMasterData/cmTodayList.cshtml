@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_CMSAP>
+
+@{
+    ViewBag.Title = "cmList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    int? bil = 0;
+}
+
+<section class="content-wrapper main-content clear-fix">
+    
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Data Customer SAP</div>
+        <div class="panel-body">
+
+
+            @if (Model != null && Model.Count() != 0)
+            {
+
+                <div class="col-sm-12" style="text-align:center;">
+                    <div id="scrollArea" class="col-sm-12">
+
+                        <div class="CMList">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Customer</th>
+                                        <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cmDetails in Model)
+                                    {
+                                        bil = bil + 1;
+                                        <tr>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_CustomerNo</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_Desc </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_CreatedBy </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @cmDetails.fld_DTCreated) </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @cmDetails.fld_DTModified)</td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                <div id="scrollArea" class="col-sm-12">
+                    Tiada data untuk hari ini
+                </div>
+            }
+
+
+            <div class="col-sm-12" style="text-align:right;">
+                <a href="@Url.Action("cmList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+            </div>
+        </div>
+    </div>
+</section>

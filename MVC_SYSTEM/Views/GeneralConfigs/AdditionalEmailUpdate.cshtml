@@ -1,0 +1,57 @@
+﻿@*13/01/2021 sepul ubah model*@
+@model MVC_SYSTEM.ModelsCorporate.tblEmailList
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResAdditionalEmail.lblTitleUpdate</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResAdditionalEmail.lblCategory</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldCategory, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.fldCategory, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResAdditionalEmail.lblName</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.fldName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResAdditionalEmail.lblEmail</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.fldEmail, new { htmlAttributes = new { @class = "form-control required" } })
+                    @Html.ValidationMessageFor(model => model.fldEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value=@GlobalResAdditionalEmail.btnSave />
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResAdditionalEmail.btnBack</button>
+    </div>
+}
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

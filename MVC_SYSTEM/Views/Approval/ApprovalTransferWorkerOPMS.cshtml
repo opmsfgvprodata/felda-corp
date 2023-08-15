@@ -1,0 +1,153 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tblASCApprovalFileDetail>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "ApprovalTransferWorkerOPMS";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    int bill = 0;
+    int dataCount = 0;
+    GetDataCount GetDataCount = new GetDataCount();
+}
+
+@using (Html.BeginForm("ApprovalTransferWorkerOPMS", "Approval", FormMethod.Post, new { id = "Approval" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4">
+                    <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary btn-block" type="submit" name="Teruskan" id="Lihat" value="Lihat" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="Disposition" class="well">
+            <div><h4 style="text-align:center;"><strong>SENARAI FAIL PERMOHONAN</strong></h4></div>
+            <div id="scrollArea" class="modal-body">
+                @if (ViewBag.resultcount > 0)
+                {
+                    <table class="table table-hover table-bordered" id="filetable">
+                        <thead>
+                            <tr>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Bil</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Nama Fail</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Tarikh Permohonan</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Tindakan</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            dataCount = GetDataCount.pkjAppcount(item.fldID, item.fldLadangID.Value, item.fldWilayahID.Value, item.fldNegaraID.Value, item.fldSyarikatID.Value, "PL");
+                            if (dataCount > 0)
+                            {
+                                bill = bill + 1;
+                                <tr>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @bill
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldFileName
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.fldDateApplied)
+                                    </td>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <a data-toggle="modal" data-target="#test-modal" href='@Url.Action("ApprovalNewWorkerOPMSDetail", "Approval")/?fileID=@item.fldID' class='btn btn-primary btn-lg' role='button' style="font-size:10px;">Pilih</a>
+
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+            </div>
+            <div class="modal-footer">
+                <a style="text-align:right" href="@Request.UrlReferrer" class="btn btn-warning" title="Back to list">@GlobalResAdditionalEmail.btnBack</a>
+            </div>
+        </div>
+    </section>
+}
+<div class="modal fade" id="test-modal" data-modal-index="1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="test-modal-2" data-modal-index="2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<style>
+    #test-modal .modal-dialog {
+        width: 90%;
+    }
+
+    #test-modal-2 .modal-dialog {
+        width: 70%;
+    }
+</style>
+<script>
+    $('.btn[data-toggle=modal]').on('click', function () {
+        var $btn = $(this);
+        var currentDialog = $btn.closest('.modal-dialog'),
+            targetDialog = $($btn.attr('data-target'));;
+        if (!currentDialog.length)
+            return;
+        targetDialog.data('previous-dialog', currentDialog);
+        currentDialog.addClass('aside');
+        var stackedDialogCount = $('.modal.in .modal-dialog.aside').length;
+        if (stackedDialogCount <= 5) {
+            currentDialog.addClass('aside-' + stackedDialogCount);
+        }
+    });
+
+    $('.modal').on('hide.bs.modal', function () {
+        var $dialog = $(this);
+        var previousDialog = $dialog.data('previous-dialog');
+        if (previousDialog) {
+            previousDialog.removeClass('aside');
+            $dialog.data('previous-dialog', undefined);
+        }
+    });
+
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Approval")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                for (var i = 0; i < ladanglist.length; i++) {
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>

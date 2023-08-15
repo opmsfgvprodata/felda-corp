@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.sp_RptTransPek_Result>
+@using MVC_SYSTEM.Class;
+
+@{
+    GetTriager GetTriager = new GetTriager();
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    string Amt = @GetTriager.GetTotalForMoney(item.fldKredit);
+    <tr>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @ViewBag.Bill
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @ViewBag.LadangCode
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @ViewBag.LadangName
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @Amt
+        </td>
+        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+            @item.fld_NoSkb
+        </td>
+    </tr>
+
+}

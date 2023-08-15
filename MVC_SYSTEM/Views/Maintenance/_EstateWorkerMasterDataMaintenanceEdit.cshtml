@@ -1,0 +1,490 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_PkjmastModelViewEdit
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblEstateWorkerMasterDataEdit</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEstateWorkerMasterDataInfo</div>
+                    <div class="panel-body">
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrPersonalInfo</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.hdrNoPkj:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.hdrName:</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.fld_Nama, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Nama, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.hdrNoKp:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nokp, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Nokp, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblGender:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdjnt, new SelectList(ViewBag.GenderList, "Value", "Text", Model.fld_Kdjnt), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdjnt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblDOB:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_Trlhr, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_Trlhr), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_Trlhr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblMarriageStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdkwn, new SelectList(ViewBag.MaritalStatusList, "Value", "Text", Model.fld_Kdkwn), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdkwn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblPeneroka:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kpenrka, new SelectList(ViewBag.SettlerStatusList, "Value", "Text", Model.fld_Kpenrka), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kpenrka, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblReligion:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdagma, new SelectList(ViewBag.ReligionList, "Value", "Text", Model.fld_Kdagma), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdagma, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblRace:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdbgsa, new SelectList(ViewBag.RaceList, "Value", "Text", Model.fld_Kdbgsa), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdbgsa, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblCitizen:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdrkyt, new SelectList(ViewBag.CountryList, "Value", "Text", Model.fld_Kdrkyt), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdrkyt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrPassportPermitInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblPermitNo:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Prmtno, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Prmtno, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblPermitEnd:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_T2prmt, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_T2prmt), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_T2prmt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.hdrNoPassport:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Psptno, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Psptno, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblPassportEnd:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_T2pspt, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_T2pspt), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_T2pspt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrSystemInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblBatch:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Batch, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblGroup:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_KumpulanID, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblActiveStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdaktf, new SelectList(ViewBag.ActiveStatusList, "Value", "Text", Model.fld_Kdaktf), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdaktf, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblNotActiveDate:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_Trtakf, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_Trtakf), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_Trtakf, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblNotActiveReason:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Sbtakf, new SelectList(ViewBag.InactiveReasonList, "Value", "Text", Model.fld_Sbtakf), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Sbtakf, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblCountry:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_NegaraID, new SelectList(ViewBag.CompanyCountryList, "Value", "Text", Model.fld_NegaraID), htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_NegaraID, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblCompany:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.CompanyList, "Value", "Text", Model.fld_SyarikatID), htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.RegionList, "Value", "Text", Model.fld_WilayahID), htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_LadangID, new SelectList(ViewBag.EstateList, "Value", "Text", Model.fld_LadangID), htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblEstateCode:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Kdldg, new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdldg, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblApprovalStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_StatusApproved, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblApplicationDate:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_DateApply, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblApplicationBy:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_AppliedBy, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblApprovalDate:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_ActionDate, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblApprovalBy:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_ActionBy, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrContactInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblAddress:</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.fld_Almt1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Almt1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblPostcode:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Poskod, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Poskod, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblDistrict:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Daerah, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_Daerah, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblState:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Neg, new SelectList(ViewBag.NegeriList, "Value", "Text", Model.fld_Neg), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Neg, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblCountry:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Negara, new SelectList(ViewBag.CountryList, "Value", "Text", Model.fld_Negara), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Negara, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblTel:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Notel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Notel, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblFax:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nofax, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Nofax, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrWorkInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblDateKLIA:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_Trmlkj, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_Trmlkj), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_Trmlkj, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblStartWork:</label>
+                            <div class="col-sm-4">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(model => model.fld_Trshjw, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = String.Format("{0:dd/MM/yyyy}", Model.fld_Trshjw), @data_val_date = @GlobalResCorp.msgModelDateValidation } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_Trshjw, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblWorkerType:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Jenispekerja, new SelectList(ViewBag.WorkerTypeList, "Value", "Text", Model.fld_Jenispekerja), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Jenispekerja, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblWorkCategory:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Ktgpkj, new SelectList(ViewBag.DesignationList, "Value", "Text", Model.fld_Ktgpkj), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Ktgpkj, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblSupplier:</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(model => model.fld_Kodbkl, new SelectList(ViewBag.SupplierList, "Value", "Text", Model.fld_Kodbkl), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kodbkl, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrContributionInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblKwspSocsoStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_StatusKwspSocso, new SelectList(ViewBag.KwspSocsoActiveList, "Value", "Text", Model.fld_StatusKwspSocso), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_StatusKwspSocso, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblKwspContribution:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_KodKWSP, new SelectList(ViewBag.KwspContributionList, "Value", "Text", Model.fld_KodKWSP), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodKWSP, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblNoKwsp:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nokwsp, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Nokwsp, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblSocsoContribution:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_KodSocso, new SelectList(ViewBag.SocsoContributionList, "Value", "Text", Model.fld_KodSocso), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodSocso, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblNoSocso:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Noperkeso, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Noperkeso, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-lg-12 text-left'><h4><span class="label label-primary">@GlobalResCorp.lblhdrBankingInformation</span></h4></div>
+                            <div class='col-lg-12'>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblAccStatus:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_StatusAkaun, new SelectList(ViewBag.BankActiveList, "Value", "Text", Model.fld_StatusAkaun), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_StatusAkaun, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblBankName:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_Kdbank, new SelectList(ViewBag.BankList, "Value", "Text", Model.fld_Kdbank), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kdbank, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblBankAccount:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NoAkaun, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_NoAkaun, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_UniqueID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(function () {
+        $('#fld_Trlhr').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function () {
+        $('#fld_T2prmt').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function () {
+        $('#fld_T2pspt').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function () {
+        $('#fld_Trtakf').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function () {
+        $('#fld_Trmlkj').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function () {
+        $('#fld_Trshjw').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $(function() {
+        $('#fld_Trshjw').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+    });
+
+    $('#fld_Poskod').blur(function() {
+        if ($("#fld_Poskod").val() === '' && $("#fld_Poskod").val() === null) {
+            $("#fld_Daerah").empty();
+        } else {
+
+            var poskodList = {};
+            poskodList.url = "@Url.Action("GetDaerah", "Maintenance")";
+            poskodList.type = "POST";
+            poskodList.data = JSON.stringify({ postCode: $("#fld_Poskod").val() });
+            poskodList.datatype = "json";
+            poskodList.contentType = "application/json";
+            poskodList.success = function (daerah) {
+                $("#fld_Daerah").empty();
+                $("#fld_Daerah").val($.trim(daerah));
+            };
+            poskodList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(poskodList);
+        }
+    });
+</script>

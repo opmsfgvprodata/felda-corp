@@ -1,0 +1,220 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_CMSAP>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "CustomerDetail";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+
+
+    string uniquefilename = "Master Data CS" + ViewBag.UserID + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Html.BeginForm("CustomerDetail", null, FormMethod.Get))
+
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-4">
+                    @Html.Label(GlobalResCorp.lblSearch)
+                    @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control", placeholder = "Sila masukkan nama pelanggan", @id = "txtfilter", @value = "" })
+                </div>
+
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <div class="well" style="margin-top:7px;">
+
+
+        <div class="modal-body">
+            <div class=" modal-footer col-md-12">
+                <a class="btn btn-danger" data-modal1='' href="@Url.Action("_CustSAPIntegration", "SAPIntegration")" id="btnCreate"> Data SAP</a>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Maklumat Pelanggan</div>
+                <div class="panel-body">
+                    <div id="scrollArea2">
+                        <div style="margin-top:17px;">
+                            @{
+                                var grid = new WebGrid(
+                                            canPage: true,
+                                            rowsPerPage: 15,
+                                            canSort: false,
+                                            ajaxUpdateContainerId: "grid");
+
+                                grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                                if (@grid.TotalRowCount > 0)
+                                {
+
+                                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                                                     tableStyle: "table table-bordered table-striped table-list table-hover",
+                                                     headerStyle: "header_table",
+                                                     alternatingRowStyle: "Grid-alt",
+                                                     selectedRowStyle: "Grid-selected",
+                                                     rowStyle: "Grid-rowstyle",
+                                                     footerStyle: "table-pager",
+                                                     mode: WebGridPagerModes.All,
+                                                     columns: grid.Columns(
+                                                        grid.Column(header: "No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                                        grid.Column("fld_CustomerNo", "Kod Pelanggan", style: "kod"),
+                                                        grid.Column("fld_Desc", "Pelanggan", style: "kod"),
+                                                        grid.Column("fld_CreatedBy", "Tindakan Oleh", style: "kod"),
+                                                        grid.Column("fld_DTCreated", "Tarikh Download", style: "kod"),
+                                                        grid.Column("fld_DTModified", "Last Modified", style: "kod")
+                    @*grid.Column(GlobalResSupplierDetail.hdrAction, canSort: false, style: "tindakan",
+                        format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("CustomerDetailUpdate", "SAPIntegration") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("CustomerDetailDelete", "SAPIntegration") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;")
+                        </text>)*@
+
+          ));
+
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="#" id="printpage">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px"  </span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                        </a>*@
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcelGL('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer col-md-12">
+            @*<a data-modal="" href=@Url.Action("CustomerDetailInsert", "SAPIntegration") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>*@
+            <a href=@Url.Action("Index", "SAPIntegration") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+
+     $(document).ready(function () {
+
+        $("#printpage").click(function () {
+
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea2').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SAPIntegration")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "CCMasterData" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>

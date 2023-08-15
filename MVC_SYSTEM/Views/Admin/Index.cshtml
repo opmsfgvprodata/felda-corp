@@ -1,0 +1,10 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    GetConfig getconfig = new GetConfig();
+}
+
+<h2><font color="white">Welcome to Admin @getconfig.GetData("sysname")</font></h2>
+

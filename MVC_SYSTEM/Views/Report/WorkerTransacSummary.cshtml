@@ -1,0 +1,450 @@
+﻿@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "WorkerTransacSummary";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+    GetDataCount GetDataCount = new GetDataCount();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    int bill = 0;
+    int bill1 = 1;
+    int check = 0;
+    decimal SumDebit = 0;
+    decimal SumKredit = 0;
+    decimal Variance = 0;
+    decimal TotalSumDebit = 0;
+    decimal TotalSumKredit = 0;
+    decimal TotalVariance = 0;
+    string wlyhName = "";
+    string ldgName = "";
+    string ldgcode = "";
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "WorkerTransacSummary_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string monthstring = ViewBag.Month.ToString();
+    if (monthstring.Length == 1)
+    {
+        monthstring = "0" + monthstring;
+    }
+
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("WorkerTransacSummary", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div id="progressmsg" class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResWorkerTransacSummary.WaitMsg</label>
+    </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerTransacSummary.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerTransacSummary.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerTransacSummary.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerTransacSummary.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerTransacSummary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well">
+            <p style="text-align:center;"><label>@GlobalResWorkerTransacSummary.hdrReportTitle</label></p>
+            @if (ViewBag.getflag == 1)
+            {
+                <p style="color:red">@GlobalResWorkerTransacSummary.lblText</p>
+            }
+            else
+            {
+                <div id="scrollArea" class="modal-body">
+                    @if (ViewBag.WilayahSelection == 0)
+                    {
+                        foreach (var wlyh in GetWilayah.GetWilayahID(ViewBag.SyarikatID))
+                        {
+                            bill = 0;
+                            TotalSumDebit = 0;
+                            TotalSumKredit = 0;
+                            wlyhName = GetWilayah.GetWilayahName(wlyh);
+                            check = 0;
+                            foreach (var ldg in GetLadang.GetCodeLadang(wlyh, "WorkerTransac", ViewBag.Year))
+                            {
+                                int totalcount = GetDataCount.datacount(ViewBag.NeragaID, ViewBag.SyarikatID, wlyh, ldg, monthstring, ViewBag.Year);
+                                if (totalcount >= 1)
+                                {
+                                    check = check + 1;
+
+                                }
+
+                            }
+                            if (check >= 1)
+                            {
+                                <logo />
+                                <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                    <thead>
+                                        @if (bill1 == 1)
+                                        {
+                                            <tr>
+                                                <th colspan="6" style="text-align:center;vertical-align:middle;">
+                                                    @ViewBag.NamaSyarikat
+                                                    <br />
+                                                    (@GlobalResWorkerTransacSummary.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                    <br />
+                                                    @GlobalResWorkerTransacSummary.hdrReportTitle
+                                                    <br />
+                                                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                                </th>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <hide />
+                                            <tr style="display:none;">
+                                                <th colspan="6" style="text-align:center;vertical-align:middle;">
+                                                    @ViewBag.NamaSyarikat
+                                                    <br />
+                                                    (@GlobalResWorkerTransacSummary.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                                    <br />
+                                                    @GlobalResWorkerTransacSummary.hdrReportTitle
+                                                    <br />
+                                                    @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                                </th>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th colspan="6" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @wlyhName
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrNo</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrKodLdg</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrNamaLdg</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrDbt</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrKrdt</th>
+                                            <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrVariance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @if (ViewBag.LadangSelection == 0)
+                                        {
+                                            foreach (var ldg2 in GetLadang.GetCodeLadang(wlyh, "WorkerTransac", ViewBag.Year))
+                                            {
+                                                int totalcount = GetDataCount.datacount(ViewBag.NeragaID, ViewBag.SyarikatID, wlyh, ldg2, monthstring, ViewBag.Year);
+                                                if (totalcount >= 1)
+                                                {
+                                                    //check = check + 1;
+                                                    bill = bill + 1;
+                                                    ldgName = GetLadang.GetLadangName(ldg2, wlyh);
+                                                    ldgcode = GetLadang.GetLadangCode(ldg2);
+                                                    SumDebit = GetDataCount.SumDbt(ViewBag.NeragaID, ViewBag.SyarikatID, wlyh, ldg2, monthstring, ViewBag.Year);
+                                                    SumKredit = GetDataCount.SumKdt(ViewBag.NeragaID, ViewBag.SyarikatID, wlyh, ldg2, monthstring, ViewBag.Year);
+                                                    Variance = SumDebit - SumKredit;
+                                                    //Html.RenderAction("WorkerTransacSummaryDetail", "Report", new { negaraid = ViewBag.NeragaID, syarikatid = ViewBag.SyarikatID, wilayahid = wlyh, ladangid = ldg2, month = ViewBag.Month, year = ViewBag.Year, bill = bill, incldg = ViewBag.IncLdg });
+                                                    //bill = bill + 1;
+
+                                                    <tr>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @bill
+                                                        </td>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @ldgcode
+                                                        </td>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @ldgName
+                                                        </td>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @SumDebit.ToString("N")
+                                                        </td>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @SumKredit.ToString("N")
+                                                        </td>
+                                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                            @Variance.ToString("N")
+                                                        </td>
+                                                    </tr>
+
+                                                    TotalSumDebit = TotalSumDebit + SumDebit;
+                                                    TotalSumKredit = TotalSumKredit + SumKredit;
+                                                    TotalVariance = TotalSumDebit - TotalSumKredit;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                                <strong>@GlobalResWorkerTransacSummary.ftrJumlah</strong>
+                                            </td>
+                                            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                                <strong>@TotalSumDebit.ToString("N")</strong>
+                                            </td>
+                                            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                                <strong>@TotalSumKredit.ToString("N")</strong>
+                                            </td>
+                                            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                                <strong>@TotalVariance.ToString("N")</strong>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <newpage />
+                            }
+                            bill1++;
+                        }
+                    }
+                    else
+                    {
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="6" style="text-align:center;vertical-align:middle;">
+                                        @ViewBag.NamaSyarikat
+                                        <br />
+                                        (@GlobalResWorkerTransacSummary.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                        <br />
+                                        @GlobalResWorkerTransacSummary.hdrReportTitle
+                                        <br />
+                                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrNo</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrKodLdg</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrNamaLdg</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrDbt</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrKrdt</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSummary.hdrVariance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (ViewBag.LadangSelection == 0)
+                                {
+                                    foreach (var ldg in GetLadang.GetCodeLadang(ViewBag.WilayahSelection, "WorkerTransac", ViewBag.Year))
+                                    {
+                                        int totalcount = GetDataCount.datacount(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ldg, monthstring, ViewBag.Year);
+                                        if (totalcount >= 1)
+                                        {
+                                            bill = bill + 1;
+                                            ldgName = GetLadang.GetLadangName(ldg, ViewBag.WilayahSelection);
+                                            ldgcode = GetLadang.GetLadangCode(ldg);
+                                            SumDebit = GetDataCount.SumDbt(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ldg, monthstring, ViewBag.Year);
+                                            SumKredit = GetDataCount.SumKdt(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ldg, monthstring, ViewBag.Year);
+                                            Variance = SumDebit - SumKredit;
+                                            <tr>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @bill
+                                                </td>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @ldgcode
+                                                </td>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @ldgName
+                                                </td>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @SumDebit.ToString("N")
+                                                </td>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @SumKredit.ToString("N")
+                                                </td>
+                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                    @Variance.ToString("N")
+                                                </td>
+                                            </tr>
+                                            TotalSumDebit = TotalSumDebit + SumDebit;
+                                            TotalSumKredit = TotalSumKredit + SumKredit;
+                                            TotalVariance = TotalSumDebit - TotalSumKredit;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    int totalcount = GetDataCount.datacount(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ViewBag.LadangSelection, monthstring, ViewBag.Year);
+                                    if (totalcount >= 1)
+                                    {
+                                        bill = bill + 1;
+                                        ldgName = GetLadang.GetLadangName(ViewBag.LadangSelection, ViewBag.WilayahSelection);
+                                        ldgcode = GetLadang.GetLadangCode(ViewBag.LadangSelection);
+                                        SumDebit = GetDataCount.SumDbt(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ViewBag.LadangSelection, monthstring, ViewBag.Year);
+                                        SumKredit = GetDataCount.SumKdt(ViewBag.NeragaID, ViewBag.SyarikatID, ViewBag.WilayahSelection, ViewBag.LadangSelection, monthstring, ViewBag.Year);
+                                        Variance = SumDebit - SumKredit;
+                                        <tr>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @bill
+                                            </td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @ldgcode
+                                            </td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @ldgName
+                                            </td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @SumDebit.ToString("N")
+                                            </td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @SumKredit.ToString("N")
+                                            </td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @Variance.ToString("N")
+                                            </td>
+                                        </tr>
+                                        TotalSumDebit = TotalSumDebit + SumDebit;
+                                        TotalSumKredit = TotalSumKredit + SumKredit;
+                                        TotalVariance = TotalSumDebit - TotalSumKredit;
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@GlobalResWorkerTransacSummary.ftrJumlah</strong>
+                                    </td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@TotalSumDebit.ToString("N")</strong>
+                                    </td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@TotalSumKredit.ToString("N")</strong>
+                                    </td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <strong>@TotalVariance.ToString("N")</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <newpage />
+                    }
+                </div>
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+            }
+        </div>
+    </section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerTransacSummary" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerTransacSummary" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerTransacSummary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerTransacSummary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

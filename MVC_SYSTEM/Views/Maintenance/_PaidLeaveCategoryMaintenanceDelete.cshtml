@@ -1,0 +1,90 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CutiKategori
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    GetConfig config = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @if (Model.fld_Deleted == false)
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblPaidLeaveCategoryDelete</h3>
+        }
+        else
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblPaidLeaveCategoryUnDelete</h3>
+        }
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblPaidLeave</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrLeaveCode:</label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.fld_KodCuti, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrDesc:</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.fld_KeteranganCuti, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrLeavePayment:</label>
+                                <div class="col-sm-3">
+                                    @Html.TextBoxFor(model => model.fld_WaktuBayaranCuti, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = config.GetWebConfigDesc(Model.fld_WaktuBayaranCuti.ToString(), "wktuBayaranCuti", Model.fld_NegaraID, Model.fld_SyarikatID)})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.lblGLCode:</label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(model => model.fld_KodGL, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = config.GetGLDesc(Model.fld_KodGL, Model.fld_NegaraID, Model.fld_SyarikatID) })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrActvtCode:</label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.fld_KodAktvt, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.fld_CutiKategoriID)
+                            @Html.HiddenFor(model => model.fld_KodCuti)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <h3>
+                            <span class="label label-danger">
+                                @GlobalResCorp.msgDelete
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes />
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+
+

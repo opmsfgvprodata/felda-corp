@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_CCSAP>
+@{
+    ViewBag.Title = "ccList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    int? bil = 0;
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Html.BeginForm("ccList", "SAPMasterData", new { id = "" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label("Cost Center")
+                    @Html.TextBox("ccCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label("Keterangan")
+                    @Html.TextBox("ccDesc", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+
+                </div>
+            </div>
+            <br />
+        </div>
+    }
+    <br />
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Data CC SAP</div>
+        <div class="panel-body">
+
+
+            @if (Model != null && Model.Count() != 0)
+            {
+
+                <div class="col-sm-12" style="text-align:right;">
+                    <a href="@Url.Action("ccRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
+                </div>
+
+                <br />
+
+                <div class="col-sm-12" style="text-align:center;">
+                    <div id="scrollArea" class="col-sm-12">
+
+                        <div class="CCList">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Syarikat</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Cost Center</th>
+                                        <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan Cost Center</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ccDetails in Model)
+                                    {
+                                        bil = bil + 1;
+                                    <tr @if (ccDetails.fld_DTCreated == DateTime.Today || ccDetails.fld_DTModified == DateTime.Today)
+                                     { <text> style="background-color:lightgrey;" </text>  }>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CompanyCode</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CstCnter</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_Desc </td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CreatedBy </td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @ccDetails.fld_DTCreated) </td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @ccDetails.fld_DTModified)</td>
+                                    </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                <div id="scrollArea" class="col-sm-12">
+                    @GlobalResCorp.msgDataNotFound
+                </div>
+            }
+
+
+            <div class="col-sm-12" style="text-align:right;">
+                <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

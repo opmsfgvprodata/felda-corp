@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tblOptionConfigsWeb>
+
+@{
+    ViewBag.Title = "Rejectreason";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    string nopkj = ViewBag.Nopkj;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">PENOLAKAN PERMOHONAN</h3>
+</div>
+
+@*modify by kamalia on 13.11.2020*@
+@using (Html.BeginForm("Rejectreason", "Approval", FormMethod.Post, new { @id = "searchForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+
+            <div class="form-group">
+                <input type="hidden" name="idval" value="@ViewBag.ID" />
+                <label class="control-label col-md-2">No Pekerja</label>
+                <label class="control-label col-md-2" style="text-align:left">@ViewBag.Nopkj</label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Nama</label>
+                <label class="control-label col-md-2" style="text-align:left">@ViewBag.Nama </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Sebab Ditolak</label>
+                <div class="col-md-9">
+                    @foreach (var item in Model)
+                    {
+                        <div>
+                            <label class="control-label col-md-4" style="text-align:left">
+                                <input type="checkbox" class="" value="@item.fldOptConfDesc" id="fldOptConfValue" name="ChkVal" />
+                                @item.fldOptConfDesc
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @*modify by kamalia on 13.11.2020*@
+        <input class="btn btn-primary" type="submit" id="search" onclick="return sendInfo()" value=@GlobalResEstateDetail.btnSave />
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Kembali</button>
+    </div>
+
+
+}
+
+@*added by kamalia on 13.11.2020*@
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    function sendInfo() {
+
+        $.ajax({
+            url: "/Approval/Rejectreason",
+            type: 'Post',
+            data: $('#searchForm').serialize(),
+            success: function (result) {
+                if (result.redirectTo) {
+                    // no validation errors we can redirect now:
+                    //alert("Pekerja Berjaya Ditolak");
+                    window.location.href = result.redirectTo;
+                }
+            }
+
+        });
+        return false;
+    }
+</script>
+
+@*added by kamalia on 13.11.2020*@

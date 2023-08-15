@@ -1,0 +1,92 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_PermitPassportDetail_Result>
+
+@{
+    int bil = 1;
+}
+@if (ViewBag.TotalCount > 0)
+{
+    <div id="test1" class="modal-body">
+        @foreach (var wilayah in Model.Select(s => s.fld_WilayahID).Distinct())
+        {
+            <p>@GlobalResPermitPassportPopup.lblWilayahName : @ViewBag.WilayahName</p>
+            <p>@GlobalResPermitPassportPopup.lblLadangName : @ViewBag.LadangName</p>
+            <p>@GlobalResPermitPassportPopup.lblTotalStaff : @ViewBag.TotalCount @GlobalResPermitPassportPopup.people</p>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center-0" width="2%">
+                            <b>@GlobalResPermitPassportPopup.No</b>
+                        </th>
+                        <th class="text-center" width="10%">
+                            <b>@GlobalResPermitPassportPopup.fld_Nopkj</b>
+                        </th>
+                        <th class="text-center" width="25%">
+                            <b>@GlobalResPermitPassportPopup.fld_Nama1</b>
+                        </th>
+                        <th class="text-center" width="10%">
+                            <b> @GlobalResPermitPassportPopup.fld_Prmtno</b>
+                        </th>
+                        <th class="text-center" width="10%">
+                            <b>@GlobalResPermitPassportPopup.fld_T2prmt</b>
+                        </th>
+                        <th class="text-center" width="5%">
+                            <b>@GlobalResPermitPassportPopup.fld_BilBlnTmtPrmnt</b>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td align="center" width="2%">
+                                @bil
+                            </td>
+                            <td align="center" width="10%">
+                                @Html.DisplayFor(modelItem => item.fld_Nopkj)
+                            </td>
+                            <td width="25%">
+                                @Html.DisplayFor(modelItem => item.fld_Nama)
+                            </td>
+                            <td align="center" width="10%">
+                                @Html.DisplayFor(modelItem => item.fld_NoPrmt)
+                            </td>
+                            <td align="center" width="10%">
+                                @Html.DisplayFor(modelItem => item.fld_TarkhTPrmt)
+                            </td>
+                            <td align="center" width="5%">
+                                <b>
+                                    @if (item.fld_BilBlnTmtPrmt <= 0)
+                                    {
+                                        <font color="red">@Html.DisplayFor(modelItem => item.fld_BilBlnTmtPrmt)</font>
+                                    }
+                                    else
+                                    {
+                                        <font color="blue">@Html.DisplayFor(modelItem => item.fld_BilBlnTmtPrmt)</font>
+                                    }
+                                </b>
+                            </td>
+                        </tr>
+                        bil++;
+                    }
+                </tbody>
+            </table>
+            <hr class="style6">
+
+        }
+    </div>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("test1").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+    });
+</script>

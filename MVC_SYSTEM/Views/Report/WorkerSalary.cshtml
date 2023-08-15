@@ -1,0 +1,539 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptBulPenPekLad_Result>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Worker Salary";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
+    int? totalpkj = 0;
+    int? totalpkj1000kbwh = 0;
+    int? totalpkj10011500 = 0;
+    int? totalpkj1501kats = 0;
+    decimal? totalpkj1000kbwhInd = 0;
+    decimal? totalpkj10011500Ind = 0;
+    decimal? totalpkj1501katsInd = 0;
+    decimal? totalpentggi = 0;
+    decimal? totalpenrndh = 1000000;
+    string selectionheader = "";
+    int headercolspan1 = 0;
+    double? totalpkj1000kbwhprcnt = 0;
+    double? totalpkj10011500prcnt = 0;
+    double? totalpkj1501katsprcnt = 0;
+
+    int bill = 1;
+    int bill2 = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    int? IncLdg = ViewBag.IncLdg;
+    int WilayahID = 0;
+    int LadangID = 0;
+    string uniquefilename = "WorkerSalary_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+
+    //var GetKrytans = Model.Select(s => new { s.fld_WargaNegara, s.fld_NegaraID, s.fld_SyarikatID, s.fld_NamaWilayah, s.fld_KodLadang, s.fld_NamaLadang }).Distinct().ToList();
+    var GetKrytans = Model.Select(s => new { s.fld_WargaNegara, s.fld_NegaraID, s.fld_SyarikatID }).Distinct().ToList();
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("WorkerSalary", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblMonth)
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblYear)
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblWilayah)
+                @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblLadang)
+                @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblKrkytan)
+                @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2" style="padding-top:25px;">
+                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerSalary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+            </div>
+        </div>
+    </div>
+    <div id="DataTable" class="well" style="margin-top: 7px">
+        <p style="text-align:center;"><label>@GlobalResWorkerSalary.hdrReportTitle</label></p>
+        @if (ViewBag.GetFlag == 2)
+        {
+            <div id="scrollArea" class="modal-body">
+                <logo />
+                @foreach (var krytan in GetKrytans)
+                {
+                    totalpkj = 0;
+                    totalpkj1000kbwh = 0;
+                    totalpkj10011500 = 0;
+                    totalpkj1501kats = 0;
+                    totalpkj1000kbwhInd = 0;
+                    totalpkj10011500Ind = 0;
+                    totalpkj1501katsInd = 0;
+                    totalpentggi = 0;
+                    totalpenrndh = 1000000;
+                    selectionheader = "";
+                    totalpkj1000kbwhprcnt = 0;
+                    totalpkj10011500prcnt = 0;
+                    totalpkj1501katsprcnt = 0;
+
+                    bill = 1;
+                    switch (IncLdg)
+                    {
+                        case 1:
+                            selectionheader = GetConfig.GetDescData(krytan.fld_WargaNegara, "krytnlist", krytan.fld_NegaraID, krytan.fld_SyarikatID);
+                            headercolspan1 = 11;
+                            break;
+                        case 2:
+                            WilayahID = ViewBag.WilayahSelection;
+                            var GetKrytansWilayah = Model.Where(x => x.fld_WilayahID == WilayahID && x.fld_WargaNegara == krytan.fld_WargaNegara).FirstOrDefault();
+                            selectionheader = GetConfig.GetDescData(krytan.fld_WargaNegara, "krytnlist", krytan.fld_NegaraID, krytan.fld_SyarikatID) + " - " + GetKrytansWilayah.fld_NamaWilayah;
+                            headercolspan1 = 12;
+                            break;
+                        case 3:
+                            WilayahID = ViewBag.WilayahSelection;
+                            LadangID = ViewBag.LadangSelection;
+                            var GetKrytansWilayah2 = Model.Where(x => x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_WargaNegara == krytan.fld_WargaNegara).FirstOrDefault();
+                            selectionheader = GetConfig.GetDescData(krytan.fld_WargaNegara, "krytnlist", krytan.fld_NegaraID, krytan.fld_SyarikatID) + " - " + GetKrytansWilayah2.fld_NamaWilayah + " - (" + GetKrytansWilayah2.fld_KodLadang + " - " + GetKrytansWilayah2.fld_NamaLadang + ")";
+                            headercolspan1 = 6;
+                            break;
+
+                    }
+                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+
+                        <thead>
+                            @if (bill2 == 1)
+                            {
+                                <tr>
+                                    <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
+                                        @ViewBag.NamaSyarikat
+                                        <br />
+                                        (@ViewBag.NoSyarikat)
+                                        <br />
+                                        @GlobalResWorkerSalary.hdrReportTitle
+                                        <br />
+                                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                    </th>
+                                </tr>
+                            }
+                            else
+                            {
+                                <hide />
+                                <tr style="display:none;">
+                                    <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
+                                        @ViewBag.NamaSyarikat
+                                        <br />
+                                        (@ViewBag.NoSyarikat)
+                                        <br />
+                                        @GlobalResWorkerSalary.hdrReportTitle
+                                        <br />
+                                        @GetTriager.GetMonthName(ViewBag.Month) - @ViewBag.Year
+                                    </th>
+                                </tr>
+                            }
+                            <tr>
+                                <th colspan="@headercolspan1" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                    @selectionheader
+                                </th>
+                            </tr>
+                            @if (ViewBag.IncLdg == 1)
+                            {
+                                <tr>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrNo</th>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.lblWilayah</th>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th colspan="6" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPrtaPen</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBwh1000</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdr10011500</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrAts1500</th>
+                                    <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPenTggi</th>
+                                    <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPenRndh</th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                </tr>
+                            }
+                            else if (ViewBag.IncLdg == 2)
+                            {
+                                <tr>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrNo</th>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrCodeLadang</th>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrLadangName</th>
+                                    <th rowspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th colspan="8" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBwh1000</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdr10011500</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrAts1500</th>
+                                    <th colspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPrtaPen</th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">%</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPenTggi</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrPenRndh</th>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrNo</th>
+                                    <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrNoPkj</th>
+                                    <th rowspan="2" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrNamePkj</th>
+                                    <th colspan="3" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBilPkjSms</th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrBwh1000</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdr10011500</th>
+                                    <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrAts1500</th>
+                                </tr>
+                            }
+                        </thead>
+                        <tbody>
+                            @{
+                                var WorkerSalary = Model.Where(x => x.fld_WargaNegara == krytan.fld_WargaNegara).ToList();
+                            }
+                            @foreach (var item in WorkerSalary)
+                            {
+                                <tr>
+                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @bill
+                                    </td>
+                                    @if (ViewBag.IncLdg == 1)
+                                    {
+                                        <td align="left" width="20%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @item.fld_NamaWilayah
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumBilPekerjaS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen1000KbwhS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1000KbwhPrcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen10011500S)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen10011500Prcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen1501KatsS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1501KatsPrcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetTotalForMoney(item.fld_PrtaPenTngi)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetTotalForMoney(item.fld_PrtaPenRndh)
+                                        </td>
+                                    }
+                                    else if (ViewBag.IncLdg == 2)
+                                    {
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @item.fld_KodLadang
+                                        </td>
+                                        <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @item.fld_NamaLadang
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumBilPekerjaS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen1000KbwhS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1000KbwhPrcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen10011500S)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen10011500Prcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkjPen1501KatsS)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1501KatsPrcnt)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetTotalForMoney(item.fld_PrtaPenTngi)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetTotalForMoney(item.fld_PrtaPenRndh)
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @item.fld_Nopkj
+                                        </td>
+                                        <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @item.fld_Nama.Trim()
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1000KbwhInd)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen10011500Ind)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_JumPkjPen1501KatsInd)
+                                        </td>
+                                    }
+                                </tr>
+                                totalpkj = totalpkj + item.fld_JumBilPekerjaS;
+                                totalpkj1000kbwh = totalpkj1000kbwh + item.fld_JumPkjPen1000KbwhS;
+                                totalpkj10011500 = totalpkj10011500 + item.fld_JumPkjPen10011500S;
+                                totalpkj1501kats = totalpkj1501kats + item.fld_JumPkjPen1501KatsS;
+
+                                totalpkj1000kbwhInd = totalpkj1000kbwhInd + item.fld_JumPkjPen1000KbwhInd;
+                                totalpkj10011500Ind = totalpkj10011500Ind + item.fld_JumPkjPen10011500Ind;
+                                totalpkj1501katsInd = totalpkj1501katsInd + item.fld_JumPkjPen1501KatsInd;
+
+                                if (item.fld_PrtaPenTngi >= totalpentggi)
+                                {
+                                    totalpentggi = item.fld_PrtaPenTngi;
+                                }
+
+                                if (item.fld_PrtaPenRndh != null && Math.Round((Double)item.fld_PrtaPenRndh, 2) != 0.00)
+                                {
+                                    if (item.fld_PrtaPenRndh <= totalpenrndh)
+                                    {
+                                        totalpenrndh = item.fld_PrtaPenRndh;
+                                    }
+                                }
+                                if (ViewBag.DataCount == bill)
+                                {
+                                    if (totalpenrndh == 1000000)
+                                    {
+                                        totalpenrndh = 0;
+                                    }
+                                }
+
+                                totalpkj1000kbwhprcnt = Double.Parse(totalpkj1000kbwh.ToString()) != 0 ? (Double.Parse(totalpkj1000kbwh.ToString()) / Double.Parse(totalpkj.ToString())) * 100 : Double.Parse(totalpkj1000kbwh.ToString());
+                                totalpkj10011500prcnt = Double.Parse(totalpkj10011500.ToString()) != 0 ? (Double.Parse(totalpkj10011500.ToString()) / Double.Parse(totalpkj.ToString())) * 100 : Double.Parse(totalpkj10011500.ToString());
+                                totalpkj1501katsprcnt = Double.Parse(totalpkj1501kats.ToString()) != 0 ? (Double.Parse(totalpkj1501kats.ToString()) / Double.Parse(totalpkj.ToString())) * 100 : Double.Parse(totalpkj1501kats.ToString());
+
+                                totalpkj1000kbwhprcnt = Math.Round((Double)totalpkj1000kbwhprcnt, 2);
+                                totalpkj10011500prcnt = Math.Round((Double)totalpkj10011500prcnt, 2);
+                                totalpkj1501katsprcnt = Math.Round((Double)totalpkj1501katsprcnt, 2);
+                            }
+                        </tbody>
+                        <tfoot>
+                            @if (ViewBag.IncLdg == 1)
+                            {
+                                <tr>
+                                    <td colspan="2" bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrTotal</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1000kbwh</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1000kbwhprcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj10011500</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj10011500prcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1501kats</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1501katsprcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpentggi)</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpenrndh)</td>
+                                </tr>
+                            }
+                            else if (ViewBag.IncLdg == 2)
+                            {
+                                <tr>
+                                    <td colspan="3" bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrTotal</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1000kbwh</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1000kbwhprcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj10011500</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj10011500prcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1501kats</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@totalpkj1501katsprcnt</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpentggi)</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpenrndh)</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.hdrTotal</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpkj1000kbwhInd)</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpkj10011500Ind)</td>
+                                    <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalpkj1501katsInd)</td>
+                                </tr>
+                            }
+                        </tfoot>
+                    </table>
+                    bill++;
+                    <newpage />
+
+                    bill2++;
+                }
+            </div>
+
+            @*//farahin-20012021*@
+            <br />
+            <div style="text-align:right; margin-top:10px">
+                <a class="btn btn-default btn-sm" href="" id="printpage">
+                    <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                </a>
+                <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                    <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                </a>
+                <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                    <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                </a>
+            </div>
+        }
+
+    </div>
+</section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    //farahin-20012021
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        //farahin comment
+         @*$("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "WorkerSalary" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });*@
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "WorkerSalary" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

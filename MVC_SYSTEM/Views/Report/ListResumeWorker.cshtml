@@ -1,0 +1,199 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.vw_TKADetail>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "ListResumeWorker";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int itemno = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "ListResumeWorker_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+}
+
+<!-- Styles for Wait Messages -->
+<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />
+
+@using (Html.BeginForm("ListResumeWorker", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    <div class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResActiveWorker.WaitMsg</label>
+    </div>
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-3">
+                    @Html.Label("Group Company")
+                    @Html.DropDownList("KumpulanSyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label("Company")
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label("Calling Visa No. Batch")
+                    @Html.DropDownList("BatchList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well">
+            @if (Model.Count() != 0)
+            {
+                <div id="scrollArea" class="modal-body">
+                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                        <thead>
+                            <tr>
+                                <th colspan="12" style="text-align:center;vertical-align:middle;">
+                                    LIST OF RESUME WORKER
+                                    <br />
+                                    TO : @ViewBag.NamaSyarikatTo
+                                    <br />
+                                    VENDOR : @ViewBag.NamaSyarikatFrom
+                                    <br />
+                                    NO. BATCH : @ViewBag.BatchName
+                                    <br />
+                                    DATE : @Convert.ToString(string.Format("{0:dd/MM/yyyy}", ViewBag.BatchDate))
+                                </th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">ITEM NO.</th>
+                                <th rowspan="2" width="15%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">NAME OF WORKER</th>
+                                <th rowspan="2" width="10%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PASSPORT NO.</th>
+                                <th rowspan="2" width="10%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PASSPORT EXPIRY DATE</th>
+                                <th rowspan="2" width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">GENDER(M/F)</th>
+                                <th rowspan="2" width="10%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">DATE OF BIRTH</th>
+                                <th rowspan="2" width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">NATIONALITY</th>
+                                <th rowspan="2" width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">WORKER'S NATURE OF WORK</th>
+                                <th colspan="4" width="40%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">DEPENDANT</th>
+                            </tr>
+                            <tr>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">NAME</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">RELATIONSHIP</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">FULL ADDRESS</th>
+                                <th bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">TELEPHONE NO.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @itemno
+                                    </td>
+                                    <td align="center" width="15%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldWorkerName
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldPassNo
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.fldPassExpDT))
+                                    </td>
+                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldGender
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.fldBOD))
+                                    </td>
+                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldNationality
+                                    </td>
+                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldNatureWork
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldDpdntName
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldDpdntRelationship
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldDpdntAdd
+                                    </td>
+                                    <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                        @item.fldDpdntTelNo
+                                    </td>
+                                </tr>
+                                itemno++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <a href="#" id="downloadpdf2">Download PDF</a>
+                <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>
+            }
+            else
+            {
+                <p style = "color:red" > Please Select Group Company, Company and Batch </p>
+            }
+        </div>
+</section>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        $("body").addClass("submit-progress-bg");
+        $(".submit-progress").removeClass("hidden");
+        return true;
+    }
+</script>

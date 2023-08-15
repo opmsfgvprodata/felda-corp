@@ -1,0 +1,63 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_Pembekal
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResSupplierDetail.lblTitleDelete</h3>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblCountry</label>
+                <div class="col-md-9">
+                    @Html.TextBox("CountryName", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblCompany</label>
+                <div class="col-md-9">
+                    @Html.TextBox("CompanyName", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2">@GlobalResSupplierDetail.lblSupplierCode</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Pembekal, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </div>
+            </div>
+
+            
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResSupplierDetail.DeleteMsg
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal">@GlobalResSupplierDetail.btnNo</button>
+        <input class="btn btn-danger" type="submit" value=@GlobalResSupplierDetail.btnYes />
+    </div>
+}

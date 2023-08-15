@@ -1,0 +1,398 @@
+﻿
+@{
+    ViewBag.Title = "DataForm";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <section class="content-wrapper main-content clear-fix">
+        <div id="Disposition" class="well">
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Search Batch</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label for="Batch Search"><span class="glyphicon glyphicon-search"></span></label>
+                                    <input type="text" name="s1" id="s1" class="form-control" placeholder="Search Batch...">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Calling Visa No. Batch</label>
+                                    @Html.DropDownList("BatchList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2" style="padding-top:25px;">
+                                    <button class="btn btn-primary btn-block" name="Cari" id="Cari" onclick="return SearchBatch()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">New Worker Data For @ViewBag.NamaSyarikat</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label>Calling Visa No. Batch</label>
+                                    <input type="text" id="NoBatch" name="NoBatch" class="form-control" />
+                                    <input type="hidden" id="BatchID" name="BatchID" class="form-control" value="" />
+                                </div>
+                                <div class="col-sm-2" style="padding-top:25px;">
+                                    <input type="hidden" id="KumpulanSyarikatList" name="KumpulanSyarikatList" class="form-control" value="@ViewBag.KumpulanSyarikatList" />
+                                    <input type="hidden" id="SyarikatList" name="SyarikatList" class="form-control" value="@ViewBag.SyarikatList" />
+                                    <button class="btn btn-primary btn-block" name="SimpanBatch" id="SimpanBatch" onclick="return SaveBatch()">Save Batch</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label>Passport No.</label>
+                                    <input type="text" id="PassportNo" name="PassportNo" class="form-control" />
+                                    <input type="hidden" id="PassportNoCopy" name="PassportNoCopy" class="form-control" value="" />
+                                </div>
+                                <div class="col-sm-2" style="padding-top:25px;">
+                                    <button class="btn btn-primary btn-block" name="Semak" id="Semak" onclick="return CheckPassport()">Check Availablity</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label>Worker Name</label>
+                                    <input type="text" id="WorkerName" name="WorkerName" class="form-control" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="startdate">Passport Expiry Date</label>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type="datetime" class="form-control" name="PDE" id="PDE" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Gender</label>
+                                    @Html.DropDownList("GenderList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="enddate">Date Of Birth</label>
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type="datetime" class="form-control" name="BOD" id="BOD" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="enddate">Nationality</label>
+                                    @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="enddate">Worker Nature Of Work</label>
+                                    @Html.DropDownList("BusinesList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label>Dependant Name</label>
+                                    <input type="text" id="DependantName" name="DependantName" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Dependant Relationship</label>
+                                    @Html.DropDownList("RelationshipList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Dependant Telephone No.</label>
+                                    <input type="text" id="DependantPhone" name="DependantPhone" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label>Dependant Full Address</label>
+                                    <textarea rows="4" cols="50" class="form-control" id="DependantAdd" name="DependantAdd"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input class="btn btn-primary" type="submit" id="submit" name="submit" value="Add" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">List Data</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-12" id="ListofDetail">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<script>
+    $(document).ready(function () {
+        $("#PassportNo").prop("disabled", true);
+        $("#Semak").prop("disabled", true);
+        $("#WorkerName").prop("disabled", true);
+        $("#PDE").prop("disabled", true);
+        $("#GenderList").prop("disabled", true);
+        $("#BOD").prop("disabled", true);
+        $("#KerakyatanList").prop("disabled", true);
+        $("#BusinesList").prop("disabled", true);
+        $("#DependantName").prop("disabled", true);
+        $("#RelationshipList").prop("disabled", true);
+        $("#DependantPhone").prop("disabled", true);
+        $("#DependantAdd").prop("disabled", true);
+        $("#submit").prop("disabled", true);
+
+        $(function () {
+            $('#PDE').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y'
+            });
+            $('#BOD').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y'
+            });
+            $('#fldPassExpDT').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y'
+            });
+            $('#fldBOD').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y'
+            });
+        });
+
+    });
+    function SaveBatch() {
+        var NoBatchForm = $("#NoBatch").val();
+        var KumpulanSyarikat = $("#KumpulanSyarikatList").val();
+        var Syarikat = $("#SyarikatList").val();
+        //alert(NoBatchForm);
+        if (NoBatchForm.trim() != "") {
+            var Batch = {};
+            Batch.url = "@Url.Action("SaveBatch", "Resource")";
+            Batch.type = "POST";
+            Batch.data = JSON.stringify({ NoBatch: NoBatchForm, KmplnSyrktID: KumpulanSyarikat, SyrktID: Syarikat });
+            Batch.datatype = "json";
+            Batch.contentType = "application/json";
+            Batch.success = function (returndata) {
+                if (returndata.status) {
+                    $('#NoBatchCopy').val(returndata.NoBatch);
+                    $("#PassportNo").prop("disabled", false);
+                    $("#Semak").prop("disabled", false);
+                    $("#NoBatch").prop("disabled", true);
+                    $("#SimpanBatch").prop("disabled", true);
+                    $("#BatchID").val(returndata.batchID);
+                }
+                else {
+
+                }
+                $.simplyToast(returndata.msg, returndata.statusmsg);
+            };
+            Batch.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(Batch);
+        }
+        else {
+            $.simplyToast('Please enter Calling Visa No. Batch', 'warning');
+        }
+        return false;
+    }
+    function CheckPassport() {
+        var Passportno = $("#PassportNo").val();
+        //alert(Passportno);
+        if (Passportno.trim() != "") {
+            var Passport = {};
+            Passport.url = "@Url.Action("CheckPassport", "Resource")";
+            Passport.type = "POST";
+            Passport.data = JSON.stringify({ Passportno: Passportno });
+            Passport.datatype = "json";
+            Passport.contentType = "application/json";
+            Passport.success = function (returndata) {
+                if (returndata.status) {
+                    $("#PassportNo").prop("disabled", true);
+                    $("#Semak").prop("disabled", true);
+                    $("#WorkerName").prop("disabled", false);
+                    $("#PDE").prop("disabled", false);
+                    $("#GenderList").prop("disabled", false);
+                    $("#BOD").prop("disabled", false);
+                    $("#KerakyatanList").prop("disabled", false);
+                    $("#BusinesList").prop("disabled", false);
+                    $("#DependantName").prop("disabled", false);
+                    $("#RelationshipList").prop("disabled", false);
+                    $("#DependantPhone").prop("disabled", false);
+                    $("#DependantAdd").prop("disabled", false);
+                    $("#submit").prop("disabled", false);
+
+                    $("#WorkerName").val('');
+                    $("#PDE").val('');
+                    $("#BOD").val('');
+                    $("#DependantName").val('');
+                    $("#DependantPhone").val('');
+                    $("#DependantAdd").val('');
+
+                    $("#PassportNoCopy").val(returndata.Passportno);
+                }
+                else {
+
+                }
+                $.simplyToast(returndata.msg, returndata.statusmsg);
+            };
+            Passport.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(Passport);
+        }
+        else {
+            $.simplyToast('Please enter Passport No.', 'warning');
+        }
+        return false;
+    }
+    function SearchBatch() {
+        var BatchID = $("#BatchList").val();
+
+        $("#PassportNo").prop("disabled", true);
+        $("#Semak").prop("disabled", true);
+        $("#WorkerName").prop("disabled", true);
+        $("#PDE").prop("disabled", true);
+        $("#GenderList").prop("disabled", true);
+        $("#BOD").prop("disabled", true);
+        $("#KerakyatanList").prop("disabled", true);
+        $("#BusinesList").prop("disabled", true);
+        $("#DependantName").prop("disabled", true);
+        $("#RelationshipList").prop("disabled", true);
+        $("#DependantPhone").prop("disabled", true);
+        $("#DependantAdd").prop("disabled", true);
+        $("#submit").prop("disabled", true);
+
+        var ListData = {};
+        ListData.url = "@Url.Action("UpdateListData", "Resource")";
+        ListData.type = "POST";
+        ListData.data = JSON.stringify({ id: BatchID });
+        ListData.datatype = "json";
+        ListData.contentType = "application/json";
+        ListData.success = function (returndata) {
+            $('#ListofDetail').empty();
+            $('#ListofDetail').append('<table class="table table-hover table-bordered" style="font-size: 11px;" border="0"></table>');
+            var table = $('#ListofDetail').children();
+            table.append(returndata.tablelisting);
+            $("#BatchID").val(returndata.BatchID);
+            $("#NoBatch").val(returndata.BatchName);
+            $("#NoBatch").prop("disabled", true);
+            $("#SimpanBatch").prop("disabled", true);
+            $("#PassportNo").prop("disabled", false);
+            $("#Semak").prop("disabled", false);
+            $.simplyToast(returndata.msg, returndata.statusmsg);
+        }
+        ListData.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(ListData);
+
+        return false;
+    }
+
+    $("form").submit(function () {
+        $.ajax({
+            url: "@Url.Action("DataForm", "Resource")",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (returndata) {
+                $("#WorkerName").prop("disabled", true);
+                $("#PDE").prop("disabled", true);
+                $("#GenderList").prop("disabled", true);
+                $("#BOD").prop("disabled", true);
+                $("#KerakyatanList").prop("disabled", true);
+                $("#BusinesList").prop("disabled", true);
+                $("#DependantName").prop("disabled", true);
+                $("#RelationshipList").prop("disabled", true);
+                $("#DependantPhone").prop("disabled", true);
+                $("#DependantAdd").prop("disabled", true);
+                $("#submit").prop("disabled", true);
+                $("#PassportNo").prop("disabled", false);
+                $("#Semak").prop("disabled", false);
+
+                $('#ListofDetail').empty();
+                $('#ListofDetail').append('<table class="table table-hover table-bordered" style="font-size: 11px;" border="0"></table>');
+                var table = $('#ListofDetail').children();
+                table.append(returndata.tablelisting);
+
+                $.simplyToast(returndata.msg, returndata.statusmsg)
+            }
+        });
+        return false;
+    });
+
+    $(function () {
+        var search1 = $('#s1');
+        var icon1 = $('#search1btn');
+
+        // handling the focus event on input2
+        $(search1).on('focus', function () {
+            $(this).animate({
+                width: '100%'
+            }, 400, function () {
+                // callback function
+            });
+            $(icon1).animate({
+                right: '10px'
+            }, 400, function () {
+                // callback function
+            });
+        });
+
+        // handling the blur event on input2
+        $(search1).on('blur', function () {
+            if (search1.val() == '') {
+                $(search1).animate({
+                    width: '45%'
+                }, 400, function () { });
+
+                $(icon1).animate({
+                    right: '360px'
+                }, 400, function () { });
+            }
+        });
+    });
+
+    $("#s1").keyup(function () {
+        var KumpulanSyarikat = $("#KumpulanSyarikatList").val();
+        var Syarikat = $("#SyarikatList").val();
+        var NoBatch = $("#s1").val()
+        var Batch = {};
+        Batch.url = "@Url.Action("GetBatch", "Resource")";
+        Batch.type = "POST";
+        Batch.data = JSON.stringify({ NoBatch: NoBatch, KmplnSyrktID: KumpulanSyarikat, SyrktID: Syarikat });
+        Batch.datatype = "json";
+        Batch.contentType = "application/json";
+        Batch.success = function (BatchList) {
+            $("#BatchList").empty();
+            for (var i = 0; i < BatchList.BatchList.length; i++) {
+                $("#BatchList").append("<option value=" + BatchList.BatchList[i].Value + ">" + BatchList.BatchList[i].Text + "</option>");
+            }
+            if(BatchList.nodata)
+            {
+                $("#Cari").prop("disabled", true);
+            }
+            else
+            {
+                $("#Cari").prop("disabled", false);
+            }
+        };
+        Batch.error = function () { alert("Error"); };
+        $.ajax(Batch);
+
+    });
+</script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs4.js")
+}

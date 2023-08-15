@@ -1,0 +1,974 @@
+﻿<!-- Aini update (Maklumat pengguna & Jumlah pekerja mengikut kerakyatan) 14/3/2023-->
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_DashAllKerakyatan_Result>
+@using MVC_SYSTEM.ModelsCustom
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetIdentity getidentity = new GetIdentity();
+    GetConfig getconfig = new GetConfig();
+    int getuserid = getidentity.ID(User.Identity.Name);
+    var authUserLogin = ViewBag.AuthUserLogin as AuthUserLogin;
+    var cuti = ViewBag.cuti;
+
+}
+
+@*<h2><font color="black">@GlobalResMain.Welcome @getconfig.GetData("sysname")</font></h2>*@
+@*Modified by aini 24/3/2023*@
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"> @*aini add css datatable*@
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        <div class="container" style="max-width: 100%;">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Maklumat Pengguna</div>
+
+                                <div class="panel-body">
+                                    <table border="0" width="100%">
+                                        <tr>
+                                            <td style="font-size: 14px;">1.</td>
+                                            <td style="font-size: 14px;">Name</td>
+                                            <td style="font-size: 14px;">: @getidentity.MyNameFullName(getuserid)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 14px;">2.</td>
+                                            <td style="font-size: 14px;">Email</td>
+                                            <td style="font-size: 14px;">: @ViewBag.AuthUserLogin.Email</td>
+                                        </tr>
+                                        @*<tr>
+            <td style="font-size: 14px;">3.</td>
+            <td style="font-size: 14px;">System Role</td>
+            <td style="font-size: 14px;">: @ViewBag.AuthUserLogin.Role</td>
+        </tr>*@
+                                        <tr>
+                                            <td style="font-size: 14px;">3.</td>
+                                            <td style="font-size: 14px;">Position</td>
+                                            <td style="font-size: 14px;">: @ViewBag.Position</td>
+                                        </tr>
+                                        @*aini modified 21/6/2023*@
+                                        <tr>
+                                            <td style="font-size: 14px;">4.</td>
+                                            <td style="font-size: 14px;">Last Access</td>
+                                            <td style="font-size: 14px;">: @getidentity.AuthUserLogin2(getuserid)</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @*aini modified 19/4/2023*@
+                    <div class="col-lg-6">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <br />
+                                <center>
+                                    <b>
+                                        <u>HELPDESK</u><br />
+                                        03-27891388<br />
+                                    </b>
+                                    groupopms@fgvholdings.com<br />
+                                    8:30AM - 5:30PM (Monday - Friday)
+                                </center>
+                                <br />
+                            </div>
+                        </div>
+                        @* aini add radio button 18072023 *@
+                        <input type="radio" id="all" name="type" value="all" checked>
+                        <label for="all">ALL</label> &nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="felda" name="type" value="felda">
+                        <label for="felda">FELDA</label> &nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="fpm" name="type" value="fpm">
+                        <label for="fpm">FPM</label>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Jumlah Pekerja Mengikut Kerakyatan</div>
+                                @* aini update foreach kerakyatan 18072023 *@
+                                <div class="panel-body">
+                                    <table border="0" width="100%">
+                                        <tr>
+                                            <td width="10%" id="tdkerakyatan"></td>
+                                            @*@if (Model.Count() != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <td width="10%">
+                                <h3 class="no-margins" id="kerakyatanjumlah">@item.fld_Jumlah</h3>
+                                <div class="font-bold text-navy" id="kerakyatan3"><small>@item.fld_Kerakyatan</small></div>
+                            </td>
+                        }
+                    }*@
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="panel-body">
+                                    <table border="0" width="100%">
+                                        <tr>
+                                            @if (Model.Count() != 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <td width="10%">
+                                                        <h3 class="no-margins">@item.fld_Jumlah</h3>
+                                                        <div class="font-bold text-navy"><small>@item.fld_Kerakyatan</small></div>
+                                                    </td>
+                                                }
+                                            }
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @*aini modified 19/4/2023*@
+                <div class="col-lg-6">
+                    <div class="panel panel-primary" style="height: 327px;">
+                        <div class="panel-heading">
+                            <table border="0" width="100%">
+                                <tr>
+                                    <td style="font-size: 14px;">Mesej</td>
+                                    <td style="text-align: right; font-size: 16px;font-weight:bold;">CLOSING PERIOD : @ViewBag.month / @ViewBag.year</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="panel-body">
+                            @Html.Action("_ShowBroadcast", "Messaging")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*aini modified 19/4/23*@
+        <div class="container" style="max-width: 100%;">
+            <div class="row">
+                <div class="col-lg-4">
+                    @*<div class="row">*@
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Jumlah Pekerja Mengikut Wilayah</div>
+
+                        <div class="panel-body">
+                            <br />
+                            <br />
+                            <div id="chart2"></div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                    @*</div>
+                        <div class="row">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Jumlah Pekerja Mengikut Wilayah</div>
+
+                                <div class="panel-body">
+                                    <div id="chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    *@
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Tamat Tempoh Permit</div>
+
+                        <div class="panel-body">
+                            <div id="chartwilayah"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Status Akaun @ViewBag.month/@ViewBag.year</div>
+
+                        <div class="panel-body">
+                            <div id='akaun'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Transaction Listing @ViewBag.year</div>
+
+                        <div class="panel-body">
+                            <div id='trans'></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Kalendar</div>
+
+                        <div class="panel-body">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@*Modified by aini 14/3/2023*@
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+@*aini add 19/4/2023*@
+<div class="modal inmodal fade " id="modalTable" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="modalSubview"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="modalwindow" width="100%"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*aini add 6/6/2023*@
+<div class="modal inmodal fade " id="modalTable2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title2"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="modalSubview"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="modalwindow2" width="100%"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (!getidentity.NegaraSumber(User.Identity.Name))
+{
+    //aini modified all javascript 19/4/2023
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+    //aini add 24/3/2023
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        //aini add function 01062023
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+
+        function destroyDataTable() {
+            if ($.fn.DataTable.isDataTable("#modalwindow")) {
+                $('#modalwindow').DataTable().destroy();
+            }
+
+            //aini add destroy datatable 2
+            if ($.fn.DataTable.isDataTable("#modalwindow2")) {
+                $('#modalwindow2').DataTable().destroy();
+            }
+        }
+
+        //aini add calendar 17/3/2023
+         var calendar = function () {
+             data1 = [];
+             data2 = [];
+             data3 = [];
+             dataset = [];
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Calendar", "Main")',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (cuti2) {
+
+
+                    //console.log(array.length);
+
+                    $.each(cuti2, function (index, obj) {
+                        data1.push(obj.fld_KeteranganCuti);
+                        var date = moment(obj.fld_TarikhCuti).format("YYYY-MM-DD");
+                        data2.push(date);
+                        data3.push({title:  obj.fld_KeteranganCuti, allDay: true, start: date });
+
+                    });
+                    //console.log(data3);
+
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        timeZone: 'UTC',
+                        initialView: 'dayGridMonth',
+
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+
+                        views: {
+                            timeGridDay: { buttonText: 'hari' },
+                            timeGridWeek: { buttonText: 'minggu' },
+                            dayGridMonth: { buttonText: 'bulan' }
+                        },
+                        events: data3,
+                        eventColor: '#4187E1'
+                    });
+
+                    calendar.render();
+                },
+            });
+
+        };
+        calendar();
+
+        //aini add function datatableLadang 24/3/2023
+        function datatablePermit(title, wilayah, permit) {
+            destroyDataTable();
+            var costcentre = $('input[name="type"]:checked').val();
+            if (costcentre == 'all') {
+                var costcentre2 = 1;
+            } else if (costcentre == 'felda') {
+                var costcentre2 = 2;
+            } else {
+                var costcentre2 = 3;
+            }
+            $('.modal-title').html(title);
+            $.ajax({
+                url: 'Dashboard/DatatablePermit?wilayah=' + wilayah + '&permit=' + permit + '&costcentre=' + costcentre2,
+                method: 'post',
+                dataType: 'json',
+                success: function (datatablepermit) {
+
+                    //console.log(datatablepermit);
+
+                    $("#modalwindow").DataTable({
+                        data: datatablepermit,
+                        columns: [
+                            { "data": 'fld_Nopkj', title: 'No' },
+                            { "data": 'fld_Nopkj', title: 'No Pekerja' },
+                            { "data": 'fld_Nokp', title: 'No Kad Pengenalan' },
+                            { "data": 'fld_Nama', title: 'Nama' },
+                            { "data": 'fld_Krkytn', title: 'Kerakyatan' },
+                            { "data": 'fld_LdgName', title: 'Ladang' },
+                            { "data": 'fld_T1prmt', title: 'Tarikh Mula Permit' },
+                            { "data": 'fld_T2prmt', title: 'Tarikh Tamat Permit' }
+                            // { "data": 'fld_DateApply', title: 'Apply Date' }
+                        ],
+                        columnDefs: [
+                            {
+                                targets: 0,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+
+            $('#modalTable').modal('show');
+        };
+
+        //add by aini 14/3/2023
+        //aini update in function 18072023
+        function donutchart(type){
+            dataLabel = [];
+            total3month = [];
+            total2month = [];
+            total1month = [];
+            total0month = [];
+            totalmonth = [];
+            $.ajax({
+                type: 'POST',
+                url: 'Dashboard/DashPermitExpiry?type=' + type,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (dashpermitresult) {
+                    $.each(dashpermitresult, function (index, obj) {
+                        dataLabel.push(obj.fld_WlyhName);
+                    });
+
+                    $.each(dashpermitresult, function (index, obj) {
+                        total3month.push(obj.total3month);
+                        total2month.push(obj.total2month);
+                        total1month.push(obj.total1month);
+                        total0month.push(obj.totalmonth);
+                        totalmonth.push(obj.totalexpired);
+                    });
+
+                    //console.log(dataSeries);
+
+                    var options = {
+                        series: [{
+                            name: '3 Bulan',
+                            data: total3month
+                        }, {
+                            name: '2 Bulan',
+                            data: total2month
+                        }, {
+                            name: '1 Bulan',
+                            data: total1month
+                        }, {
+                            name: 'Semasa',
+                            data: total0month
+                        }, {
+                            name: 'Telah Tamat Tempoh',
+                            data: totalmonth
+                        }
+                        ],
+                        chart: {
+                            type: 'bar',
+                            height: 347,
+                            stacked: true,
+                            events: {
+                                click(event, chartContext, config) {
+                                    var wilayah = config.config.xaxis.categories[config.dataPointIndex];
+                                    var permit = config.config.series[config.seriesIndex].name;
+                                    var title = 'WILAYAH ' + wilayah + ' - Tempoh Tamat Permit: ' + config.config.series[config.seriesIndex].name;
+                                    //console.log(permit);
+                                    datatablePermit(title,wilayah,permit);
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: '55%',
+                                endingShape: 'rounded'
+                            },
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            colors: ['transparent']
+                        },
+                        xaxis: {
+                            categories: dataLabel
+
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return val
+                                }
+                            }
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chartwilayah"), options);
+                    chart.render();
+                },
+            });
+
+        };
+        donutchart(1);
+
+        function donutchart2(type) {
+            dataLabel2 = [];
+            dataSeries2 = [];
+            $.ajax({
+                type: 'POST',
+                url: 'Dashboard/DashWilayah?type=' + type,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (dashkerakyatanresult) {
+                    $.each(dashkerakyatanresult, function (index, obj) {
+                        dataLabel2.push(obj.fld_Wilayah);
+                    });
+
+                    $.each(dashkerakyatanresult, function (index, obj) {
+                        dataSeries2.push(obj.fld_Jumlah);
+                    });
+                    //console.log(dataSeries2); //sini dah read new dataset
+                    var options = {
+                        series: dataSeries2, //count kerakyatan
+                        labels: dataLabel2, //kerakyatan
+                        chart: {
+                            type: 'donut',
+                            height: 430,
+                            events: {
+                                dataPointSelection: (event, chartContext, config) => {
+                                    var costcentre = $('input[name="type"]:checked').val();
+                                    if (costcentre == 'all') {
+                                        var costcentre2 = 1;
+                                    } else if (costcentre == 'felda') {
+                                        var costcentre2 = 2;
+                                    } else {
+                                        var costcentre2 = 3;
+                                    }
+                                    window.location.href = "Dashboard/WilayahResult?wilayah=" + config.w.config.labels[config.dataPointIndex] + '&costcentre=' + costcentre2;
+                                }
+                            },
+                            toolbar: {
+                                show: true,
+                                tools: {
+                                    download: true,
+                                    selection: true,
+                                    zoom: true,
+                                    zoomin: true,
+                                    zoomout: true,
+                                    pan: true,
+                                    reset: true
+                                },
+                                export: {
+                                    csv: {
+                                        filename: 'Jumlah Pekerja Mengikut Wilayah',
+                                        columnDelimiter: ',',
+                                        headerCategory: 'category',
+                                        headerValue: 'value',
+                                        dateFormatter(timestamp) {
+                                            return new Date(timestamp).toDateString()
+                                        }
+                                    },
+                                },
+                            },
+                        },
+
+                        /*title: {
+                            text: '[Tahun : 2023] - [TKA : 458] - [TKT : 672] - [Jumlah : 1130]',
+                            align: 'left',
+                            margin: 10,
+                            offsetX: 0,
+                            offsetY: 5,
+                            floating: false,
+                            style: {
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                color: '#263238'
+                            },
+                        },*/
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                    floating: true
+                                }
+                            }
+                        }],
+                        //aini add 28042023
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    labels: {
+                                        show: true,
+                                        name: {
+                                            show: true,
+                                            fontSize: '22px',
+                                            fontFamily: 'Rubik',
+                                            color: '#dfsda',
+                                            offsetY: -10
+                                        },
+                                        value: {
+                                            show: true,
+                                            fontSize: '30px',
+                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                            color: undefined,
+                                            offsetY: 16,
+                                            formatter: function (val) {
+                                                return val
+                                            }
+                                        },
+                                        total: {
+                                            show: true,
+                                            label: 'Total',
+                                            color: '#373d3f',
+                                            formatter: function (w) {
+                                                return w.globals.seriesTotals.reduce((a, b) => {
+                                                    return a + b
+                                                }, 0)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart2"), options);
+                    chart.render();
+                },
+            });
+
+        };
+        donutchart2(1);
+
+        //end update 18072023
+
+        var barchartaccount = function () {
+            dataLabelLadang = [];
+            dataFelda = [];
+            dataFPM = [];
+            dataFPM = [];
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DashStatusAkaun", "Dashboard")',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (DashStatusAkaun) {
+                    $.each(DashStatusAkaun, function (index, obj) {
+                        dataLabelLadang.push(obj.fld_LdgName);
+                    });
+                    $.each(DashStatusAkaun, function (index, obj) {
+                        dataFelda.push(obj.GLToVendor);
+                        dataFPM.push(obj.progress);
+                    });
+                    //console.log(dataSeriesProgress);
+                    var options = {
+                        series: [{
+                            name: 'FELDA',
+                            data: dataFelda
+                        }, {
+                            name: 'FPM',
+                            data: dataFPM
+                        }
+                        ],
+                        chart: {
+                            type: 'bar',
+                            height: 380,
+                            events: {
+                                dataPointSelection: (event, chartContext, config) => {
+                                    var wilayah = config.w.config.xaxis.categories[config.dataPointIndex];
+                                    var costcentre = config.w.config.series[config.seriesIndex].name;
+                                    var title = 'STATUS AKAUN WILAYAH ' + wilayah + ' - Cost Centre: ' + costcentre;
+                                    datatableakaun(title, wilayah, costcentre);
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                            }
+                        },
+                        colors: ['#FF6F16', '#35C332'],
+                        //fill: {
+                        //    colors: ['#F44336', '#E91E63', '#9C27B0']
+                        //},
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function (val, opts) {
+                                return val + '%'
+                            },
+                            style: {
+                                fontSize: '12px',
+                                colors: ['#fff']
+                            }
+                        },
+                        xaxis: {
+                            categories: dataLabelLadang,
+                        }
+                    };
+                    //    plotOptions: {
+                    //        radialBar: {
+                    //            dataLabels: {
+                    //                total: {
+                    //                    show: true,
+                    //                    label: 'TOTAL'
+                    //                }
+                    //            }
+                    //        }
+                    //    },
+                    //    labels: dataLabelLadang
+                    //};
+
+                    var chart = new ApexCharts(document.querySelector("#akaun"), options);
+                    chart.render();
+                },
+            });
+
+        };
+        barchartaccount();
+
+        //aini update function datatableakaun 18072023
+        function datatableakaun(title, wilayah, costcentre) {
+            destroyDataTable();
+            $('.modal-title2').html(title);
+            $.ajax({
+                url: 'Dashboard/DashStatusAkaunWilayah?wilayah=' + wilayah + '&costcentre=' + costcentre,
+                method: 'post',
+                dataType: 'json',
+                success: function (dashStatusAkaun) {
+
+                    $("#modalwindow2").DataTable({
+                        data: dashStatusAkaun,
+                        columns: [
+                            { "data": 'fld_LdgName', title: 'No' },
+                            { "data": 'fld_LdgName', title: 'Ladang' },
+                            { "data": 'TutupUrusNiaga', title: 'Tutup Urusniaga' },
+                            { "data": 'Verify', title: 'Verify' },
+                            { "data": 'KelulusanPengurus', title: 'Kelulusan Pengurus' },
+                            { "data": 'KelulusanPegKewangan', title: 'Kelulusan Peg. Kewangan' },
+                            { "data": 'KelulusanPegWilayahFelda', title: 'Kelulusan Peg. Wilayah FELDA' },
+                            { "data": 'GLToGL', title: 'Post to SAP GL to GL' },
+                            { "data": 'GLToVendor', title: 'Post to SAP GL to Vendor' }
+                        ],
+                        columnDefs: [
+                            {
+                                targets: 0,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+                            {
+                                targets: 2,
+                                render: function (data, type, row, meta) {
+                                    if (row['TutupUrusNiaga'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['TutupUrusNiaga'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 3,
+                                render: function (data, type, row, meta) {
+                                    if (row['Verify'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['Verify'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 4,
+                                render: function (data, type, row, meta) {
+                                    if (row['KelulusanPengurus'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['KelulusanPengurus'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 5,
+                                render: function (data, type, row, meta) {
+                                    if (row['KelulusanPegKewangan'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['KelulusanPegKewangan'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 6,
+                                render: function (data, type, row, meta) {
+                                    if (row['KelulusanPegWilayahFelda'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['KelulusanPegWilayahFelda'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 7,
+                                render: function (data, type, row, meta) {
+                                    if (row['GLToGL'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['GLToGL'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            },
+                            {
+                                targets: 8,
+                                render: function (data, type, row, meta) {
+                                    if (row['GLToVendor'] == 1)
+                                        return '<td align="center"><center><div class="okstatus"></div></center></td>';
+                                    else if (row['GLToVendor'] == 2) {
+                                        return '<td align="center"><center><div class="pendingstatus"></div></center></td>';
+                                    }
+                                    else {
+                                        return '<td align="center"><center><div class="kostatus"></div></center></td>';
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+
+            $('#modalTable2').modal('show');
+        };
+
+        //aini add 07072023
+        var charttrans = function () {
+            dataMonth = [];
+            dataAmountFELDA = [];
+            dataAmountFPM = [];
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DashTrans", "Dashboard")',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (dashTrans) {
+                    $.each(dashTrans, function (index, obj) {
+                        dataMonth.push(obj.fld_Month);
+                        //dataAmount.push(obj.fld_Amt.toLocaleString("en-US"));
+                        dataAmountFELDA.push(obj.fld_AmtFELDA);
+                        dataAmountFPM.push(obj.fld_AmtFPM);
+                    });
+                    //console.log(dataMonth);
+
+                    var options = {
+                        series: [{
+                            name: "Amount FELDA (RM)",
+                            data: dataAmountFELDA
+                        },
+                        {
+                            name: "Amount FPM (RM)",
+                            data: dataAmountFPM
+                        }],
+                        chart: {
+                            height: 350,
+                            type: 'line',
+                            zoom: {
+                                enabled: false
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            curve: 'straight'
+                        },
+                        grid: {
+                            row: {
+                                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                opacity: 0.5
+                            },
+                        },
+                        colors: ['#FF6F16', '#35C332'],
+                        xaxis: {
+                            categories: dataMonth,
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#trans"), options);
+                    chart.render();
+                },
+            });
+
+        };
+        charttrans();
+
+        //aini add loop kerakyatan
+        function kerakyatancostcentre(costcentre) {
+            $.ajax({
+                type: 'POST',
+                url: 'Dashboard/DashCostCentreKerakyatan?costcentre=' + costcentre,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (kerakyatanresult) {
+
+                    $("#kerakyatanjumlah").empty();
+                    $("#kerakyatan3").empty();
+
+                    $.each(kerakyatanresult, function (index, obj) {
+                        $("#tdkerakyatan").append('<td width = "10%" id = "tdkerakyatan"><h3 class="no-margins">' + obj.fld_Jumlah + '</h3><div class="font-bold text-navy"><small>' + obj.fld_Kerakyatan + '</small></div></td>');
+
+
+                        //$("#kerakyatanjumlah").append('<h3 class="no-margins" id="kerakyatanjumlah">' + obj.fld_Jumlah + '</h3>');
+                        //$("#kerakyatan3").append('<div class="font-bold text-navy" id="kerakyatan3"><small>' + obj.fld_Kerakyatan + '</small></div>');
+                        //    jumlah.push(obj.fld_Kerakyatan);
+                        //    kerakyatan.push(obj.fld_Jumlah);
+                    });
+
+                },
+            });
+
+        };
+        kerakyatancostcentre(1);
+
+        $('input[type=radio][name="type"]').change(function () {
+            if ($(this).val() == 'all') {
+                $("#all").prop("checked", true);
+                $("#felda").prop("checked", false);
+                $("#fpm").prop("checked", false);
+                $('#chart2').empty();
+                $('#chartwilayah').empty();
+                $('#tdkerakyatan').empty();
+                donutchart(1); //dashboard permit
+                donutchart2(1); //dashboard wilayah
+                kerakyatancostcentre(1);
+            } else if ($(this).val() == 'felda') {
+                $("#felda").prop("checked", true);
+                $("#fpm").prop("checked", false);
+                $("#all").prop("checked", false);
+                $('#chart2').empty();
+                $('#chartwilayah').empty();
+                $('#tdkerakyatan').empty();
+                donutchart(2);
+                donutchart2(2);
+                kerakyatancostcentre(2);
+            } else {
+                $("#fpm").prop("checked", true);
+                $("#felda").prop("checked", false);
+                $("#all").prop("checked", false);
+                $('#chart2').empty();
+                $('#chartwilayah').empty();
+                $('#tdkerakyatan').empty();
+                donutchart(3);
+                donutchart2(3);
+                kerakyatancostcentre(3);
+            }
+        });
+
+        $(window).on("load", function () {
+            window.open("@Url.Action("Index", "PopupRemainder", null, this.Request.Url.Scheme)", null, "height=600,width=800,status=yes,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=no");
+        });
+
+    </script>
+
+}

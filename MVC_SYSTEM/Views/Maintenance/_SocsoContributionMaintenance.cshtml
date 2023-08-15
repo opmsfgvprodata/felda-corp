@@ -1,0 +1,126 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    var grid = new WebGrid(
+        canPage: true,
+        rowsPerPage: Model.PageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "grid");
+
+    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+    if (@grid.TotalRowCount > 0)
+    {
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblSocsoContributionCount)</div>
+
+        @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+                           tableStyle: "table table-bordered table-striped table-list table-hover tableStyle",
+                           headerStyle: "header_table wordwrap",
+                           alternatingRowStyle: "Grid-alt",
+                           selectedRowStyle: "Grid-selected",
+                           rowStyle: "Grid-rowstyle",
+                           footerStyle: "table-pager",
+                           mode: WebGridPagerModes.All,
+                           columns: grid.Columns(
+                               grid.Column(header: "No."
+                                   , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                     + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                     * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                               grid.Column(columnName: "fld_KodCaruman", header: GlobalResCorp.lblKwspContributionCode, style: "kod"),
+                               grid.Column(columnName: "fld_Keterangan", header: GlobalResCorp.lblDescription, style: "keterangan wordwrap"),
+                               grid.Column(columnName: "fld_UmurLower", header: GlobalResCorp.lblContributionSubCategoryMinAge, style: "tetapan1"),
+                               grid.Column(columnName: "fld_UmurUpper", header: GlobalResCorp.lblContributionSubCategoryMaxAge, style: "tetapan1"),
+                               grid.Column(columnName: "fld_PeratusCarumanPekerja", header: GlobalResCorp.lblContributionSubCategoryEmpyeeCont, style: "tetapan1"),
+                               grid.Column(columnName: "fld_PeratusCarumanMajikanBawah5000", header: GlobalResCorp.lbllKwspContributionBelow5000, style: "tetapan1"),
+                               grid.Column(columnName: "fld_PeratusCarumanMajikanAtas5000", header: GlobalResCorp.lbllKwspContributionAbove5000, style: "tetapan1"),
+                               grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                               {
+                                   if (item.fld_Deleted == false)
+                                   {
+                                       var tindakan = "<a data-modal1='' href='" + @Url.Action("_SocsoContributionMaintenanceEdit", "Maintenance") + "/?id=" + item.fld_JenisCarumanID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                                      "<a data-modal1='' href='" + @Url.Action("_SocsoContributionMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JenisCarumanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                                       return @Html.Raw(tindakan);
+                                   }
+
+                                   else
+                                   {
+                                       var tindakan = "<a data-modal1='' href='" + @Url.Action("_SocsoContributionMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JenisCarumanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                                       return @Html.Raw(tindakan);
+                                   }
+                               }, canSort: false, style: "tindakan")
+                               ))
+    }
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label(GlobalResCorp.msgErrorSearch)
+        </div>
+
+        <hr />
+    }
+}
+
+<style>
+
+    table tr th:nth-child(1) {
+        width: 50px !important;
+    }
+
+    table tr th:nth-child(4), th:nth-child(5), th:nth-child(6), th:nth-child(7), th:nth-child(8) {
+        width: 110px !important;
+        vertical-align: middle !important;
+    }
+
+    table tr th:nth-child(2) {
+        width: 80px !important;
+        vertical-align: middle !important;
+    }
+
+    table tr th:last-child {
+        width: 20px !important;
+        vertical-align: middle !important;
+    }
+
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>
+

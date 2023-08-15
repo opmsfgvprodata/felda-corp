@@ -1,0 +1,230 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.vw_PermohonanKewangan>
+@using MVC_SYSTEM.Class
+@{
+    int bill = 1;
+    GetTriager GetTriager = new GetTriager();
+    GetLadang GetLadang = new GetLadang();
+    int? wlyhid = Model.Select(s => s.fld_WilayahID).Take(1).FirstOrDefault();
+    int? tableid = Model.Select(s => s.fld_LadangID).Take(1).FirstOrDefault();
+    long id;
+    decimal? totalprmhnnwng = 0;
+    decimal? totalpaymentmode = 0;
+    string btnskg = "btntrm" + tableid;
+    string btntlk = "btntlk" + tableid;
+    string textcolor = "green";
+    int? month = Model.Select(s => s.fld_Month).Take(1).FirstOrDefault();
+    int? year = Model.Select(s => s.fld_Year).Take(1).FirstOrDefault();
+    int? gmstatustolak = Model.Select(s => s.fld_TolakWilGM_Status).Take(1).FirstOrDefault();
+    int? gmstatussokong = Model.Select(s => s.fld_SokongWilGM_Status).Take(1).FirstOrDefault();
+    int? hqstatustolak = Model.Select(s => s.fld_TolakHQ_Status).Take(1).FirstOrDefault();
+    int? hqstatussokong = Model.Select(s => s.fld_TerimaHQ_Status).Take(1).FirstOrDefault();
+    string NoAcc, NoGL, NoCIT;
+}
+<table class="table table-bordered table-hover" style="font-size: 11px;" border="0">
+    <thead>
+        <tr>
+            <th colspan="7" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;font-size:small;" border="1">
+                Financial Request Verification (Finance)
+            </th>
+        </tr>
+        <tr>
+            <th colspan="7" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                @Model.Select(s => s.fld_WlyhName).Take(1).FirstOrDefault()
+            </th>
+        </tr>
+        <tr>
+            <th width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrNo</th>
+            <th width="5%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrKodLdg</th>
+            <th width="10%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrNamaLdg</th>
+            <th width="18%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrGajiBuruh</th>
+            <th width="16%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Payment Mode (RM)</th>
+            <th width="22%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Action History</th>
+            <th width="8%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Reference</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            id = item.fld_ID;
+            //GetLadang.GetLadangAcc(out NoAcc, out NoGL, out NoCIT, item.fld_LadangID, item.fld_WilayahID);
+            NoAcc = item.fld_NoAcc;
+            NoGL = item.fld_NoGL;
+            NoCIT = item.fld_NoCIT;
+            <tr>
+                <td width="5%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    @bill
+                </td>
+                <td width="5%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    @item.fld_LdgCode
+                </td>
+                <td width="10%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    @item.fld_LdgName
+                </td>
+                <td width="18%" align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    <div class="row">
+                        <div class="column" width: 40%;>
+                            <p>Worker Net Salary</p>
+                            <p>Others</p>
+                        </div>
+                        <div class="column" width: 20%;>
+                            <p>:</p>
+                            <p>:</p>
+                        </div>
+                        <div class="column" width: 40%;>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahWorkerNet)</p>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahPermohonan - item.fld_JumlahWorkerNet)</p>
+                        </div>
+                    </div>
+                    @* code utk ada link *@
+                    @*<a href="#" onclick="UpdateStatus2(this,@item.fld_ID,'SemakWil','@id','@tableid','@item.fld_JumlahPermohonan','@NoAcc', '@NoGL', '@NoCIT', '@item.fld_JumlahPDP', '@item.fld_JumlahCIT', '@item.fld_JumlahManual', '@item.fld_LdgName','@item.fld_SkbNo');">@GetTriager.GetTotalForMoney(item.fld_JumlahPermohonan)</a>*@
+                </td>
+                <td width="16%" align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    <div class="row">
+                        <div class="column" width: 40%;>
+                            <p>CASH</p>
+                            <p>CHEQUE</p>
+                            <p>CDMAS</p>
+                            <p>EWALLET</p>
+                        </div>
+                        <div class="column" width: 20%;>
+                            <p>:</p>
+                            <p>:</p>
+                            <p>:</p>
+                            <p>:</p>
+                        </div>
+                        <div class="column" width: 40%;>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahCash)</p>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahCheque)</p>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahCdmas)</p>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahEwallet)</p>
+                        </div>
+                    </div>
+                </td>
+                <td width="22%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    @if (item.fld_TolakWil_Status == 1 || item.fld_TolakWilGM_Status == 1 || item.fld_TolakHQ_Status == 1)
+                    {
+                        textcolor = "red";
+                    }
+                    else
+                    {
+                        textcolor = "green";
+                    }
+                    <p>
+                        <font color="@textcolor">
+                            @{
+                                Html.RenderAction("ApplicationSupportHistoryDetail", "ApplicationSupport", new { SPWID = id });
+
+                            }
+                        </font>
+                    </p>
+                </td>
+                <td width="8%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                    <a href="#" onclick="ScTran('@tableid', '@wlyhid', @item.fld_ID);">Transaction Listing</a>
+                </td>
+            </tr>
+            totalprmhnnwng = totalprmhnnwng + item.fld_JumlahPermohonan;
+            totalpaymentmode = item.fld_JumlahCash + item.fld_JumlahCheque + item.fld_JumlahCdmas + item.fld_JumlahEwallet;
+            bill++;
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                Total
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(totalprmhnnwng)
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(totalpaymentmode)
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: left; vertical-align:middle !important;border:1px solid black;" border="1"></td>
+            <td bgcolor="#085480" style="color:white; text-align: left; vertical-align:middle !important;border:1px solid black;" border="1"></td>
+        </tr>
+    </tfoot>
+</table>
+<br />
+<table class="table table-bordered table-hover" id="@tableid" style="font-size: 11px;" border="0">
+    <thead>
+        <tr>
+            <th colspan="4" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                For HQ Use
+            </th>
+        </tr>
+        <tr>
+            <th width="15%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrNamaLdg</th>
+            <th width="20%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerTransacSalary.hdrGajiBuruh</th>
+            <th width="20%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Action History</th>
+            <th width="10%" bgcolor="#073e5f" style="color:white;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="15%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @Model.Select(s => s.fld_LdgName).Take(1).FirstOrDefault()
+            </td>
+            <td width="20%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @GetTriager.GetTotalForMoney(totalprmhnnwng)
+            </td>
+            <td width="20%" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @if (gmstatustolak == 0 && gmstatussokong == 1 && hqstatustolak == 0 && hqstatussokong == 1)
+                {
+                    <p><font color="green">Telah Diterima oleh HQ</font></p>
+                }
+                else if (gmstatustolak == 0 && gmstatussokong == 1 && hqstatustolak == 1 && hqstatussokong == 0)
+                {
+                    <p><font color="red">Telah Ditolak oleh HQ</font></p>
+                }
+            </td>
+            <td width="10%" valign="middle" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                @if (ViewBag.matchtotal == true)
+                {
+                    if (gmstatustolak == 0 && gmstatussokong == 1 && hqstatustolak == 0 && hqstatussokong == 0)
+                    {
+                        <button type="button" class="btn btn-primary btn-lg" style="font-size:10px;" id="@btnskg" onclick="UpdateStatus(this,'@tableid','TerimaHQ', '@month','@year');">Approve</button>
+                        <button type="button" class="btn btn-danger btn-lg" style="font-size:10px;" id="@btntlk" onclick="UpdateStatus(this,'@tableid', 'TolakHQ', '@month','@year');">Reject</button>
+                    }
+                    else if (gmstatustolak == 0 && gmstatussokong == 1 && hqstatustolak == 1 && hqstatussokong == 0)
+                    {
+                        <button type="button" class="btn btn-primary btn-lg" style="font-size:10px;" id="@btnskg" onclick="UpdateStatus(this,'@tableid','TerimaHQ', '@month','@year');">Approve</button>
+                        <button type="button" class="btn btn-danger btn-lg" disabled style="font-size:10px;" id="@btntlk" onclick="UpdateStatus(this,'@tableid', 'TolakHQ', '@month','@year');">Reject</button>
+                    }
+                    else if (gmstatustolak == 0 && gmstatussokong == 1 && hqstatustolak == 0 && hqstatussokong == 1)
+                    {
+                        <button type="button" class="btn btn-primary btn-lg" disabled style="font-size:10px;" id="@btnskg" onclick="UpdateStatus(this,'@tableid','TerimaHQ', '@month','@year');">Approve</button>
+                        <button type="button" class="btn btn-danger btn-lg" style="font-size:10px;" id="@btntlk" onclick="UpdateStatus(this,'@tableid', 'TolakHQ', '@month','@year');">Reject</button>
+                    }
+                    @*else if (gmstatustolak == 0 && gmstatussokong == 1 && (hqstatustolak == 1 || hqstatussokong == 1))
+                        {
+                            <button type="button" class="btn btn-primary btn-lg" disabled style="font-size:10px;" id="@btnskg" onclick="UpdateStatus(this,'@tableid','TerimaHQ', '@month','@year');">Terima</button>
+                            <button type="button" class="btn btn-danger btn-lg" disabled style="font-size:10px;" id="@btntlk" onclick="UpdateStatus(this,'@tableid', 'TolakHQ', '@month','@year');">Tolak</button>
+                        }*@
+
+                }
+                else
+                {
+                    <p><font color="red"><b>Semakan Atau Sokongan Belum Selesai</b></font></p>
+                }
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+@* style for worker salary & payemnt mode *@
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: left;
+        padding: 15px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>

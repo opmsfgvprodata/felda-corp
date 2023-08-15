@@ -1,0 +1,89 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblEmail;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "EmailMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_EmailMaintenance", "Maintenance", null, options, new { @id = "AgamaSearchDetails" }))
+        {
+            @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.hdrCategory)
+                @Html.DropDownList("CateList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-3">
+                @Html.Label(GlobalResCorp.lblDepart)
+                @Html.DropDownList("DepartList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-3">
+                @Html.Label(GlobalResCorp.lblRegion)
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2" style="padding-top:25px;">
+                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResLocalWorkerInfo.btnViewName" onclick="return DisplayProgressMessage(this);" />
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblEmailInfo</div>
+                <div class="panel-body">
+                    <div id="EmailMaintenanceDetails">
+                        @Html.Action("_EmailMaintenance")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' href=@Url.Action("_EmailCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+</script>
+
+
+
+

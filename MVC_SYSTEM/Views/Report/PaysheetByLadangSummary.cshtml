@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MVC_SYSTEM.Models.tbl_SokPermhnWang>
+@using MVC_SYSTEM.Class;
+
+@{
+    GetTriager GetTriager = new GetTriager();
+}
+
+@if (ViewBag.DataCount >= 1)
+{
+    foreach (var item in Model)
+    {
+        decimal? kwsp = ViewBag.KWSP;
+        decimal? socso = ViewBag.SOCSO;
+        decimal? kwspsocsoP = ViewBag.KwspSocsoP;
+        decimal? kwspsocsoM = ViewBag.KwspSocsoM;
+        decimal? jumlahPDP = item.fld_JumlahPDP;
+        string kwspsocso = GetTriager.GetTotalForMoney(kwsp + socso);
+        decimal? pdpcittt = ViewBag.PDP + ViewBag.TT + ViewBag.CIT;
+        //string total = GetTriager.GetTotalForMoney(pdpcittt + kwspsocsoP + kwspsocsoM);
+        string totalPDP = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(kwspsocsoP) + GetTriager.GetTotalForMoney2(kwspsocsoM) + GetTriager.GetTotalForMoney2(ViewBag.PDP));
+        decimal? totalCIT = ViewBag.CIT + ViewBag.Manual;
+        string total = GetTriager.GetTotalForMoney(GetTriager.GetTotalForMoney2(kwspsocsoP) + GetTriager.GetTotalForMoney2(kwspsocsoM) + GetTriager.GetTotalForMoney2(ViewBag.PDP) + GetTriager.GetTotalForMoney2(totalCIT));
+
+        <tr>
+            <td colspan="2" bgcolor="#085480" style="color:white; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GlobalResWorkerMyeg.ftrTotal</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.GajiKasar)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.Manual)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.CheckrolPekerja)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.KWSP)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.SOCSO)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.Lain)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.GajiBersih)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong></strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.PDP)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(kwspsocsoP)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(kwspsocsoM)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@totalPDP</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong></strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(ViewBag.CIT)</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@GetTriager.GetTotalForMoney(totalCIT)</strong>
+            </td>
+
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong></strong>
+            </td>
+
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong>@total</strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong></strong>
+            </td>
+            <td bgcolor="#085480" style="color:white; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">
+                <strong></strong>
+            </td>
+        </tr>
+    }
+}

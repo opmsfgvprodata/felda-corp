@@ -1,0 +1,85 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_QuotaPerluLadang>
+@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "EstateNeed";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetLadang GetLadang = new GetLadang();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm("EstateNeedHQ", null, FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="text" name="filter" value="@ViewBag.filter" class="form-control" style="display: inline" placeholder=@GlobalResEstateNeed.lblSearch />
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                @*@GlobalResEstateNeed.btnGo*@
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+
+                    </div>
+                </div>
+                <div class="pull-left col-lg-1">
+                    <a class="btn btn-success" data-modal="" href="@Url.Action("EstateNeedHQInsert", "DataEntry")" id="btnCreate">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:17px;">
+                @{
+                    var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                    grid.Pager(WebGridPagerModes.All);
+
+                    @grid.GetHtml(htmlAttributes: new { id = "grid", year = "grid" },   // id for ajaxUpdateContainerId parameter
+                         fillEmptyRows: false,
+                         tableStyle: "table table-bordered table-hover",
+                         mode: WebGridPagerModes.All,
+                         columns: grid.Columns(
+                           grid.Column("fld_LadangID", GlobalResEstateNeed.hdrLdgCode, style: "col-lg-2", format:@<text>@(GetLadang.GetCodeLadangFromID2(item.fld_LadangID))</text>),
+                             grid.Column("fld_LadangID", GlobalResEstateNeed.hdrLdgName, style: "col-lg-2", format:@<text>@(GetLadang.GetLadangName(item.fld_LadangID, item.fld_WilayahID))</text>),
+                             grid.Column("fld_Tahun", GlobalResEstateNeed.hdrYear, style: "col-lg-2"),
+                        grid.Column("fld_Perlu", GlobalResEstateNeed.hdrPerlu, style: "col-lg-2"),
+
+                            grid.Column(GlobalResEstateNeed.hdrAction, canSort: false, style: "col-lg-2",
+                            format: @<text>
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("EstateNeedHQUpdate", "DataEntry") + "/?id=" + item.fld_LadangID + "&year=" + item.fld_Tahun + "' title='EstateNeedUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                @Html.Raw("<a data-modal='' href='" + @Url.Action("EstateNeedHQDelete", "DataEntry") + "/?id=" + item.fld_LadangID + "&year=" + item.fld_Tahun + "' title='EstateNeedDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                            </text>)
+
+                        ));
+                }
+
+
+            </div>
+                    }
+    </div>
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}
+
+

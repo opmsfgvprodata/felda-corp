@@ -1,0 +1,78 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_CutiMaintenance
+@{
+    GetConfig getConfig = new GetConfig();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResCorp.lblLeaveAllocationDelete</h3>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblLeaveAllocation</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLeaveType:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_JenisCuti, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = getConfig.GetPaidLeaveDescFromCode(Model.fld_JenisCuti, Model.fld_NegaraID, Model.fld_SyarikatID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrDesc:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Keterangan, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLeaveAllocationMinVal:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_LowerLimit, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblLeaveAllocationMaxVal:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_UpperLimit, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrLeaveAllocation:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_PeruntukkanCuti, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_CutiMaintenanceID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+        <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+    </div>
+}
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+
+

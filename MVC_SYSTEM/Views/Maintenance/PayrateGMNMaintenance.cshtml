@@ -1,0 +1,131 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsCorporate.tbl_UpahAktiviti>
+
+@{
+    ViewBag.Title = "PayrateGMNMaintenance";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    //string aktvtselection = "";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "GMNMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        <div class="row">
+            @using (Ajax.BeginForm("_PayrateGMNMaintenance", "Maintenance", null, options, new { @id = "KdrHargaSearchDetails" }))
+            {
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.lblKodKategori)
+                    @Html.DropDownList("KateList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @*manual,mekanikal*@
+                    @Html.Label(GlobalResCorp.hdrWorkAktvt)
+                    @Html.DropDownList("AktvtList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="@GlobalResCorp.btnView" />
+                    @*<input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="@GlobalResNoSkb.btnViewName" />*@
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="well" style="margin-top: 7px">
+        <div class="panel panel-primary">
+            <div id="divheader" class="panel-heading">@GlobalResCorp.lblPayrateKategoriMaintenance</div>
+            <div class="panel-body" id="content">
+                <div id="GMNMaintenanceDetails">
+                    @Html.Action("_PayrateGMNMaintenance")
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' href=@Url.Action("PayrateGMNInsert", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+    @*</div>*@
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#KateList").change(function () {
+            var KateAkt1 = {};
+            var disableoption = "";
+            KateAkt1.url = "@Url.Action("GetSubAkt", "Maintenance")";
+            KateAkt1.type = "POST";
+            KateAkt1.data = JSON.stringify({ KateAkt: $("#KateList").val() });
+            KateAkt1.datatype = "json";
+            KateAkt1.contentType = "application/json";
+            KateAkt1.success = function (result) {
+                $("#AktvtList").empty();
+                $("#AktvtList").append("<option value=''>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < result.length; i++) {
+                    if ($("#KateList").val() == 0) {
+                        disableoption = "";
+                    }
+                    $("#AktvtList").append("<option value=" + result[i].Value + " " + disableoption + ">" + result[i].Text + "</option>");
+                }
+            };
+            KateAkt1.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(KateAkt1);
+        });
+
+        if ($("#KateList").val() == 0) {
+            var KateAkt1 = {};
+            var disableoption = "";
+            KateAkt1.url = "@Url.Action("GetSubAkt", "Maintenance")";
+            KateAkt1.type = "POST";
+            KateAkt1.data = JSON.stringify({ KateAkt: $("#KateList").val() });
+            KateAkt1.datatype = "json";
+            KateAkt1.contentType = "application/json";
+            KateAkt1.success = function (result) {
+                $("#AktvtList").empty();
+                $("#AktvtList").append("<option value=''>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < result.length; i++) {
+                    if ($("#KateList").val() == 0) {
+                        disableoption = "";
+                    }
+                    $("#AktvtList").append("<option value=" + result[i].Value + " " + disableoption + ">" + result[i].Text + "</option>");
+                }
+            };
+            KateAkt1.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(KateAkt1);
+        }
+    });
+
+</script>
+
+
+
+

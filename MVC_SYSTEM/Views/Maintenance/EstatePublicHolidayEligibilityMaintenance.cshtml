@@ -1,0 +1,119 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.vw_CutiUmumLdg>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblTitlePublicHolidayEligibilityMaintenance;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "publicHolidayEligibilityMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_EstatePublicHolidayEligibilityMaintenance", "Maintenance", null, options, new { @id = "publicHolidayEligibilitySearchDetails" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblRegion</label>
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    <label>@GlobalResCorp.lblEstate</label>
+                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", disabled = "true" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblYear</label>
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblPublicHolidayEligibilityInfo</div>
+                <div class="panel-body">
+                    <div id="publicHolidayEligibilityMaintenanceDetails">
+                        @Html.Action("_EstatePublicHolidayEligibilityMaintenance")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' href=@Url.Action("_EstatePublicHolidayEligibilityMaintenanceCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+
+    $("#WilayahList").change(function () {
+        if ($("#WilayahList").val() == "0") {
+            $("#LadangList").prop("disabled", true);
+        }
+
+        else {
+            $("#LadangList").prop("disabled", false);
+        }
+
+        var WilayahList = {};
+        var disableoption = "";
+        WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+        WilayahList.type = "POST";
+        WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+        WilayahList.datatype = "json";
+        WilayahList.contentType = "application/json";
+        WilayahList.success = function (ladanglist) {
+            $("#LadangList").empty();
+            $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahList);
+    });
+
+</script>
+
+

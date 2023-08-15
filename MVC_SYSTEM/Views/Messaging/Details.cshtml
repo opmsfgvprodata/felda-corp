@@ -1,0 +1,23 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_Messaging
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "Masej - " + Model.fld_Title;
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+    GetIdentity GetIdentity = new GetIdentity();
+    var UserList = GetIdentity.GetListUser();
+    var Username = UserList.Where(x => x.fldUserID == Model.fld_CreatedBy).Select(s => s.fldUserFullName).FirstOrDefault();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">@Html.DisplayFor(model => model.fld_Title)</div>
+            <div class="modal-body">
+                @Html.Raw(Model.fld_Msg)
+            </div>
+            <div class="modal-footer">
+                Ditulis Oleh: @Username, Pada: @Model.fld_CreatedDT
+            </div>
+        </div>
+    </div>
+</section>

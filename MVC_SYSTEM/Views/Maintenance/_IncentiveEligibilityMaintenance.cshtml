@@ -1,0 +1,156 @@
+﻿@using MVC_SYSTEM.Class
+@{
+
+    GetConfig getConfig = new GetConfig();
+
+    var grid = new WebGrid(
+        source: Model,
+        canPage: true,
+        rowsPerPage: @ViewBag.pageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "gridT");
+
+    grid.Pager(WebGridPagerModes.All);
+
+    if (@grid.TotalRowCount > 0)
+    {
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblIncentiveEligibilityCount)</div>
+
+        @grid.GetHtml(
+            htmlAttributes: new { id = "gridT" },
+            tableStyle: "table table-striped table-bordered table-list table-hover",
+            headerStyle: "header_table",
+            alternatingRowStyle: "Grid-alt",
+            selectedRowStyle: "Grid-selected",
+            rowStyle: "Grid-rowstyle",
+            mode: WebGridPagerModes.All,
+            columns: grid.Columns(
+                grid.Column(header: GlobalResCorp.hdrNo
+                    , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                      + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                      * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                grid.Column("JenisInsentif.fld_KodInsentif", GlobalResCorp.lblIncentiveCode, style: "kod"),
+                grid.Column("JenisInsentif.fld_Keterangan", GlobalResCorp.lblIncentiveName, style: "keterangan"),
+                grid.Column(GlobalResCorp.lblIncentiveEligibilityDesignation, format: (item) =>
+                {
+                    WebGrid subGrid = new WebGrid(source: item.Designation);
+                    var count = 1;
+                    if (@subGrid.TotalRowCount > 0)
+                    {
+                        return subGrid.GetHtml(
+                            htmlAttributes: new { id = "nestedT" },
+                            tableStyle: "table borderless",
+                            headerStyle: "header_table",
+                            alternatingRowStyle: "Grid-alt",
+                            rowStyle: "Grid-rowstyle borderless",
+                            displayHeader: false,
+
+                            columns: subGrid.Columns(
+                                subGrid.Column(format: (designation) =>
+                                {
+                                    var tindakan = count++;
+                                    return @Html.Raw(tindakan);
+
+                                }, canSort: false, style: "count"),
+                                subGrid.Column(format: (designation) =>
+                                {
+                                    var tindakan = getConfig.GetWebConfigDesc(designation.fldOptConfValue.ToString(), "designation", designation.fld_NegaraID, designation.fld_SyarikatID);
+                                    return @Html.Raw(tindakan);
+
+                                }, canSort: false, style: "tetapan1"),
+                                subGrid.Column(format: (designation) =>
+                                {
+                                    if (designation.fldDeleted == false)
+                                    {
+                                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_IncentiveEligibilityMaintenanceDelete", "Maintenance") + "/?id=" + designation.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                                        return @Html.Raw(tindakan);
+                                    }
+
+                                    else
+                                    {
+                                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_IncentiveEligibilityMaintenanceDelete", "Maintenance") + "/?id=" + designation.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                                        return @Html.Raw(tindakan);
+                                    }
+                                }, canSort: false, style: "tindakan2"))
+                       );
+                    }
+                    else
+                    {
+                        return @Html.Raw("<br/><div class='text-center'>" + @GlobalResCorp.msgErrorSearch + "</div><br/>");
+                    }
+                }, canSort: false, style: "tindakan"),
+                grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                {
+                    var tindakan = "<a data-modal1='' href='" + @Url.Action("_IncentiveEligibilityMaintenanceCreate", "Maintenance") + "/?id=" + item.JenisInsentif.fld_JenisInsentifID + "' class='btn btn-success' role='button' title='" + @GlobalResCorp.lblIncentiveEligibilityAddLower + "' onclick='return DisplayProgressMessage2(this);'><i class='fa fa-plus fa-lg'></i></a>";
+                    return @Html.Raw(tindakan);
+                }, canSort: false, style: "tindakan")
+
+                )
+            )
+    }
+
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label(GlobalResCorp.msgErrorSearch)
+        </div>
+        <hr />
+    }
+}
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 250px !important;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 30px !important;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan2 {
+        width: 80px !important;
+        text-align: right;
+        vertical-align: middle !important;
+    }
+</style>
+
+

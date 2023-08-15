@@ -1,0 +1,56 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_CMSAPCreate
+@using MVC_SYSTEM.Class;
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @*<h3 class="modal-title">Add New User</h3>*@
+    </div>
+
+    @using (Html.BeginForm("_cmRequest", "SAPMasterData", new { id = "" }))
+    {
+
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Request New Customer Code</div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fld_CompanyCode, "SAP Company Code", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fld_CustomerNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-4">
+                                @Html.EditorFor(model => model.fld_CustomerNo, new { htmlAttributes = new { @class = "form-control required", required = "required" } })
+                                @Html.ValidationMessageFor(model => model.fld_CustomerNo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                -
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.EditorFor(model => model.fld_CustomerNo2, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+
+                            <input class="btn btn-success" type="submit" value="Sent" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</section>

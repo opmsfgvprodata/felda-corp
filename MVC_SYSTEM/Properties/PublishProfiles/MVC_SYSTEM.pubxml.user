@@ -1,0 +1,1778 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAwSP7m1kYIEit7nXakRuhXwAAAAACAAAAAAADZgAAwAAAABAAAADG061U2RtybsVq73IL3TbeAAAAAASAAACgAAAAEAAAABx81d1Stat3oqjECnruS9wYAAAA4LMiviP5rIXgVTJFJcPuwSCFU0w7S3XUFAAAAENdfe8FJfj3CBT6Er6qBE222CPa</EncryptedPassword>
+    <_PublishTargetUrl>ftp://ftp.smarterasp.net/msdevelopment</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Start/BundleConfig.cs">
+      <publishTime>11/02/2016 18:45:23</publishTime>
+    </File>
+    <File Include="App_Start/FilterConfig.cs">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="App_Start/RouteConfig.cs">
+      <publishTime>11/14/2016 23:39:31</publishTime>
+    </File>
+    <File Include="Asset/alert/simply-toast.css">
+      <publishTime>08/14/2015 09:43:04</publishTime>
+    </File>
+    <File Include="Asset/alert/simply-toast.js">
+      <publishTime>08/14/2015 09:43:04</publishTime>
+    </File>
+    <File Include="Asset/alert/simply-toast.min.css">
+      <publishTime>08/14/2015 09:43:04</publishTime>
+    </File>
+    <File Include="Asset/alert/simply-toast.min.js">
+      <publishTime>08/14/2015 09:43:04</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap-theme.css">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap-theme.css.map">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap-theme.min.css">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap-theme.min.css.map">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap.css">
+      <publishTime>06/24/2016 16:00:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap.css.map">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap.min.css">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/bootstrap.min.css.map">
+      <publishTime>09/06/2016 12:42:58</publishTime>
+    </File>
+    <File Include="Asset/Content/form.css">
+      <publishTime>11/01/2016 18:23:44</publishTime>
+    </File>
+    <File Include="Asset/Content/jquery.datetimepicker.css">
+      <publishTime>11/02/2016 18:38:37</publishTime>
+    </File>
+    <File Include="Asset/Content/leftnav.css">
+      <publishTime>11/02/2016 11:44:39</publishTime>
+    </File>
+    <File Include="Asset/Content/PagedList.css">
+      <publishTime>06/23/2016 14:00:53</publishTime>
+    </File>
+    <File Include="Asset/Content/Site.css">
+      <publishTime>11/18/2016 20:36:42</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/accordion.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/all.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/autocomplete.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/base.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/button.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/core.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/datepicker.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/dialog.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/draggable.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-icons_222222_256x240.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-icons_454545_256x240.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-icons_888888_256x240.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/menu.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/progressbar.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/resizable.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/selectable.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/selectmenu.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/slider.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/sortable.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/spinner.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/tabs.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/theme.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Content/themes/base/tooltip.css">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>05/12/2016 21:37:32</publishTime>
+    </File>
+    <File Include="Asset/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>05/12/2016 21:41:21</publishTime>
+    </File>
+    <File Include="Asset/Images/bg.jpg">
+      <publishTime>04/22/2016 12:44:21</publishTime>
+    </File>
+    <File Include="Asset/Images/client_logo.jpg">
+      <publishTime>05/14/2016 02:29:38</publishTime>
+    </File>
+    <File Include="Asset/Images/contact.png">
+      <publishTime>05/14/2016 03:58:00</publishTime>
+    </File>
+    <File Include="Asset/Images/message.png">
+      <publishTime>05/14/2016 03:58:00</publishTime>
+    </File>
+    <File Include="Asset/Images/performance.png">
+      <publishTime>05/14/2016 03:58:00</publishTime>
+    </File>
+    <File Include="Asset/Images/report.png">
+      <publishTime>05/14/2016 03:58:00</publishTime>
+    </File>
+    <File Include="Asset/Images/wait.gif">
+      <publishTime>10/25/2016 13:01:30</publishTime>
+    </File>
+    <File Include="Asset/Images/wait2.gif">
+      <publishTime>09/13/2016 16:49:54</publishTime>
+    </File>
+    <File Include="Asset/Scripts/Appjs.js">
+      <publishTime>11/15/2016 19:49:26</publishTime>
+    </File>
+    <File Include="Asset/Scripts/Appjs2.js">
+      <publishTime>10/21/2016 12:22:46</publishTime>
+    </File>
+    <File Include="Asset/Scripts/Appjs3.js">
+      <publishTime>11/15/2016 13:29:29</publishTime>
+    </File>
+    <File Include="Asset/Scripts/bootstrap.js">
+      <publishTime>09/06/2016 12:42:57</publishTime>
+    </File>
+    <File Include="Asset/Scripts/bootstrap.min.js">
+      <publishTime>09/06/2016 12:42:57</publishTime>
+    </File>
+    <File Include="Asset/Scripts/Close_Function.js">
+      <publishTime>05/17/2016 16:04:46</publishTime>
+    </File>
+    <File Include="Asset/Scripts/Customizer.js">
+      <publishTime>06/30/2016 15:50:00</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.intellisense.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.min.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.min.map">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.slim.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.slim.min.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-3.1.0.slim.min.map">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-ui-1.11.4.js">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery-ui-1.11.4.min.js">
+      <publishTime>06/24/2016 17:19:43</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.datetimepicker.js">
+      <publishTime>11/02/2016 18:38:36</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.signalR-2.2.1.js">
+      <publishTime>09/05/2016 15:56:15</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.signalR-2.2.1.min.js">
+      <publishTime>09/05/2016 15:56:15</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>06/22/2016 01:05:17</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>06/22/2016 01:05:17</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.validate-vsdoc.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.validate.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.validate.min.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>08/23/2016 11:55:41</publishTime>
+    </File>
+    <File Include="Asset/Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>08/23/2016 11:55:41</publishTime>
+    </File>
+    <File Include="Asset/Scripts/modernizr-2.8.3.js">
+      <publishTime>08/23/2016 16:43:27</publishTime>
+    </File>
+    <File Include="Asset/Scripts/myownjs.js">
+      <publishTime>05/24/2016 12:21:33</publishTime>
+    </File>
+    <File Include="Asset/Scripts/respond.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Asset/Scripts/respond.matchmedia.addListener.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Asset/Scripts/respond.matchmedia.addListener.min.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Asset/Scripts/respond.min.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Asset/Scripts/_references.js">
+      <publishTime>11/15/2016 13:14:05</publishTime>
+    </File>
+    <File Include="Attributes/AccessDeniedAuthorizeAttribute.cs">
+      <publishTime>10/15/2016 02:22:00</publishTime>
+    </File>
+    <File Include="Attributes/AntiForgeryHandleErrorAttribute.cs">
+      <publishTime>09/08/2016 19:58:51</publishTime>
+    </File>
+    <File Include="AuthModels/MVC_SYSTEM_Auth.cs">
+      <publishTime>10/14/2016 11:31:13</publishTime>
+    </File>
+    <File Include="AuthModels/tblClient.cs">
+      <publishTime>10/26/2016 12:47:04</publishTime>
+    </File>
+    <File Include="AuthModels/tblRole.cs">
+      <publishTime>10/26/2016 12:51:21</publishTime>
+    </File>
+    <File Include="AuthModels/tblUser.cs">
+      <publishTime>11/14/2016 19:12:37</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201610270932168_Initial.cs">
+      <publishTime>10/27/2016 17:32:16</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201610270932168_Initial.Designer.cs">
+      <publishTime>10/27/2016 17:32:16</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201610270932168_Initial.resx">
+      <publishTime>10/27/2016 17:32:16</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201611141100491_InitialCreate2.cs">
+      <publishTime>11/14/2016 19:00:49</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201611141100491_InitialCreate2.Designer.cs">
+      <publishTime>11/14/2016 19:00:50</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/201611141100491_InitialCreate2.resx">
+      <publishTime>11/14/2016 19:00:50</publishTime>
+    </File>
+    <File Include="AuthModelsMigrations/Configuration.cs">
+      <publishTime>10/27/2016 17:30:37</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>08/23/2016 16:43:02</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>08/23/2016 16:43:02</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>11/22/2016 12:40:55</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>11/22/2016 12:40:54</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.Core.dll">
+      <publishTime>09/06/2016 12:55:54</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>08/23/2016 11:55:45</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.Relational.dll">
+      <publishTime>09/06/2016 12:56:01</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>08/23/2016 11:55:45</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.xml">
+      <publishTime>08/23/2016 11:55:45</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.xml">
+      <publishTime>08/23/2016 11:55:45</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Antiforgery.dll">
+      <publishTime>09/06/2016 12:53:53</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Authentication.Cookies.dll">
+      <publishTime>09/06/2016 12:54:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Authentication.dll">
+      <publishTime>09/06/2016 12:54:19</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Authorization.dll">
+      <publishTime>09/06/2016 12:53:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Cors.dll">
+      <publishTime>09/06/2016 12:54:22</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Cryptography.Internal.dll">
+      <publishTime>09/06/2016 12:51:39</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Cryptography.KeyDerivation.dll">
+      <publishTime>09/06/2016 12:51:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.DataProtection.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.DataProtection.dll">
+      <publishTime>09/06/2016 12:53:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Diagnostics.Abstractions.dll">
+      <publishTime>09/06/2016 12:51:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.FileProviders.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:46</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.FileProviders.Physical.dll">
+      <publishTime>09/06/2016 12:52:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Hosting.Abstractions.dll">
+      <publishTime>09/06/2016 12:53:33</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Html.Abstractions.dll">
+      <publishTime>09/06/2016 12:53:26</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Http.Abstractions.dll">
+      <publishTime>09/06/2016 12:53:30</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Http.dll">
+      <publishTime>09/06/2016 12:54:13</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Http.Extensions.dll">
+      <publishTime>09/06/2016 12:54:15</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Http.Features.dll">
+      <publishTime>09/06/2016 12:52:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.xml">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.dll">
+      <publishTime>09/06/2016 12:54:45</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.xml">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.JsonPatch.dll">
+      <publishTime>09/06/2016 12:54:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Localization.dll">
+      <publishTime>09/06/2016 12:54:26</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Mvc.Abstractions.dll">
+      <publishTime>09/06/2016 12:54:32</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Mvc.Razor.Host.dll">
+      <publishTime>09/06/2016 12:53:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.PageExecutionInstrumentation.Interfaces.dll">
+      <publishTime>09/06/2016 12:51:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Razor.dll">
+      <publishTime>09/06/2016 12:51:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Razor.Runtime.dll">
+      <publishTime>09/06/2016 12:53:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Routing.dll">
+      <publishTime>09/06/2016 12:54:29</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.Core.dll">
+      <publishTime>09/05/2016 15:56:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.Core.xml">
+      <publishTime>09/05/2016 15:56:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.SystemWeb.dll">
+      <publishTime>09/05/2016 15:56:17</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.SystemWeb.xml">
+      <publishTime>09/05/2016 15:56:17</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.WebUtilities.dll">
+      <publishTime>09/06/2016 12:53:47</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>08/23/2016 16:43:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml">
+      <publishTime>08/23/2016 16:43:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Dnx.Compilation.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:39</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Caching.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:54</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Caching.Memory.dll">
+      <publishTime>09/06/2016 12:53:17</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:57</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.Binder.dll">
+      <publishTime>09/06/2016 12:53:02</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.dll">
+      <publishTime>09/06/2016 12:52:59</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:02</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.DependencyInjection.dll">
+      <publishTime>09/06/2016 12:52:05</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Globalization.CultureInfoCache.dll">
+      <publishTime>09/06/2016 12:52:13</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Localization.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Localization.dll">
+      <publishTime>09/06/2016 12:53:20</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.Abstractions.dll">
+      <publishTime>09/06/2016 12:52:19</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.dll">
+      <publishTime>09/06/2016 12:52:22</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.MemoryPool.dll">
+      <publishTime>09/06/2016 12:52:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.OptionsModel.dll">
+      <publishTime>09/06/2016 12:53:05</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.PlatformAbstractions.dll">
+      <publishTime>09/06/2016 12:52:31</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Primitives.dll">
+      <publishTime>09/06/2016 12:52:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.WebEncoders.Core.dll">
+      <publishTime>09/06/2016 12:53:23</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.WebEncoders.dll">
+      <publishTime>09/06/2016 12:53:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Net.Http.Headers.dll">
+      <publishTime>09/06/2016 12:54:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.dll">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.xml">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+      <publishTime>08/23/2016 11:55:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.xml">
+      <publishTime>08/23/2016 11:55:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.xml">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>08/23/2016 11:55:39</publishTime>
+    </File>
+    <File Include="bin/MVC_SYSTEM.dll">
+      <publishTime>11/22/2016 20:21:18</publishTime>
+    </File>
+    <File Include="bin/MVC_SYSTEM.dll.config">
+      <publishTime>11/02/2016 18:38:40</publishTime>
+    </File>
+    <File Include="bin/MVC_SYSTEM.pdb">
+      <publishTime>11/22/2016 20:21:18</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>08/23/2016 16:43:31</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.xml">
+      <publishTime>08/23/2016 16:43:31</publishTime>
+    </File>
+    <File Include="bin/Owin.dll">
+      <publishTime>08/23/2016 11:55:51</publishTime>
+    </File>
+    <File Include="bin/Remotion.Linq.dll">
+      <publishTime>09/06/2016 12:54:51</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.x86.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.AppContext.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.StackTrace.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.Primitives.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="bin/System.Collections.Immutable.dll">
+      <publishTime>09/06/2016 12:54:04</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
+      <publishTime>09/06/2016 12:55:57</publishTime>
+    </File>
+    <File Include="bin/System.Interactive.Async.dll">
+      <publishTime>09/06/2016 12:51:34</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Dynamic.dll">
+      <publishTime>09/19/2016 10:20:18</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>09/05/2016 14:13:09</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.xml">
+      <publishTime>09/05/2016 14:13:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>09/05/2016 14:13:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.SelfHost.dll">
+      <publishTime>09/06/2016 13:53:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.SelfHost.xml">
+      <publishTime>09/06/2016 13:53:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.xml">
+      <publishTime>09/05/2016 14:13:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>08/23/2016 11:55:39</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.xml">
+      <publishTime>08/23/2016 11:55:39</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>08/23/2016 11:55:37</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.xml">
+      <publishTime>08/23/2016 11:55:38</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>08/23/2016 16:43:37</publishTime>
+    </File>
+    <File Include="Class/AccCardProcess.cs">
+      <publishTime>11/17/2016 14:10:46</publishTime>
+    </File>
+    <File Include="Class/GetConfig.cs">
+      <publishTime>10/14/2016 12:06:56</publishTime>
+    </File>
+    <File Include="Class/GetIdentity.cs">
+      <publishTime>11/04/2016 11:33:44</publishTime>
+    </File>
+    <File Include="Class/GetPolicyTerm.cs">
+      <publishTime>11/21/2016 13:38:42</publishTime>
+    </File>
+    <File Include="Class/GetRunningNo.cs">
+      <publishTime>11/17/2016 17:20:20</publishTime>
+    </File>
+    <File Include="Class/SaleFileProcess.cs">
+      <publishTime>11/18/2016 18:40:39</publishTime>
+    </File>
+    <File Include="ConfigModels/MVC_SYSTEM_Config.cs">
+      <publishTime>10/14/2016 12:06:56</publishTime>
+    </File>
+    <File Include="ConfigModels/tblSystemConfig.cs">
+      <publishTime>10/14/2016 12:54:19</publishTime>
+    </File>
+    <File Include="ConfigModelsMigrations/201610140407561_InitialCreate.cs">
+      <publishTime>10/14/2016 12:07:56</publishTime>
+    </File>
+    <File Include="ConfigModelsMigrations/201610140407561_InitialCreate.Designer.cs">
+      <publishTime>10/14/2016 12:07:56</publishTime>
+    </File>
+    <File Include="ConfigModelsMigrations/201610140407561_InitialCreate.resx">
+      <publishTime>10/14/2016 12:07:56</publishTime>
+    </File>
+    <File Include="ConfigModelsMigrations/Configuration.cs">
+      <publishTime>10/27/2016 16:33:53</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.css">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.css.map">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css.map">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css.map">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css.map">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Content/PagedList.css">
+      <publishTime>09/09/2016 19:12:57</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="Controllers/AdminController.cs">
+      <publishTime>11/01/2016 14:18:38</publishTime>
+    </File>
+    <File Include="Controllers/AgentManagementController.cs">
+      <publishTime>10/14/2016 10:10:40</publishTime>
+    </File>
+    <File Include="Controllers/AlertController.cs">
+      <publishTime>10/14/2016 17:45:27</publishTime>
+    </File>
+    <File Include="Controllers/ContactController.cs">
+      <publishTime>11/21/2016 14:49:04</publishTime>
+    </File>
+    <File Include="Controllers/GenesysContactController.cs">
+      <publishTime>11/21/2016 14:34:44</publishTime>
+    </File>
+    <File Include="Controllers/LoginController.cs">
+      <publishTime>11/14/2016 19:21:06</publishTime>
+    </File>
+    <File Include="Controllers/MainController.cs">
+      <publishTime>11/01/2016 14:18:10</publishTime>
+    </File>
+    <File Include="Controllers/PublicPostController.cs">
+      <publishTime>10/25/2016 16:06:58</publishTime>
+    </File>
+    <File Include="Controllers/PublicPostViewController.cs">
+      <publishTime>10/26/2016 14:11:45</publishTime>
+    </File>
+    <File Include="Controllers/ReffController.cs">
+      <publishTime>09/13/2016 12:48:14</publishTime>
+    </File>
+    <File Include="Controllers/ReportController.cs">
+      <publishTime>11/18/2016 19:01:51</publishTime>
+    </File>
+    <File Include="Controllers/SystemConfigsController.cs">
+      <publishTime>10/19/2016 13:44:11</publishTime>
+    </File>
+    <File Include="Controllers/tblCustomerContactsController.cs">
+      <publishTime>11/15/2016 18:02:43</publishTime>
+    </File>
+    <File Include="Controllers/UserController.cs">
+      <publishTime>11/18/2016 20:22:14</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170431529_InitialCreate.cs">
+      <publishTime>11/17/2016 12:31:53</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170431529_InitialCreate.Designer.cs">
+      <publishTime>11/17/2016 12:31:53</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170431529_InitialCreate.resx">
+      <publishTime>11/17/2016 12:31:53</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170547406_InitialCreate2.cs">
+      <publishTime>11/17/2016 13:47:40</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170547406_InitialCreate2.Designer.cs">
+      <publishTime>11/17/2016 13:47:41</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/201611170547406_InitialCreate2.resx">
+      <publishTime>11/17/2016 13:47:40</publishTime>
+    </File>
+    <File Include="CustomerAccCardModelsMigrations/Configuration.cs">
+      <publishTime>11/17/2016 12:31:03</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201610280959347_InitialCreate.cs">
+      <publishTime>11/15/2016 18:02:43</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201610280959347_InitialCreate.Designer.cs">
+      <publishTime>10/28/2016 17:59:35</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201610280959347_InitialCreate.resx">
+      <publishTime>10/28/2016 17:59:35</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611020932386_InitialCreate2.cs">
+      <publishTime>11/02/2016 17:32:38</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611020932386_InitialCreate2.Designer.cs">
+      <publishTime>11/02/2016 17:32:40</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611020932386_InitialCreate2.resx">
+      <publishTime>11/02/2016 17:32:40</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611030519347_InitialCreate3.cs">
+      <publishTime>11/03/2016 13:19:35</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611030519347_InitialCreate3.Designer.cs">
+      <publishTime>11/03/2016 13:19:37</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611030519347_InitialCreate3.resx">
+      <publishTime>11/03/2016 13:19:36</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611031043561_InitialCreate4.cs">
+      <publishTime>11/03/2016 18:43:56</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611031043561_InitialCreate4.Designer.cs">
+      <publishTime>11/03/2016 18:43:56</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611031043561_InitialCreate4.resx">
+      <publishTime>11/03/2016 18:43:56</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611040341180_InitialCreate5.cs">
+      <publishTime>11/04/2016 11:41:18</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611040341180_InitialCreate5.Designer.cs">
+      <publishTime>11/04/2016 11:41:20</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611040341180_InitialCreate5.resx">
+      <publishTime>11/04/2016 11:41:20</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611090318388_InitialCreate6.cs">
+      <publishTime>11/09/2016 11:18:39</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611090318388_InitialCreate6.Designer.cs">
+      <publishTime>11/09/2016 11:18:42</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611090318388_InitialCreate6.resx">
+      <publishTime>11/09/2016 11:18:41</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100239029_InitialCreate7.cs">
+      <publishTime>11/10/2016 10:40:43</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100239029_InitialCreate7.Designer.cs">
+      <publishTime>11/10/2016 10:40:43</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100239029_InitialCreate7.resx">
+      <publishTime>11/10/2016 10:40:43</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100830036_InitialCreate8.cs">
+      <publishTime>11/10/2016 16:30:03</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100830036_InitialCreate8.Designer.cs">
+      <publishTime>11/10/2016 16:30:03</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100830036_InitialCreate8.resx">
+      <publishTime>11/10/2016 16:30:03</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100852050_InitialCreate9.cs">
+      <publishTime>11/10/2016 16:52:04</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100852050_InitialCreate9.Designer.cs">
+      <publishTime>11/10/2016 16:52:05</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100852050_InitialCreate9.resx">
+      <publishTime>11/10/2016 16:52:05</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100902489_InitialCreate10.cs">
+      <publishTime>11/10/2016 17:02:48</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100902489_InitialCreate10.Designer.cs">
+      <publishTime>11/10/2016 17:02:49</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100902489_InitialCreate10.resx">
+      <publishTime>11/10/2016 17:02:48</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100904598_InitialCreate11.cs">
+      <publishTime>11/10/2016 17:04:59</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100904598_InitialCreate11.Designer.cs">
+      <publishTime>11/10/2016 17:04:59</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100904598_InitialCreate11.resx">
+      <publishTime>11/10/2016 17:04:59</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100923477_InitialCreate12.cs">
+      <publishTime>11/10/2016 17:23:47</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100923477_InitialCreate12.Designer.cs">
+      <publishTime>11/10/2016 17:23:47</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611100923477_InitialCreate12.resx">
+      <publishTime>11/10/2016 17:23:47</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110858534_InitialCreate13.cs">
+      <publishTime>11/11/2016 16:58:53</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110858534_InitialCreate13.Designer.cs">
+      <publishTime>11/11/2016 16:58:55</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110858534_InitialCreate13.resx">
+      <publishTime>11/11/2016 16:58:55</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110927152_InitialCreate14.cs">
+      <publishTime>11/11/2016 17:27:15</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110927152_InitialCreate14.Designer.cs">
+      <publishTime>11/11/2016 17:27:15</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611110927152_InitialCreate14.resx">
+      <publishTime>11/11/2016 17:27:15</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611111731367_InitialCreate15.cs">
+      <publishTime>11/12/2016 01:31:36</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611111731367_InitialCreate15.Designer.cs">
+      <publishTime>11/12/2016 01:31:38</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611111731367_InitialCreate15.resx">
+      <publishTime>11/12/2016 01:31:38</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611151004264_InitialCreate16.cs">
+      <publishTime>11/15/2016 18:04:26</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611151004264_InitialCreate16.Designer.cs">
+      <publishTime>11/15/2016 18:04:28</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611151004264_InitialCreate16.resx">
+      <publishTime>11/15/2016 18:04:28</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611210607550_InitialCreate17.cs">
+      <publishTime>11/21/2016 14:07:54</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611210607550_InitialCreate17.Designer.cs">
+      <publishTime>11/21/2016 14:07:55</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/201611210607550_InitialCreate17.resx">
+      <publishTime>11/21/2016 14:07:55</publishTime>
+    </File>
+    <File Include="CustomerContactModelsMigrations/Configuration.cs">
+      <publishTime>10/28/2016 17:58:21</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100933109_InitialCreate.cs">
+      <publishTime>11/10/2016 17:33:10</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100933109_InitialCreate.Designer.cs">
+      <publishTime>11/10/2016 17:33:11</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100933109_InitialCreate.resx">
+      <publishTime>11/10/2016 17:33:10</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100955404_InitialCreate2.cs">
+      <publishTime>11/10/2016 17:55:40</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100955404_InitialCreate2.Designer.cs">
+      <publishTime>11/10/2016 17:55:40</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611100955404_InitialCreate2.resx">
+      <publishTime>11/10/2016 17:55:40</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611110329305_InitialCreate3.cs">
+      <publishTime>11/11/2016 11:29:31</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611110329305_InitialCreate3.Designer.cs">
+      <publishTime>11/11/2016 11:29:31</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611110329305_InitialCreate3.resx">
+      <publishTime>11/11/2016 11:29:31</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111732454_InitialCreate4.cs">
+      <publishTime>11/12/2016 01:32:45</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111732454_InitialCreate4.Designer.cs">
+      <publishTime>11/12/2016 01:32:45</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111732454_InitialCreate4.resx">
+      <publishTime>11/12/2016 01:32:45</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111926018_InitialCreate5.cs">
+      <publishTime>11/12/2016 03:26:02</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111926018_InitialCreate5.Designer.cs">
+      <publishTime>11/12/2016 03:26:03</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611111926018_InitialCreate5.resx">
+      <publishTime>11/12/2016 03:26:03</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611112007460_InitialCreate6.cs">
+      <publishTime>11/12/2016 04:07:45</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611112007460_InitialCreate6.Designer.cs">
+      <publishTime>11/12/2016 04:07:46</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611112007460_InitialCreate6.resx">
+      <publishTime>11/12/2016 04:07:46</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611170156140_InitialCreate7.cs">
+      <publishTime>11/17/2016 09:56:14</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611170156140_InitialCreate7.Designer.cs">
+      <publishTime>11/17/2016 09:56:17</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611170156140_InitialCreate7.resx">
+      <publishTime>11/17/2016 09:56:17</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210418007_InitialCreate8.cs">
+      <publishTime>11/21/2016 12:18:01</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210418007_InitialCreate8.Designer.cs">
+      <publishTime>11/21/2016 12:18:01</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210418007_InitialCreate8.resx">
+      <publishTime>11/21/2016 12:18:01</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210545079_InitialCreate9.cs">
+      <publishTime>11/21/2016 13:45:07</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210545079_InitialCreate9.Designer.cs">
+      <publishTime>11/21/2016 13:45:08</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210545079_InitialCreate9.resx">
+      <publishTime>11/21/2016 13:45:08</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210605241_InitialCreate10.cs">
+      <publishTime>11/21/2016 14:05:24</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210605241_InitialCreate10.Designer.cs">
+      <publishTime>11/21/2016 14:05:24</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/201611210605241_InitialCreate10.resx">
+      <publishTime>11/21/2016 14:05:24</publishTime>
+    </File>
+    <File Include="CustomerPolicyModelsMigrations/Configuration.cs">
+      <publishTime>11/10/2016 17:32:55</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140502090_InitialCreate.cs">
+      <publishTime>11/14/2016 13:02:09</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140502090_InitialCreate.Designer.cs">
+      <publishTime>11/14/2016 13:02:09</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140502090_InitialCreate.resx">
+      <publishTime>11/14/2016 13:02:09</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140615279_InitialCreate2.cs">
+      <publishTime>11/14/2016 14:15:27</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140615279_InitialCreate2.Designer.cs">
+      <publishTime>11/14/2016 14:15:28</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140615279_InitialCreate2.resx">
+      <publishTime>11/14/2016 14:15:28</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140804551_InitialCreate3.cs">
+      <publishTime>11/14/2016 16:04:55</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140804551_InitialCreate3.Designer.cs">
+      <publishTime>11/14/2016 16:04:55</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140804551_InitialCreate3.resx">
+      <publishTime>11/14/2016 16:04:55</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140814421_InitialCreate4.cs">
+      <publishTime>11/14/2016 16:14:42</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140814421_InitialCreate4.Designer.cs">
+      <publishTime>11/14/2016 16:14:42</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/201611140814421_InitialCreate4.resx">
+      <publishTime>11/14/2016 16:14:42</publishTime>
+    </File>
+    <File Include="CustomerQuestionModelsMigrations/Configuration.cs">
+      <publishTime>11/14/2016 13:01:17</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-09-11-2016.txt">
+      <publishTime>11/09/2016 18:04:02</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-11-11-2016.txt">
+      <publishTime>11/11/2016 21:22:56</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-12-11-2016.txt">
+      <publishTime>11/12/2016 05:19:31</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-13-11-2016.txt">
+      <publishTime>11/13/2016 12:11:33</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-14-11-2016.txt">
+      <publishTime>11/14/2016 22:44:20</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-15-11-2016.txt">
+      <publishTime>11/15/2016 21:50:40</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-18-11-2016.txt">
+      <publishTime>11/18/2016 20:19:09</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-25-10-2016.txt">
+      <publishTime>10/25/2016 15:55:55</publishTime>
+    </File>
+    <File Include="ErrorLog/ErrorLog-27-10-2016.txt">
+      <publishTime>10/27/2016 16:29:47</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="Global.asax.cs">
+      <publishTime>10/13/2016 14:15:40</publishTime>
+    </File>
+    <File Include="Hubs/ChatHub.cs">
+      <publishTime>09/08/2016 19:56:19</publishTime>
+    </File>
+    <File Include="log/errorlog.cs">
+      <publishTime>10/25/2016 15:55:10</publishTime>
+    </File>
+    <File Include="LoginModels/MVC_SYSTEM_Login_Models.cs">
+      <publishTime>11/14/2016 19:21:06</publishTime>
+    </File>
+    <File Include="LoginModels/tblUsers.cs">
+      <publishTime>11/14/2016 19:21:05</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_CustomerAccCard_Model.cs">
+      <publishTime>11/17/2016 12:26:15</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_CustomerContact_Model.cs">
+      <publishTime>11/21/2016 14:07:06</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_CustomerPolicy_Model.cs">
+      <publishTime>11/21/2016 14:05:10</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_CustomerQuestion_Model.cs">
+      <publishTime>11/14/2016 12:58:39</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_Model.cs">
+      <publishTime>10/18/2016 16:37:17</publishTime>
+    </File>
+    <File Include="Models/MVC_SYSTEM_ReportList_Model.cs">
+      <publishTime>11/17/2016 19:33:33</publishTime>
+    </File>
+    <File Include="Models/tblAccCardCustomer.cs">
+      <publishTime>11/17/2016 13:47:00</publishTime>
+    </File>
+    <File Include="Models/tblBank.cs">
+      <publishTime>11/10/2016 13:45:03</publishTime>
+    </File>
+    <File Include="Models/tblCustomerContact.cs">
+      <publishTime>11/21/2016 14:06:50</publishTime>
+    </File>
+    <File Include="Models/tblCustomerPolicy.cs">
+      <publishTime>11/21/2016 14:02:56</publishTime>
+    </File>
+    <File Include="Models/tblHistoryAction.cs">
+      <publishTime>10/28/2016 17:54:58</publishTime>
+    </File>
+    <File Include="Models/tblMainBatchLead.cs">
+      <publishTime>10/28/2016 17:54:58</publishTime>
+    </File>
+    <File Include="Models/tblOccupation.cs">
+      <publishTime>10/28/2016 17:54:58</publishTime>
+    </File>
+    <File Include="Models/tblOptionConfig.cs">
+      <publishTime>10/28/2016 17:54:58</publishTime>
+    </File>
+    <File Include="Models/tblPlan.cs">
+      <publishTime>11/11/2016 11:29:03</publishTime>
+    </File>
+    <File Include="Models/tblPlanSumAssured.cs">
+      <publishTime>11/21/2016 12:16:04</publishTime>
+    </File>
+    <File Include="Models/tblPostSlotDesc.cs">
+      <publishTime>10/20/2016 12:28:44</publishTime>
+    </File>
+    <File Include="Models/tblPublicPost.cs">
+      <publishTime>10/26/2016 12:40:15</publishTime>
+    </File>
+    <File Include="Models/tblReportList.cs">
+      <publishTime>11/17/2016 20:15:16</publishTime>
+    </File>
+    <File Include="Models/tblSubBatchLead.cs">
+      <publishTime>10/28/2016 17:54:58</publishTime>
+    </File>
+    <File Include="Models/tblSystemConfig.cs">
+      <publishTime>11/10/2016 13:45:03</publishTime>
+    </File>
+    <File Include="Models/tblUWQuestion.cs">
+      <publishTime>11/14/2016 14:17:45</publishTime>
+    </File>
+    <File Include="Models/tblUWQuestionRemark.cs">
+      <publishTime>11/14/2016 16:14:28</publishTime>
+    </File>
+    <File Include="ModelsMigrations/201610270945415_Initial.cs">
+      <publishTime>10/27/2016 17:45:41</publishTime>
+    </File>
+    <File Include="ModelsMigrations/201610270945415_Initial.Designer.cs">
+      <publishTime>10/27/2016 17:45:41</publishTime>
+    </File>
+    <File Include="ModelsMigrations/201610270945415_Initial.resx">
+      <publishTime>10/27/2016 17:45:41</publishTime>
+    </File>
+    <File Include="ModelsMigrations/Configuration.cs">
+      <publishTime>10/27/2016 17:43:43</publishTime>
+    </File>
+    <File Include="MVC_SYSTEM.csproj">
+      <publishTime>11/22/2016 20:20:21</publishTime>
+    </File>
+    <File Include="MVC_SYSTEM.csproj.user">
+      <publishTime>11/22/2016 20:20:21</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>11/02/2016 18:38:38</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>11/22/2016 12:40:38</publishTime>
+    </File>
+    <File Include="Project_Readme.html">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="Properties/AssemblyInfo.cs">
+      <publishTime>09/08/2016 19:50:29</publishTime>
+    </File>
+    <File Include="Properties/PublishProfiles/MVC_SYSTEM.pubxml">
+      <publishTime>11/22/2016 14:31:46</publishTime>
+    </File>
+    <File Include="Properties/PublishProfiles/MVC_SYSTEM.pubxml.user">
+      <publishTime>11/22/2016 15:07:29</publishTime>
+    </File>
+    <File Include="ReportListModelsMigrations/201611171135402_InitialCreate.cs">
+      <publishTime>11/17/2016 19:35:40</publishTime>
+    </File>
+    <File Include="ReportListModelsMigrations/201611171135402_InitialCreate.Designer.cs">
+      <publishTime>11/17/2016 19:35:40</publishTime>
+    </File>
+    <File Include="ReportListModelsMigrations/201611171135402_InitialCreate.resx">
+      <publishTime>11/17/2016 19:35:40</publishTime>
+    </File>
+    <File Include="ReportListModelsMigrations/Configuration.cs">
+      <publishTime>11/17/2016 19:35:17</publishTime>
+    </File>
+    <File Include="ReportModels/MVC_SYSTEM_SaleFileReport_Model.cs">
+      <publishTime>11/21/2016 15:07:34</publishTime>
+    </File>
+    <File Include="ReportModels/vwSaleFileReport.cs">
+      <publishTime>11/21/2016 15:07:27</publishTime>
+    </File>
+    <File Include="roslyn/csc.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/csc.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/csc.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/csi.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/csi.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CodeAnalysis.Scripting.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.DiaSymReader.Native.amd64.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.DiaSymReader.Native.x86.dll">
+      <publishTime>08/23/2016 16:43:21</publishTime>
+    </File>
+    <File Include="roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.AppContext.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.Collections.Immutable.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.Diagnostics.StackTrace.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.IO.FileSystem.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.IO.FileSystem.Primitives.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/System.Reflection.Metadata.dll">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/vbc.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/vbc.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/vbc.rsp">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/VBCSCompiler.exe">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="roslyn/VBCSCompiler.exe.config">
+      <publishTime>08/23/2016 16:43:22</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>09/06/2016 12:56:13</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.intellisense.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.min.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.min.map">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.slim.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.slim.min.js">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.1.0.slim.min.map">
+      <publishTime>08/23/2016 16:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery.signalR-2.2.1.js">
+      <publishTime>09/05/2016 15:56:15</publishTime>
+    </File>
+    <File Include="Scripts/jquery.signalR-2.2.1.min.js">
+      <publishTime>09/05/2016 15:56:15</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate-vsdoc.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>08/23/2016 16:43:10</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>08/23/2016 11:55:41</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>08/23/2016 11:55:41</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.8.3.js">
+      <publishTime>08/23/2016 16:43:27</publishTime>
+    </File>
+    <File Include="Scripts/respond.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Scripts/respond.matchmedia.addListener.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Scripts/respond.matchmedia.addListener.min.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Scripts/respond.min.js">
+      <publishTime>08/23/2016 16:43:35</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>09/06/2016 12:42:57</publishTime>
+    </File>
+    <File Include="Security/CustomRoleProvider.cs">
+      <publishTime>09/08/2016 19:56:48</publishTime>
+    </File>
+    <File Include="Security/EncryptDecrypt.cs">
+      <publishTime>09/08/2016 19:56:59</publishTime>
+    </File>
+    <File Include="Security/MyIdentity.cs">
+      <publishTime>09/08/2016 19:57:06</publishTime>
+    </File>
+    <File Include="Security/MyPrincipal.cs">
+      <publishTime>09/08/2016 19:57:13</publishTime>
+    </File>
+    <File Include="Security/UserIdentity.cs">
+      <publishTime>09/08/2016 19:57:21</publishTime>
+    </File>
+    <File Include="Startup.cs">
+      <publishTime>09/06/2016 13:46:34</publishTime>
+    </File>
+    <File Include="SystemModels/MVC_SYSTEM_System.cs">
+      <publishTime>09/19/2016 10:26:49</publishTime>
+    </File>
+    <File Include="SystemModels/tblAgentDetail.cs">
+      <publishTime>09/13/2016 16:17:33</publishTime>
+    </File>
+    <File Include="SystemModels/tblAgentStatu.cs">
+      <publishTime>09/14/2016 16:16:00</publishTime>
+    </File>
+    <File Include="SystemModels/tblDesignation.cs">
+      <publishTime>09/14/2016 16:16:18</publishTime>
+    </File>
+    <File Include="ViewingModels/AgentList.cs">
+      <publishTime>09/15/2016 11:40:17</publishTime>
+    </File>
+    <File Include="ViewingModels/ContactList.cs">
+      <publishTime>11/04/2016 11:45:01</publishTime>
+    </File>
+    <File Include="ViewingModels/MVC_SYSTEM_Viewing.cs">
+      <publishTime>11/01/2016 15:24:39</publishTime>
+    </File>
+    <File Include="ViewingModels/PagedList.cs">
+      <publishTime>09/10/2016 00:44:19</publishTime>
+    </File>
+    <File Include="ViewingModels/PublicPostList.cs">
+      <publishTime>10/21/2016 16:55:00</publishTime>
+    </File>
+    <File Include="ViewingModels/SystemConfigList.cs">
+      <publishTime>10/14/2016 12:54:20</publishTime>
+    </File>
+    <File Include="ViewingModels/tblPostSlotDesc.cs">
+      <publishTime>10/25/2016 17:30:57</publishTime>
+    </File>
+    <File Include="ViewingModels/UserList.cs">
+      <publishTime>10/17/2016 16:26:51</publishTime>
+    </File>
+    <File Include="Views/Admin/Index.cshtml">
+      <publishTime>10/18/2016 11:25:49</publishTime>
+    </File>
+    <File Include="Views/AgentManagement/Create.cshtml">
+      <publishTime>09/15/2016 13:05:24</publishTime>
+    </File>
+    <File Include="Views/AgentManagement/Details.cshtml">
+      <publishTime>09/14/2016 12:59:59</publishTime>
+    </File>
+    <File Include="Views/AgentManagement/Edit.cshtml">
+      <publishTime>10/05/2016 17:55:02</publishTime>
+    </File>
+    <File Include="Views/AgentManagement/Index.cshtml">
+      <publishTime>10/17/2016 16:04:54</publishTime>
+    </File>
+    <File Include="Views/Alert/AlreadySignIn.cshtml">
+      <publishTime>05/18/2016 20:19:21</publishTime>
+    </File>
+    <File Include="Views/Alert/Denied.cshtml">
+      <publishTime>08/24/2016 16:50:07</publishTime>
+    </File>
+    <File Include="Views/Alert/error400.cshtml">
+      <publishTime>10/14/2016 18:07:55</publishTime>
+    </File>
+    <File Include="Views/Alert/error404.cshtml">
+      <publishTime>08/24/2016 16:50:43</publishTime>
+    </File>
+    <File Include="Views/Contact/Create.cshtml">
+      <publishTime>11/15/2016 18:02:44</publishTime>
+    </File>
+    <File Include="Views/Contact/Details.cshtml">
+      <publishTime>11/21/2016 14:52:36</publishTime>
+    </File>
+    <File Include="Views/Contact/EditCustomer.cshtml">
+      <publishTime>11/21/2016 16:13:51</publishTime>
+    </File>
+    <File Include="Views/Contact/EditPolicy.cshtml">
+      <publishTime>11/21/2016 13:54:25</publishTime>
+    </File>
+    <File Include="Views/Contact/EditQuestion.cshtml">
+      <publishTime>11/18/2016 20:38:25</publishTime>
+    </File>
+    <File Include="Views/Contact/Index.cshtml">
+      <publishTime>11/15/2016 13:01:59</publishTime>
+    </File>
+    <File Include="Views/Contact/NewCreate.cshtml">
+      <publishTime>11/21/2016 15:47:31</publishTime>
+    </File>
+    <File Include="Views/Contact/NewPolicy.cshtml">
+      <publishTime>11/21/2016 13:53:22</publishTime>
+    </File>
+    <File Include="Views/Contact/NewQuestion.cshtml">
+      <publishTime>11/18/2016 20:38:55</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/Create.cshtml">
+      <publishTime>11/21/2016 15:46:50</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/Delete.cshtml">
+      <publishTime>11/15/2016 18:02:45</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/Details.cshtml">
+      <publishTime>11/15/2016 18:02:45</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/EditCustomer.cshtml">
+      <publishTime>11/21/2016 16:11:00</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/EditPolicy.cshtml">
+      <publishTime>11/21/2016 13:50:28</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/EditQuestion.cshtml">
+      <publishTime>11/17/2016 12:01:40</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/Index.cshtml">
+      <publishTime>11/15/2016 18:02:46</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/NewPolicy.cshtml">
+      <publishTime>11/21/2016 13:28:13</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/NewQuestion.cshtml">
+      <publishTime>11/15/2016 18:02:46</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/NoData.cshtml">
+      <publishTime>11/11/2016 10:27:32</publishTime>
+    </File>
+    <File Include="Views/GenesysContact/Question.cshtml">
+      <publishTime>11/14/2016 17:00:26</publishTime>
+    </File>
+    <File Include="Views/Login/Index.cshtml">
+      <publishTime>11/14/2016 19:21:06</publishTime>
+    </File>
+    <File Include="Views/Main/Index.cshtml">
+      <publishTime>10/18/2016 11:23:26</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Create.cshtml">
+      <publishTime>10/26/2016 13:15:46</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Delete.cshtml">
+      <publishTime>10/25/2016 15:38:00</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Details.cshtml">
+      <publishTime>10/18/2016 16:38:27</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Edit.cshtml">
+      <publishTime>10/18/2016 16:38:28</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Index.cshtml">
+      <publishTime>10/26/2016 12:24:06</publishTime>
+    </File>
+    <File Include="Views/PublicPost/Publish.cshtml">
+      <publishTime>10/25/2016 15:37:48</publishTime>
+    </File>
+    <File Include="Views/PublicPostView/COC.cshtml">
+      <publishTime>10/26/2016 14:18:04</publishTime>
+    </File>
+    <File Include="Views/PublicPostView/COCPreview.cshtml">
+      <publishTime>10/26/2016 14:17:41</publishTime>
+    </File>
+    <File Include="Views/PublicPostView/CompanyPolicy.cshtml">
+      <publishTime>10/25/2016 17:12:01</publishTime>
+    </File>
+    <File Include="Views/PublicPostView/CompanyPolicyPreview.cshtml">
+      <publishTime>10/25/2016 17:20:51</publishTime>
+    </File>
+    <File Include="Views/PublicPostView/Index.cshtml">
+      <publishTime>10/25/2016 16:30:11</publishTime>
+    </File>
+    <File Include="Views/Reff/Create.cshtml">
+      <publishTime>09/13/2016 12:48:16</publishTime>
+    </File>
+    <File Include="Views/Reff/Delete.cshtml">
+      <publishTime>09/13/2016 12:48:17</publishTime>
+    </File>
+    <File Include="Views/Reff/Details.cshtml">
+      <publishTime>09/13/2016 12:48:18</publishTime>
+    </File>
+    <File Include="Views/Reff/Edit.cshtml">
+      <publishTime>09/13/2016 12:48:19</publishTime>
+    </File>
+    <File Include="Views/Reff/Index.cshtml">
+      <publishTime>09/13/2016 12:48:20</publishTime>
+    </File>
+    <File Include="Views/Report/Index.cshtml">
+      <publishTime>11/18/2016 20:48:01</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>08/23/2016 11:55:44</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutAdmin.cshtml">
+      <publishTime>10/26/2016 12:06:44</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutGenesys.cshtml">
+      <publishTime>11/10/2016 21:19:48</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutLogin.cshtml">
+      <publishTime>10/26/2016 12:06:18</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutMain.cshtml">
+      <publishTime>11/02/2016 18:45:21</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginPartial.cshtml">
+      <publishTime>08/23/2016 11:55:44</publishTime>
+    </File>
+    <File Include="Views/Shared/_PartialFooter.cshtml">
+      <publishTime>09/09/2016 15:01:38</publishTime>
+    </File>
+    <File Include="Views/Shared/_PartialGenesysHeader.cshtml">
+      <publishTime>11/10/2016 22:06:46</publishTime>
+    </File>
+    <File Include="Views/Shared/_PartialHeader.cshtml">
+      <publishTime>11/04/2016 11:33:56</publishTime>
+    </File>
+    <File Include="Views/Shared/_PartialLeftNav.cshtml">
+      <publishTime>11/18/2016 19:16:32</publishTime>
+    </File>
+    <File Include="Views/Shared/_PartialLeftNavAdmin.cshtml">
+      <publishTime>11/02/2016 11:57:04</publishTime>
+    </File>
+    <File Include="Views/SystemConfigs/Create.cshtml">
+      <publishTime>10/13/2016 17:43:12</publishTime>
+    </File>
+    <File Include="Views/SystemConfigs/Delete.cshtml">
+      <publishTime>10/13/2016 17:43:13</publishTime>
+    </File>
+    <File Include="Views/SystemConfigs/Details.cshtml">
+      <publishTime>10/14/2016 17:42:42</publishTime>
+    </File>
+    <File Include="Views/SystemConfigs/Edit.cshtml">
+      <publishTime>11/01/2016 17:40:11</publishTime>
+    </File>
+    <File Include="Views/SystemConfigs/Index.cshtml">
+      <publishTime>11/02/2016 12:02:30</publishTime>
+    </File>
+    <File Include="Views/tblCustomerContacts/Create.cshtml">
+      <publishTime>11/15/2016 18:02:47</publishTime>
+    </File>
+    <File Include="Views/tblCustomerContacts/Delete.cshtml">
+      <publishTime>11/15/2016 18:02:47</publishTime>
+    </File>
+    <File Include="Views/tblCustomerContacts/Details.cshtml">
+      <publishTime>11/15/2016 18:02:47</publishTime>
+    </File>
+    <File Include="Views/tblCustomerContacts/Edit.cshtml">
+      <publishTime>11/15/2016 18:02:47</publishTime>
+    </File>
+    <File Include="Views/tblCustomerContacts/Index.cshtml">
+      <publishTime>11/15/2016 18:02:47</publishTime>
+    </File>
+    <File Include="Views/User/Create.cshtml">
+      <publishTime>11/14/2016 19:02:41</publishTime>
+    </File>
+    <File Include="Views/User/Delete.cshtml">
+      <publishTime>11/01/2016 17:38:49</publishTime>
+    </File>
+    <File Include="Views/User/Details.cshtml">
+      <publishTime>10/17/2016 15:56:00</publishTime>
+    </File>
+    <File Include="Views/User/Edit.cshtml">
+      <publishTime>11/14/2016 19:04:19</publishTime>
+    </File>
+    <File Include="Views/User/Index.cshtml">
+      <publishTime>10/26/2016 11:45:08</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>09/19/2016 16:55:50</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>11/22/2016 20:21:31</publishTime>
+    </File>
+    <File Include="Web.Debug.config">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+    <File Include="Web.Release.config">
+      <publishTime>08/23/2016 11:55:28</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,119 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_ProduktivitiViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.titlteRegisterProductivity</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEstateWorkerProductivityRegistrationInfo1</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrNoPkj:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "fld_nopkj form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrName:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Nopkj, null, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetPkjNameFromNoPkj(Model.fld_Nopkj, Model.fld_NegaraID, Model.fld_SyarikatID, Model.fld_WilayahID, Model.fld_LadangID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_Year, null, new { @class = "fld_Year form-control", @readonly = "true" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblMonth:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Month, null, new { @class = "fld_Month form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrCategory:</label>
+                            <div class="col-sm-3">
+                                @Html.DropDownListFor(model => model.fld_JenisPelan, new SelectList(ViewBag.jenisPelanList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_JenisPelan, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrTarget:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Targetharian, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Targetharian, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrUnit:</label>
+                            <div class="col-sm-3">
+                                @Html.DropDownListFor(model => model.fld_Unit, new SelectList(ViewBag.UnitList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_Unit, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrTargetWorkingDay:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_HadirKerja, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer" style="margin-top: -20px;">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave />
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(function() {
+        $('#fld_JenisPelan').on('change',
+            function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("checkCategoryType", "Maintenance")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ jenisPelan: $('#fld_JenisPelan').val() }),
+                    success: function(result) {
+                        $('#fld_Unit').prop("disabled", false);
+                        $('#fld_Unit').empty();
+                        for (var i = 0; i < result.UnitList.length; i++) {
+                            $('#fld_Unit').append("<option value=" +
+                                result.UnitList[i].Value +
+                                ">" +
+                                result.UnitList[i].Text +
+                                "</option>");
+                        }
+
+                        if ($('#fld_JenisPelan').val() === '' || $('#fld_JenisPelan').val() === null) {
+                            $('#fld_Unit').prop("disabled", true);
+                        }
+                    }
+                });
+            });
+    });
+</script>
+
+

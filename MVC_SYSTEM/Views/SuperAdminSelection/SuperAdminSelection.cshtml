@@ -1,0 +1,178 @@
+﻿@using MVC_SYSTEM.Class
+@{ 
+    GetIdentity getidentity = new GetIdentity();
+}
+<!-- Styles for Wait Messages -->
+<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />
+
+<div class="modal-header">
+    <h3 class="modal-title">@GlobalResSuperAdminSelection.Selection</h3>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    <div class="submit-progress hidden">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>@GlobalResSuperAdminSelection.WaitMsg</label>
+    </div>
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <span id="progress" class="text-center" style="display: none;">
+                <img src="~/Asset/Images/wait.gif" alt="wait" />
+            </span>
+            @if (getidentity.SuperPowerAdmin(User.Identity.Name))
+            {
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.Label(GlobalResSuperAdminSelection.GroupCompany)
+                    @Html.DropDownList("KumpulanSyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            }
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.Label(GlobalResSuperAdminSelection.Country)
+                    @Html.DropDownList("NegaraList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.Label(GlobalResSuperAdminSelection.Company)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value="@GlobalResSuperAdminSelection.Go" onclick="return DisplayProgressMessage(this);" />
+    </div>
+}
+@if (getidentity.SuperPowerAdmin(User.Identity.Name))
+{
+<script>
+    $(document).ready(function () {
+        $("#KumpulanSyarikatList").change(function () {
+            var KumpulanSyarikatList = {};
+            KumpulanSyarikatList.url = "@Url.Action("GetNegara", "SuperAdminSelection", null, "http")";
+            KumpulanSyarikatList.type = "POST";
+            KumpulanSyarikatList.data = JSON.stringify({ KumpulanSyarikatID: $("#KumpulanSyarikatList").val() });
+            KumpulanSyarikatList.datatype = "json";
+            KumpulanSyarikatList.contentType = "application/json";
+            KumpulanSyarikatList.success = function (negaralist) {
+                $("#NegaraList").empty();
+                for (var i = 0; i < negaralist.length; i++) {
+                    $("#NegaraList").append("<option value=" + negaralist[i].Value + ">" + negaralist[i].Text + "</option>");
+                }
+            };
+            KumpulanSyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(KumpulanSyarikatList);
+            getsyarikat($("#KumpulanSyarikatList").val());
+        });
+
+        function getsyarikat(id)
+        {
+            var NegaraID = {};
+            NegaraID.url = "@Url.Action("GetSyarikat1", "SuperAdminSelection", null, "http")";
+            NegaraID.type = "POST";
+            NegaraID.data = JSON.stringify({ KumpulanSyarikatID: id });
+            NegaraID.datatype = "json";
+            NegaraID.contentType = "application/json";
+            NegaraID.success = function (syarikatlist) {
+                $("#SyarikatList").empty();
+                for (var i = 0; i < syarikatlist.length; i++) {
+                    $("#SyarikatList").append("<option value=" + syarikatlist[i].Value + ">" + syarikatlist[i].Text + "</option>");
+                }
+            };
+            NegaraID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(NegaraID);
+        }
+
+        $("#NegaraList").change(function () {
+            var NegaraID = {};
+            NegaraID.url = "@Url.Action("GetSyarikat", "SuperAdminSelection", null, "http")";
+            NegaraID.type = "POST";
+            NegaraID.data = JSON.stringify({ NegaraID: $("#NegaraList").val() });
+            NegaraID.datatype = "json";
+            NegaraID.contentType = "application/json";
+            NegaraID.success = function (syarikatlist) {
+                $("#SyarikatList").empty();
+                for (var i = 0; i < syarikatlist.length; i++) {
+                    $("#SyarikatList").append("<option value=" + syarikatlist[i].Value + ">" + syarikatlist[i].Text + "</option>");
+                }
+            };
+            NegaraID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(NegaraID);
+        });
+
+        var KumpulanSyarikatList = {};
+        KumpulanSyarikatList.url = "@Url.Action("GetNegara", "SuperAdminSelection", null, "http")";
+        KumpulanSyarikatList.type = "POST";
+        KumpulanSyarikatList.data = JSON.stringify({ KumpulanSyarikatID: $("#KumpulanSyarikatList").val() });
+        KumpulanSyarikatList.datatype = "json";
+        KumpulanSyarikatList.contentType = "application/json";
+        KumpulanSyarikatList.success = function (negaralist) {
+            $("#NegaraList").empty();
+            for (var i = 0; i < negaralist.length; i++) {
+                $("#NegaraList").append("<option value=" + negaralist[i].Value + ">" + negaralist[i].Text + "</option>");
+            }
+        };
+        KumpulanSyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(KumpulanSyarikatList);
+
+        var NegaraID = {};
+        NegaraID.url = "@Url.Action("GetSyarikat", "SuperAdminSelection", null, "http")";
+        NegaraID.type = "POST";
+        NegaraID.data = JSON.stringify({ NegaraID: $("#NegaraList").val() });
+        NegaraID.datatype = "json";
+        NegaraID.contentType = "application/json";
+        NegaraID.success = function (syarikatlist) {
+            $("#SyarikatList").empty();
+            for (var i = 0; i < syarikatlist.length; i++) {
+                $("#SyarikatList").append("<option value=" + syarikatlist[i].Value + ">" + syarikatlist[i].Text + "</option>");
+            }
+        };
+        NegaraID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(NegaraID);
+
+    });
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+}
+else
+{
+    <script>
+    $(document).ready(function () {
+        $("#NegaraList").change(function () {
+            var NegaraID = {};
+            NegaraID.url = "@Url.Action("GetSyarikat", "SuperAdminSelection", null, "http")";
+            NegaraID.type = "POST";
+            NegaraID.data = JSON.stringify({ NegaraID: $("#NegaraList").val() });
+            NegaraID.datatype = "json";
+            NegaraID.contentType = "application/json";
+            NegaraID.success = function (syarikatlist) {
+                $("#SyarikatList").empty();
+                for (var i = 0; i < syarikatlist.length; i++) {
+                    $("#SyarikatList").append("<option value=" + syarikatlist[i].Value + ">" + syarikatlist[i].Text + "</option>");
+                }
+            };
+            NegaraID.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(NegaraID);
+        });
+    });
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+    </script>
+}
+<script>
+    function DisplayProgressMessage(ctl) {
+        $("body").addClass("submit-progress-bg");
+        $(".submit-progress").removeClass("hidden");
+        return true;
+    }
+</script>

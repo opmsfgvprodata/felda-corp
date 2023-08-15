@@ -1,0 +1,267 @@
+﻿@using MVC_SYSTEM.Class
+@model IEnumerable<MVC_SYSTEM.ViewingModelsOPMS.vw_RptSctran>
+
+@{
+    GetTriager GetTriager = new GetTriager();
+
+    int? month = ViewBag.MonthList;
+    int? year = ViewBag.YearList;
+    int bil = 0;
+    decimal? debit = 0;
+    decimal? credit = 0;
+
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int year1 = ChangeTimeZone.gettimezone().Year;
+    int month1 = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "Transaction_Listing_" + ViewBag.UserID + "_" + year1.ToString() + month1.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+
+}
+
+<!-- hearder modal popup -->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">Transaction Listing</h3>
+</div>
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div class="modal-body">
+        @*<p style="font-size: 11px" align="right">@GlobalResEstate.lblDate : @ViewBag.Date</p>*@
+        <table class="table table-hover" style="font-size: 11px;" cellspacing="0" border="0" width="100%">
+            <thead>
+                <tr>
+                    <th colspan="10" style="text-align: center; vertical-align: middle; border: none;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (No Syarikat : @ViewBag.NoSyarikat)
+                        <br />
+                        Laporan Senarai Transaksi @ViewBag.Ladang Bagi Bulan  @ViewBag.MonthList/@ViewBag.YearList
+                    </th>
+                </tr>
+                <tr>
+                    <th rowspan="1" width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Bil</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Lejar</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Jadual Aktiviti Kerja</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Kod Aktiviti</th>
+                    <th rowspan="1" width="5%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Peringkat</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">IO</th>
+                    <th rowspan="1" width="3%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">GL</th>
+                    <th rowspan="1" width="3%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Catitan</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red;border-top: 1px solid red;border-bottom: 1px solid red;" border="1">Debit</th>
+                    <th rowspan="1" width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Kredit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    bil = bil + 1;
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@bil</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_KodGL</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_Keterangan</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_KodAktvt</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: left;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_KodPkt</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_IO</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_GL</td>
+                        <td align="center" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: center;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">&nbsp;</td>
+                        @if (item.fld_KdCaj == "D")
+                        {
+                            <td align="right" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: right;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_Amt</td>
+                            <td align="right" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: right;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">0.00</td>
+                            debit += item.fld_Amt;
+                        }
+
+                        else
+                        {
+                            <td align="right" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: right;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">0.00</td>
+                            <td align="right" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; text-align: right;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none">@item.fld_Amt</td>
+                            credit += item.fld_Amt;
+                        }
+                    </tr>
+                }
+                <tr>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1"></td>
+                    <td align="center" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 1px solid red;border-collapse:separate !important;border-spacing:0px !important; border-right: none; border-left: none" border="1">
+                        Jumlah (RM)
+                    </td>
+                    <td align="right" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border: 1px solid red; border-right: none; border-left: none" border="1">
+                        @GetTriager.GetTotalForMoney(debit)
+                    </td>
+                    <td align="right" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border: 1px solid red; border-right: none; border-left: none" border="1">
+                        @GetTriager.GetTotalForMoney(credit)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="float: left; width: 100%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
+            <thead>
+                <tr>
+                    <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 2px solid gray; border-bottom: none; border-left: none;"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        @*<table style="float: left; width: 70%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
+                <thead>
+                    <tr>
+                        <th colspan="2" width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResEstate.lblPreparedBy</th>
+                        <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResEstate.lblApprovedBy</th>
+                    </tr>
+                    <tr>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblID</td>
+                        <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.IDPenyelia</td>
+                        <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblID</td>
+                        <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblName</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.NamaPenyelia</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblName</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblPosition</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: PENYELIA</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblPosition</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblDate</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.Date</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResEstate.lblDate</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                </tbody>
+            </table>*@
+        <newpage />
+    </div>
+    @*if (ViewBag.Print == null)
+        {
+            <div style="text-align:right; margin-top:10px">
+                <a class="btn btn-default btn-sm" href="#" id="printpage">
+                    <span class="glyphicon glyphicon-print"> </span> @GlobalResEstate.btnPrint
+                </a>
+                <a href="#" id="downloadpdf" class="btn btn-default btn-sm">
+                    <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadPdf
+                </a>
+                <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                    <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadExcel
+                </a>
+            </div>
+        }*@
+}
+
+@if (Model == null)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+
+<!-- footer modal popup -->
+<div class="modal-footer">
+    <button class="btn btn-danger" data-dismiss="modal">Close</button>
+</div>
+
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf").click(function () {
+            //var RadioGroup = $('input[name=RadioGroup]:checked').val();
+            var MonthList = $("#MonthList").val();
+            var YearList = $("#YearList").val();
+            //var GroupList = $("#GroupList").val();
+            //var StatusList = $("#StatusList").val();
+            //var WorkCategoryList = $("#WorkCategoryList").val();
+
+            //var StatusList = '';
+            //var WorkCategoryList = '';
+
+            var param = '/?MonthList=' + MonthList + '&YearList=' + YearList;
+            var controller = 'Report';
+            var action = 'PrintTransactionPdf';
+
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("PDFIndetifier", "PdfCreator")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ controller: controller, action: action, param: param });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                //var win = window.open(result.link, '_blank');
+                //win.focus();
+                PDFObject.embed(result.link, "#searchResultTransactionListingRpt", { height: "450px" });
+            };
+
+            ajxfn.error = function () {
+                //$.simplyToast('', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+
+            return false;
+        });
+    });
+</script>
+
+@*<script>
+        $(document).ready(function () {
+            $("#downloadpdf2").click(function () {
+                var myHtml = document.getElementById('scrollArea2').innerHTML;
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ConvertPDF2", "Report")',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "TransactionListingReport" }),
+                    success: function (result) {
+                        if (result.success) {
+                            var win = window.open(result.link, '_blank');
+                            win.focus();
+                        } else {
+                            $.simplyToast(result.msg, result.status);
+                        }
+                    },
+                    error: function (error) {
+                        $.simplyToast('Sorry to many data', 'danger');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>*@

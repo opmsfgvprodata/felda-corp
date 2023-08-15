@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnViewName" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="hdrAktvt" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="hdrBil" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="hdrCatatan" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="hdrCmpnyNo" xml:space="preserve">
+    <value>Company No</value>
+  </data>
+  <data name="hdrDbt" xml:space="preserve">
+    <value>Debit (RM)</value>
+  </data>
+  <data name="hdrInvois" xml:space="preserve">
+    <value>No. P2/P3/Invoice</value>
+  </data>
+  <data name="hdrJnsPkrjaan" xml:space="preserve">
+    <value>Job Type</value>
+  </data>
+  <data name="hdrKodStok" xml:space="preserve">
+    <value>Stock Code</value>
+  </data>
+  <data name="hdrKP" xml:space="preserve">
+    <value>IC No/ Passport</value>
+  </data>
+  <data name="hdrKrdt" xml:space="preserve">
+    <value>Credit (RM)</value>
+  </data>
+  <data name="hdrKtrgn" xml:space="preserve">
+    <value>Activity Information</value>
+  </data>
+  <data name="hdrKuantiti" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="hdrLejar" xml:space="preserve">
+    <value>Ledger</value>
+  </data>
+  <data name="hdrNama" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="hdrNamaFail" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="hdrNo" xml:space="preserve">
+    <value>Np</value>
+  </data>
+  <data name="hdrNoA" xml:space="preserve">
+    <value>NoA / Tetap Kend.</value>
+  </data>
+  <data name="hdrNoCek" xml:space="preserve">
+    <value>Cheque No</value>
+  </data>
+  <data name="hdrNoDkmn" xml:space="preserve">
+    <value>Document No</value>
+  </data>
+  <data name="hdrNoKntrk" xml:space="preserve">
+    <value>Contract No / IC</value>
+  </data>
+  <data name="hdrNoPekerja" xml:space="preserve">
+    <value>Worker No</value>
+  </data>
+  <data name="hdrPrgkt" xml:space="preserve">
+    <value>Levels</value>
+  </data>
+  <data name="hdrReportTitle" xml:space="preserve">
+    <value>LIST OF NEW WORKER APPLIED</value>
+  </data>
+  <data name="hdrSbbKemasukan" xml:space="preserve">
+    <value>Sebab Kemasukan</value>
+  </data>
+  <data name="hdrStatus" xml:space="preserve">
+    <value>Application Status</value>
+  </data>
+  <data name="hdrTarikhKelulusan" xml:space="preserve">
+    <value>Approved Date</value>
+  </data>
+  <data name="hdrTrkhDkmn" xml:space="preserve">
+    <value>Document Date</value>
+  </data>
+  <data name="hdrTrkhLantikan" xml:space="preserve">
+    <value>Arrived Date in KLIA/ Appointed Date</value>
+  </data>
+  <data name="hdrTrkhPermohonan" xml:space="preserve">
+    <value>Date Applied to HQ</value>
+  </data>
+  <data name="hdrWarganegara" xml:space="preserve">
+    <value>Nationality</value>
+  </data>
+  <data name="lblKrkytan" xml:space="preserve">
+    <value>Citizen</value>
+  </data>
+  <data name="lblLadang" xml:space="preserve">
+    <value>Estate</value>
+  </data>
+  <data name="lblMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="lblStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblWilayah" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="lblYear" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="sltAll" xml:space="preserve">
+    <value>ALL</value>
+  </data>
+  <data name="WaitMsg" xml:space="preserve">
+    <value>Please wait data is being processed...</value>
+  </data>
+  <data name="hdrKeterangan" xml:space="preserve">
+    <value>Explaination</value>
+  </data>
+  <data name="hdrApprvBy" xml:space="preserve">
+    <value>Approved By</value>
+  </data>
+</root>

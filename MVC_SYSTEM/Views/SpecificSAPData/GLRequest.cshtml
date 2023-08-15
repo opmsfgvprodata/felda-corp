@@ -1,0 +1,169 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.ModelsCorporate
+@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_GLSAP>
+
+@{
+    ViewBag.Title = "GLRequest";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    GetConfig getconfig = new GetConfig();
+    MVC_SYSTEM_ModelsCorporate db = new MVC_SYSTEM_ModelsCorporate();
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+    string uniquefilename = "GL_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+
+    string dateformat = getconfig.GetData("dateformat3");
+    int bil = 0, bil1 = 0, bil2 = 0, bil3 = 0, bil4 = 0;
+
+
+}
+
+
+@using (Html.BeginForm("_GLRequest", "SpecificSAPData", new { id = "glrequest" }))
+{
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom:16px;">
+
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ">Date:(yyyyMMdd)</label>
+                    <div class="col-sm-4">
+                        @Html.TextBox("dateStart", "", null, htmlAttributes: new { @class = "form-control col-sm-2" })
+
+                    </div>
+
+                    <div class="col-sm-1 text-center">
+                        -
+                    </div>
+
+                    <div class="col-sm-4 ">
+                        @Html.TextBox("dateEnd", "", null, htmlAttributes: new { @class = "form-control col-sm-2" })
+                    </div>
+                </div>
+
+                <div class="text-right col-sm-11">
+
+                    <label class="control-label col-sm-2"></label>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">GL Number:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBox("glStart", "", null, htmlAttributes: new { @class = "form-control col-sm-2" })
+                    </div>
+                    <div class="col-sm-1 text-center">
+                        -
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.TextBox("glEnd", "", null, htmlAttributes: new { @class = "form-control col-sm-2" })
+                    </div>
+                    <div class="col-sm-1">
+
+                        <input class="btn btn-success" type="submit" value="Sent" />
+
+                    </div>
+                </div>
+
+            </div>
+           
+        </div>
+
+        <div class="well" style="margin-top:7px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">GL LISTING</div>
+                <div class="panel-body">
+                    @if (Model != null && Model.Count() != 0)
+                    {
+                        var GLList = db.tbl_GLSAP.OrderByDescending(o => o.fld_DTModified);
+                        <div id="scrollArea2">
+
+
+                            <div id="GLList" class="panel-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod GL</th>
+                                            <th bgcolor="#ffcc80" width="20%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan GL</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var GLDetails in GLList)
+                                        {
+                                            bil = bil + 1;
+                                            <tr>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ViewBag.fld_GLcode</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@GLDetails.fld_Desc </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@GLDetails.fld_CreatedBy </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @GLDetails.fld_DTCreated.Date) </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @GLDetails.fld_DTModified.Date)</td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div style="text-align:right; margin-top:10px">
+                        <a class="btn btn-default btn-sm" href="" id="printpage">
+                            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                        </a>
+                        <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                        </a>
+                        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+    <script src="~/Asset/Scripts/FromHTML.js"></script>
+    <script src="~/Asset/Scripts/FileSaver.js"></script>
+
+    <script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea2').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SpecificSAPData")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+    </script>
+

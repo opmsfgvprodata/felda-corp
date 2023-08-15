@@ -1,0 +1,113 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_JenisInsentif
+
+@{
+    GetConfig config = new GetConfig();
+    @Scripts.Render("~/bundles/jqueryval")
+    var isFixed = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_TetapanNilai).ToString(), "tetapanNilai", Model.fld_NegaraID, Model.fld_SyarikatID);
+    var isKwspSocso = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_AdaCaruman).ToString(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID);
+    var GLDesc = config.GetGLDesc(Model.fld_KodGL, Model.fld_NegaraID, Model.fld_SyarikatID);
+    var workerType = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_KelayakanKepada).ToString(), "jenisKelayakanInsentif", Model.fld_NegaraID, Model.fld_SyarikatID);
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        @if (Model.fld_Deleted == false)
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblIncentiveDelete</h3>
+        }
+        else
+        {
+            <h3 class="modal-title">@GlobalResCorp.lblIncentiveUnDelete</h3>
+        }
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblIncentiveInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveCode</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodInsentif, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveKodAktvt:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_KodAktvt, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveName</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Keterangan, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveKodGL</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_KodGL, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = GLDesc })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveIsKwspSocso:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_AdaCaruman, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = isKwspSocso })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveIsFixedValue:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_TetapanNilai, htmlAttributes: new {@class = "form-control", @disabled = "true", @Value = isFixed})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveMinValue:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_MinValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveMaxValue:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_MaxValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveFixedValue:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_FixedValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveDailyFixedValue:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_DailyFixedValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_DailyFixedValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblWorkerType:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_KelayakanKepada, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = workerType })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_JenisInsentifID)
+                        @Html.HiddenFor(model => model.fld_JenisInsentif)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <h3>
+                        <span class="label label-danger">
+                            @GlobalResCorp.msgDelete
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnYes>
+            <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+        </div>
+    }
+</section>

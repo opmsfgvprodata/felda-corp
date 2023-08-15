@@ -1,0 +1,80 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsCorporate.vw_CutiUmumKelayakanDetails>
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResCorp.lblPublicHolidayEligibilityInfo</h3>
+</div>
+<section class="content-wrapper main-content clear-fix">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblLeaveInfo</div>
+                <div class="panel-body">
+                    @{
+                        var grid = new WebGrid(
+                            canPage: false,
+                            rowsPerPage: Model.PageSize,
+                            canSort: false,
+                            ajaxUpdateContainerId: "grid");
+
+                        grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+                        if (@grid.TotalRowCount > 0)
+                        {
+                            <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblLeaveInfo)</div>
+
+                            @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+                                                    tableStyle: "table table-bordered table-striped table-list table-hover",
+                                                    headerStyle: "header_table",
+                                                    alternatingRowStyle: "Grid-alt",
+                                                    selectedRowStyle: "Grid-selected",
+                                                    rowStyle: "Grid-rowstyle",
+                                                    footerStyle: "table-pager",
+                                                    mode: WebGridPagerModes.All,
+                                                    columns: grid.Columns(
+                                                        grid.Column(header: "No."
+                                                            , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                                                              + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                                                              * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                                        grid.Column(columnName: "fld_KeteranganCuti", header: GlobalResCorp.lblEstateCode, style: "keterangan"),
+                                               grid.Column(columnName: "fld_TarikhCuti", header: GlobalResCorp.hdrLeaveDate, format: (item) =>
+                                               {
+                                                   var date = String.Format("{0:dd/MM/yyyy}", item.fld_TarikhCuti);
+
+                                                   return @Html.Raw(date);
+
+                                               }, canSort: false, style: "kod")
+                                                        ))
+                        }
+                        else
+                        {
+                            <hr />
+                            <div class="text-center">
+                                @Html.Label((string)@ViewBag.Message)
+                            </div>
+
+                            <hr />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+    </div>
+
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>

@@ -1,0 +1,121 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    GetConfig getConfig = new GetConfig();
+}
+
+@{
+    var grid = new WebGrid(
+        canPage: true,
+        rowsPerPage: Model.PageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "grid");
+
+    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+    if (@grid.TotalRowCount > 0)
+    {
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblCountryCount)</div>
+
+        @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+            tableStyle: "table table-bordered table-striped table-list table-hover",
+            headerStyle: "header_table",
+            alternatingRowStyle: "Grid-alt",
+            selectedRowStyle: "Grid-selected",
+            rowStyle: "Grid-rowstyle",
+            footerStyle: "table-pager",
+            mode: WebGridPagerModes.All,
+            columns: grid.Columns(
+                grid.Column(header: "No."
+                    , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                      + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                      * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                grid.Column(columnName: "fldOptConfvalue", header: GlobalResCorp.lblCountryCode, style: "kodnegara"),
+                grid.Column(columnName: "fldOptConfDesc", header: GlobalResCorp.lblCountryName, style: "namanegara"),
+                //grid.Column(columnName: "fldOptConfFlag2", header: GlobalResCorp.lblCodeValue2, style: "tetapan1"),
+                //grid.Column(columnName: "fldOptConfFlag3", header: GlobalResCorp.lblCodeValue3, style: "tetapan2"),
+                //grid.Column(GlobalResCorp.lblActiveStatus, format: (item) =>
+                //{
+                //    var boolToInt = item.fldDeleted == true ? "2" : "1";
+
+                //    var tindakan = getConfig.GetWebConfigDesc(boolToInt, "statusaktif", item.fld_NegaraID, item.fld_SyarikatID);
+
+                //    return @Html.Raw(tindakan);
+
+                //}, canSort: false, style: "tindakan"),
+                grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                {
+                    if (item.fldDeleted == false)
+                    {
+                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_CountryMaintenanceEdit", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                       "<a data-modal1='' href='" + @Url.Action("_CountryMaintenanceDelete", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                        return @Html.Raw(tindakan);
+                    }
+
+                    else
+                    {
+                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_CountryMaintenanceDelete", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                        return @Html.Raw(tindakan);
+                    }
+                }, canSort: false, style: "tindakan")
+                ))
+        ;
+    }
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label(GlobalResCorp.msgErrorSearch)
+        </div>
+
+        <hr />
+    }
+}
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kodnegara {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .namanegara {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>

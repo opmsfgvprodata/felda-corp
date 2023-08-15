@@ -1,0 +1,455 @@
+﻿
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Application Support Region Second";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    GetIDDataFromDatabase GetIDDataFromDatabase = new GetIDDataFromDatabase();
+    var DataID = new List<long>();
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResDataEntry.WaitMsg
+        </label>
+    </div>
+</div>
+
+<!-- Styles for custom modal popup transaction Listing -->
+<style>
+    #myModal1 .modal-dialog {
+        width: 80% !important;
+    }
+</style>
+
+@using (Html.BeginForm("ApplicationSupportRegionSecond", "ApplicationSupport", FormMethod.Post, new { id = "ApplicationSupport" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResApproval.msgWait</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom:16px;">
+            <div class="row">
+                @*Added by Shazana 1/8/2023*@
+                <div class="col-sm-2">
+                    <label for="NamaSyarikat">@GlobalResApproval.lblSyarikatName</label>
+                    @Html.DropDownList("SyarikatIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="View" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top:7px;">
+            @if (ViewBag.GetView != 1)
+            {
+                //foreach (var wilayahid in ViewBag.WilayahSelection)
+                //{
+                //    if (ViewBag.LadangID == 0)
+                //    {
+                //        DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, 0, "ApplicationSupportAllLadang", ViewBag.Month, ViewBag.Year);
+                //    }
+                //    else
+                //    {
+                //DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, ViewBag.LadangID, "ApplicationSupportSelectedLadang", ViewBag.Month, ViewBag.Year);
+
+                //Commented by Shazana 6/3/2023
+                //DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID2(ViewBag.NegaraID, ViewBag.SyarikatID, ViewBag.LadangID, "ApplicationSupportSelectedLadang", ViewBag.Month, ViewBag.Year);
+                //}
+                //Html.RenderAction("ApplicationSupportRegionGMDetail", "ApplicationSupport", new { eachid = DataID, NegaraID = ViewBag.NegaraID, SyarikatID = ViewBag.SyarikatID, WilayahID = wilayahid, Month = ViewBag.Month, Year = ViewBag.Year });
+                //Html.RenderAction("ApplicationSupportRegionSecondDetail", "ApplicationSupport", new { eachid = DataID, NegaraID = ViewBag.NegaraID, SyarikatID = ViewBag.SyarikatID, LadangID = ViewBag.LadangID, Month = ViewBag.Month, Year = ViewBag.Year });
+                //}
+
+                //Added by Shazana 3/4/2023
+                @*<a class="btn btn-default" href="#" id="downloadpdf" style="float: right;">
+                    <img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /> Cetak/PDF
+                </a>*@
+
+                //Added by Shazana 6/3/2023
+                foreach (var wilayahid in ViewBag.WilayahSelection)
+                {
+                    if (ViewBag.LadangID == 0)
+                    {
+                        DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID2(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, ViewBag.LadangID, "ApplicationSupportAllLadangSelectedRegion", ViewBag.Month, ViewBag.Year);
+                    }
+                    else
+                    {
+                        DataID = GetIDDataFromDatabase.tbl_SokPermhnWangID2(ViewBag.NegaraID, ViewBag.SyarikatID, wilayahid, ViewBag.LadangID, "ApplicationSupportSelectedLadang", ViewBag.Month, ViewBag.Year);
+                    }
+                    //Modified by Shazana 3/4/2023
+                    //Modified by Shazana 1/8/2023
+                    Html.RenderAction("ApplicationSupportRegionSecondDetail", "ApplicationSupport", new { eachid = DataID, NegaraID = ViewBag.NegaraID, SyarikatID = ViewBag.SyarikatID, LadangID = ViewBag.LadangID, Month = ViewBag.Month, Year = ViewBag.Year, WilayahID = ViewBag.WilayahID, SyarikatCc = ViewBag.SyarikatCc });
+                }
+
+            }
+            else
+            {
+                <p style="color:red"> Please select estate </p>
+            }
+        </div>
+    </section>
+
+}
+
+<!-- modal popup -->
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent' data-refresh="true"></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Asset/Scripts/jquery.stickytableheaders2.js" type="text/javascript"></script>
+<script src="~/Asset/Scripts/bootpopup.js" type="text/javascript"></script>
+
+<script>
+    $("table").stickyTableHeaders();
+</script>
+<script>
+
+    /*Added by Shazana 1/8/2023*/
+     $("#SyarikatIDList").change(function () {
+        var SyarikatIDList = {};
+        var disableoption = "";
+        SyarikatIDList.url = "@Url.Action("GetWilayah", "ApplicationSupport")";
+        SyarikatIDList.type = "POST";
+        SyarikatIDList.data = JSON.stringify({ SyarikatID: $("#SyarikatIDList").val() });
+        SyarikatIDList.datatype = "json";
+        SyarikatIDList.contentType = "application/json";
+        SyarikatIDList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+            getLadangList();
+        };
+
+        SyarikatIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatIDList);
+    });
+
+
+
+  function getLadangList() {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "ApplicationSupport")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    };
+
+
+
+    /*Commented by Shazana 1/8/2023*/
+    @*if ($("#WilayahIDList").val() == 0) {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "ApplicationSupport")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    }*@
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "ApplicationSupport")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+    function UpdateStatus(gethis, id, flag, month, year, WilayahID) {
+        var NegaraID='@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        /*Commented by Shazana 6/3/2023*/
+        @*var WilayahID = '@ViewBag.WilayahID';*@
+        var value = gethis.parentNode.parentNode.children[0].innerHTML;
+        switch(flag) {
+            case 'SokongGMWil':
+                $(gethis).attr("disabled", "disabled");
+                $('#tlk' + id).removeAttr('disabled', false);
+
+                var PermohonanUpdateUpdate = {};
+                PermohonanUpdateUpdate.url = "@Url.Action("UpdateDataSecond", "ApplicationSupport")";
+                PermohonanUpdateUpdate.type = "POST";
+                PermohonanUpdateUpdate.data = JSON.stringify({ LdgID: id, UpdateFlag: flag, Month: month, Year: year, NegaraId: NegaraID , SyarikatId: SyarikatID, WilayahId: WilayahID, SebabTolak: ""});
+                PermohonanUpdateUpdate.datatype = "json";
+                PermohonanUpdateUpdate.contentType = "application/json";
+                PermohonanUpdateUpdate.success = function (returndata) {
+                    var tableData = $("#" + id + " td:contains(" + value + ")").parent().find('td:eq(2)'),
+                span = $('<p><font color="green">' + returndata.DescStatus + ' oleh ' + returndata.ActionBy + ' pada ' + ToJavaScriptDate(returndata.getdatetime) + '</font></p>');
+                    tableData.append(span);
+                };
+                PermohonanUpdateUpdate.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(PermohonanUpdateUpdate);
+                //alert('Telah disokong');
+                bootpopup({
+                        title: "Action",
+                        content: [
+                            /*Modified by Shazana 29/3/2023*/
+                            { p: { text: "Permohonan telah diluluskan " } },
+
+                        ],
+                        });
+                break;
+            case 'TolakGMWil':
+                bootpopup({
+                    title: "Permohonan Ditolak",
+                    content: [
+                        { input: { type: "text", label: "Sebab", name: "SebabTolak", id: "SebabTolak", placeholder: "SebabTolak", value: "" } },
+                    ],
+                    cancel: function (data, array, event) { },
+                    ok: function (data, array, event) {
+                        $(gethis).attr("disabled", "disabled");
+                        $('#smk' + id).removeAttr('disabled', false);
+
+                        var PermohonanUpdateUpdate = {};
+                        PermohonanUpdateUpdate.url = "@Url.Action("UpdateDataSecond", "ApplicationSupport")";
+                        PermohonanUpdateUpdate.type = "POST";
+                        PermohonanUpdateUpdate.data = JSON.stringify({ LdgID: id, UpdateFlag: flag, Month: month, Year: year, NegaraId: NegaraID , SyarikatId: SyarikatID, WilayahId: WilayahID, SebabTolak: data.SebabTolak });
+                        PermohonanUpdateUpdate.datatype = "json";
+                        PermohonanUpdateUpdate.contentType = "application/json";
+                        PermohonanUpdateUpdate.success = function (returndata) {
+                            var tableData = $("#" + id + " td:contains(" + value + ")").parent().find('td:eq(2)'),
+                        span = $('<p><font color="red">' + returndata.DescStatus + ' oleh ' + returndata.ActionBy + ' pada ' + ToJavaScriptDate(returndata.getdatetime) + '</font></p>');
+                            tableData.append(span);
+                        };
+                        PermohonanUpdateUpdate.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                        $.ajax(PermohonanUpdateUpdate);
+                        //alert('Telah ditolak');
+
+                        bootpopup({
+                                title: "Action",
+                                content: [
+                                    { p: { text: "Permohonan telah ditolak" } },
+                                ],
+                             });
+                    },
+                    complete: function () { },
+                });
+                break;
+        }
+        return false;
+    }
+
+    function UpdateStatus2(gethis, id, flag, btnid, tblid, jmlhwang, NoAcc, NoGL, NoCIT, PDPRM, CITRM, MANUALRM, ldgName, skbno) {
+        var value = gethis.parentNode.parentNode.children[1].innerHTML;
+        var totalkaedahbyran = 0;
+        var NegaraID='@ViewBag.NegaraID';
+        var SyarikatID= '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+        var Year='@ViewBag.Year';
+        switch(flag) {
+            case 'SemakWil':
+                bootpopup({
+                    title: "Kaedah Bayaran " + ldgName,
+                    content: [
+                        { p: { text: "F43 : " + skbno } },
+                        { p: { text: "No Akaun : " + NoAcc} },
+                        { p: { text: "GL Bank : " + NoGL} },
+                        { p: { text: "Zon CIT : " + NoCIT } },
+                        { p: { text: "Jumlah Permohonan : RM" + jmlhwang.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } },
+                         { p: { text: "PDP : " + PDPRM.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } },
+                          { p: { text: "CIT : " + CITRM.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } },
+                        { p: { text: "Permohonan Manual: " } },
+                         { p: { text: "MANUAL : " + MANUALRM.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } },
+                    ],
+                    //complete: function () { },
+                });
+                break;
+        }
+        return false;
+    }
+
+    function ScTran(LdgID, wlyhid, id) {
+        var NegaraID = '@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+        var Year = '@ViewBag.Year';
+        //modal popup utk TL
+        $('#myModalContent').load("@Url.Action("TransactionListingRptSearch", "ApplicationSupport")?NegaraID="+NegaraID+"&SyarikatID="+SyarikatID+"&WilayahID="+wlyhid+"&LadangID="+LdgID+"&Month="+Month+"&Year="+Year+"", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+        function Paysheet(LdgID, wlyhid, id) {
+        var NegaraID = '@ViewBag.NegaraID';
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var Month = '@ViewBag.Month';
+        var Year = '@ViewBag.Year';
+        //modal popup utk paysheet
+        $('#myModalContent').load("@Url.Action("WorkerPaySheetRptSearch", "ApplicationSupport")?NegaraID="+NegaraID+"&SyarikatID="+SyarikatID+"&WilayahID="+wlyhid+"&LadangID="+LdgID+"&Month="+Month+"&Year="+Year+"", function () {
+            $('#myModal1').modal({
+                backdrop: 'static', keyboard: false
+            }, 'show');
+            return false;
+        })
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+
+@*Added by Shazana 3/4/2023*@
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").show();
+        $("#downloadpdf").show();
+
+        $("#printpage").click(function () {
+            $("#printpage").hide();
+            $("#downloadpdf").hide();
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+    $("#downloadpdf").click(function () {
+            //$("#downloadpdfGLtoVendor").hide();
+      var MonthList =  '@ViewBag.Month';
+        var YearList = '@ViewBag.Year';
+        var WilayahIDList = '@ViewBag.WilayahID';
+        var LadangIDList = '@ViewBag.LadangID';
+        var param = '/?WilayahIDList=' + WilayahIDList + "&YearList=" + YearList + "&MonthList=" + MonthList + "&LadangIDList=" + LadangIDList;
+         debugger
+        PDFObject.embed("@Url.Action("exportPDF", "ApplicationSupport")" + param, "#DataTable", { height: "700px" });
+         return false;
+    });
+
+    })
+
+</script>
+<script src="~/Asset/Scripts/FromHTML.js"></script>

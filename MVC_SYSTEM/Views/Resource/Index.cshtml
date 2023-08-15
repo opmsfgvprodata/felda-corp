@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<!-- Styles for Wait Messages -->
+<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+            <div class="submit-progress hidden">
+                <i class="fa fa-2x fa-spinner fa-spin"></i>
+                <label>@GlobalResApproval.msgWait</label>
+            </div>
+            <!-- ** END POP-UP MESSAGE AREA ** -->
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Company Selection</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label for="Syarikat">Group Company</label>
+                                    @Html.DropDownList("KumpulanSyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="Syarikat">Company</label>
+                                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-report">
+                    <input class="btn btn-primary" type="submit" name="Teruskan" id="Teruskan" value="Next" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#KumpulanSyarikatList").change(function () {
+            var KumpulanSyarikatList = {};
+            KumpulanSyarikatList.url = "@Url.Action("GetSyarikat", "Resource")";
+            KumpulanSyarikatList.type = "POST";
+            KumpulanSyarikatList.data = JSON.stringify({ KumpulanSyarikatID: $("#KumpulanSyarikatList").val() });
+            KumpulanSyarikatList.datatype = "json";
+            KumpulanSyarikatList.contentType = "application/json";
+            KumpulanSyarikatList.success = function (syarikatlist) {
+                $("#SyarikatList").empty();
+                for (var i = 0; i < syarikatlist.length; i++) {
+                    $("#SyarikatList").append("<option value=" + syarikatlist[i].Value + ">" + syarikatlist[i].Text + "</option>");
+                }
+            };
+            KumpulanSyarikatList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(KumpulanSyarikatList);
+        });
+    });
+    function DisplayProgressMessage(ctl) {
+        $("body").addClass("submit-progress-bg");
+        $(".submit-progress").removeClass("hidden");
+        return true;
+    }
+</script>
+
+
+

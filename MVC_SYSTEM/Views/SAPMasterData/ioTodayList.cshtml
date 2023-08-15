@@ -1,0 +1,97 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.vw_SAPIODetails>
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.ModelsCorporate
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    GetConfig getconfig = new GetConfig();
+    MVC_SYSTEM_ModelsCorporate db = new MVC_SYSTEM_ModelsCorporate();
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+
+
+    string uniquefilename = "Master Data IO" + ViewBag.UserID + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+    int bil4 = 0;
+
+   
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Data Customer SAP</div>
+        <div class="panel-body">
+            @if (Model != null && Model.Count() != 0)
+            {
+
+                <div id="scrollArea" class="col-sm-12">
+
+                    <table class="table table-hover">
+                        <thead>
+
+                            <tr>
+                                <th bgcolor="#ffcc80" width="1%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Wilayah</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Rancangan</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FLD</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FPM</th>
+                                <th bgcolor="#ffcc80" width="5%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Indikator</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Peringkat</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Sub Peringkat</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Blok</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Luas Pkt</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Luas Kawasan Tanaman</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Luas Kawasan Berhasil</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Syarikat</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var IODetails in Model)
+                            {
+                                bil4 = bil4 + 1;
+                            <tr>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil4</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_WlyhName</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgName </td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_IOcode</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_ZIOFPM</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgIndicator </td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_PktCode</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_SubPktCode</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_kodBlok</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasPkt</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawTnmn</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawBerhasil</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CompanyCode</td>
+                            </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+            }
+
+            else
+            {
+                <div id="scrollArea" class="col-sm-12">
+                    Tiada data untuk hari ini
+                </div>
+            }
+
+            <div class="col-sm-12" style="text-align:right;">
+                <a href="@Url.Action("IOList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+            </div>
+
+        </div>
+    </div>
+
+   

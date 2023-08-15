@@ -1,0 +1,88 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_Pembekal>
+
+@{
+    ViewBag.Title = "Supplier";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Styles for Wait Messages -->
+<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />
+@using (Html.BeginForm("Supplier", null, FormMethod.Get))
+{
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResNoSkb.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResNoSkb.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResNoSkb.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <div class="row">
+                @*<div class="col-sm-5">
+                        <div class="input-group">
+                            <input type="text" name="filter" value="@ViewBag.filter" class="form-control" style="display: inline" placeholder="Search" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    @GlobalResEstateNeed.btnGo
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>*@
+                <div class="pull-left col-lg-1">
+                    <a class="btn btn-success" data-modal="" href="@Url.Action("EstateDetailInsert", "GeneralConfigs")" id="btnCreate">
+                        <span class="glyphicon glyphicon-plus" style=""> </span> Tambah Data Baru
+                    </a>
+                </div>
+            </div>
+            <div style="margin-top:17px;">
+                @{
+                    var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+
+                    grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                    grid.Pager(WebGridPagerModes.All);
+
+                    @grid.GetHtml(htmlAttributes: new { id = "grid" },   // id for ajaxUpdateContainerId parameter
+                         fillEmptyRows: false,
+                         tableStyle: "table table-bordered table-hover",
+                         mode: WebGridPagerModes.All,
+                         columns: grid.Columns(
+                           grid.Column("fld_KodPbkl", "Kod Pmbekal", style: "col-lg-2"),
+                           grid.Column("fld_NamaPbkl", "Nama Pembekal", style: "col-lg-2"),
+                            grid.Column(GlobalResEstateNeed.hdrAction, canSort: false, style: "col-lg-2",
+                            format: @<text>
+                                @*@Html.Raw("<a data-modal='' href='" + @Url.Action("EstateDetailUpdate", "GeneralConfigs") + "/?id=" + item.fld_LdgCode + "&wlyh=" + item.fld_WlyhID + "' title='EstateDetailUpdate'> <span class='glyphicon glyphicon-edit'> </span> </a>")*@
+                                @*@Html.Raw("<a data-modal='' href='" + @Url.Action("EstateNeedDelete", "DataEntry") + "/?id=" + item.fld_LadangID + "&year=" + item.fld_Tahun + "' title='EstateNeedDelete'> <span class='glyphicon glyphicon-trash'> </span> </a>")*@
+                            </text>)
+
+                        ));
+                }
+            </div>
+        </div>
+    </section>
+                    }
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/appjs.js")
+}
