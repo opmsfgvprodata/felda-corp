@@ -84,6 +84,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_CompanyCode { get; set; }
         public string fld_ZIOFLD { get; set; }
         public string fld_ZIOFPM { get; set; }
+        //farahin tambah - 10/8/2023
+        public string fld_WBS { get; set; }
     }
 
     public class vw_SAPIODetailsCreate

@@ -1150,6 +1150,11 @@
     <Compile Include="Security\MyIdentity.cs" />
     <Compile Include="Security\MyPrincipal.cs" />
     <Compile Include="Security\UserIdentity.cs" />
+    <Compile Include="Service References\FPMMD_FTQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SAPMD\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2765,7 +2770,20 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Service References\FPMMD_FTQ\MVC_SYSTEM.FPMMD_FTQ.ZFM_OPMS_MASTERResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\FPMMD_FTQ\MVC_SYSTEM.FPMMD_FTQ.ZFM_OPMS_MASTERResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\FPMMD_FTQ\zws_opms_masterdata.wsdl" />
     <None Include="Service References\SAPMD\document.wsdl" />
+    <None Include="Service References\FPMMD_FTQ\configuration91.svcinfo" />
+    <None Include="Service References\FPMMD_FTQ\configuration.svcinfo" />
+    <None Include="Service References\FPMMD_FTQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Service References\SAPMD\MVC_SYSTEM.SAPMD.ZfmOpmsMasterResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -3516,6 +3534,7 @@
     <Content Include="Views\SAPMasterData\errorView.cshtml" />
     <Content Include="Views\SAPMasterData\ioTodayList.cshtml" />
     <Content Include="Views\DataEntry\PalmPriceInfo.cshtml" />
+    <Content Include="Views\SAPMasterData\vdTodayList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3957,6 +3976,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\FPMMD_FTQ\" />
     <WCFMetadataStorage Include="Service References\SAPMD\" />
     <WCFMetadataStorage Include="Service References\SAPMD_FLP\" />
     <WCFMetadataStorage Include="Service References\SAPMD_FLQ\" />
