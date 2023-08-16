@@ -23,7 +23,7 @@
 
     <div class="panel panel-primary">
 
-        <div class="panel-heading">Data Customer SAP</div>
+        <div class="panel-heading">Data IO SAP - @Todaydate</div>
         <div class="panel-body">
             @if (Model != null && Model.Count() != 0)
             {
@@ -39,6 +39,7 @@
                                 <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Rancangan</th>
                                 <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FLD</th>
                                 <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FPM</th>
+                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod WBS</th>
                                 <th bgcolor="#ffcc80" width="5%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Indikator</th>
                                 <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Peringkat</th>
                                 <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Sub Peringkat</th>
@@ -60,6 +61,7 @@
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgName </td>
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_IOcode</td>
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_ZIOFPM</td>
+                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_WBS</td>
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgIndicator </td>
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_PktCode</td>
                                 <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_SubPktCode</td>

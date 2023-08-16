@@ -1,7 +1,8 @@
 ﻿@model IEnumerable < MVC_SYSTEM.ModelsCorporate.tbl_CMSAP>
 
 @{
-    ViewBag.Title = "cmList";
+    //ViewBag.Title = "cmList"; //Dania comment
+    ViewBag.Title = "Master Data Customer "; //Dania tambah
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
     int? bil = 0;
@@ -13,6 +14,10 @@
         @Html.AntiForgeryToken()
         <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
             <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label("Kod Syarikat")
+                    @Html.DropDownList("CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
                 <div class="col-sm-2">
                     @Html.Label("Kod Customer")
                     @Html.TextBox("cmCode", null, htmlAttributes: new { @class = "form-control" })
@@ -40,13 +45,7 @@
             @if (Model != null && Model.Count() != 0)
             {
 
-                <div class="col-sm-12" style="text-align:right;">
-                    <a href="@Url.Action("cmRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
-                </div>
-
-                <br />
-
-                <div class="col-sm-12" style="text-align:center;">
+                 <div class="col-sm-12" style="text-align:center;">
                     <div id="scrollArea" class="col-sm-12">
 
                         <div class="CCList">
@@ -54,11 +53,12 @@
                                 <thead>
                                     <tr>
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Syarikat</th>
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Customer</th>
                                         <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan </th>
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh </th>
+
 
                                     </tr>
                                 </thead>
@@ -66,14 +66,33 @@
                                     @foreach (var cmDetails in Model)
                                     {
                                         bil = bil + 1;
-                                        <tr @if (cmDetails.fld_DTCreated == DateTime.Today || cmDetails.fld_DTModified == DateTime.Today)
-                                     { <text> style="background-color:lightgrey;" </text>  }>
+                                        <tr @if (cmDetails.fld_DTCreated == DateTime.Today || cmDetails.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_CompanyCode</td>
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_CustomerNo</td>
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_Desc </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@cmDetails.fld_CreatedBy </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @cmDetails.fld_DTCreated) </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @cmDetails.fld_DTModified)</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @if (cmDetails.fld_ModifiedBy == "" || cmDetails.fld_ModifiedBy == null)
+                                                {
+                                                    @Html.DisplayFor(modelItem => cmDetails.fld_CreatedBy)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => cmDetails.fld_ModifiedBy)
+                                                }
+
+                                            </td>
+
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @if (cmDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", cmDetails.fld_DTCreated)
+                                                }
+                                                else
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", cmDetails.fld_DTModified)
+                                                }
+                                            </td>
                                         </tr>
 
                                     }
@@ -93,8 +112,10 @@
             }
 
 
-            <div class="col-sm-12" style="text-align:right;">
+            <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
+                <input type="button" id="btnDisplaySearchResults" value="New Customer" onclick="location.href='@Url.Action("cmRequest", "SAPMasterData")'" class="btn btn-success " />
                 <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+
             </div>
         </div>
     </div>

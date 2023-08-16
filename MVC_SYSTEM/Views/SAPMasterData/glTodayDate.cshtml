@@ -37,7 +37,9 @@
                             <thead>
                                 <tr>
                                     <th bgcolor="#ffcc80" width="2%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
-
+                                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                        Syarikat
+                                    </th>
                                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
                                         GL No
                                     </th>
@@ -56,7 +58,9 @@
                                     bil = bil + 1;
                                     <tr>
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
-
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            @Html.DisplayFor(modelItem => item.fld_CompanyCode)
+                                        </td>
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
                                             @Html.DisplayFor(modelItem => item.fld_GLcode)
                                         </td>

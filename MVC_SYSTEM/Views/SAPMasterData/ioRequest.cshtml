@@ -20,48 +20,73 @@
                     <div class="panel-heading">Request New Vendor</div>
                     <div class="panel-body">
 
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                @Html.LabelFor(model => model.fld_CompanyCode, "SAP Company Code", htmlAttributes: new { @class = "control-label" })
-                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                        <div class="field">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.fld_CompanyCode, "SAPCompanyCode", htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                @Html.Label(GlobalResCorp.lblRegion)
-                                @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    @Html.Label(GlobalResCorp.lblRegion)
+                                    @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.Label(GlobalResCorp.lblEstate)
+                                    @Html.DropDownList("fld_LadangID", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                @Html.Label(GlobalResCorp.lblEstate)
-                                @Html.DropDownList("fld_LadangID", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="fieldFELDA">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.Label("Indikator Rancangan", htmlAttributes: new { @class = "control-label" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.fld_LdgIndicator, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "1", @readonly = true } })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.fld_LdgIndicator2, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "9", @readonly = true } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.Label("Peringkat Rancangan", htmlAttributes: new { @class = "control-label" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.fld_PktCode, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "001", @readonly = true } })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.fld_PktCode2, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "999", @readonly = true } })
+                                </div>
+                            </div>
+                        </div>
+                        @*kodIO Display*@
+                        <div class="fieldFPM">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.Label("Kod IO", htmlAttributes: new { @class = "control-label" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+
+                                    @Html.EditorFor(model => model.fld_IOCodeBegin, null, new { htmlAttributes = new { @class = "form-control col-sm-2" } })
+                                </div>
+                                <div class="col-md-2">
+
+                                    @Html.EditorFor(model => model.fld_IOCodeEnd, null, new { htmlAttributes = new { @class = "form-control col-sm-2" } })
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                @Html.Label("Indikator Rancangan", htmlAttributes: new { @class = "control-label" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                @Html.EditorFor(model => model.fld_LdgIndicator, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "1", @readonly = true } })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.EditorFor(model => model.fld_LdgIndicator2, null, new { htmlAttributes = new { @class = "form-control col-sm-2", @placeholder = "9", @readonly = true } })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                @Html.Label("Peringkat Rancangan", htmlAttributes: new { @class = "control-label" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <div class="col-md-2">
-                                @Html.EditorFor(model => model.fld_PktCode, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "001", @readonly = true } })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.EditorFor(model => model.fld_PktCode2, null, new { htmlAttributes = new { @class = "form-control col-md-1", @placeholder = "999", @readonly = true } })
-                            </div>
-                        </div>
 
                         <div class="col-sm-9 right">
 
@@ -70,7 +95,7 @@
                         </div>
                     </div>
                     </div>
-            </div>
+                </div>
         </div>
 
     }
@@ -124,4 +149,22 @@
             $.ajax(WilayahIDList);
         });
     });
+
+    $(document).ready(function () {
+        //this line fires no matter what
+        $(".field").show();
+        $(".fieldFPM").hide();
+        $(".fieldFELDA").hide();
+        $("#fld_CompanyCode").change(function () {
+            var value = document.getElementById("fld_CompanyCode").value;
+            if (value == "FPM" || value == "8800") {
+                $(".fieldFELDA").hide();
+                $(".fieldFPM").show("highlight", { color: "#7FAAFF" }, 1000);
+            }
+            else {
+                $(".fieldFELDA").show("highlight", { color: "#7FAAFF" }, 1000);
+            }
+        });
+    })
+
 </script>

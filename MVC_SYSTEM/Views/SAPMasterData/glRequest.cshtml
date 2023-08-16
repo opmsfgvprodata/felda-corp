@@ -2,6 +2,7 @@
 @using MVC_SYSTEM.Class;
 
 @{ 
+    ViewBag.Title = "Request New GL";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -33,27 +34,28 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_CompanyCode, "SAP Company Code", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-9">
-                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="col-md-2">
+                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control required", required = "required" })
+                                @Html.ValidationMessageFor(model => model.fld_CompanyCode, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_GLcode, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_GLcode, new { htmlAttributes = new { @class = "form-control required", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.fld_GLcode, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-sm-1 text-center">
                                 -
                             </div>
-                            <div class="col-sm-4">
-                                @Html.EditorFor(model => model.fld_GLcode2, new { htmlAttributes = new { @class = "form-control"} })
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_GLcode2, new { htmlAttributes = new { @class = "form-control" } })
 
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-12" style="text-align:right; padding-top:7px;">
 
                             <input class="btn btn-success" type="submit" value="Sent" />
 

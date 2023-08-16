@@ -34,6 +34,7 @@
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Rancangan</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO Code</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FPM</th>
+                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod WBS</th>
                     <th bgcolor="#ffcc80" width="5%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Indikator</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Peringkat</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Sub Peringkat</th>
@@ -50,33 +51,39 @@
                 @foreach (var IODetails in Model)
                 {
                     bil4 = bil4 + 1;
-                <tr @if (IODetails.fld_DTCreated == DateTime.Today || IODetails.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil4</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CompanyCode</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_WlyhName</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgName </td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_IOcode</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_ZIOFPM</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgIndicator </td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_PktCode</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_SubPktCode</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_kodBlok</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasPkt</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawTnmn</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawBerhasil</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CreatedBy</td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTCreated) </td>
-                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTModified)</td>
-                </tr>
+                    <tr @if (IODetails.fld_DTCreated == DateTime.Today || IODetails.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil4</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CompanyCode</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_WlyhName</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgName </td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_IOcode</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_ZIOFPM</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;"
+                            border="1">
+                            @IODetails.fld_WBS
+                        </td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgIndicator </td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_PktCode</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_SubPktCode</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_kodBlok</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasPkt</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawTnmn</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawBerhasil</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CreatedBy</td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTCreated) </td>
+                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTModified)</td>
+                    </tr>
 
                 }
             </tbody>
         </table>
 
     </div>
-    //dania tambah back button 13/4/2023
-    <div class="col-sm-12" style="text-align:right;">
+    <br /><br />
+    <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
+        <input type="button" id="btnDisplaySearchResults" value="New IO" onclick="location.href='@Url.Action("ioRequest", "SAPMasterData")'" class="btn btn-success " />
         <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+
     </div>
     @*<div style="text-align:right; margin-top:10px">
             <a class="btn btn-default btn-sm" href="#" id="printpage5">

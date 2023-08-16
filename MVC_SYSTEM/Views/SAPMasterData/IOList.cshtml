@@ -65,9 +65,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Data IO SAP</div>
                     <div class="panel-body">
-                        <div class="col-sm-12" style="text-align:right;">
-                            <a href="@Url.Action("ioRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
-                        </div>
+                       
                         <div id="searchResultMasterDataReport">
                             <br />
                             @Html.Action("_IOList")
@@ -75,17 +73,15 @@
 
                         </div>
                     </div>
-                            
+
                 </div>
 
             </div>
         </div>
-           
-            <div class="modal-footer">
-                <a href=@Url.Action("Index", "SAPMasterData") class="btn btn-warning" role="button">@GlobalResCorp.btnBack</a>
-            </div>
 
-      
+       
+
+
 
 
     }
