@@ -251,8 +251,9 @@ namespace MVC_SYSTEM.ModelsSP
             var typeParameter = type.HasValue ?
                 new ObjectParameter("Type", type) :
                 new ObjectParameter("Type", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DashAllKerakyatan_Result>("sp_DashAllKerakyatan", syarikatIDParameter, typeParameter);
+
+          return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DashAllKerakyatan_Result>("sp_DashAllKerakyatan", syarikatIDParameter, typeParameter);
+          
         }
     
         public virtual IEnumerable<sp_DashJantina_Result> sp_DashJantina(Nullable<int> syarikatID, Nullable<int> wilayah, Nullable<int> costcentre)
