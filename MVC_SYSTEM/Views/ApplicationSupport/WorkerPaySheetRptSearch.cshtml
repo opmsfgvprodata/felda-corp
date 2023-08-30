@@ -155,14 +155,16 @@
                     if (item.PaySheetPekerja.fld_PaymentMode == "5")
                     {
                         totalNetPayM2U += item.PaySheetPekerja.fld_GajiBersih;
-                        paymentmode = "M2U";
+                        /*paymentmode = "M2U";*/ /*Commented by Shazana 19/8/2023*/
+                        paymentmode = "M2U-E"; /*Added by Shazana 19/8/2023*/
                     }
 
                     //Added by Shazana 25/7/2023
                     if (item.PaySheetPekerja.fld_PaymentMode == "6")
                     {
                         totalNetPayM2E += item.PaySheetPekerja.fld_GajiBersih;
-                        paymentmode = "M2E";
+                        /*paymentmode = "M2E";*//*Commented by Shazana 19/8/2023*/
+                        paymentmode = "M2E-HQ"; /*Added by Shazana 19/8/2023*/
                     }
 
                     if (item.PaySheetPekerja.fld_PaymentMode == null)
@@ -335,7 +337,10 @@
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2U</td>
+                    @*Commented by Shazana 19/8/2023*@
+                    @*<td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2U</td>*@
+                    @*Added by Shazana 19/8/2023*@
+                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2E-E</td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
@@ -356,7 +361,11 @@
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2E</td>
+                    @*Commented by Shazana 19/8/2023*@
+                    @*<td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2E</td>*@
+                    @*Added by Shazana 19/8/2023*@
+                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">M2E-HQ</td>
+
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
                     <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
