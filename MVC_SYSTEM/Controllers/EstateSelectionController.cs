@@ -50,6 +50,19 @@ namespace MVC_SYSTEM.Controllers
             
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
+            //yana add 030823
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+            ViewBag.SyarikatList = SyarikatList;
+            // end here 030823
+
             List<SelectListItem> WilayahIDList = new List<SelectListItem>();
             List<SelectListItem> LadangIDList = new List<SelectListItem>();
 
@@ -139,7 +152,9 @@ namespace MVC_SYSTEM.Controllers
             return Redirect(routeurl);
         }
 
-        public JsonResult GetLadang(int WilayahID)
+        // yana update 030823 - add string SyarikatList
+        public JsonResult GetLadang(int WilayahID, string SyarikatList)
+        // end here 030823
         {
             List<SelectListItem> ladanglist = new List<SelectListItem>();
 
@@ -156,12 +171,14 @@ namespace MVC_SYSTEM.Controllers
                 if (WilayahID == 0)
                 {
                     //modified by faeza 09.07.2023 - OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang)
-                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_Deleted_L == false).OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
+                    // yana update 030823 x.fld_CostCentre == SyarikatList
+                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_Deleted_L == false && x.fld_CostCentre == SyarikatList).OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
                 }
                 else
                 {
                     //modified by faeza 09.07.2023 - OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang)
-                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_Deleted_L == false).OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
+                    // yana update 030823 x.fld_CostCentre == SyarikatList
+                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_Deleted_L == false && x.fld_CostCentre == SyarikatList).OrderBy(o => o.fld_CostCentre).ThenBy(t => t.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
                 }
             }
 
