@@ -26,6 +26,12 @@
         {
             @Html.AntiForgeryToken()
             <div class="row">
+                @*sarah added*@
+                <div class="col-sm-2">
+                    <label>Kod Syarikat</label>
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*end*@
                 <div class="col-sm-2">
                     <label>@GlobalResCorp.lblRegion</label>
                     @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
@@ -88,9 +94,11 @@
             } else {
 
                 var WilayahList = {};
-                WilayahList.url = "@Url.Action("GetLadang", "Json")";
+                //sarah modified
+                WilayahList.url = "@Url.Action("GetLadang2", "Json")";
                 WilayahList.type = "POST";
-                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+                //sarah modified
+                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() });
                 WilayahList.datatype = "json";
                 WilayahList.contentType = "application/json";
                 WilayahList.success = function(ladanglist) {
