@@ -46,6 +46,19 @@ namespace MVC_SYSTEM.Controllers
             drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
             drprangeyear = timezone.gettimezone().Year;
 
+            //yana add 030823
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+            ViewBag.SyarikatList = SyarikatList;
+            // end here 030823
+
             List<SelectListItem> WilayahIDList = new List<SelectListItem>();
             List<SelectListItem> LadangIDList = new List<SelectListItem>();
 
@@ -172,7 +185,9 @@ namespace MVC_SYSTEM.Controllers
             
         }
 
-        public JsonResult GetSubEst(int Wlyh)
+        // yana update 030823 - add string SyarikatList
+        public JsonResult GetSubEst(int Wlyh, string SyarikatList)
+        // end here 030823
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -184,8 +199,10 @@ namespace MVC_SYSTEM.Controllers
             //var findsub = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kmplnKategoriAktvt" && x.fldOptConfValue == KateAkt && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
 
             List<SelectListItem> result = new List<SelectListItem>();
+            // yana update 030823 - add x.fld_CostCentre == SyarikatList
             result = new SelectList(db.tbl_Ladang
-                .Where(x => x.fld_Deleted == false && x.fld_WlyhID == Wlyh && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Where(x => x.fld_Deleted == false && x.fld_WlyhID == Wlyh && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_CostCentre == SyarikatList)
+                // end here 030823
                 .OrderBy(o => o.fld_ID)
                 .Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
 
