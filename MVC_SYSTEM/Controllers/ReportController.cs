@@ -7437,5 +7437,245 @@ namespace MVC_SYSTEM.Controllers
         //        return View(PaySheetPekerjaList);
         //    }
         //}
+
+        //Added by Shazana 15/8/2023
+        public ActionResult MapaReport()
+        {
+            ViewBag.Report = "class = active";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            int[] wlyhid = new int[] { };
+            int? wilayahselection = 0;
+            int? ladangselection = 0;
+            int incldg = 0;
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+            List<SelectListItem> wilayahList = new List<SelectListItem>();
+            List<SelectListItem> ladangList = new List<SelectListItem>();
+
+            if (WilayahID == 0 && LadangID == 0)
+            {
+                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
+                        .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                        .OrderBy(o => o.fldOptConfDesc)
+                        .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                    "Value", "Text").ToList();
+
+                wlyhid = getwilyah.GetWilayahID(SyarikatID);
+                wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
+                wilayahList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
+
+                //ladangList = new SelectList(db2.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
+                ladangList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
+            }
+            else if (WilayahID != 0 && LadangID == 0)
+            {
+                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
+                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .OrderBy(o => o.fldOptConfDesc)
+                .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+                wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
+                wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
+                wilayahList = new SelectList(db2.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
+                wilayahselection = WilayahID;
+                incldg = 1;
+
+            }
+            else if (WilayahID != 0 && LadangID != 0)
+            {
+                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
+                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .OrderBy(o => o.fldOptConfDesc)
+                .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+                wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
+                wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
+                ladangList = new SelectList(db2.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_ID == LadangID && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
+
+                wilayahselection = WilayahID;
+                ladangselection = LadangID;
+                incldg = 1;
+            }
+
+            ViewBag.CompCodeList = CompCodeList;
+            ViewBag.WilayahList = wilayahList;
+            ViewBag.LadangList = ladangList;
+
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            int month = timezone.gettimezone().Month;
+
+            ViewBag.MonthList = new SelectList(
+                db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false &&
+                                                   x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID),
+                "fldOptConfValue", "fldOptConfDesc", month - 1);
+
+            return View();
+        }
+
+        [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Viewer")]
+        public ViewResult _MapaReport(int? WilayahList, int? LadangList, int? MonthList, int? YearList, string CompCodeList, string print)
+        {
+
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.NamaSyarikat = db.tbl_Syarikat
+                .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Select(s => s.fld_NamaSyarikat)
+                .FirstOrDefault();
+            ViewBag.NoSyarikat = db.tbl_Syarikat
+                .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Select(s => s.fld_NoSyarikat)
+                .FirstOrDefault();
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Print = print;
+            ViewBag.YearList = YearList;
+            ViewBag.MonthList = MonthList;
+            //Added by Shazana 15/8/2023
+            var namapenuhsyarikat = GetConfig.GetSyarikatFullName(CompCodeList);
+            var namasyarikat = GetConfig.GetSyarikatName(CompCodeList);
+            ViewBag.costcentre = CompCodeList;
+            ViewBag.namapenuhsyarikat = namapenuhsyarikat.ToUpper();
+            ViewBag.namasyarikat = namasyarikat.ToUpper();
+
+            List<sp_MapaReport_Result> MapaData = new List<sp_MapaReport_Result>();
+            List<vw_MapaCustomModel> PaySheetPekerjaList = new List<vw_MapaCustomModel>();
+
+            String namabulan = db.tblOptionConfigsWeb.Where(x => x.fldOptConfValue == MonthList.ToString()).Select(x => x.fldOptConfFlag2).FirstOrDefault();
+            if (namabulan != null)
+            { ViewBag.namabulan = namabulan.ToUpper(); }
+            else
+            { ViewBag.namabulan = ""; }
+            ViewBag.WilayahList = WilayahList;
+            ViewBag.LadangList = LadangList;
+
+            try
+            {
+                if (String.IsNullOrEmpty(MonthList.ToString()) || String.IsNullOrEmpty(YearList.ToString()) || String.IsNullOrEmpty(WilayahList.ToString()))
+                {
+                    ViewBag.Message = @GlobalResCorp.lblChooseWorkerMasterDataReport;
+                }
+                else
+                {
+                    if (WilayahList == 0)
+                    {
+                        
+                        if (LadangList == 0)
+                        {
+                            dbSP.SetCommandTimeout(3600);
+                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            .Where(x => x.fld_Month == MonthList && x.fld_Year == YearList).OrderBy(o => o.fld_WilayahID).ToList();
+                        }
+                    }
+                    else
+                    {
+                        if (LadangList == 0)
+                        {
+
+                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            .Where(x => x.fld_Month == MonthList &&
+                                    x.fld_Year == YearList && x.fld_WilayahID == WilayahList).OrderBy(o => o.fld_WilayahID).ToList();
+                            ViewBag.Tajuk = db.tbl_Wilayah
+                            .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == WilayahList)
+                               .Select(s => "Wilayah " + s.fld_WlyhName.Substring(0, 1).ToUpper() + s.fld_WlyhName.Substring(1).ToLower()).FirstOrDefault();
+                        }
+                        else
+                        {
+                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            .Where(x => x.fld_Month == MonthList &&
+                                    x.fld_Year == YearList && x.fld_WilayahID == WilayahList && x.fld_LadangID == LadangList).OrderBy(o => o.fld_WilayahID).ToList();
+
+                            ViewBag.Tajuk = db.tbl_Ladang
+                  .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == LadangList)
+                  .Select(s => s.fld_LdgName.Substring(0, 1).ToUpper() + s.fld_LdgName.Substring(1).ToLower())
+                  .FirstOrDefault();
+                        }
+                    }
+                    if (MapaData.Count() != 0)
+                    {
+                        foreach (var salary in MapaData)
+                        {
+                            Connection Connection = new Connection();
+                            string host, catalog, user, pass = "";
+
+
+                            Connection.GetConnection(out host, out catalog, out user, out pass, salary.fld_WilayahID, SyarikatID.Value, NegaraID.Value);
+                            MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+                            var SbkpSipMajikan = estateConnection.tbl_ByrCarumanTambahan.Where(x => x.fld_NegaraID == salary.fld_NegaraID && x.fld_SyarikatID == salary.fld_SyarikatID && x.fld_WilayahID == salary.fld_WilayahID && x.fld_LadangID == salary.fld_LadangID && x.fld_Month == MonthList && x.fld_Year == YearList).Select(x => x.fld_CarumanMajikan).ToList();
+                            var summajikan = SbkpSipMajikan.Sum();
+
+                            var socsoMajikan = estateConnection.vw_PaySheetPekerja.Where(x => x.fld_NegaraID == salary.fld_NegaraID && x.fld_SyarikatID == salary.fld_SyarikatID && x.fld_WilayahID == salary.fld_WilayahID && x.fld_LadangID == salary.fld_LadangID && x.fld_Year == YearList && x.fld_Month == MonthList).Select(x => x.fld_SocsoMjk).ToList();
+                            var sumsocsomajikan = socsoMajikan.Sum();
+
+                            var kwspMajikan = estateConnection.vw_PaySheetPekerja.Where(x => x.fld_NegaraID == salary.fld_NegaraID && x.fld_SyarikatID == salary.fld_SyarikatID && x.fld_WilayahID == salary.fld_WilayahID && x.fld_LadangID == salary.fld_LadangID && x.fld_Year == YearList && x.fld_Month == MonthList).Select(x => x.fld_KWSPMjk).ToList();
+                            var sumKwspMajikan = socsoMajikan.Sum();
+
+                            var ladangInfo = db.tbl_Ladang.Where(x => x.fld_ID == salary.fld_LadangID && x.fld_WlyhID == salary.fld_WilayahID && x.fld_NegaraID == salary.fld_NegaraID && x.fld_SyarikatID == salary.fld_SyarikatID).FirstOrDefault();
+
+                            List<ModelsCustom.CarumanTambahanCustomModel> carumanTambahanCustomModelList = new List<ModelsCustom.CarumanTambahanCustomModel>();
+
+                            ModelsCustom.CarumanTambahanCustomModel carumanTambahanCustomModel = new ModelsCustom.CarumanTambahanCustomModel();
+                            carumanTambahanCustomModel.fld_KodCarumanTambahan = "SBKPSIP";
+                            carumanTambahanCustomModel.fld_CarumanMajikan = summajikan + sumsocsomajikan;
+                            carumanTambahanCustomModel.fld_CarumanMajikanKwsp = sumKwspMajikan;
+                            carumanTambahanCustomModel.fld_accountNo = ladangInfo.fld_NoAcc == null ? "" : ladangInfo.fld_NoAcc;
+                            carumanTambahanCustomModel.fld_NoGL = ladangInfo.fld_NoGL == null ? "" : ladangInfo.fld_NoGL;
+                            carumanTambahanCustomModel.fld_zonCIT = ladangInfo.fld_NoCIT == null ? "" : ladangInfo.fld_NoCIT;
+                            carumanTambahanCustomModel.ladangid = salary.fld_LadangID;
+                            carumanTambahanCustomModelList.Add(carumanTambahanCustomModel);
+
+                            PaySheetPekerjaList.Add(new ModelsCustom.vw_MapaCustomModel()
+                            {
+                                sp_RptMAPA = salary,
+                                CarumanTambahan = carumanTambahanCustomModelList
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (PaySheetPekerjaList.Count == 0)
+                        {
+                            ViewBag.Message = @GlobalResCorp.msgNoRecord;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+            }
+            return View(PaySheetPekerjaList);
+        }
+
     }
 }
