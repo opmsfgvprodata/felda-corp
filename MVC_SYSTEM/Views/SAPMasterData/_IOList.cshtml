@@ -22,7 +22,7 @@
 @if (Model != null && Model.Count() != 0)
 {
 
-    <div id="scrollArea" class="col-sm-12">
+    <div id="scrollArea" >
 
         <table class="table table-hover">
             <thead>
@@ -74,20 +74,71 @@
         </table>
 
     </div>
+<<<<<<< Updated upstream
     //dania tambah back button 13/4/2023
     <div class="col-sm-12" style="text-align:right;">
+=======
+
+    <div style="text-align:right; margin-top:10px">
+        <a class="btn btn-default btn-sm" href="" id="printpage">
+            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+        </a>
+        <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+        </a>
+        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+        </a>
+    </div>
+
+    <br />
+    <br />
+    <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
+        <input type="button" id="btnDisplaySearchResults" value="New IO" onclick="location.href='@Url.Action("ioRequest", "SAPMasterData")'" class="btn btn-success " />
+>>>>>>> Stashed changes
         <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
     </div>
-    @*<div style="text-align:right; margin-top:10px">
-            <a class="btn btn-default btn-sm" href="#" id="printpage5">
-                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
-            </a>
-            <a class="btn btn-default btn-sm" href="#" id="downloadpdf5">
-                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
-            </a>
-            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel2('@uniquefilename')">
-                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-            </a>
-        </div>*@
-
 }
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                rl: '@Url.Action("ConvertPDF2", "SAPMasterData")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "MasterData IO" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+
+    }
+</script>
