@@ -467,6 +467,19 @@ namespace MVC_SYSTEM.Controllers
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
+            //yana add 030823
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+            ViewBag.SyarikatList = SyarikatList;
+            // end here 030823
+
             List<SelectListItem> WilayahIDList = new List<SelectListItem>();
             List<SelectListItem> LadangIDList = new List<SelectListItem>();
 
@@ -531,7 +544,8 @@ namespace MVC_SYSTEM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //Aini update 16052023
-        public ActionResult AuditTrail3(int? YearList, int WilayahIDList, int LadangIDList)
+        // yana update 070823 - add string SyarikatList
+        public ActionResult AuditTrail3(int? YearList, string SyarikatList, int WilayahIDList, int LadangIDList)
         {
             int[] wlyhid = new int[] { };
             //string mywlyid = "";
@@ -547,6 +561,19 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.AuditTrail = "class = active";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            //yana add 030823
+            List<SelectListItem> SyarikatList2 = new List<SelectListItem>();
+            SyarikatList2 = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+
+            ViewBag.SyarikatList = SyarikatList2;
+            // end here 030823
 
             List<SelectListItem> WilayahIDList2 = new List<SelectListItem>();
             List<SelectListItem> LadangIDList2 = new List<SelectListItem>();
@@ -611,6 +638,12 @@ namespace MVC_SYSTEM.Controllers
             {
                 getaudittrailwilayahID = db3.vw_AuditTrail.Where(x => x.fld_Thn == YearList && wlyhid.Contains((int)x.fld_WilayahID)).Select(s => s.fld_WilayahID).Distinct().ToList();
             }
+            // yana add 100823
+            //else if (LadangIDList == 0)
+            //{
+            //    getaudittrailwilayahID = db3.vw_AuditTrail.Where(x => x.fld_Thn == YearList && x.fld_WilayahID == WilayahIDList && x.fld_CostCentre == SyarikatList).Select(s => s.fld_WilayahID).Distinct().ToList();
+            //}
+            // end here 100823
             else
             {
                 getaudittrailwilayahID = db3.vw_AuditTrail.Where(x => x.fld_Thn == YearList && x.fld_WilayahID == WilayahIDList).Select(s => s.fld_WilayahID).Distinct().ToList();
@@ -630,14 +663,15 @@ namespace MVC_SYSTEM.Controllers
 
             return View();
         }
-
-        public ActionResult AuditTrailDetail(int wilid, int? ladcd, int year, int bil, string filesourcepath)
+        // yana add 070923 - string SyarikatList
+        public ActionResult AuditTrailDetail(int wilid, int? ladcd, int year, int bil, string filesourcepath, string SyarikatList)
         {
             int? getuserid = getidentity.ID(User.Identity.Name);
             string stringyear = year.ToString();
 
             stringyear = stringyear.Substring(2, 2);
-            var AuditTrailReport = db3.vw_AuditTrail.Where(x => x.fld_Thn == year && x.fld_WilayahID == wilid && x.fld_LadangID == ladcd).OrderBy(o => o.fld_LdgName).ToList();
+            // yana add 070923 - x.fld_CostCentre == SyarikatList
+            var AuditTrailReport = db3.vw_AuditTrail.Where(x => x.fld_Thn == year && x.fld_WilayahID == wilid && x.fld_LadangID == ladcd && x.fld_CostCentre == SyarikatList).OrderBy(o => o.fld_LdgName).ToList();
 
             ViewBag.bil = bil;
             ViewBag.FileSource = filesourcepath;
@@ -685,6 +719,35 @@ namespace MVC_SYSTEM.Controllers
 
             return Json(ladanglist);
         }
+
+        // yana add 070823
+        public JsonResult GetLadang2(int WilayahID, string SyarikatList)
+        {
+            List<SelectListItem> ladanglist = new List<SelectListItem>();
+
+            int? NegaraID = 0;
+            int? SyarikatID = 0;
+            int? WilayahID2 = 0;
+            int? LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID2, out LadangID, getuserid, User.Identity.Name);
+
+            if (getwilyah.GetAvailableWilayah(SyarikatID))
+            {
+                if (WilayahID == 0)
+                {
+                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_Deleted_L == false && x.fld_CostCentre == SyarikatList).OrderBy(o => o.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
+                }
+                else
+                {
+                    ladanglist = new SelectList(db.vw_NSWL.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_Deleted_L == false && x.fld_CostCentre == SyarikatList).OrderBy(o => o.fld_NamaLadang).Select(s => new SelectListItem { Value = s.fld_LadangID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_NamaLadang }), "Value", "Text").ToList();
+                }
+            }
+
+            return Json(ladanglist);
+        }
+        // end here 070823
 
         protected override void Dispose(bool disposing)
         {
