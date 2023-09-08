@@ -2022,12 +2022,12 @@ namespace MVC_SYSTEM.Controllers
             ladangList1.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
             ViewBag.LadangList1 = ladangList1;
 
-            List<SelectListItem> JnisAktvt = new List<SelectListItem>();
-            //var GetJenisAktvtyDesc = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "activityLevel" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => new { s.fldOptConfValue, s.fldOptConfDesc }).ToList(); JnisAktvt = new SelectList(GetJenisAktvtyDesc.Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
-            var tbl_JenisAktiviti = db.tbl_JenisAktiviti.Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).ToList();
-            JnisAktvt = new SelectList(tbl_JenisAktiviti.OrderBy(o => o.fld_KodJnsAktvt).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_KodJnsAktvt + " - " + s.fld_Desc }), "Value", "Text").ToList();
-            JnisAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" }));
-            ViewBag.JnisAktvt = JnisAktvt;
+            //List<SelectListItem> JnisAktvt = new List<SelectListItem>();
+            ////var GetJenisAktvtyDesc = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "activityLevel" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => new { s.fldOptConfValue, s.fldOptConfDesc }).ToList(); JnisAktvt = new SelectList(GetJenisAktvtyDesc.Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            //var tbl_JenisAktiviti = db.tbl_JenisAktiviti.Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).ToList();
+            //JnisAktvt = new SelectList(tbl_JenisAktiviti.OrderBy(o => o.fld_KodJnsAktvt).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_KodJnsAktvt + " - " + s.fld_Desc }), "Value", "Text").ToList();
+            //JnisAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" }));
+            //ViewBag.JnisAktvt = JnisAktvt;
 
             List<SelectListItem> JnisPkt = new List<SelectListItem>();
             JnisPkt = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "jnspkt" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
