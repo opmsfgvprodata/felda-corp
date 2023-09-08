@@ -11,7 +11,7 @@ namespace MVC_SYSTEM.ModelsCorporate
             : base(nameOrConnectionString: "MVC_SYSTEM_HQ_CONN")
         {
         }
-
+        public virtual DbSet<tbl_HargaKesukaran> tbl_HargaKesukaran { get; set; }
         public virtual DbSet<tbl_Ladang> tbl_Ladang { get; set; }
         public virtual DbSet<tblPkjmastApp> tblPkjmastApp { get; set; }
         public virtual DbSet<vw_AuditTrail> vw_AuditTrail { get; set; }
