@@ -123,5 +123,15 @@ namespace MVC_SYSTEM.Class
                 SyarikatID = getcountycompany.fldSyarikatID;
             }
         }
+
+        //add by faeza 28.08.2023
+        public void GetSyarikatRCMSDetail(string compcode, out string CorpID, out string ClientID, out string AccNo, out string InitialName)
+        {
+            var getsyarikat = db.tbl_Syarikat.Where(x => x.fld_SAPComCode == compcode).FirstOrDefault();
+            CorpID = getsyarikat.fld_CorporateID;
+            ClientID = getsyarikat.fld_ClientBatchID;
+            AccNo = getsyarikat.fld_AccountNo;
+            InitialName = getsyarikat.fld_NamaPndkSyarikat;
+        }
     }
 }
