@@ -769,6 +769,7 @@
     <Compile Include="Class\GetActivityDetail.cs" />
     <Compile Include="Class\GetDataCount.cs" />
     <Compile Include="Class\GetFile.cs" />
+    <Compile Include="Class\GetGenerateFile.cs" />
     <Compile Include="Class\GetGroup.cs" />
     <Compile Include="Class\GetIDDataFromDatabase.cs" />
     <Compile Include="Class\GetLadang.cs" />
@@ -816,6 +817,7 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\Maintenance2Controller.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
+    <Compile Include="Controllers\MaybankFileGenController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\MobileLoginController.cs" />
     <Compile Include="Controllers\MobileRequestController.cs" />
@@ -1045,6 +1047,9 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_MyegDetail_Result.cs">
@@ -3516,6 +3521,8 @@
     <Content Include="Views\SAPMasterData\errorView.cshtml" />
     <Content Include="Views\SAPMasterData\ioTodayList.cshtml" />
     <Content Include="Views\DataEntry\PalmPriceInfo.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcms.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
