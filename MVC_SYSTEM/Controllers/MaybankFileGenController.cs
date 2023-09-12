@@ -33,47 +33,56 @@ namespace MVC_SYSTEM.Controllers
         // GET: MaybankFileGen
         public ActionResult Index()
         {
-            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
-            int? getuserid = getidentity.ID(User.Identity.Name);
-            string host, catalog, user, pass = "";
-
-            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
-            int year = Minus1month.Year;
-            int month = Minus1month.Month;
-            int drpyear = 0;
-            int drprangeyear = 0;
-
             ViewBag.MaybankFileGen = "class = active";
-
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-            //Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
-
-            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
-            drprangeyear = timezone.gettimezone().Year;
-
-            var yearlist = new List<SelectListItem>();
-            for (var i = drpyear; i <= drprangeyear; i++)
-            {
-                if (i == year)
-                {
-                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
-                }
-                else
-                {
-                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-                }
-            }
-
-            ViewBag.YearList = yearlist;
-
-            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
-
-            dbC.Dispose();
+            List<SelectListItem> sublist = new List<SelectListItem>();
+            ViewBag.MenuSubList = sublist;
+            ViewBag.MenuList = new SelectList(dbC.tblMenuLists.Where(x => x.fld_Flag == "m2e" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_Desc }), "Value", "Text").ToList();
+            db.Dispose();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId)
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string MenuList, string MenuSubList)
+        {
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            if (MenuSubList != null)
+            {
+                return RedirectToAction(MenuSubList, "MaybankFileGen");
+            }
+            else
+            {
+                int menulist = int.Parse(MenuList);
+                var action = dbC.tblMenuLists.Where(x => x.fld_ID == menulist && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => s.fld_Val).FirstOrDefault();
+                db.Dispose();
+                return RedirectToAction(action, "MaybankFileGen");
+            }
+        }
+
+        public JsonResult GetSubList(int ListID)
+        {
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var findsub = dbC.tblMenuLists.Where(x => x.fld_ID == ListID).Select(s => s.fld_Sub).FirstOrDefault();
+            List<SelectListItem> sublist = new List<SelectListItem>();
+            if (findsub != null)
+            {
+                sublist = new SelectList(dbC.tblMenuLists.Where(x => x.fld_Flag == findsub && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_ID).Select(s => new SelectListItem { Value = s.fld_Val, Text = s.fld_Desc }), "Value", "Text").ToList();
+            }
+            db.Dispose();
+            return Json(sublist);
+        }
+
+        [HttpPost]
+        public ActionResult DownloadText(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
