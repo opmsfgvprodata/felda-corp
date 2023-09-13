@@ -79,7 +79,7 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             //fatin added - 08/09/2023
-            if (MaintenanceList.ToString() == "533")
+            if (MaintenanceList.ToString() == "1536")
             {
                 int maintenancelist = int.Parse(MaintenanceList);
                 var action = db.tblMenuLists.Where(x => x.fld_ID == maintenancelist && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => s.fld_Val).FirstOrDefault();
