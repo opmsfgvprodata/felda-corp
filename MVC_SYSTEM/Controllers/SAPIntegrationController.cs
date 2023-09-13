@@ -78,6 +78,17 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
+            //fatin added - 08/09/2023
+            if (MaintenanceList.ToString() == "533")
+            {
+                int maintenancelist = int.Parse(MaintenanceList);
+                var action = db.tblMenuLists.Where(x => x.fld_ID == maintenancelist && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => s.fld_Val).FirstOrDefault();
+                db.Dispose();
+                return RedirectToAction(action, "Report");
+
+            }
+            //end
+
             if (MaintenanceSubList != null)
             {
                 return RedirectToAction(MaintenanceSubList, "SAPIntegration");
@@ -89,6 +100,7 @@ namespace MVC_SYSTEM.Controllers
                 db.Dispose();
                 return RedirectToAction(action, "SAPIntegration");
             }
+
         }
 
         public JsonResult GetSubList(int ListID)
