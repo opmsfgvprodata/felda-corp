@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptRumKedKepPekLad_Result>
 @using MVC_SYSTEM.Class;
 @{
+
+
+    GetConfig GetConfig = new GetConfig();
     ViewBag.Title = "Active Worker";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
@@ -108,6 +111,11 @@
                     @Html.Label(GlobalResActiveWorker.lblYear)
                     @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
+                @*sarah added*@
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
                 <div class="col-sm-3">
                     @Html.Label(GlobalResActiveWorker.lblWilayah)
                     @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
@@ -130,274 +138,282 @@
             @if (Model.Count() != 0)
             {
                 <div id="scrollArea" class="modal-body">
-                    <logo />
-                    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
-                        <thead>
-                            <tr>
-                                @*sarah modified *@
-                                @*<th colspan="28" style="text-align:center;vertical-align:middle;">*@
-                                <th colspan="29" style="text-align:center;vertical-align:middle;">
-                                    @ViewBag.NamaSyarikat
-                                    <br />
-                                    (@ViewBag.NoSyarikat)
-                                    <br />
-                                    @GlobalResActiveWorker.hdrReportTitle (@status)
-                                    <br />
-                                    @ViewBag.Year
-                                </th>
-                            </tr>
-                            @if (ViewBag.IncLdg2 != 1)
-                            {
+                    @foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
+                    {
+                        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
                                 <tr>
-                                    @*sarah modified*@
-                                    @*<th colspan="28" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">*@
-                                    <th colspan="29" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @selectionheader
+                                    @*sarah modified *@
+                                    @*<th colspan="28" style="text-align:center;vertical-align:middle;">*@
+                                    <th colspan="29" style="text-align:center;vertical-align:middle;">
+
+
+                                        @namapenuhsyarikat
+                                        <br />
+                                        (@namasyarikat)
+                                        <br />
+                                        @GlobalResActiveWorker.hdrReportTitle (@status)
+                                        <br />
+                                        @ViewBag.Year
                                     </th>
                                 </tr>
-                            }
+                                @if (ViewBag.IncLdg2 != 1)
+                                {
+                                    <tr>
+                                        @*sarah modified*@
+                                        @*<th colspan="28" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">*@
+                                        <th colspan="29" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @selectionheader
+                                        </th>
+                                    </tr>
+                                }
 
-                            <tr>
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
-                                @if (ViewBag.Incldg == 0)
-                                {
-                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
-                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblTotalLadang</th>
-                                }
-                                else
-                                {
-                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrCodeLadang</th>
-                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
-                                }
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNisbah</th>
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrWide</th>
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerlu @*@ViewBag.Year*@</th>
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerluSemasa</th>
-                                @*sarah modidified*@
-                                <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrEstate</th>
-                                @*<th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrEstate</th>*@
-                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
-                                <th rowspan="3" width="5%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrKrngSms</th>
-                                @*sarah modified*@
-                                <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrBilPkjSms</th>
-                                @*<th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrBilPkjSms</th>*@
-                            </tr>
-                            <tr>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKT</th>
-                                <th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrAsing</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPemandu</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPenoreh</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPenuai</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPkjAm</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hrdOps</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrMndrAM</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrInpekKualiti</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLoader</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrSemaian</th>
-                                <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
-                            </tr>
-                            <tr>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKI</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKB</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKN</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKIN</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKP</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKK</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKTH</th>
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKV</th>
-                                @*sarah added 10/05/2023*@
-                                <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
-                                    <a data-toggle="modal" data-target="#exampleModal" href="#">@GlobalResActiveWorker.hdrother</a>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
                                 <tr>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @RowNo
-                                    </td>
-
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
                                     @if (ViewBag.Incldg == 0)
                                     {
-                                        <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
-                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_JumLdg</td>
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                        <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblTotalLadang</th>
                                     }
                                     else
                                     {
-                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_KodLadang</td>
-                                        <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                        <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrCodeLadang</th>
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
                                     }
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_Nisbah)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForDec2(item.fld_LuasLadang)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_PerluThn)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_PerluSmsa)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKT)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKI)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKB)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKN)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKIN)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKP)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKK)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKTH)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_TKV)
-                                    </td>
-                                    @*sarah added 10/05/2023*@
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_other)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_JumPkrja)
-                                    </td>
-                                    <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_KekurangSmsa)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsPemandu)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsPenoreh)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsPenuai)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsPekerjaAm)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsOpOperasi)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsMandorAm)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsInpekKualiti)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsLoader)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_BilPkjSmsSemaian)
-                                    </td>
-                                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                                        @GetTriager.GetDashForInt(item.fld_JumBilPkjSms)
-                                    </td>
-
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNisbah</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrWide</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerlu @*@ViewBag.Year*@</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPerluSemasa</th>
+                                    @*sarah modidified*@
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrEstate</th>
+                                    @*<th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrEstate</th>*@
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                    <th rowspan="3" width="5%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrKrngSms</th>
+                                    @*sarah modified*@
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrBilPkjSms</th>
+                                    @*<th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrBilPkjSms</th>*@
                                 </tr>
+                                <tr>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKT</th>
+                                    <th colspan="9" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrAsing</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPemandu</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPenoreh</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPenuai</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrPkjAm</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hrdOps</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrMndrAM</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrInpekKualiti</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLoader</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrSemaian</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKI</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKB</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKN</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKIN</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKP</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKK</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKTH</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKV</th>
+                                    @*sarah added 10/05/2023*@
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                        <a data-toggle="modal" data-target="#exampleModal" href="#">@GlobalResActiveWorker.hdrother</a>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
                                 {
-                                    jumldg = jumldg + item.fld_JumLdg;
-                                    luastnh = luastnh + item.fld_LuasLadang;
-                                    perluthn = perluthn + item.fld_PerluThn;
-                                    perlusms = perlusms + item.fld_PerluSmsa;
-                                    nisbah = nisbah + item.fld_Nisbah;
-                                    tkt = tkt + item.fld_TKT;
-                                    tki = tki + item.fld_TKI;
-                                    tkb = tkb + item.fld_TKB;
-                                    tkn = tkn + item.fld_TKN;
-                                    tkin = tkin + item.fld_TKIN;
-                                    tkp = tkp + item.fld_TKP;
-                                    tkk = tkk + item.fld_TKK;
-                                    tkth = tkth + item.fld_TKTH;
-                                    tkv = tkv + item.fld_TKV;
-                                    @*sarah added 10/05/2023*@
-                                    tkother = tkother + item.fld_other;
-                                    @*sampai sini*@
-                                    jumpkj = jumpkj + item.fld_JumPkrja;
-                                    tkts = tkts + item.fld_TKTS;
-                                    tkis = tkis + item.fld_TKIS;
-                                    tkbs = tkbs + item.fld_TKBS;
-                                    tkns = tkns + item.fld_TKNS;
-                                    tkins = tkins + item.fld_TKINS;
-                                    tkps = tkps + item.fld_TKPS;
-                                    tkks = tkks + item.fld_TKKS;
-                                    tkths = tkths + item.fld_TKTHS;
-                                    tkvs = tkvs + item.fld_TKVS;
-                                    @*sarah added 10/05/2023*@
-                                    tkothers = tkothers + item.fld_others;
-                                    @*sampai sini*@
-                                    jumpkjs = jumpkjs + item.fld_JumPkrjaS;
-                                    kkrgnsms = kkrgnsms + item.fld_KekurangSmsa;
-                                    bilpkjpmndu = bilpkjpmndu + item.fld_BilPkjSmsPemandu;
-                                    bilpkjpnreh = bilpkjpnreh + item.fld_BilPkjSmsPenoreh;
-                                    bilpkjpnuai = bilpkjpnuai + item.fld_BilPkjSmsPenuai;
-                                    bilpkjam = bilpkjam + item.fld_BilPkjSmsPekerjaAm;
-                                    bilpkjops = bilpkjops + item.fld_BilPkjSmsOpOperasi;
-                                    bilpkjmndram = bilpkjmndram + item.fld_BilPkjSmsMandorAm;
-                                    bilpkjinspkualiti = bilpkjinspkualiti + item.fld_BilPkjSmsInpekKualiti;
-                                    bilpkjloader = bilpkjloader + item.fld_BilPkjSmsLoader;
-                                    bilpkjpnymaian = bilpkjpnymaian + item.fld_BilPkjSmsSemaian;
-                                    jumbilpkj = jumbilpkj + item.fld_JumBilPkjSms;
+                                    <tr>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @RowNo
+                                        </td>
 
+                                        @if (ViewBag.Incldg == 0)
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_JumLdg</td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_KodLadang</td>
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                        }
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_Nisbah)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForDec2(item.fld_LuasLadang)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_PerluThn)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_PerluSmsa)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKT)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKI)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKP)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKV)
+                                        </td>
+                                        @*sarah added 10/05/2023*@
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_other)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumPkrja)
+                                        </td>
+                                        <td align="center" width="5%" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_KekurangSmsa)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsPemandu)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsPenoreh)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsPenuai)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsPekerjaAm)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsOpOperasi)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsMandorAm)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsInpekKualiti)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsLoader)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_BilPkjSmsSemaian)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumBilPkjSms)
+                                        </td>
+
+                                    </tr>
+                                    {
+                                        jumldg = jumldg + item.fld_JumLdg;
+                                        luastnh = luastnh + item.fld_LuasLadang;
+                                        perluthn = perluthn + item.fld_PerluThn;
+                                        perlusms = perlusms + item.fld_PerluSmsa;
+                                        nisbah = nisbah + item.fld_Nisbah;
+                                        tkt = tkt + item.fld_TKT;
+                                        tki = tki + item.fld_TKI;
+                                        tkb = tkb + item.fld_TKB;
+                                        tkn = tkn + item.fld_TKN;
+                                        tkin = tkin + item.fld_TKIN;
+                                        tkp = tkp + item.fld_TKP;
+                                        tkk = tkk + item.fld_TKK;
+                                        tkth = tkth + item.fld_TKTH;
+                                        tkv = tkv + item.fld_TKV;
+                                        @*sarah added 10/05/2023*@
+                                        tkother = tkother + item.fld_other;
+                                        @*sampai sini*@
+                                        jumpkj = jumpkj + item.fld_JumPkrja;
+                                        tkts = tkts + item.fld_TKTS;
+                                        tkis = tkis + item.fld_TKIS;
+                                        tkbs = tkbs + item.fld_TKBS;
+                                        tkns = tkns + item.fld_TKNS;
+                                        tkins = tkins + item.fld_TKINS;
+                                        tkps = tkps + item.fld_TKPS;
+                                        tkks = tkks + item.fld_TKKS;
+                                        tkths = tkths + item.fld_TKTHS;
+                                        tkvs = tkvs + item.fld_TKVS;
+                                        @*sarah added 10/05/2023*@
+                                        tkothers = tkothers + item.fld_others;
+                                        @*sampai sini*@
+                                        jumpkjs = jumpkjs + item.fld_JumPkrjaS;
+                                        kkrgnsms = kkrgnsms + item.fld_KekurangSmsa;
+                                        bilpkjpmndu = bilpkjpmndu + item.fld_BilPkjSmsPemandu;
+                                        bilpkjpnreh = bilpkjpnreh + item.fld_BilPkjSmsPenoreh;
+                                        bilpkjpnuai = bilpkjpnuai + item.fld_BilPkjSmsPenuai;
+                                        bilpkjam = bilpkjam + item.fld_BilPkjSmsPekerjaAm;
+                                        bilpkjops = bilpkjops + item.fld_BilPkjSmsOpOperasi;
+                                        bilpkjmndram = bilpkjmndram + item.fld_BilPkjSmsMandorAm;
+                                        bilpkjinspkualiti = bilpkjinspkualiti + item.fld_BilPkjSmsInpekKualiti;
+                                        bilpkjloader = bilpkjloader + item.fld_BilPkjSmsLoader;
+                                        bilpkjpnymaian = bilpkjpnymaian + item.fld_BilPkjSmsSemaian;
+                                        jumbilpkj = jumbilpkj + item.fld_JumBilPkjSms;
+
+                                    }
+                                    RowNo++;
                                 }
-                                RowNo++;
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                @if (ViewBag.Incldg == 0)
-                                {
-                                    <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
-                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumldg</td>
-                                }
-                                else
-                                {
-                                    <td colspan="3" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
-                                }
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@nisbah</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@luastnh</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perluthn</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perlusms</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkt</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tki</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkb</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkn</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkin</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkp</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkk </td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkth</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkv</td>
-                                @*sarah added 10/05/2023*@
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkother</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumpkj</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@kkrgnsms</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpmndu</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnreh</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnuai</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjam</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjops</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjmndram</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjinspkualiti</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjloader</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnymaian</td>
-                                <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumbilpkj</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    @if (ViewBag.Incldg == 0)
+                                    {
+                                        <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                        <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumldg</td>
+                                    }
+                                    else
+                                    {
+                                        <td colspan="3" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@nisbah</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@luastnh</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perluthn</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@perlusms</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkt</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tki</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkb</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkn</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkin</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkp</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkk </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkth</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkv</td>
+                                    @*sarah added 10/05/2023*@
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkother</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumpkj</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@kkrgnsms</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpmndu</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnreh</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnuai</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjam</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjops</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjmndram</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjinspkualiti</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjloader</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@bilpkjpnymaian</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumbilpkj</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
                 </div>
                 <!--<a href="#" id="downloadpdf">Download PDF</a>-->
                 //farahin comment button asal
@@ -510,6 +526,7 @@
         @*sarah added sampai sini*@
     </section>
 }
+
 <script src="~/Asset/Scripts/FromHTML.js"></script>
 <script src="~/Asset/Scripts/FileSaver.js"></script>
 <script>
@@ -568,7 +585,58 @@
             });
             return false;
         });*@
-        if ($("#WilayahIDList").val() == 0) {
+
+        $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+        var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang4", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                debugger
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+        });
+
+        /*sarah comment*/
+        @*if ($("#WilayahIDList").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";
             WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
@@ -611,7 +679,7 @@
             };
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);
-        });
+        });*@
     });
 </script>
 <script>
