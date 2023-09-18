@@ -1787,15 +1787,15 @@ namespace MVC_SYSTEM.Controllers
 
 
 
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Zopmsslp[] zopmsslp = new SAPMD_FLQ.Zopmsslp[1];
-            SAPMD_FLQ.Zopmsslp zopmsslps = new SAPMD_FLQ.Zopmsslp();
+            SAPMD_FLP.Zopmsslp[] zopmsslp = new SAPMD_FLP.Zopmsslp[1];
+            SAPMD_FLP.Zopmsslp zopmsslps = new SAPMD_FLP.Zopmsslp();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             var credential = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "sapCredential");
             string username = "", password = "";
@@ -1811,7 +1811,7 @@ namespace MVC_SYSTEM.Controllers
 
             try
             {
-                request = new SAPMD_FLQ.ZfmOpmsMaster();
+                request = new SAPMD_FLP.ZfmOpmsMaster();
 
                 request.DateBegin = "";
                 request.DateEnd = "";
@@ -1831,7 +1831,7 @@ namespace MVC_SYSTEM.Controllers
 
                 if (zopmsslp.Count() - 1 >= 0)
                 {
-                    foreach (SAPMD_FLQ.Zopmsslp a in zopmsslp)
+                    foreach (SAPMD_FLP.Zopmsslp a in zopmsslp)
                     {
 
                         kodComp = a.Zbukrs;
@@ -2131,7 +2131,7 @@ namespace MVC_SYSTEM.Controllers
 
                 if (iresponse.Return.Count() - 1 >= 1)
                 {
-                    foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                    foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                     {
                         type = a.Type;
                         id = a.Id;
