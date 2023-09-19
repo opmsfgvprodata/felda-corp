@@ -183,7 +183,7 @@
                 var ajxfn = {};
                 ajxfn.url = "@Url.Action("GetPkt", "EstateDataManagement")";
                 ajxfn.type = "POST";
-                ajxfn.data = JSON.stringify({ JnisAktvt: $("#JnisAktvt").val(), JnsPkt: $("#JnisPkt").val(), WilayahList: $("#wilayahList1").val(), LadangList: $("#ladangList1").val() });
+                ajxfn.data = JSON.stringify({ JnsPkt: $("#JnisPkt").val(), WilayahList: $("#wilayahList1").val(), LadangList: $("#ladangList1").val() }); //fatin modified remove JnisAktvt- 13/09/2023
                 ajxfn.datatype = "json";
                 ajxfn.contentType = "application/json";
                 ajxfn.success = function (result) {

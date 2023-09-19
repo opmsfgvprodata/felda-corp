@@ -1,0 +1,109 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_PktPinjam
+@{
+    GetConfig getconfig = new GetConfig();
+    string wilayahPinjam = getconfig.GetWilayahNameFromID(Model.fld_WilayahIDAsal);
+    string ladangPinjam = getconfig.GetLadangNameFromID(Model.fld_LadangIDAsal);
+    string wilayahAsal = getconfig.GetWilayahNameFromID(Model.fld_WilayahID);
+    string ladangAsal = getconfig.GetLadangNameFromID(Model.fld_LadangID);
+    string jnsPkt = getconfig.GetWebConfigDesc(Model.fld_JenisPkt.ToString(),"jnspkt", Model.fld_NegaraID, Model.fld_SyarikatID);
+    string peringkat = Model.fld_KodPkt + " - " + Model.fld_NamaPkt + " - " + Model.fld_SAPCode;
+    string dateformat = getconfig.GetData("dateformat");
+
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    var DateNow = ChangeTimeZone.gettimezone();
+
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Pinjam Peringkat</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Pinjam Peringkat</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Wilayah Pinjam:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_WilayahIDAsal", wilayahPinjam, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Ladang Pinjam:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_LadangIDAsal", ladangPinjam, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Jenis Peringkat:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_JenisPkt", jnsPkt, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Peringkat:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_NamaPkt", peringkat, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Wilayah Asal:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_WilayahID", wilayahAsal, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Ladang Asal:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("fld_LadangID", ladangAsal, new { @class = "form-control", @type = "text", @disabled = "true" })
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Tarikh Akhir:</label>
+                                <div class="col-sm-8">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                            <input type="date" class="form-control" name="fld_EndDT" id="fld_EndDT" onkeydown="return false" required />
+                                            <span class="input-group-addon">
+                                                @*<span class="glyphicon glyphicon-calendar"></span>*@
+                                            </span>
+                                        </div>
+                                </div>
+                           
+                        </div>
+                    
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                        @Html.HiddenFor(model => model.fld_WilayahIDAsal)
+                        @Html.HiddenFor(model => model.fld_LadangIDAsal)
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+</script>
+
