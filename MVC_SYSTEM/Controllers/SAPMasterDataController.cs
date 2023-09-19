@@ -1816,8 +1816,8 @@ namespace MVC_SYSTEM.Controllers
                 request.DateBegin = "";
                 request.DateEnd = "";
                 request.SlpComp = "1000";
-                request.SlpIndBegin = "5";
-                request.SlpIndEnd = "6";
+                request.SlpIndBegin = "1";
+                request.SlpIndEnd = "9";
                 request.SlpPktBegin = "001";
                 request.SlpPktEnd = "999";
                 request.SlpRanBegin = LadangCode;
