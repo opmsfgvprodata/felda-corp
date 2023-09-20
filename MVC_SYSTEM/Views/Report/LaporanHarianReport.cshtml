@@ -1,0 +1,199 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+
+    ViewBag.Title = "LaporanHarianReport";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    GetLadang GetLadang = new GetLadang();
+    GetWilayah GetWilayah = new GetWilayah();
+    GetPekerja GetPekerja = new GetPekerja();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "LaporanHarianReport_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    int bill = 1;
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResultLaporanHarianReport",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResDataEntry.WaitMsg
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        @using (Ajax.BeginForm("_LaporanHarianReport", "Report", null, options, new { @id = "LaporanHarianReport" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", (SelectList)null, "Sila Pilih", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblRegion)
+                    @Html.DropDownList("WilayahIDList", (SelectList)null, "Sila Pilih", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblEstate)
+                    @Html.DropDownList("LadangIDList", (SelectList)null, "Sila Pilih", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblWorker)
+                    @Html.DropDownList("WorkerList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(" ")
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="Lihat" />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top: 7px">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Laporan Harian Pekerja</div>
+                <div class="panel-body">
+                    <div id="searchResultLaporanHarianReport">
+                        @Html.Action("_LaporanHarianReport")
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href=@Url.Action("Index", "Report") class="btn btn-warning" role="button">@GlobalResCorp.btnBack</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+
+    $(document).ready(function () {
+
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang2", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0> Sila Pilih  </option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang2", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatList: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0> Sila Pilih </option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+
+        $("#LadangIDList").change(function () {
+            var LadangIDList = {};
+            var disableoption = "";
+            LadangIDList.url = "@Url.Action("GetPekerja3", "Report")";
+            LadangIDList.type = "POST";
+            LadangIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), LadangID: $("#LadangIDList").val() });
+            LadangIDList.datatype = "json";
+            LadangIDList.contentType = "application/json";
+            LadangIDList.success = function (pekerjalist) {
+                $("#WorkerList").empty();
+                $("#WorkerList").append("<option value=0>@GlobalResWorkerTransac.sltAll</option>");
+                for (var i = 0; i < pekerjalist.length; i++) {
+                    if ($("#LadangIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WorkerList").append("<option value=" + pekerjalist[i].Value + " " + disableoption + ">" + pekerjalist[i].Text + "</option>");
+                }
+            };
+            LadangIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(LadangIDList);
+        });
+
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>

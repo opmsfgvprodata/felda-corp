@@ -1,0 +1,211 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@using MVC_SYSTEM.ModelsEstate
+@using MVC_SYSTEM.ModelsCorporate
+@model IEnumerable<MVC_SYSTEM.ModelsEstate.tbl_Kerja>
+@{
+    ViewBag.Title = "LaporanHarianReport";
+    System.Globalization.DateTimeFormatInfo mfi = new System.Globalization.DateTimeFormatInfo();
+    GetIdentity GetIdentity = new GetIdentity();
+    GetEstateDetail GetWorkerDetail = new GetEstateDetail();
+    GetConfig GetConfig = new GetConfig();
+    int bill = 0;
+    string nama = "";
+
+    KadarOT kadar = new KadarOT();
+    GetTriager Triager = new GetTriager();
+    tbl_CostCentre Costcenter = new tbl_CostCentre();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "KerjaHarian_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+
+    <div id="scrollArea" class="modal-body">
+        <logo />
+
+        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0" width="100%" id="test">
+            <thead>
+                <tr>
+                    <th colspan="14" style="text-align:center;vertical-align:middle;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (@GlobalResCorp.lblCompanyNo : @ViewBag.NoSyarikat)
+                        <br />
+                        @GlobalResCorp.lblWorkReport
+                        <br />
+                        @mfi.GetMonthName(Convert.ToInt32(ViewBag.MonthSelection)) - @ViewBag.YearSelection
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+            <thead>
+
+                <tr>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrNo</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblDate</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrNoPkj</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrName</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblGLCode</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrActvtCode</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrDesc</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrOutcome</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.hdrRate</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblOvertimeHour</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblTotalOt</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblTotal</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblTotalOverall</th>
+
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblUserID</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    bill = bill + 1;
+                    Decimal OTRate = 46.16M;
+
+                    <tr>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Tarikh.Value.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_Nopkj</td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetWorkerDetail.Name(item.fld_Nopkj, item.fld_WilayahID.Value, item.fld_SyarikatID.Value, item.fld_NegaraID.Value, item.fld_LadangID.Value)
+                        </td>
+
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetConfig.GetGLDesc(item.fld_KodGL, item.fld_NegaraID.Value, item.fld_SyarikatID.Value)
+
+                        </td>
+
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_KodAktvt
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetConfig.GetAktvt(item.fld_KodAktvt, item.fld_NegaraID.Value, item.fld_SyarikatID.Value)
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_JumlahHasil
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_KadarByr
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @Convert.ToInt32(@item.fld_JamOT)
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @Triager.GetTotalForMoney(@kadar.mul(Convert.ToDecimal(@item.fld_JamOT), OTRate))
+                        </td>
+
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Amount
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_OverallAmount
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @GetIdentity.MyNameFullName(item.fld_CreatedBy)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <newpage />
+    </div>
+
+    if (ViewBag.Print == null)
+    {
+        <div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>
+    }
+}
+
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        });
+
+        $("#downloadpdf2").click(function () {
+
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "LaporanHarianReport" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+    });
+</script>
