@@ -7,6 +7,8 @@
 @{
     ViewBag.Title = "_TransactionListingRptSearch";
     //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    //sarah added
+    GetConfig GetConfig = new GetConfig();
     GetTriager GetTriager = new GetTriager();
     ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
 
@@ -29,15 +31,19 @@
 
 @if (Model != null && Model.Count() != 0)
 {
-    <div id="scrollArea" class="modal-body">
+<div id="scrollArea" class="modal-body">
+    @foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
+    {
+        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
         <logo />
         <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
             <thead>
                 <tr>
                     <th colspan="10" style="text-align: center; vertical-align: middle; border: none;">
-                        @ViewBag.NamaSyarikat
+                        @namapenuhsyarikat
                         <br />
-                        (@GlobalResNoSkb.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                        (@GlobalResNoSkb.hdrCmpnyNo : @namasyarikat)
                         <br />
                         Laporan Transaction Listing
                     </th>
@@ -116,46 +122,47 @@
             <tbody></tbody>
         </table>
         @*<table style="float: left; width: 70%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
-            <thead>
-                <tr>
-                    <th colspan="2" width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">Disediakan Oleh/Disemak Oleh</th>
-                    <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">Disahkan Oleh</th>
-                </tr>
-                <tr>
-                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
-                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
-                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
-                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">ID</td>
-                    <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.IDPenyelia</td>
-                    <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">ID</td>
-                    <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
-                </tr>
-                <tr>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Nama</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.NamaPenyelia</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Nama</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
-                </tr>
-                <tr>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Jawatan</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: PENYELIA</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Jawatan</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
-                </tr>
-                <tr>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Tarikh</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.Date</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Tarikh</td>
-                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
-                </tr>
-            </tbody>
-        </table>*@
+                <thead>
+                    <tr>
+                        <th colspan="2" width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">Disediakan Oleh/Disemak Oleh</th>
+                        <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">Disahkan Oleh</th>
+                    </tr>
+                    <tr>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                        <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">ID</td>
+                        <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.IDPenyelia</td>
+                        <td width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">ID</td>
+                        <td width="3%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Nama</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.NamaPenyelia</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Nama</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Jawatan</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: PENYELIA</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Jawatan</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Tarikh</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.Date</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">Tarikh</td>
+                        <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    </tr>
+                </tbody>
+            </table>*@
         <newpage />
+    }
     </div>
 
     //kamalia-03022021
