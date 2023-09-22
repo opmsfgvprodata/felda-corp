@@ -7,9 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using SysXml = System.Xml;
-
-
+using SysXML = System.Xml;
 namespace MVC_SYSTEM.SAPMD {
     
     
@@ -27,7 +25,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -66,6 +64,8 @@ namespace MVC_SYSTEM.SAPMD {
         
         private Zopmsvd[] itVendField;
         
+        private Bus2054Detail[] itWbsField;
+        
         private string slpCompField;
         
         private string slpIndBeginField;
@@ -85,6 +85,8 @@ namespace MVC_SYSTEM.SAPMD {
         private string vdCompField;
         
         private string vdEndField;
+        
+        private string wbsField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
@@ -284,7 +286,20 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=16)]
+        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=16)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
+        public Bus2054Detail[] ItWbs {
+            get {
+                return this.itWbsField;
+            }
+            set {
+                this.itWbsField = value;
+                this.RaisePropertyChanged("ItWbs");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=17)]
         public string SlpComp {
             get {
                 return this.slpCompField;
@@ -296,7 +311,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=18)]
         public string SlpIndBegin {
             get {
                 return this.slpIndBeginField;
@@ -308,7 +323,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=19)]
         public string SlpIndEnd {
             get {
                 return this.slpIndEndField;
@@ -320,7 +335,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=20)]
         public string SlpPktBegin {
             get {
                 return this.slpPktBeginField;
@@ -332,7 +347,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=21)]
         public string SlpPktEnd {
             get {
                 return this.slpPktEndField;
@@ -344,7 +359,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=22)]
         public string SlpRanBegin {
             get {
                 return this.slpRanBeginField;
@@ -356,7 +371,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=22)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=23)]
         public string SlpRanEnd {
             get {
                 return this.slpRanEndField;
@@ -368,7 +383,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=23)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=24)]
         public string VdBegin {
             get {
                 return this.vdBeginField;
@@ -380,7 +395,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=25)]
         public string VdComp {
             get {
                 return this.vdCompField;
@@ -392,7 +407,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=25)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=26)]
         public string VdEnd {
             get {
                 return this.vdEndField;
@@ -400,6 +415,18 @@ namespace MVC_SYSTEM.SAPMD {
             set {
                 this.vdEndField = value;
                 this.RaisePropertyChanged("VdEnd");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=27)]
+        public string Wbs {
+            get {
+                return this.wbsField;
+            }
+            set {
+                this.wbsField = value;
+                this.RaisePropertyChanged("Wbs");
             }
         }
         
@@ -414,7 +441,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -488,7 +515,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -524,7 +551,7 @@ namespace MVC_SYSTEM.SAPMD {
         private string systemField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string Type {
             get {
                 return this.typeField;
@@ -536,7 +563,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string Id {
             get {
                 return this.idField;
@@ -548,7 +575,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string Number {
             get {
                 return this.numberField;
@@ -560,7 +587,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public string Message {
             get {
                 return this.messageField;
@@ -572,7 +599,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string LogNo {
             get {
                 return this.logNoField;
@@ -584,7 +611,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public string LogMsgNo {
             get {
                 return this.logMsgNoField;
@@ -596,7 +623,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public string MessageV1 {
             get {
                 return this.messageV1Field;
@@ -608,7 +635,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public string MessageV2 {
             get {
                 return this.messageV2Field;
@@ -620,7 +647,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public string MessageV3 {
             get {
                 return this.messageV3Field;
@@ -632,7 +659,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=9)]
         public string MessageV4 {
             get {
                 return this.messageV4Field;
@@ -644,7 +671,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=10)]
         public string Parameter {
             get {
                 return this.parameterField;
@@ -656,7 +683,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=11)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=11)]
         public int Row {
             get {
                 return this.rowField;
@@ -668,7 +695,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=12)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=12)]
         public string Field {
             get {
                 return this.fieldField;
@@ -680,7 +707,7 @@ namespace MVC_SYSTEM.SAPMD {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=13)]
         public string System {
             get {
                 return this.systemField;
@@ -702,7 +729,1467 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:sap-com:document:sap:soap:functions:mc-style")]
+    public partial class Bus2054Detail : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string wbsElementField;
+        
+        private string descriptionField;
+        
+        private string responsibleNoField;
+        
+        private string applicantNoField;
+        
+        private string companyCodeField;
+        
+        private string businessAreaField;
+        
+        private string controllingAreaField;
+        
+        private string profitCtrField;
+        
+        private string projTypeField;
+        
+        private string wbsPlanningElementField;
+        
+        private string wbsAccountAssignmentElementField;
+        
+        private string wbsBillingElementField;
+        
+        private string cstgSheetField;
+        
+        private string overheadKeyField;
+        
+        private string resAnalKeyField;
+        
+        private string requestCctrControllingAreaField;
+        
+        private string requestCctrField;
+        
+        private string respsblCctrControllingAreaField;
+        
+        private string respsblCctrField;
+        
+        private string calendarField;
+        
+        private string priorityField;
+        
+        private string equipmentField;
+        
+        private string functLocField;
+        
+        private string currencyField;
+        
+        private string currencyIsoField;
+        
+        private string plantField;
+        
+        private string userFieldKeyField;
+        
+        private string userFieldChar201Field;
+        
+        private string userFieldChar202Field;
+        
+        private string userFieldChar101Field;
+        
+        private string userFieldChar102Field;
+        
+        private decimal userFieldQuan1Field;
+        
+        private string userFieldUnit1Field;
+        
+        private string userFieldUnit1IsoField;
+        
+        private decimal userFieldQuan2Field;
+        
+        private string userFieldUnit2Field;
+        
+        private string userFieldUnit2IsoField;
+        
+        private decimal userFieldCurr1Field;
+        
+        private string userFieldCuky1Field;
+        
+        private string userFieldCuky1IsoField;
+        
+        private decimal userFieldCurr2Field;
+        
+        private string userFieldCuky2Field;
+        
+        private string userFieldCuky2IsoField;
+        
+        private string userFieldDate1Field;
+        
+        private string userFieldDate2Field;
+        
+        private string userFieldFlag1Field;
+        
+        private string userFieldFlag2Field;
+        
+        private string wbsCctrPostedActualField;
+        
+        private string wbsSummarizationField;
+        
+        private string objectclassField;
+        
+        private string statisticalField;
+        
+        private string taxjurcodeField;
+        
+        private string interestProfField;
+        
+        private string investProfileField;
+        
+        private decimal evgewField;
+        
+        private string changeNoField;
+        
+        private string subprojectField;
+        
+        private string planintegratedField;
+        
+        private string invReasonField;
+        
+        private string scaleField;
+        
+        private string envirInvestField;
+        
+        private string requestCompCodeField;
+        
+        private string wbsMrpElementField;
+        
+        private string locationField;
+        
+        private string ventureField;
+        
+        private string recIndField;
+        
+        private string equityTypField;
+        
+        private string jvOtypeField;
+        
+        private string jvJibclField;
+        
+        private string jvJibsaField;
+        
+        private string wbsBasicStartDateField;
+        
+        private string wbsBasicFinishDateField;
+        
+        private string wbsForecastStartDateField;
+        
+        private string wbsForecastFinishDateField;
+        
+        private string wbsActualStartDateField;
+        
+        private string wbsActualFinishDateField;
+        
+        private decimal wbsBasicDurationField;
+        
+        private string wbsBasicDurUnitField;
+        
+        private string wbsBasicDurUnitIsoField;
+        
+        private decimal wbsForecastDurationField;
+        
+        private string wbsForcastDurUnitField;
+        
+        private string wbsForecastDurUnitIsoField;
+        
+        private decimal wbsActualDurationField;
+        
+        private string wbsActualDurUnitField;
+        
+        private string wbsActualDurUnitIsoField;
+        
+        private string wbsScdBasicStartDateField;
+        
+        private string wbsScdBasicFinishDateField;
+        
+        private string wbsScdForecastStartDateField;
+        
+        private string wbsScdForecastFinishDateField;
+        
+        private string wbsScdActualStartDateField;
+        
+        private string wbsScdActualFinishDateField;
+        
+        private string wbsUpField;
+        
+        private string wbsDownField;
+        
+        private string wbsLeftField;
+        
+        private string wbsRightField;
+        
+        private string funcAreaField;
+        
+        private string languField;
+        
+        private string languIsoField;
+        
+        private string systemStatusField;
+        
+        private string shortIdField;
+        
+        private string networkAssignmentField;
+        
+        private string projectDefinitionField;
+        
+        private string statProfField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string WbsElement {
+            get {
+                return this.wbsElementField;
+            }
+            set {
+                this.wbsElementField = value;
+                this.RaisePropertyChanged("WbsElement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+                this.RaisePropertyChanged("Description");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public string ResponsibleNo {
+            get {
+                return this.responsibleNoField;
+            }
+            set {
+                this.responsibleNoField = value;
+                this.RaisePropertyChanged("ResponsibleNo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string ApplicantNo {
+            get {
+                return this.applicantNoField;
+            }
+            set {
+                this.applicantNoField = value;
+                this.RaisePropertyChanged("ApplicantNo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public string CompanyCode {
+            get {
+                return this.companyCodeField;
+            }
+            set {
+                this.companyCodeField = value;
+                this.RaisePropertyChanged("CompanyCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public string BusinessArea {
+            get {
+                return this.businessAreaField;
+            }
+            set {
+                this.businessAreaField = value;
+                this.RaisePropertyChanged("BusinessArea");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string ControllingArea {
+            get {
+                return this.controllingAreaField;
+            }
+            set {
+                this.controllingAreaField = value;
+                this.RaisePropertyChanged("ControllingArea");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        public string ProfitCtr {
+            get {
+                return this.profitCtrField;
+            }
+            set {
+                this.profitCtrField = value;
+                this.RaisePropertyChanged("ProfitCtr");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        public string ProjType {
+            get {
+                return this.projTypeField;
+            }
+            set {
+                this.projTypeField = value;
+                this.RaisePropertyChanged("ProjType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        public string WbsPlanningElement {
+            get {
+                return this.wbsPlanningElementField;
+            }
+            set {
+                this.wbsPlanningElementField = value;
+                this.RaisePropertyChanged("WbsPlanningElement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
+        public string WbsAccountAssignmentElement {
+            get {
+                return this.wbsAccountAssignmentElementField;
+            }
+            set {
+                this.wbsAccountAssignmentElementField = value;
+                this.RaisePropertyChanged("WbsAccountAssignmentElement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=11)]
+        public string WbsBillingElement {
+            get {
+                return this.wbsBillingElementField;
+            }
+            set {
+                this.wbsBillingElementField = value;
+                this.RaisePropertyChanged("WbsBillingElement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=12)]
+        public string CstgSheet {
+            get {
+                return this.cstgSheetField;
+            }
+            set {
+                this.cstgSheetField = value;
+                this.RaisePropertyChanged("CstgSheet");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=13)]
+        public string OverheadKey {
+            get {
+                return this.overheadKeyField;
+            }
+            set {
+                this.overheadKeyField = value;
+                this.RaisePropertyChanged("OverheadKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=14)]
+        public string ResAnalKey {
+            get {
+                return this.resAnalKeyField;
+            }
+            set {
+                this.resAnalKeyField = value;
+                this.RaisePropertyChanged("ResAnalKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=15)]
+        public string RequestCctrControllingArea {
+            get {
+                return this.requestCctrControllingAreaField;
+            }
+            set {
+                this.requestCctrControllingAreaField = value;
+                this.RaisePropertyChanged("RequestCctrControllingArea");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=16)]
+        public string RequestCctr {
+            get {
+                return this.requestCctrField;
+            }
+            set {
+                this.requestCctrField = value;
+                this.RaisePropertyChanged("RequestCctr");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=17)]
+        public string RespsblCctrControllingArea {
+            get {
+                return this.respsblCctrControllingAreaField;
+            }
+            set {
+                this.respsblCctrControllingAreaField = value;
+                this.RaisePropertyChanged("RespsblCctrControllingArea");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=18)]
+        public string RespsblCctr {
+            get {
+                return this.respsblCctrField;
+            }
+            set {
+                this.respsblCctrField = value;
+                this.RaisePropertyChanged("RespsblCctr");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=19)]
+        public string Calendar {
+            get {
+                return this.calendarField;
+            }
+            set {
+                this.calendarField = value;
+                this.RaisePropertyChanged("Calendar");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=20)]
+        public string Priority {
+            get {
+                return this.priorityField;
+            }
+            set {
+                this.priorityField = value;
+                this.RaisePropertyChanged("Priority");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=21)]
+        public string Equipment {
+            get {
+                return this.equipmentField;
+            }
+            set {
+                this.equipmentField = value;
+                this.RaisePropertyChanged("Equipment");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=22)]
+        public string FunctLoc {
+            get {
+                return this.functLocField;
+            }
+            set {
+                this.functLocField = value;
+                this.RaisePropertyChanged("FunctLoc");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=23)]
+        public string Currency {
+            get {
+                return this.currencyField;
+            }
+            set {
+                this.currencyField = value;
+                this.RaisePropertyChanged("Currency");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=24)]
+        public string CurrencyIso {
+            get {
+                return this.currencyIsoField;
+            }
+            set {
+                this.currencyIsoField = value;
+                this.RaisePropertyChanged("CurrencyIso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=25)]
+        public string Plant {
+            get {
+                return this.plantField;
+            }
+            set {
+                this.plantField = value;
+                this.RaisePropertyChanged("Plant");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=26)]
+        public string UserFieldKey {
+            get {
+                return this.userFieldKeyField;
+            }
+            set {
+                this.userFieldKeyField = value;
+                this.RaisePropertyChanged("UserFieldKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=27)]
+        public string UserFieldChar201 {
+            get {
+                return this.userFieldChar201Field;
+            }
+            set {
+                this.userFieldChar201Field = value;
+                this.RaisePropertyChanged("UserFieldChar201");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=28)]
+        public string UserFieldChar202 {
+            get {
+                return this.userFieldChar202Field;
+            }
+            set {
+                this.userFieldChar202Field = value;
+                this.RaisePropertyChanged("UserFieldChar202");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=29)]
+        public string UserFieldChar101 {
+            get {
+                return this.userFieldChar101Field;
+            }
+            set {
+                this.userFieldChar101Field = value;
+                this.RaisePropertyChanged("UserFieldChar101");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=30)]
+        public string UserFieldChar102 {
+            get {
+                return this.userFieldChar102Field;
+            }
+            set {
+                this.userFieldChar102Field = value;
+                this.RaisePropertyChanged("UserFieldChar102");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=31)]
+        public decimal UserFieldQuan1 {
+            get {
+                return this.userFieldQuan1Field;
+            }
+            set {
+                this.userFieldQuan1Field = value;
+                this.RaisePropertyChanged("UserFieldQuan1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=32)]
+        public string UserFieldUnit1 {
+            get {
+                return this.userFieldUnit1Field;
+            }
+            set {
+                this.userFieldUnit1Field = value;
+                this.RaisePropertyChanged("UserFieldUnit1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=33)]
+        public string UserFieldUnit1Iso {
+            get {
+                return this.userFieldUnit1IsoField;
+            }
+            set {
+                this.userFieldUnit1IsoField = value;
+                this.RaisePropertyChanged("UserFieldUnit1Iso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=34)]
+        public decimal UserFieldQuan2 {
+            get {
+                return this.userFieldQuan2Field;
+            }
+            set {
+                this.userFieldQuan2Field = value;
+                this.RaisePropertyChanged("UserFieldQuan2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=35)]
+        public string UserFieldUnit2 {
+            get {
+                return this.userFieldUnit2Field;
+            }
+            set {
+                this.userFieldUnit2Field = value;
+                this.RaisePropertyChanged("UserFieldUnit2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=36)]
+        public string UserFieldUnit2Iso {
+            get {
+                return this.userFieldUnit2IsoField;
+            }
+            set {
+                this.userFieldUnit2IsoField = value;
+                this.RaisePropertyChanged("UserFieldUnit2Iso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=37)]
+        public decimal UserFieldCurr1 {
+            get {
+                return this.userFieldCurr1Field;
+            }
+            set {
+                this.userFieldCurr1Field = value;
+                this.RaisePropertyChanged("UserFieldCurr1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=38)]
+        public string UserFieldCuky1 {
+            get {
+                return this.userFieldCuky1Field;
+            }
+            set {
+                this.userFieldCuky1Field = value;
+                this.RaisePropertyChanged("UserFieldCuky1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=39)]
+        public string UserFieldCuky1Iso {
+            get {
+                return this.userFieldCuky1IsoField;
+            }
+            set {
+                this.userFieldCuky1IsoField = value;
+                this.RaisePropertyChanged("UserFieldCuky1Iso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=40)]
+        public decimal UserFieldCurr2 {
+            get {
+                return this.userFieldCurr2Field;
+            }
+            set {
+                this.userFieldCurr2Field = value;
+                this.RaisePropertyChanged("UserFieldCurr2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=41)]
+        public string UserFieldCuky2 {
+            get {
+                return this.userFieldCuky2Field;
+            }
+            set {
+                this.userFieldCuky2Field = value;
+                this.RaisePropertyChanged("UserFieldCuky2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=42)]
+        public string UserFieldCuky2Iso {
+            get {
+                return this.userFieldCuky2IsoField;
+            }
+            set {
+                this.userFieldCuky2IsoField = value;
+                this.RaisePropertyChanged("UserFieldCuky2Iso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=43)]
+        public string UserFieldDate1 {
+            get {
+                return this.userFieldDate1Field;
+            }
+            set {
+                this.userFieldDate1Field = value;
+                this.RaisePropertyChanged("UserFieldDate1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=44)]
+        public string UserFieldDate2 {
+            get {
+                return this.userFieldDate2Field;
+            }
+            set {
+                this.userFieldDate2Field = value;
+                this.RaisePropertyChanged("UserFieldDate2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=45)]
+        public string UserFieldFlag1 {
+            get {
+                return this.userFieldFlag1Field;
+            }
+            set {
+                this.userFieldFlag1Field = value;
+                this.RaisePropertyChanged("UserFieldFlag1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=46)]
+        public string UserFieldFlag2 {
+            get {
+                return this.userFieldFlag2Field;
+            }
+            set {
+                this.userFieldFlag2Field = value;
+                this.RaisePropertyChanged("UserFieldFlag2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=47)]
+        public string WbsCctrPostedActual {
+            get {
+                return this.wbsCctrPostedActualField;
+            }
+            set {
+                this.wbsCctrPostedActualField = value;
+                this.RaisePropertyChanged("WbsCctrPostedActual");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=48)]
+        public string WbsSummarization {
+            get {
+                return this.wbsSummarizationField;
+            }
+            set {
+                this.wbsSummarizationField = value;
+                this.RaisePropertyChanged("WbsSummarization");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=49)]
+        public string Objectclass {
+            get {
+                return this.objectclassField;
+            }
+            set {
+                this.objectclassField = value;
+                this.RaisePropertyChanged("Objectclass");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=50)]
+        public string Statistical {
+            get {
+                return this.statisticalField;
+            }
+            set {
+                this.statisticalField = value;
+                this.RaisePropertyChanged("Statistical");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=51)]
+        public string Taxjurcode {
+            get {
+                return this.taxjurcodeField;
+            }
+            set {
+                this.taxjurcodeField = value;
+                this.RaisePropertyChanged("Taxjurcode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=52)]
+        public string InterestProf {
+            get {
+                return this.interestProfField;
+            }
+            set {
+                this.interestProfField = value;
+                this.RaisePropertyChanged("InterestProf");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=53)]
+        public string InvestProfile {
+            get {
+                return this.investProfileField;
+            }
+            set {
+                this.investProfileField = value;
+                this.RaisePropertyChanged("InvestProfile");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=54)]
+        public decimal Evgew {
+            get {
+                return this.evgewField;
+            }
+            set {
+                this.evgewField = value;
+                this.RaisePropertyChanged("Evgew");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=55)]
+        public string ChangeNo {
+            get {
+                return this.changeNoField;
+            }
+            set {
+                this.changeNoField = value;
+                this.RaisePropertyChanged("ChangeNo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=56)]
+        public string Subproject {
+            get {
+                return this.subprojectField;
+            }
+            set {
+                this.subprojectField = value;
+                this.RaisePropertyChanged("Subproject");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=57)]
+        public string Planintegrated {
+            get {
+                return this.planintegratedField;
+            }
+            set {
+                this.planintegratedField = value;
+                this.RaisePropertyChanged("Planintegrated");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=58)]
+        public string InvReason {
+            get {
+                return this.invReasonField;
+            }
+            set {
+                this.invReasonField = value;
+                this.RaisePropertyChanged("InvReason");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=59)]
+        public string Scale {
+            get {
+                return this.scaleField;
+            }
+            set {
+                this.scaleField = value;
+                this.RaisePropertyChanged("Scale");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=60)]
+        public string EnvirInvest {
+            get {
+                return this.envirInvestField;
+            }
+            set {
+                this.envirInvestField = value;
+                this.RaisePropertyChanged("EnvirInvest");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=61)]
+        public string RequestCompCode {
+            get {
+                return this.requestCompCodeField;
+            }
+            set {
+                this.requestCompCodeField = value;
+                this.RaisePropertyChanged("RequestCompCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=62)]
+        public string WbsMrpElement {
+            get {
+                return this.wbsMrpElementField;
+            }
+            set {
+                this.wbsMrpElementField = value;
+                this.RaisePropertyChanged("WbsMrpElement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=63)]
+        public string Location {
+            get {
+                return this.locationField;
+            }
+            set {
+                this.locationField = value;
+                this.RaisePropertyChanged("Location");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=64)]
+        public string Venture {
+            get {
+                return this.ventureField;
+            }
+            set {
+                this.ventureField = value;
+                this.RaisePropertyChanged("Venture");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=65)]
+        public string RecInd {
+            get {
+                return this.recIndField;
+            }
+            set {
+                this.recIndField = value;
+                this.RaisePropertyChanged("RecInd");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=66)]
+        public string EquityTyp {
+            get {
+                return this.equityTypField;
+            }
+            set {
+                this.equityTypField = value;
+                this.RaisePropertyChanged("EquityTyp");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=67)]
+        public string JvOtype {
+            get {
+                return this.jvOtypeField;
+            }
+            set {
+                this.jvOtypeField = value;
+                this.RaisePropertyChanged("JvOtype");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=68)]
+        public string JvJibcl {
+            get {
+                return this.jvJibclField;
+            }
+            set {
+                this.jvJibclField = value;
+                this.RaisePropertyChanged("JvJibcl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=69)]
+        public string JvJibsa {
+            get {
+                return this.jvJibsaField;
+            }
+            set {
+                this.jvJibsaField = value;
+                this.RaisePropertyChanged("JvJibsa");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=70)]
+        public string WbsBasicStartDate {
+            get {
+                return this.wbsBasicStartDateField;
+            }
+            set {
+                this.wbsBasicStartDateField = value;
+                this.RaisePropertyChanged("WbsBasicStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=71)]
+        public string WbsBasicFinishDate {
+            get {
+                return this.wbsBasicFinishDateField;
+            }
+            set {
+                this.wbsBasicFinishDateField = value;
+                this.RaisePropertyChanged("WbsBasicFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=72)]
+        public string WbsForecastStartDate {
+            get {
+                return this.wbsForecastStartDateField;
+            }
+            set {
+                this.wbsForecastStartDateField = value;
+                this.RaisePropertyChanged("WbsForecastStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=73)]
+        public string WbsForecastFinishDate {
+            get {
+                return this.wbsForecastFinishDateField;
+            }
+            set {
+                this.wbsForecastFinishDateField = value;
+                this.RaisePropertyChanged("WbsForecastFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=74)]
+        public string WbsActualStartDate {
+            get {
+                return this.wbsActualStartDateField;
+            }
+            set {
+                this.wbsActualStartDateField = value;
+                this.RaisePropertyChanged("WbsActualStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=75)]
+        public string WbsActualFinishDate {
+            get {
+                return this.wbsActualFinishDateField;
+            }
+            set {
+                this.wbsActualFinishDateField = value;
+                this.RaisePropertyChanged("WbsActualFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=76)]
+        public decimal WbsBasicDuration {
+            get {
+                return this.wbsBasicDurationField;
+            }
+            set {
+                this.wbsBasicDurationField = value;
+                this.RaisePropertyChanged("WbsBasicDuration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=77)]
+        public string WbsBasicDurUnit {
+            get {
+                return this.wbsBasicDurUnitField;
+            }
+            set {
+                this.wbsBasicDurUnitField = value;
+                this.RaisePropertyChanged("WbsBasicDurUnit");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=78)]
+        public string WbsBasicDurUnitIso {
+            get {
+                return this.wbsBasicDurUnitIsoField;
+            }
+            set {
+                this.wbsBasicDurUnitIsoField = value;
+                this.RaisePropertyChanged("WbsBasicDurUnitIso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=79)]
+        public decimal WbsForecastDuration {
+            get {
+                return this.wbsForecastDurationField;
+            }
+            set {
+                this.wbsForecastDurationField = value;
+                this.RaisePropertyChanged("WbsForecastDuration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=80)]
+        public string WbsForcastDurUnit {
+            get {
+                return this.wbsForcastDurUnitField;
+            }
+            set {
+                this.wbsForcastDurUnitField = value;
+                this.RaisePropertyChanged("WbsForcastDurUnit");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=81)]
+        public string WbsForecastDurUnitIso {
+            get {
+                return this.wbsForecastDurUnitIsoField;
+            }
+            set {
+                this.wbsForecastDurUnitIsoField = value;
+                this.RaisePropertyChanged("WbsForecastDurUnitIso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=82)]
+        public decimal WbsActualDuration {
+            get {
+                return this.wbsActualDurationField;
+            }
+            set {
+                this.wbsActualDurationField = value;
+                this.RaisePropertyChanged("WbsActualDuration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=83)]
+        public string WbsActualDurUnit {
+            get {
+                return this.wbsActualDurUnitField;
+            }
+            set {
+                this.wbsActualDurUnitField = value;
+                this.RaisePropertyChanged("WbsActualDurUnit");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=84)]
+        public string WbsActualDurUnitIso {
+            get {
+                return this.wbsActualDurUnitIsoField;
+            }
+            set {
+                this.wbsActualDurUnitIsoField = value;
+                this.RaisePropertyChanged("WbsActualDurUnitIso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=85)]
+        public string WbsScdBasicStartDate {
+            get {
+                return this.wbsScdBasicStartDateField;
+            }
+            set {
+                this.wbsScdBasicStartDateField = value;
+                this.RaisePropertyChanged("WbsScdBasicStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=86)]
+        public string WbsScdBasicFinishDate {
+            get {
+                return this.wbsScdBasicFinishDateField;
+            }
+            set {
+                this.wbsScdBasicFinishDateField = value;
+                this.RaisePropertyChanged("WbsScdBasicFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=87)]
+        public string WbsScdForecastStartDate {
+            get {
+                return this.wbsScdForecastStartDateField;
+            }
+            set {
+                this.wbsScdForecastStartDateField = value;
+                this.RaisePropertyChanged("WbsScdForecastStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=88)]
+        public string WbsScdForecastFinishDate {
+            get {
+                return this.wbsScdForecastFinishDateField;
+            }
+            set {
+                this.wbsScdForecastFinishDateField = value;
+                this.RaisePropertyChanged("WbsScdForecastFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=89)]
+        public string WbsScdActualStartDate {
+            get {
+                return this.wbsScdActualStartDateField;
+            }
+            set {
+                this.wbsScdActualStartDateField = value;
+                this.RaisePropertyChanged("WbsScdActualStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=90)]
+        public string WbsScdActualFinishDate {
+            get {
+                return this.wbsScdActualFinishDateField;
+            }
+            set {
+                this.wbsScdActualFinishDateField = value;
+                this.RaisePropertyChanged("WbsScdActualFinishDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=91)]
+        public string WbsUp {
+            get {
+                return this.wbsUpField;
+            }
+            set {
+                this.wbsUpField = value;
+                this.RaisePropertyChanged("WbsUp");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=92)]
+        public string WbsDown {
+            get {
+                return this.wbsDownField;
+            }
+            set {
+                this.wbsDownField = value;
+                this.RaisePropertyChanged("WbsDown");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=93)]
+        public string WbsLeft {
+            get {
+                return this.wbsLeftField;
+            }
+            set {
+                this.wbsLeftField = value;
+                this.RaisePropertyChanged("WbsLeft");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=94)]
+        public string WbsRight {
+            get {
+                return this.wbsRightField;
+            }
+            set {
+                this.wbsRightField = value;
+                this.RaisePropertyChanged("WbsRight");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=95)]
+        public string FuncArea {
+            get {
+                return this.funcAreaField;
+            }
+            set {
+                this.funcAreaField = value;
+                this.RaisePropertyChanged("FuncArea");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=96)]
+        public string Langu {
+            get {
+                return this.languField;
+            }
+            set {
+                this.languField = value;
+                this.RaisePropertyChanged("Langu");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=97)]
+        public string LanguIso {
+            get {
+                return this.languIsoField;
+            }
+            set {
+                this.languIsoField = value;
+                this.RaisePropertyChanged("LanguIso");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=98)]
+        public string SystemStatus {
+            get {
+                return this.systemStatusField;
+            }
+            set {
+                this.systemStatusField = value;
+                this.RaisePropertyChanged("SystemStatus");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=99)]
+        public string ShortId {
+            get {
+                return this.shortIdField;
+            }
+            set {
+                this.shortIdField = value;
+                this.RaisePropertyChanged("ShortId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=100)]
+        public string NetworkAssignment {
+            get {
+                return this.networkAssignmentField;
+            }
+            set {
+                this.networkAssignmentField = value;
+                this.RaisePropertyChanged("NetworkAssignment");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=101)]
+        public string ProjectDefinition {
+            get {
+                return this.projectDefinitionField;
+            }
+            set {
+                this.projectDefinitionField = value;
+                this.RaisePropertyChanged("ProjectDefinition");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=102)]
+        public string StatProf {
+            get {
+                return this.statProfField;
+            }
+            set {
+                this.statProfField = value;
+                this.RaisePropertyChanged("StatProf");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -776,7 +2263,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -852,6 +2339,12 @@ namespace MVC_SYSTEM.SAPMD {
         private decimal zblkwuField;
         
         private decimal zblkwrField;
+        
+        private string ziofldField;
+        
+        private string ziofpmField;
+        
+        private string zprpsPosid1Field;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
@@ -1273,6 +2766,42 @@ namespace MVC_SYSTEM.SAPMD {
             }
         }
         
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=35)]
+        public string Ziofld {
+            get {
+                return this.ziofldField;
+            }
+            set {
+                this.ziofldField = value;
+                this.RaisePropertyChanged("Ziofld");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=36)]
+        public string Ziofpm {
+            get {
+                return this.ziofpmField;
+            }
+            set {
+                this.ziofpmField = value;
+                this.RaisePropertyChanged("Ziofpm");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=37)]
+        public string ZprpsPosid1 {
+            get {
+                return this.zprpsPosid1Field;
+            }
+            set {
+                this.zprpsPosid1Field = value;
+                this.RaisePropertyChanged("ZprpsPosid1");
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -1284,7 +2813,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1358,7 +2887,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1432,7 +2961,7 @@ namespace MVC_SYSTEM.SAPMD {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1448,6 +2977,8 @@ namespace MVC_SYSTEM.SAPMD {
         private Zopmsslp[] itSlpField;
         
         private Zopmsvd[] itVendField;
+        
+        private Bus2054Detail[] itWbsField;
         
         private Bapiret2[] returnField;
         
@@ -1518,6 +3049,19 @@ namespace MVC_SYSTEM.SAPMD {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
+        public Bus2054Detail[] ItWbs {
+            get {
+                return this.itWbsField;
+            }
+            set {
+                this.itWbsField = value;
+                this.RaisePropertyChanged("ItWbs");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         [System.Xml.Serialization.XmlArrayItemAttribute("item", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
         public Bapiret2[] Return {
             get {
