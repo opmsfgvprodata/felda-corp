@@ -25,11 +25,17 @@
             {
                 @Html.AntiForgeryToken()
             <div class="row">
+                @*fatin added - 05/08/2023*@
+                <div class="col-sm-2">
+                    <label>Syarikat</label>
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*end*@
                 <div class="col-sm-3">
                     <label>@GlobalResCorp.lblRegion</label>
                     @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control wilayahList" })
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3"> @*fatin modified col-sm-4 to col-sm-3 - 05/08/2023*@
                     <label>@GlobalResCorp.lblEstate</label>
                     @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control ladangList", @disabled = "true" })
                 </div>
@@ -91,9 +97,11 @@
 
         var WilayahList = {};
         var disableoption = "";
-        WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+        @*WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";*@
+        WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin added - 05/08/2023
         WilayahList.type = "POST";
-        WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+        /*WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });*/
+        WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() }); //fatin added - 05/08/2023
         WilayahList.datatype = "json";
         WilayahList.contentType = "application/json";
         WilayahList.success = function (ladanglist) {

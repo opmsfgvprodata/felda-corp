@@ -26,6 +26,12 @@
         {
             @Html.AntiForgeryToken()
         <div class="row">
+            @*fatin added - 03/08/2023*@
+            <div class="col-sm-2">
+                <label>Syarikat</label>
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            @*end*@
             <div class="col-sm-2">
                 <label>@GlobalResCorp.lblRegion</label>
                 @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
@@ -97,9 +103,11 @@
             } else {
 
                 var WilayahList = {};
-                WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+                @*WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";*@ //fatin comment - 03/08/2023
+                WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin added - 03/08/2023
                 WilayahList.type = "POST";
-                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+                //WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() }); //fatin comment - 03/08/2023
+                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() }); //fatin modified add SyarikatList  - 03/08/2023
                 WilayahList.datatype = "json";
                 WilayahList.contentType = "application/json";
                 WilayahList.success = function(ladanglist) {
