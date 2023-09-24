@@ -54,5 +54,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(50)]
         public string fld_WlyhName { get; set; }
+
+        //yana add 090823
+        public string fld_CostCentre { get; set; }
     }
 }
