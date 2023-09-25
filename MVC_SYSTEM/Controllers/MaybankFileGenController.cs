@@ -162,7 +162,7 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             GetNSWL.GetSyarikatRCMSDetail(CompCode, out CorpID, out ClientID, out AccNo, out InitialName);
             //Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
-            
+
             List<sp_MaybankRcms_Result> maybankrcmsList = new List<sp_MaybankRcms_Result>();
             if (WorkerId == null)
                 WorkerId = new string[] { "0" };
@@ -514,12 +514,9 @@ namespace MVC_SYSTEM.Controllers
         public JsonResult GetWorker(int? WilayahID, string CompCode, int Year, int Month)
         {
             List<SelectListItem> workerList = new List<SelectListItem>();
-
-            int? NegaraID, SyarikatID, LadangID;
-            int? getuserid = getidentity.ID(User.Identity.Name);
-            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
-            var maybankrcmsList = dbSP.sp_MaybankRcms(NegaraID, SyarikatID, WilayahID, Year, Month, getuserid, CompCode).Select(s=>new { s.fld_Nopkj, s.fld_Nama }).OrderBy(o=>o.fld_Nama).ToList();
+            var userDetail = getidentity.GetUserDetail(User.Identity.Name);
+            var getuserid = userDetail.fldUserID;
+            var maybankrcmsList = dbSP.sp_MaybankRcms(userDetail.fldNegaraID, userDetail.fldSyarikatID, WilayahID, Year, Month, getuserid, CompCode).Select(s => new { s.fld_Nopkj, s.fld_Nama }).OrderBy(o => o.fld_Nama).ToList();
 
             if (maybankrcmsList.Count() > 0)
             {
