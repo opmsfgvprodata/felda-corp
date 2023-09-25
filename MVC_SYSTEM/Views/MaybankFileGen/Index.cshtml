@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Pejanaan Fail</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="ListReport">Mod Bayaran</label>
+                                    @Html.DropDownList("MenuList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div id="sublist" class="col-sm-6">
+                                    <label for="ListReport">Sub Menu</label>
+                                    @Html.DropDownList("MenuSubList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-report">
+                    <input class="btn btn-primary" type="submit" name="upload" id="upload" value=@GlobalResCorp.btnGo onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var SubList = {};
+        //var disableoption = "";
+        SubList.url = "@Url.Action("GetSubList", "MaybankFileGen")";
+        SubList.type = "POST";
+        SubList.data = JSON.stringify({ ListID: $("#MenuList").val() });
+        SubList.datatype = "json";
+        SubList.contentType = "application/json";
+        SubList.success = function (sublist) {
+            $("#MenuSubList").empty();
+            if (sublist.length != 0) {
+                $("#sublist").removeClass("hidden");
+                $.simplyToast('@GlobalResCorp.msgSubMenu', 'success');
+                for (var i = 0; i < sublist.length; i++) {
+                    $("#MenuSubList").append("<option value=" + sublist[i].Value + ">" + sublist[i].Text + "</option>");
+                }
+            }
+            else {
+                $("#MenuSubList").empty();
+                $("#sublist").addClass("hidden");
+            }
+        };
+        SubList.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'error'); };
+        $.ajax(SubList);
+
+        $("#MenuList").change(function () {
+            var SubList = {};
+            //var disableoption = "";
+            SubList.url = "@Url.Action("GetSubList", "MaybankFileGen")";
+            SubList.type = "POST";
+            SubList.data = JSON.stringify({ ListID: $("#MenuList").val() });
+            SubList.datatype = "json";
+            SubList.contentType = "application/json";
+            SubList.success = function (sublist) {
+                $("#MenuSubList").empty();
+                if (sublist.length != 0) {
+                    $("#sublist").removeClass("hidden");
+                    $.simplyToast('@GlobalResCorp.msgSubMenu', 'success');
+                    for (var i = 0; i < sublist.length; i++) {
+                        $("#MenuSubList").append("<option value=" + sublist[i].Value + ">" + sublist[i].Text + "</option>");
+                    }
+                }
+                else {
+                    $("#MenuSubList").empty();
+                    $("#sublist").addClass("hidden");
+                }
+            };
+            SubList.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'error'); };
+            $.ajax(SubList);
+        });
+    });
+</script>
