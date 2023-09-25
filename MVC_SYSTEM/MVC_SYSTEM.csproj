@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -53,6 +54,12 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.5.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -1898,6 +1905,130 @@
     <Content Include="Asset\Content\jquery.datetimepicker.css" />
     <Content Include="Asset\Scripts\script-custom-editor.js" />
     <Content Include="Asset\Scripts\sweetalert.min.js" />
+    <Content Include="Asset\select2\css\select2.css" />
+    <Content Include="Asset\select2\css\select2.min.css" />
+    <Content Include="Asset\select2\js\i18n\af.js" />
+    <Content Include="Asset\select2\js\i18n\af.min.js" />
+    <Content Include="Asset\select2\js\i18n\ar.js" />
+    <Content Include="Asset\select2\js\i18n\ar.min.js" />
+    <Content Include="Asset\select2\js\i18n\az.js" />
+    <Content Include="Asset\select2\js\i18n\az.min.js" />
+    <Content Include="Asset\select2\js\i18n\bg.js" />
+    <Content Include="Asset\select2\js\i18n\bg.min.js" />
+    <Content Include="Asset\select2\js\i18n\bn.js" />
+    <Content Include="Asset\select2\js\i18n\bn.min.js" />
+    <Content Include="Asset\select2\js\i18n\bs.js" />
+    <Content Include="Asset\select2\js\i18n\bs.min.js" />
+    <Content Include="Asset\select2\js\i18n\ca.js" />
+    <Content Include="Asset\select2\js\i18n\ca.min.js" />
+    <Content Include="Asset\select2\js\i18n\cs.js" />
+    <Content Include="Asset\select2\js\i18n\cs.min.js" />
+    <Content Include="Asset\select2\js\i18n\da.js" />
+    <Content Include="Asset\select2\js\i18n\da.min.js" />
+    <Content Include="Asset\select2\js\i18n\de.js" />
+    <Content Include="Asset\select2\js\i18n\de.min.js" />
+    <Content Include="Asset\select2\js\i18n\dsb.js" />
+    <Content Include="Asset\select2\js\i18n\dsb.min.js" />
+    <Content Include="Asset\select2\js\i18n\el.js" />
+    <Content Include="Asset\select2\js\i18n\el.min.js" />
+    <Content Include="Asset\select2\js\i18n\en.js" />
+    <Content Include="Asset\select2\js\i18n\en.min.js" />
+    <Content Include="Asset\select2\js\i18n\es.js" />
+    <Content Include="Asset\select2\js\i18n\es.min.js" />
+    <Content Include="Asset\select2\js\i18n\et.js" />
+    <Content Include="Asset\select2\js\i18n\et.min.js" />
+    <Content Include="Asset\select2\js\i18n\eu.js" />
+    <Content Include="Asset\select2\js\i18n\eu.min.js" />
+    <Content Include="Asset\select2\js\i18n\fa.js" />
+    <Content Include="Asset\select2\js\i18n\fa.min.js" />
+    <Content Include="Asset\select2\js\i18n\fi.js" />
+    <Content Include="Asset\select2\js\i18n\fi.min.js" />
+    <Content Include="Asset\select2\js\i18n\fr.js" />
+    <Content Include="Asset\select2\js\i18n\fr.min.js" />
+    <Content Include="Asset\select2\js\i18n\gl.js" />
+    <Content Include="Asset\select2\js\i18n\gl.min.js" />
+    <Content Include="Asset\select2\js\i18n\he.js" />
+    <Content Include="Asset\select2\js\i18n\he.min.js" />
+    <Content Include="Asset\select2\js\i18n\hi.js" />
+    <Content Include="Asset\select2\js\i18n\hi.min.js" />
+    <Content Include="Asset\select2\js\i18n\hr.js" />
+    <Content Include="Asset\select2\js\i18n\hr.min.js" />
+    <Content Include="Asset\select2\js\i18n\hsb.js" />
+    <Content Include="Asset\select2\js\i18n\hsb.min.js" />
+    <Content Include="Asset\select2\js\i18n\hu.js" />
+    <Content Include="Asset\select2\js\i18n\hu.min.js" />
+    <Content Include="Asset\select2\js\i18n\hy.js" />
+    <Content Include="Asset\select2\js\i18n\hy.min.js" />
+    <Content Include="Asset\select2\js\i18n\id.js" />
+    <Content Include="Asset\select2\js\i18n\id.min.js" />
+    <Content Include="Asset\select2\js\i18n\is.js" />
+    <Content Include="Asset\select2\js\i18n\is.min.js" />
+    <Content Include="Asset\select2\js\i18n\it.js" />
+    <Content Include="Asset\select2\js\i18n\it.min.js" />
+    <Content Include="Asset\select2\js\i18n\ja.js" />
+    <Content Include="Asset\select2\js\i18n\ja.min.js" />
+    <Content Include="Asset\select2\js\i18n\ka.js" />
+    <Content Include="Asset\select2\js\i18n\ka.min.js" />
+    <Content Include="Asset\select2\js\i18n\km.js" />
+    <Content Include="Asset\select2\js\i18n\km.min.js" />
+    <Content Include="Asset\select2\js\i18n\ko.js" />
+    <Content Include="Asset\select2\js\i18n\ko.min.js" />
+    <Content Include="Asset\select2\js\i18n\lt.js" />
+    <Content Include="Asset\select2\js\i18n\lt.min.js" />
+    <Content Include="Asset\select2\js\i18n\lv.js" />
+    <Content Include="Asset\select2\js\i18n\lv.min.js" />
+    <Content Include="Asset\select2\js\i18n\mk.js" />
+    <Content Include="Asset\select2\js\i18n\mk.min.js" />
+    <Content Include="Asset\select2\js\i18n\ms.js" />
+    <Content Include="Asset\select2\js\i18n\ms.min.js" />
+    <Content Include="Asset\select2\js\i18n\nb.js" />
+    <Content Include="Asset\select2\js\i18n\nb.min.js" />
+    <Content Include="Asset\select2\js\i18n\ne.js" />
+    <Content Include="Asset\select2\js\i18n\ne.min.js" />
+    <Content Include="Asset\select2\js\i18n\nl.js" />
+    <Content Include="Asset\select2\js\i18n\nl.min.js" />
+    <Content Include="Asset\select2\js\i18n\pl.js" />
+    <Content Include="Asset\select2\js\i18n\pl.min.js" />
+    <Content Include="Asset\select2\js\i18n\ps.js" />
+    <Content Include="Asset\select2\js\i18n\ps.min.js" />
+    <Content Include="Asset\select2\js\i18n\pt-BR.js" />
+    <Content Include="Asset\select2\js\i18n\pt-BR.min.js" />
+    <Content Include="Asset\select2\js\i18n\pt.js" />
+    <Content Include="Asset\select2\js\i18n\pt.min.js" />
+    <Content Include="Asset\select2\js\i18n\ro.js" />
+    <Content Include="Asset\select2\js\i18n\ro.min.js" />
+    <Content Include="Asset\select2\js\i18n\ru.js" />
+    <Content Include="Asset\select2\js\i18n\ru.min.js" />
+    <Content Include="Asset\select2\js\i18n\sk.js" />
+    <Content Include="Asset\select2\js\i18n\sk.min.js" />
+    <Content Include="Asset\select2\js\i18n\sl.js" />
+    <Content Include="Asset\select2\js\i18n\sl.min.js" />
+    <Content Include="Asset\select2\js\i18n\sq.js" />
+    <Content Include="Asset\select2\js\i18n\sq.min.js" />
+    <Content Include="Asset\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="Asset\select2\js\i18n\sr-Cyrl.min.js" />
+    <Content Include="Asset\select2\js\i18n\sr.js" />
+    <Content Include="Asset\select2\js\i18n\sr.min.js" />
+    <Content Include="Asset\select2\js\i18n\sv.js" />
+    <Content Include="Asset\select2\js\i18n\sv.min.js" />
+    <Content Include="Asset\select2\js\i18n\th.js" />
+    <Content Include="Asset\select2\js\i18n\th.min.js" />
+    <Content Include="Asset\select2\js\i18n\tk.js" />
+    <Content Include="Asset\select2\js\i18n\tk.min.js" />
+    <Content Include="Asset\select2\js\i18n\tr.js" />
+    <Content Include="Asset\select2\js\i18n\tr.min.js" />
+    <Content Include="Asset\select2\js\i18n\uk.js" />
+    <Content Include="Asset\select2\js\i18n\uk.min.js" />
+    <Content Include="Asset\select2\js\i18n\vi.js" />
+    <Content Include="Asset\select2\js\i18n\vi.min.js" />
+    <Content Include="Asset\select2\js\i18n\zh-CN.js" />
+    <Content Include="Asset\select2\js\i18n\zh-CN.min.js" />
+    <Content Include="Asset\select2\js\i18n\zh-TW.js" />
+    <Content Include="Asset\select2\js\i18n\zh-TW.min.js" />
+    <Content Include="Asset\select2\js\select2.full.js" />
+    <Content Include="Asset\select2\js\select2.full.min.js" />
+    <Content Include="Asset\select2\js\select2.js" />
+    <Content Include="Asset\select2\js\select2.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -1933,6 +2064,7 @@
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx.diagram">
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
     </Content>
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\MVC_SYSTEM.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -3548,6 +3680,9 @@
     <Content Include="Views\DataEntry\PalmPriceInfo.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcms.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGen.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGenIndividu.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcmsIndividu.cshtml" />
+    <Content Include="Views\MaybankFileGen\Index.cshtml" />
     <Content Include="Views\Report\MapaReport.cshtml" />
     <Content Include="Views\Report\_MapaReport.cshtml" />
     <Content Include="Views\SAPMasterData\vdTodayList.cshtml" />
@@ -4036,7 +4171,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
