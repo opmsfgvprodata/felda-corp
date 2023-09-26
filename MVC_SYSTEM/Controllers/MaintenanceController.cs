@@ -16445,7 +16445,6 @@ namespace MVC_SYSTEM.Controllers
         }
 
         //Added by Shazana 15/5/2023
-
         public ActionResult DifficultyPriceMaintenance(string filter, int page = 1, string sort = "fldOptConfFlag1",
            string sortdir = "ASC")
         {
@@ -16472,7 +16471,8 @@ namespace MVC_SYSTEM.Controllers
             int role = GetIdentity.RoleID(getuserid).Value;
 
             //Modified by Shazana 18/7/2023
-            var JenisDifficulty = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag2 == "HargaKesukaran").Select(x => x.fldOptConfDesc).ToList();
+            //Modified by Shazana 21/9/2023
+            var JenisDifficulty = db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan")).Select(x => x.fldOptConfDesc).ToList();
 
             //Commented by Shazana 12/62/2023
             //var DifficultyData = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1.Contains("Kesukaran") && (JenisDifficulty.Contains(x.fldOptConfFlag1)) && x.fldOptConfFlag2 != "HargaKesukaran").ToList();
@@ -16487,7 +16487,8 @@ namespace MVC_SYSTEM.Controllers
             foreach (var DifficultyDatadetails in DifficultyData)
             {
                 //Modified by Shazana 18/7/2023
-                JenisHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfDesc == DifficultyDatadetails.fld_JenisHargaKesukaran && x.fldOptConfFlag2 == "HargaKesukaran" && x.fldDeleted == false).Select(s => s.fldOptConfFlag1).FirstOrDefault();
+                //Modified by Shazana 21/9/2023
+                JenisHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfDesc == DifficultyDatadetails.fld_JenisHargaKesukaran && (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldDeleted == false).Select(s => s.fldOptConfFlag1).FirstOrDefault();
 
                 //Commented by Shazana 14/6/2023
                 //CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fldOptConfFlag1, fldOptConfFlag2 = DifficultyDatadetails.fldOptConfFlag2, fldOptConfDesc = DifficultyDatadetails.fldOptConfDesc, fldOptConfValue = DifficultyDatadetails.fldOptConfValue, fldOptConfFlag3 = DifficultyDatadetails.fldOptConfFlag3, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fldOptConfID });
@@ -16542,7 +16543,8 @@ namespace MVC_SYSTEM.Controllers
 
 
             List<SelectListItem> JnsHargaKesukaran = new List<SelectListItem>();
-            JnsHargaKesukaran = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag2 == "HargaKesukaran" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfValue + " - " + s.fldOptConfDesc }), "Value", "Text").ToList();
+            //Modified by Shazana 21/9/2023
+            JnsHargaKesukaran = new SelectList(db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfValue + " - " + s.fldOptConfDesc }), "Value", "Text").ToList();
             JnsHargaKesukaran.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
 
             ViewBag.fldOptConfFlag1 = JnsHargaKesukaran;
@@ -16586,7 +16588,7 @@ namespace MVC_SYSTEM.Controllers
                     //db.SaveChanges();
 
                     //Added by Shazana 18/7/2023
-                    var detailjnsHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag2 == "HargaKesukaran" && x.fldOptConfValue == HargaKesukaran.fld_KodHargaKesukaran.Substring(0, 1) && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).FirstOrDefault();
+                    var detailjnsHargaKesukaran = db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldOptConfValue == HargaKesukaran.fld_KodHargaKesukaran.Substring(0, 1) && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).FirstOrDefault();
 
                     ModelsCorporate.tbl_HargaKesukaran HargaKesukaran1 = new ModelsCorporate.tbl_HargaKesukaran();
 
@@ -16666,7 +16668,8 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-            var detailjnsHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag2 == "HargaKesukaran" && x.fldOptConfValue == jnsHargaKesukaran && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).FirstOrDefault();
+            //Modified by Shazana 21/9/2023
+            var detailjnsHargaKesukaran = db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldOptConfValue == jnsHargaKesukaran && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).FirstOrDefault();
             //Modify by Shazana 16/6/2023
             //Commented by Shazana 18/7/2023
             //string lastcode = db.tblOptionConfigsWebs.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldOptConfFlag1 == detailjnsHargaKesukaran.fldOptConfFlag1 && x.fldOptConfFlag2!= "HargaKesukaran").OrderByDescending(o => o.fldOptConfValue).Select(s => s.fldOptConfValue).FirstOrDefault();
