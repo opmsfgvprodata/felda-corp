@@ -16662,7 +16662,6 @@ namespace MVC_SYSTEM.Controllers
                 db.Dispose();
             }
         }
-
         public JsonResult GenerateKodHargaKesukaran(string jnsHargaKesukaran)
         {
             int? getuserid = GetIdentity.ID(User.Identity.Name);
