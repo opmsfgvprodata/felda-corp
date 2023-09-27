@@ -1,6 +1,7 @@
 ﻿using MVC_SYSTEM.App_LocalResources;
 using MVC_SYSTEM.AuthModels;
 using MVC_SYSTEM.Class;
+using MVC_SYSTEM.log;
 using MVC_SYSTEM.Models;
 using MVC_SYSTEM.ModelsAPI;
 using MVC_SYSTEM.ModelsCorporate;
@@ -23,6 +24,8 @@ namespace MVC_SYSTEM.Controllers
         private GetNSWL GetNSWL = new GetNSWL();
         GetWilayah getwilyah = new GetWilayah();
         Connection Connection = new Connection();
+        errorlog geterror = new errorlog();
+
 
         // GET: SAPMasterData
         public ActionResult Index()
@@ -2284,6 +2287,288 @@ namespace MVC_SYSTEM.Controllers
 
 
             return View(result);
+        }
+
+         //RISE PART - WBS ELEMENT
+        //22/9/2023
+        public ActionResult wbsList(string wbsCode, string wbsDesc)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var result = new List<tbl_WBSSAP>();
+
+            if ((wbsCode == null || wbsCode == "") && (wbsDesc == null || wbsDesc == ""))
+            {
+                result = db.tbl_WBSSAP.OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsCode != null && wbsCode != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsDesc != null && wbsDesc != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc)).OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsCode != null && wbsDesc != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc) || w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            return View(result);
+        }
+
+        public ActionResult wbsRequest()
+        {
+
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            SyarikatList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
+            ViewBag.fld_CompanyCode = SyarikatList;
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult _wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var oClient = new SAPMD.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD.ZfmOpmsMaster();
+            SAPMD.ZfmOpmsMasterResponse iresponse = new SAPMD.ZfmOpmsMasterResponse();
+
+            SAPMD.Bus2054Detail[] zopmswbs = new SAPMD.Bus2054Detail[1];
+            SAPMD.Bus2054Detail zopmswbss = new SAPMD.Bus2054Detail();
+
+            SAPMD.Bapiret2[] bapirtn = new SAPMD.Bapiret2[1];
+            SAPMD.Bapiret2 bapiret2_return = new SAPMD.Bapiret2();
+
+            oClient.ClientCredentials.UserName.UserName = "WF-BATCH";
+            oClient.ClientCredentials.UserName.Password = "@12345bnm";
+
+            oClient.Open();
+
+            try
+            {
+                request = new SAPMD.ZfmOpmsMaster();
+
+                request.DateBegin = "";
+                request.DateEnd = "";
+                request.Wbs = tbl_WBSSAPCreate.fld_wbsElement;
+                request.ItWbs = zopmswbs;
+
+                iresponse = oClient.ZfmOpmsMaster(request);
+
+                bapirtn = iresponse.Return;
+                zopmswbs = iresponse.ItWbs;
+
+
+                foreach (SAPMD.Bus2054Detail a in zopmswbs)
+                {
+                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
+
+                    if (wbsCode == null) {
+                        tbl_WBSSAP = new tbl_WBSSAP();
+
+                        tbl_WBSSAP.fld_wbsElement = a.WbsElement;
+                        tbl_WBSSAP.fld_wbsDescription = a.Description;
+                        tbl_WBSSAP.fld_Deleted = false;
+                        tbl_WBSSAP.fld_createdby = getuserid.ToString();
+                        tbl_WBSSAP.fld_createdDate = DateTime.Today;
+                        tbl_WBSSAP.fld_updatedDate = DateTime.Today;
+
+
+                        db.tbl_WBSSAP.Add(tbl_WBSSAP);
+                        db.SaveChanges();
+                        db.Entry(tbl_WBSSAP).State = EntityState.Detached;
+                    }
+
+                    else
+                    {
+                        if (wbsCode.fld_wbsElement.Contains(a.WbsElement))
+                        {
+                            //ModelsCorporate.tbl_WBSSAP _WBSSAP = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).Single();
+
+
+                            wbsCode.fld_wbsDescription = a.Description;
+                            wbsCode.fld_updatedby = getuserid.ToString();
+                            wbsCode.fld_updatedDate = DateTime.Today;
+
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
+                foreach (SAPMD.Bapiret2 b in bapirtn)
+                {
+                    tbl_SAPLog = new tbl_SAPLog
+                    {
+                        
+                        fld_type = b.Type,
+                        fld_id = b.Id ,
+                        fld_number = b.Number ,
+                        fld_logno =b.LogNo ,
+                        fld_logmsgno = b.LogMsgNo,
+                        fld_message = b.Message,
+                        fld_msg1 = b.MessageV1 ,
+                        fld_msg2 = b.MessageV2,
+                        fld_msg3 = b.MessageV3,
+                        fld_msg4 = b.MessageV4,
+                        fld_parameter = b.Parameter,
+                        fld_row = Convert.ToString(b.Row),
+                        fld_field = b.Field,
+                        fld_system = "SAP WBS",
+                        fld_logDate = DateTime.Today
+                    };
+
+                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                    db.SaveChanges();
+                    db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                }
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = GlobalResCorp.msgUpdate,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "1",
+                    //div = "",
+                    rootUrl = domain,
+                    action = "wbsList",
+                    controller = "SAPMasterData"
+                });
+            }
+            catch(Exception ex)
+            {
+                if (ex == null)
+                {
+                    foreach (SAPMD.Bapiret2 b in bapirtn)
+                    {
+                        tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_type = b.Type,
+                            fld_id = b.Id,
+                            fld_number = b.Number,
+                            fld_logno = b.LogNo,
+                            fld_logmsgno = b.LogMsgNo,
+                            fld_message = b.Message,
+                            fld_msg1 = b.MessageV1,
+                            fld_msg2 = b.MessageV2,
+                            fld_msg3 = b.MessageV3,
+                            fld_msg4 = b.MessageV4,
+                            fld_parameter = b.Parameter,
+                            fld_row = Convert.ToString(b.Row),
+                            fld_field = b.Field,
+                            fld_system = "SAP WBS", //return dari SAP
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                    }
+                }
+                else
+                {
+                    string msg = ex.InnerException.ToString().Substring(63, 3);
+
+                    if (msg == "401")
+                    {
+                       tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_message = msg,
+                            fld_msg1 = "Unauthorized. Kindly check the ID with Basis Team.",
+                        fld_system = "OPMS WBS", //return dari source code
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                    
+                    }
+                    else
+                    {
+                        tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_message = ex.Message,
+                            fld_system = "OPMS WBS", //return dari source code
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                    }
+                }
+
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+
+            }
+
+            
+
         }
     }
 }

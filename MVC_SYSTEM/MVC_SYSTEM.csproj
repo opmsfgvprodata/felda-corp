@@ -944,6 +944,7 @@
     <Compile Include="ModelsCorporate\tbl_UploadedCountDetail.cs" />
     <Compile Include="ModelsCorporate\tbl_VDSAP.cs" />
     <Compile Include="ModelsCorporate\tbl_Version.cs" />
+    <Compile Include="ModelsCorporate\tbl_WBSSAP.cs" />
     <Compile Include="ModelsCorporate\tbl_Wilayah.cs" />
     <Compile Include="ModelsCorporate\vw_AuditTrail.cs" />
     <Compile Include="ModelsCorporate\vw_CutiUmumKelayakan.cs" />
@@ -3523,6 +3524,8 @@
     <Content Include="Views\DataEntry\PalmPriceInfo.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcms.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGen.cshtml" />
+    <Content Include="Views\SAPMasterData\wbsList.cshtml" />
+    <Content Include="Views\SAPMasterData\wbsRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_WBSSAP>
+@{
+
+    ViewBag.Title = "WBS Element";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "wbsListDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+
+    int? bil = 0;
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+
+<section class="content-wrapper main-content clear-fix">
+    @using (Html.BeginForm("wbsList", "SAPMasterData", new { id = "" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
+            <div class="row">
+
+                <div class="col-sm-2">
+                    @Html.Label("WBS Element")
+                    @Html.TextBox("wbsCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label("Keterangan")
+                    @Html.TextBox("wbsDesc", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+
+                </div>
+            </div>
+            <br />
+        </div>
+    }
+    <br />
+
+    <div id="wbsListDetails">
+        <div class="well" style="margin-top:7px;">
+            <div class="modal-body">
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">WBS ELEMENT</div>
+                    <div class="panel-body">
+                        @if (Model != null && Model.Count() != 0)
+                        {
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div id="scrollArea" class="col-sm-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod WBS</th>
+                                                <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan</th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    Tindakan Oleh
+                                                </th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    Tarikh
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var wbsDetails in Model)
+                                            {
+                                                bil = bil + 1;
+                                                <tr @if (wbsDetails.fld_createdDate == DateTime.Today || wbsDetails.fld_updatedDate == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@wbsDetails.fld_wbsElement</td>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@wbsDetails.fld_wbsDescription </td>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                        @if (wbsDetails.fld_updatedby == "" || wbsDetails.fld_updatedby == null)
+                                                        {
+                                                            @Html.DisplayFor(modelItem => wbsDetails.fld_createdby)
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(modelItem => wbsDetails.fld_updatedby)
+                                                        }
+
+                                                    </td>
+
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                        @if (wbsDetails.fld_updatedDate == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                        {
+                                                            @String.Format("{0:dd/MM/yyyy}", wbsDetails.fld_createdDate)
+                                                        }
+                                                        else
+                                                        {
+                                                            @String.Format("{0:dd/MM/yyyy}", wbsDetails.fld_updatedDate)
+                                                        }
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div id="scrollArea" class="col-sm-12">
+                                @GlobalResCorp.msgDataNotFound
+                            </div>
+                        }
+
+                        <br />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' href=@Url.Action("wbsRequest", "SAPMasterData") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">New WBS</a>
+            <a href=@Url.Action("Index", "SAPMasterData") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
