@@ -129,6 +129,7 @@
                             WILAYAH @GetConfig.GetWilayahNameFromID(wilayah)
                             @Html.TextBox("WilayahList", (int)ViewBag.WilayahList, new { @readonly = "readonly", @hidden = "true" })
                             @Html.TextBox("LadangList", (int)ViewBag.LadangList, new { @readonly = "readonly", @hidden = "true" })
+                            @*@Html.TextBox("CompCodeList", ViewBag.CompCodeList, new { @readonly = "readonly", @hidden = "true" })*@
 
                     </tr>
                     <tr>
@@ -168,9 +169,9 @@
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
                         <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">EWALLET (RM)</th>
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
-                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2U (RM)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-E (RM)</th>
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
-                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E (RM)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-HQ (RM)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -480,11 +481,9 @@
             <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> Excel
         </a>
 
-
-
-
         @*//Added by Shazana 3/4/2023*@
-        <a class="btn btn-default" href="#" id="downloadpdf" style="float: right;">
+        @*Modified by Shazana 29/9/2023*@
+        <a class="btn btn-default" href="#" id="downloadpdf2" style="float: right;">
             <img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /> Cetak/PDF
         </a>
     </div>
@@ -514,9 +513,6 @@ else
             })
 
     </script>*@
-
-
-
 
 @*Added by Shazana 3/4/2023*@
 <style>
@@ -576,11 +572,41 @@ else
         var LadangList = '@ViewBag.LadangList';
         var CompCode = '@ViewBag.CompCodeList';
 
-        var param = '/?WilayahList=' + WilayahList + "&LadangList=" + LadangList + "&YearList=" + YearList + "&MonthList=" + MonthList + "&CompCodeList=" + CompCodeList;
+        var param = '/?WilayahList=' + WilayahList + "&LadangList=" + LadangList + "&YearList=" + YearList + "&MonthList=" + MonthList + "&CompCodeList=" + CompCode;
          debugger
         PDFObject.embed("@Url.Action("exportPDF", "Report")" + param, "#scrollArea", { height: "700px" });
          return false;
     });
+</script>
+
+@*Added by Shazana 29/9/2023*@
+
+<script>
+       $(document).ready(function () {
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            debugger
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "BayaranGajiPekerja" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+
+       });
+
 </script>
 
 
