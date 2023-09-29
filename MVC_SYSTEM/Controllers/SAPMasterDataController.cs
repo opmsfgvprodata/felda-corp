@@ -3,6 +3,7 @@ using iTextSharp.text.pdf;
 using MVC_SYSTEM.App_LocalResources;
 using MVC_SYSTEM.AuthModels;
 using MVC_SYSTEM.Class;
+using MVC_SYSTEM.log;
 using MVC_SYSTEM.Models;
 using MVC_SYSTEM.ModelsAPI;
 using MVC_SYSTEM.ModelsCorporate;
@@ -26,6 +27,7 @@ namespace MVC_SYSTEM.Controllers
         private GetNSWL GetNSWL = new GetNSWL();
         GetWilayah getwilyah = new GetWilayah();
         Connection Connection = new Connection();
+        errorlog geterror = new errorlog();
 
         string IDFelda = "WF-BATCH"; string pwdFelda = "@12345bnm";
         string IDFPM = "FELDAOPMSRFC"; string pwdFPM = "@12345bnm";
@@ -300,16 +302,16 @@ namespace MVC_SYSTEM.Controllers
             string exception = "";
 
             //FELDA
-            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
 
-            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
 
-            SAPMD_FLP.Zopmsgl[] zopmsgl = new SAPMD_FLP.Zopmsgl[1];
-            SAPMD_FLP.Zopmsgl zopmsgls = new SAPMD_FLP.Zopmsgl();
+            SAPMD_FLQ.Zopmsgl[] zopmsgl = new SAPMD_FLQ.Zopmsgl[1];
+            SAPMD_FLQ.Zopmsgl zopmsgls = new SAPMD_FLQ.Zopmsgl();
 
-            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
-            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
             List<ZOPMSGL> glAmount = new List<ZOPMSGL>();
 
@@ -340,7 +342,7 @@ namespace MVC_SYSTEM.Controllers
                 try
                 {
 
-                    request = new SAPMD_FLP.ZfmOpmsMaster();
+                    request = new SAPMD_FLQ.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -358,7 +360,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (iresponse.ItGl.Count() - 1 >= 0)
                     {
-                        foreach (SAPMD_FLP.Zopmsgl a in zopmsgl)
+                        foreach (SAPMD_FLQ.Zopmsgl a in zopmsgl)
                         {
 
                             bukrs = a.Bukrs;
@@ -481,7 +483,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -937,15 +939,15 @@ namespace MVC_SYSTEM.Controllers
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
 
             //FELDA
-            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLP.ZfmOpmsMaster();
-            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
 
-            SAPMD_FLP.Zopmscc[] zopmscc = new SAPMD_FLP.Zopmscc[1];
-            SAPMD_FLP.Zopmscc zopmsccs = new SAPMD_FLP.Zopmscc();
+            SAPMD_FLQ.Zopmscc[] zopmscc = new SAPMD_FLQ.Zopmscc[1];
+            SAPMD_FLQ.Zopmscc zopmsccs = new SAPMD_FLQ.Zopmscc();
 
-            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
-            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
@@ -972,7 +974,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    request = new SAPMD_FLP.ZfmOpmsMaster();
+                    request = new SAPMD_FLQ.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -991,7 +993,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItCc.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLP.Zopmscc a in zopmscc)
+                        foreach (SAPMD_FLQ.Zopmscc a in zopmscc)
                         {
                             KOKRS = a.Kokrs;
                             KOSTL = a.Kostl;
@@ -1113,7 +1115,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -1566,15 +1568,15 @@ namespace MVC_SYSTEM.Controllers
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
 
             //FELDA
-            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLP.ZfmOpmsMaster();
-            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
 
-            SAPMD_FLP.Zopmsvd[] zopmsvd = new SAPMD_FLP.Zopmsvd[1];
-            SAPMD_FLP.Zopmsvd zopmsvds = new SAPMD_FLP.Zopmsvd();
+            SAPMD_FLQ.Zopmsvd[] zopmsvd = new SAPMD_FLQ.Zopmsvd[1];
+            SAPMD_FLQ.Zopmsvd zopmsvds = new SAPMD_FLQ.Zopmsvd();
 
-            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
-            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
@@ -1601,7 +1603,7 @@ namespace MVC_SYSTEM.Controllers
 
                 try
                 {
-                    request = new SAPMD_FLP.ZfmOpmsMaster();
+                    request = new SAPMD_FLQ.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -1620,7 +1622,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItVend.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLP.Zopmsvd a in zopmsvd)
+                        foreach (SAPMD_FLQ.Zopmsvd a in zopmsvd)
                         {
                             bukrs = a.Bukrs;
                             lifnr = a.Lifnr;
@@ -1712,7 +1714,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -2170,15 +2172,15 @@ namespace MVC_SYSTEM.Controllers
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
 
             //FELDA
-            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLP.ZfmOpmsMaster();
-            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
 
-            SAPMD_FLP.Zopmscs[] zopmscs = new SAPMD_FLP.Zopmscs[1];
-            SAPMD_FLP.Zopmscs zopmscss = new SAPMD_FLP.Zopmscs();
+            SAPMD_FLQ.Zopmscs[] zopmscs = new SAPMD_FLQ.Zopmscs[1];
+            SAPMD_FLQ.Zopmscs zopmscss = new SAPMD_FLQ.Zopmscs();
 
-            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
-            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
@@ -2205,7 +2207,7 @@ namespace MVC_SYSTEM.Controllers
 
                 try
                 {
-                    request = new SAPMD_FLP.ZfmOpmsMaster();
+                    request = new SAPMD_FLQ.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -2224,7 +2226,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItCust.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLP.Zopmscs a in zopmscs)
+                        foreach (SAPMD_FLQ.Zopmscs a in zopmscs)
                         {
                             bukrs = a.Bukrs;
                             kunnr = a.Kunnr;
@@ -2309,7 +2311,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -2862,15 +2864,15 @@ namespace MVC_SYSTEM.Controllers
 
 
             //declaration FELDA
-            var oClient = new SAPMD.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD.ZfmOpmsMaster();
-            SAPMD.ZfmOpmsMasterResponse iresponse = new SAPMD.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
 
-            SAPMD.Zopmsslp[] zopmsslp = new SAPMD.Zopmsslp[1];
-            SAPMD.Zopmsslp zopmsslps = new SAPMD.Zopmsslp();
+            SAPMD_FLQ.Zopmsslp[] zopmsslp = new SAPMD_FLQ.Zopmsslp[1];
+            SAPMD_FLQ.Zopmsslp zopmsslps = new SAPMD_FLQ.Zopmsslp();
 
-            SAPMD.Bapiret2[] bapirtn = new SAPMD.Bapiret2[1];
-            SAPMD.Bapiret2 bapiret2_return = new SAPMD.Bapiret2();
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
            
             oClient.ClientCredentials.UserName.UserName = IDFelda;
@@ -2899,7 +2901,7 @@ namespace MVC_SYSTEM.Controllers
 
                 if (_IOSAPCreate.fld_CompanyCode == "1000")
                 {
-                    request = new SAPMD.ZfmOpmsMaster();
+                    request = new SAPMD_FLQ.ZfmOpmsMaster();
 
                     request.DateBegin = "";
                     request.DateEnd = "";
@@ -2919,7 +2921,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (zopmsslp.Count() - 1 >= 0)
                     {
-                        foreach (SAPMD.Zopmsslp a in zopmsslp)
+                        foreach (SAPMD_FLQ.Zopmsslp a in zopmsslp)
                         {
 
                             kodComp = a.Zbukrs;
@@ -3202,7 +3204,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (iresponse.Return.Count() - 1 >= 1)
                     {
-                        foreach (SAPMD.Bapiret2 a in bapirtn)
+                        foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
                         {
                             type = a.Type;
                             id = a.Id;
@@ -3500,6 +3502,290 @@ namespace MVC_SYSTEM.Controllers
             db3.Entry(gethtml).State = EntityState.Deleted;
             db3.SaveChanges();
             return View();
+        }
+
+
+        //RISE PART - WBS ELEMENT
+        //22/9/2023
+        public ActionResult wbsList(string wbsCode, string wbsDesc)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var result = new List<tbl_WBSSAP>();
+
+            if ((wbsCode == null || wbsCode == "") && (wbsDesc == null || wbsDesc == ""))
+            {
+                result = db.tbl_WBSSAP.OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsCode != null && wbsCode != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsDesc != null && wbsDesc != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc)).OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            else if (wbsCode != null && wbsDesc != "")
+            {
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc) || w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+
+                if (!result.Any())
+                {
+                    ViewBag.Message = "Tiada Record";
+                    return View();
+
+                }
+            }
+
+            return View(result);
+        }
+
+        public ActionResult wbsRequest()
+        {
+
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            SyarikatList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
+            ViewBag.fld_CompanyCode = SyarikatList;
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult _wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLQ.ZfmOpmsMaster();
+            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+
+            SAPMD_FLQ.Bus2054Detail[] zopmswbs = new SAPMD_FLQ.Bus2054Detail[1];
+            SAPMD_FLQ.Bus2054Detail zopmswbss = new SAPMD_FLQ.Bus2054Detail();
+
+            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+
+            oClient.ClientCredentials.UserName.UserName = IDFelda;
+            oClient.ClientCredentials.UserName.Password = pwdFelda;
+
+            oClient.Open();
+
+            try
+            {
+                request = new SAPMD_FLQ.ZfmOpmsMaster();
+
+                request.DateBegin = "";
+                request.DateEnd = "";
+                request.Wbs = tbl_WBSSAPCreate.fld_wbsElement;
+                request.ItWbs = zopmswbs;
+
+                iresponse = oClient.ZfmOpmsMaster(request);
+
+                bapirtn = iresponse.Return;
+                zopmswbs = iresponse.ItWbs;
+
+
+                foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
+                {
+                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
+
+                    if (wbsCode == null)
+                    {
+                        tbl_WBSSAP = new tbl_WBSSAP();
+
+                        tbl_WBSSAP.fld_wbsElement = a.WbsElement;
+                        tbl_WBSSAP.fld_wbsDescription = a.Description;
+                        tbl_WBSSAP.fld_Deleted = false;
+                        tbl_WBSSAP.fld_createdby = getuserid.ToString();
+                        tbl_WBSSAP.fld_createdDate = DateTime.Today;
+                        tbl_WBSSAP.fld_updatedDate = DateTime.Today;
+
+
+                        db.tbl_WBSSAP.Add(tbl_WBSSAP);
+                        db.SaveChanges();
+                        db.Entry(tbl_WBSSAP).State = EntityState.Detached;
+                    }
+
+                    else
+                    {
+                        if (wbsCode.fld_wbsElement.Contains(a.WbsElement))
+                        {
+                            //ModelsCorporate.tbl_WBSSAP _WBSSAP = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).Single();
+
+
+                            wbsCode.fld_wbsDescription = a.Description;
+                            wbsCode.fld_updatedby = getuserid.ToString();
+                            wbsCode.fld_updatedDate = DateTime.Today;
+
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
+                foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
+                {
+                    tbl_SAPLog = new tbl_SAPLog
+                    {
+
+                        fld_type = b.Type,
+                        fld_id = b.Id,
+                        fld_number = b.Number,
+                        fld_logno = b.LogNo,
+                        fld_logmsgno = b.LogMsgNo,
+                        fld_message = b.Message,
+                        fld_msg1 = b.MessageV1,
+                        fld_msg2 = b.MessageV2,
+                        fld_msg3 = b.MessageV3,
+                        fld_msg4 = b.MessageV4,
+                        fld_parameter = b.Parameter,
+                        fld_row = Convert.ToString(b.Row),
+                        fld_field = b.Field,
+                        fld_system = "SAP WBS",
+                        fld_logDate = DateTime.Today
+                    };
+
+                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                    db.SaveChanges();
+                    db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                }
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = GlobalResCorp.msgUpdate,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "1",
+                    //div = "",
+                    rootUrl = domain,
+                    action = "wbsList",
+                    controller = "SAPMasterData"
+                });
+            }
+            catch (Exception ex)
+            {
+                if (ex == null)
+                {
+                    foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
+                    {
+                        tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_type = b.Type,
+                            fld_id = b.Id,
+                            fld_number = b.Number,
+                            fld_logno = b.LogNo,
+                            fld_logmsgno = b.LogMsgNo,
+                            fld_message = b.Message,
+                            fld_msg1 = b.MessageV1,
+                            fld_msg2 = b.MessageV2,
+                            fld_msg3 = b.MessageV3,
+                            fld_msg4 = b.MessageV4,
+                            fld_parameter = b.Parameter,
+                            fld_row = Convert.ToString(b.Row),
+                            fld_field = b.Field,
+                            fld_system = "SAP WBS", //return dari SAP
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                    }
+                }
+                else
+                {
+                    string msg = ex.InnerException.ToString().Substring(63, 3);
+
+                    if (msg == "401")
+                    {
+                        tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_message = msg,
+                            fld_msg1 = "Unauthorized. Kindly check the ID with Basis Team.",
+                            fld_system = "OPMS WBS", //return dari source code
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+
+                    }
+                    else
+                    {
+                        tbl_SAPLog = new tbl_SAPLog
+                        {
+
+                            fld_message = ex.Message,
+                            fld_system = "OPMS WBS", //return dari source code
+                            fld_logDate = DateTime.Today
+                        };
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+                        db.Entry(tbl_SAPLog).State = EntityState.Detached;
+                    }
+                }
+
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+
+            }
+
+
+
         }
     }
 }

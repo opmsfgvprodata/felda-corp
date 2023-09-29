@@ -942,6 +942,7 @@
     <Compile Include="ModelsCorporate\tbl_UploadedCountDetail.cs" />
     <Compile Include="ModelsCorporate\tbl_VDSAP.cs" />
     <Compile Include="ModelsCorporate\tbl_Version.cs" />
+    <Compile Include="ModelsCorporate\tbl_WBSSAP.cs" />
     <Compile Include="ModelsCorporate\tbl_Wilayah.cs" />
     <Compile Include="ModelsCorporate\vw_AuditTrail.cs" />
     <Compile Include="ModelsCorporate\vw_CutiUmumKelayakan.cs" />
@@ -2797,7 +2798,6 @@
     <Content Include="Service References\SAPMD_FLP\MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\SAPMD_FLQ\document.wsdl" />
     <None Include="Service References\SAPMD_FLP\configuration91.svcinfo" />
     <None Include="Service References\SAPMD_FLP\configuration.svcinfo" />
     <None Include="Service References\SAPMD_FLP\Reference.svcmap">
@@ -2810,6 +2810,7 @@
     <Content Include="Service References\SAPMD_FLQ\MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\SAPMD_FLQ\zws_opms_master.wsdl" />
     <None Include="Service References\SAPPostIntegration\configuration91.svcinfo" />
     <None Include="Service References\SAPPostIntegration\configuration.svcinfo" />
     <None Include="Service References\SAPMD\configuration91.svcinfo" />
@@ -3535,6 +3536,8 @@
     <Content Include="Views\SAPMasterData\ioTodayList.cshtml" />
     <Content Include="Views\DataEntry\PalmPriceInfo.cshtml" />
     <Content Include="Views\SAPMasterData\vdTodayList.cshtml" />
+    <Content Include="Views\SAPMasterData\wbsList.cshtml" />
+    <Content Include="Views\SAPMasterData\wbsRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
