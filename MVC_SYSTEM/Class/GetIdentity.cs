@@ -182,6 +182,15 @@ namespace MVC_SYSTEM.Class
             return ID;
         }
 
+        public tblUser GetUserDetail(string username)
+        {
+            MVC_SYSTEM_Auth db = new MVC_SYSTEM_Auth();
+            tblUser User;
+            int ID = 0;
+            User = db.tblUsers.Where(u => u.fldUserName.Equals(username)).FirstOrDefault();
+            return User;
+        }
+
         public int ? ClientID(string username)
         {
             MVC_SYSTEM_Auth db = new MVC_SYSTEM_Auth();
