@@ -169,9 +169,9 @@
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
                         <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">EWALLET (RM)</th>
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
-                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-E (RM)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-E (RM)</th> 
                         <th rowspan="1" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL PEKERJA</th>
-                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-HQ (RM)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">M2E-HQ (RM)</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -469,12 +469,12 @@
             </table>
             @*}*@
 
-
         }
     </div>
 
     <div style="text-align:right; margin-top:10px">
-        @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+        @*Commentted by Shazana 29/9/2023*@
+        @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf"> 
                 <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadPdf
             </a>*@
         <a class="btn btn-default btn-sm" href="#" id="Excelbtn" onclick="HTMLtoExcel('@uniquefilename')">
@@ -482,7 +482,7 @@
         </a>
 
         @*//Added by Shazana 3/4/2023*@
-        @*Modified by Shazana 29/9/2023*@
+        @*Modified by Shazana 29/9/2023*@ 
         <a class="btn btn-default" href="#" id="downloadpdf2" style="float: right;">
             <img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /> Cetak/PDF
         </a>
@@ -582,7 +582,9 @@ else
 @*Added by Shazana 29/9/2023*@
 
 <script>
-       $(document).ready(function () {
+
+
+     $(document).ready(function () {
 
         $("#downloadpdf2").click(function () {
             var myHtml = document.getElementById('scrollArea').innerHTML;
@@ -606,6 +608,7 @@ else
         });
 
        });
+
 
 </script>
 

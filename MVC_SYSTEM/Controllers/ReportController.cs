@@ -6915,8 +6915,6 @@ namespace MVC_SYSTEM.Controllers
 
 
 
-
-
         public JsonResult GetList(int wlyh, int ldg, int RadioGroup, string StatusList)
         {
             Connection Connection = new Connection();
