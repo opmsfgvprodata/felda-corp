@@ -16470,15 +16470,39 @@ namespace MVC_SYSTEM.Controllers
             var records = new PagedList<ModelsCustom.CustMod_HargaKesukaran>();
             int role = GetIdentity.RoleID(getuserid).Value;
 
-            //Modified by Shazana 18/7/2023
-            //Modified by Shazana 21/9/2023
-            var JenisDifficulty = db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan")).Select(x => x.fldOptConfDesc).ToList();
+            //commented by faeza 07.10.2023
+            ////Modified by Shazana 18/7/2023
+            ////Modified by Shazana 21/9/2023
+            //var JenisDifficulty = db.tblOptionConfigsWebs.Where(x => (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan")).Select(x => x.fldOptConfFlag1).ToList();
 
-            //Commented by Shazana 12/62/2023
-            //var DifficultyData = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1.Contains("Kesukaran") && (JenisDifficulty.Contains(x.fldOptConfFlag1)) && x.fldOptConfFlag2 != "HargaKesukaran").ToList();
-            //Added by Shazana 12/6/2023
-            //Modified by Shazana 18/7/2023
-            var DifficultyData = db.tbl_HargaKesukaran.Where(x => JenisDifficulty.Contains(x.fld_JenisHargaKesukaran)).ToList();
+            ////Commented by Shazana 12/62/2023
+            ////var DifficultyData = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1.Contains("Kesukaran") && (JenisDifficulty.Contains(x.fldOptConfFlag1)) && x.fldOptConfFlag2 != "HargaKesukaran").ToList();
+            ////Added by Shazana 12/6/2023
+            ////Modified by Shazana 18/7/2023
+            //var DifficultyData = db.tbl_HargaKesukaran.Where(x => JenisDifficulty.Contains(x.fld_JenisHargaKesukaran)).ToList();
+
+            //string JenisHargaKesukaran = "";
+            //List<CustMod_HargaKesukaran> custMod_HargaKesukaran = new List<CustMod_HargaKesukaran>();
+
+            //var CustMod_HargaKesukaran = new List<CustMod_HargaKesukaran>();
+            //foreach (var DifficultyDatadetails in DifficultyData)
+            //{
+            //    //Modified by Shazana 18/7/2023
+            //    //Modified by Shazana 21/9/2023
+            //    JenisHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfDesc == DifficultyDatadetails.fld_JenisHargaKesukaran && (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldDeleted == false).Select(s => s.fldOptConfFlag1).FirstOrDefault();
+
+            //    //Commented by Shazana 14/6/2023
+            //    //CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fldOptConfFlag1, fldOptConfFlag2 = DifficultyDatadetails.fldOptConfFlag2, fldOptConfDesc = DifficultyDatadetails.fldOptConfDesc, fldOptConfValue = DifficultyDatadetails.fldOptConfValue, fldOptConfFlag3 = DifficultyDatadetails.fldOptConfFlag3, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fldOptConfID });
+            //    //Added by Shazana 14/6/2023
+            //    //CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fldOptConfFlag1, fldOptConfFlag2 = DifficultyDatadetails.fldOptConfFlag2, fldOptConfDesc = DifficultyDatadetails.fldOptConfDesc, fldOptConfValue = DifficultyDatadetails.fldOptConfValue, fldOptConfFlag3 = DifficultyDatadetails.fldOptConfFlag3, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fldOptConfID, fldDeleted = DifficultyDatadetails.fldDeleted });
+
+            //    //Modified by Shazana 18/7/2023
+            //    CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = JenisHargaKesukaran, fldOptConfFlag2 = DifficultyDatadetails.fld_HargaKesukaran.ToString(), fldOptConfDesc = DifficultyDatadetails.fld_Keterangan, fldOptConfValue = DifficultyDatadetails.fld_KodHargaKesukaran, JenisHargaKesukaran = DifficultyDatadetails.fld_JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fld_Id, fldDeleted = DifficultyDatadetails.fld_Deleted });
+            //}
+
+
+            //added by faeza 07.10.2023
+            var DifficultyData = db.tbl_HargaKesukaran.ToList();
 
             string JenisHargaKesukaran = "";
             List<CustMod_HargaKesukaran> custMod_HargaKesukaran = new List<CustMod_HargaKesukaran>();
@@ -16486,18 +16510,9 @@ namespace MVC_SYSTEM.Controllers
             var CustMod_HargaKesukaran = new List<CustMod_HargaKesukaran>();
             foreach (var DifficultyDatadetails in DifficultyData)
             {
-                //Modified by Shazana 18/7/2023
-                //Modified by Shazana 21/9/2023
-                JenisHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfDesc == DifficultyDatadetails.fld_JenisHargaKesukaran && (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldDeleted == false).Select(s => s.fldOptConfFlag1).FirstOrDefault();
-
-                //Commented by Shazana 14/6/2023
-                //CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fldOptConfFlag1, fldOptConfFlag2 = DifficultyDatadetails.fldOptConfFlag2, fldOptConfDesc = DifficultyDatadetails.fldOptConfDesc, fldOptConfValue = DifficultyDatadetails.fldOptConfValue, fldOptConfFlag3 = DifficultyDatadetails.fldOptConfFlag3, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fldOptConfID });
-                //Added by Shazana 14/6/2023
-                //CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fldOptConfFlag1, fldOptConfFlag2 = DifficultyDatadetails.fldOptConfFlag2, fldOptConfDesc = DifficultyDatadetails.fldOptConfDesc, fldOptConfValue = DifficultyDatadetails.fldOptConfValue, fldOptConfFlag3 = DifficultyDatadetails.fldOptConfFlag3, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fldOptConfID, fldDeleted = DifficultyDatadetails.fldDeleted });
-
-                //Modified by Shazana 18/7/2023
-                CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = JenisHargaKesukaran, fldOptConfFlag2 = DifficultyDatadetails.fld_HargaKesukaran.ToString(), fldOptConfDesc = DifficultyDatadetails.fld_Keterangan, fldOptConfValue = DifficultyDatadetails.fld_KodHargaKesukaran, JenisHargaKesukaran = DifficultyDatadetails.fld_JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fld_Id, fldDeleted = DifficultyDatadetails.fld_Deleted });
-            }
+                JenisHargaKesukaran = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == DifficultyDatadetails.fld_JenisHargaKesukaran && (x.fldOptConfFlag2 == "HargaKesukaran" || x.fldOptConfFlag2 == "HargaTambahan") && x.fldDeleted == false).Select(s => s.fldOptConfDesc).FirstOrDefault();
+                CustMod_HargaKesukaran.Add(new CustMod_HargaKesukaran { fldOptConfFlag1 = DifficultyDatadetails.fld_JenisHargaKesukaran, fldOptConfFlag2 = DifficultyDatadetails.fld_HargaKesukaran.ToString(), fldOptConfDesc = DifficultyDatadetails.fld_Keterangan, fldOptConfValue = DifficultyDatadetails.fld_KodHargaKesukaran, JenisHargaKesukaran = JenisHargaKesukaran, fldOptConfID = DifficultyDatadetails.fld_Id, fldDeleted = DifficultyDatadetails.fld_Deleted });
+            }//end faeza
 
             if (!String.IsNullOrEmpty(filter))
             {
@@ -16593,13 +16608,14 @@ namespace MVC_SYSTEM.Controllers
                     ModelsCorporate.tbl_HargaKesukaran HargaKesukaran1 = new ModelsCorporate.tbl_HargaKesukaran();
 
                     HargaKesukaran1.fld_JenisAktiviti = detailjnsHargaKesukaran.fldOptConfFlag3;
-                    HargaKesukaran1.fld_JenisHargaKesukaran = detailjnsHargaKesukaran.fldOptConfDesc;
+                    //HargaKesukaran1.fld_JenisHargaKesukaran = detailjnsHargaKesukaran.fldOptConfDesc;
+                    HargaKesukaran1.fld_JenisHargaKesukaran = detailjnsHargaKesukaran.fldOptConfFlag1; //modified by faeza 07.10.2023
                     HargaKesukaran1.fld_Keterangan = HargaKesukaran.fld_Keterangan;
                     HargaKesukaran1.fld_KodHargaKesukaran = HargaKesukaran.fld_KodHargaKesukaran;
                     HargaKesukaran1.fld_NegaraId = NegaraID;
                     HargaKesukaran1.fld_SyarikatId = SyarikatID;
-                    HargaKesukaran1.fld_WilayahId = WilayahID;
-                    HargaKesukaran1.fld_LadangId = LadangID;
+                    //HargaKesukaran1.fld_WilayahId = WilayahID;
+                    //HargaKesukaran1.fld_LadangId = LadangID;
                     HargaKesukaran1.fld_CreatedBy = getuserid.ToString();
                     HargaKesukaran1.fld_CreatedDate = DateTime.Today;
                     HargaKesukaran1.fld_HargaKesukaran = HargaKesukaran.fld_HargaKesukaran;
