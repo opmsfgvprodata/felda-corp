@@ -304,6 +304,17 @@ namespace MVC_SYSTEM.Controllers
             //string mywlyid = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            //yana tambah 180623
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            SyarikatList = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            // end here
+
             //sepul tambah untuk panggil 3 character dpn username 07/05/2021
             String username_first = User.Identity.Name.Substring(0, 3);
             ViewBag.myID = username_first;
@@ -331,6 +342,15 @@ namespace MVC_SYSTEM.Controllers
                 LadangIDList = new SelectList(db.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
                 LadangIDList.Insert(0, (new SelectListItem { Text = "All", Value = "0" }));
 
+                //Add by yana 080923
+                SyarikatList = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+                // end here 080923
+
             }
             else if (WilayahID != 0 && LadangID == 0)
             {
@@ -341,6 +361,15 @@ namespace MVC_SYSTEM.Controllers
                 //Added by kamalia 19/11/2020
                 LadangIDList = new SelectList(db.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
 
+                //Add by yana 080923
+                SyarikatList = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+                // end here 080923
+
             }
             else if (WilayahID != 0 && LadangID != 0)
             {
@@ -350,11 +379,23 @@ namespace MVC_SYSTEM.Controllers
 
                 WilayahIDList = new SelectList(db.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
                 LadangIDList = new SelectList(db.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_ID == LadangID && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
+
+                //Add by yana 080923
+                SyarikatList = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+                // end here 080923
             }
 
             ViewBag.fldWilayahID = WilayahIDList;
             //Added by kamalia 19/11/2020
             ViewBag.fldLadangID = LadangIDList;
+            // yana add 070823
+            ViewBag.fldSyarikatList = SyarikatList;
+            // end here 070823
 
             return PartialView("Create");
         }
