@@ -33,6 +33,12 @@
                 @Html.Label(GlobalResCorp.lblYear)
                 @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
             </div>
+            @*yana add 030823*@
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", (SelectList)null, "Sila Pilih", htmlAttributes: new { @class = "form-control" })
+            </div>
+            @*end here 030823*@
             <div class="col-sm-2">
                 @Html.Label(GlobalResCorp.lblRegion)
                 @Html.DropDownList("WlyhList", null, htmlAttributes: new { @class = "form-control" })
@@ -94,7 +100,8 @@
             var disableoption = "";
             Wlyhlist.url = "@Url.Action("GetSubEst", "UnblockCheckroll")";
             Wlyhlist.type = "POST";
-            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val() });
+            @* yana update 030823 - add SyarikatList: $("#SyarikatList").val() *@
+            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val(), SyarikatList: $("#SyarikatList").val() });
             Wlyhlist.datatype = "json";
             Wlyhlist.contentType = "application/json";
             Wlyhlist.success = function (result) {
