@@ -16689,7 +16689,7 @@ namespace MVC_SYSTEM.Controllers
             //Commented by Shazana 18/7/2023
             //string lastcode = db.tblOptionConfigsWebs.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldOptConfFlag1 == detailjnsHargaKesukaran.fldOptConfFlag1 && x.fldOptConfFlag2!= "HargaKesukaran").OrderByDescending(o => o.fldOptConfValue).Select(s => s.fldOptConfValue).FirstOrDefault();
             //Added by Shazana 18/7/2023
-            string lastcode = db.tbl_HargaKesukaran.Where(x => x.fld_NegaraId == NegaraID && x.fld_SyarikatId == SyarikatID && x.fld_JenisHargaKesukaran == detailjnsHargaKesukaran.fldOptConfDesc).OrderByDescending(o => o.fld_KodHargaKesukaran).Select(s => s.fld_KodHargaKesukaran).FirstOrDefault();
+            string lastcode = db.tbl_HargaKesukaran.Where(x => x.fld_NegaraId == NegaraID && x.fld_SyarikatId == SyarikatID && x.fld_JenisHargaKesukaran == detailjnsHargaKesukaran.fldOptConfFlag1).OrderByDescending(o => o.fld_KodHargaKesukaran).Select(s => s.fld_KodHargaKesukaran).FirstOrDefault();
             if (lastcode == null)
             {
                 int generated = 1;
