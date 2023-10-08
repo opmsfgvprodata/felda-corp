@@ -41,7 +41,7 @@ namespace MVC_SYSTEM.Class
             //DateTime NowDate = timezone.gettimezone();
             DateTime? date = timezone.gettimezone();
             DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
-            DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 6);
+            DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 5);
 
             GetNSWL.GetSyarikatRCMSDetail(CompCode, out CorpID, out ClientID, out AccNo, out InitialName);
             string filePath = "~/MaybankFile/" + tahun + "/" + bulan + "/" + NegaraID.ToString() + "_" + SyarikatID.ToString() + "/" + WilayahID.ToString() + "/";
