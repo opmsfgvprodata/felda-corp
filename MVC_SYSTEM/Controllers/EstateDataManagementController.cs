@@ -1,4 +1,5 @@
-﻿using MVC_SYSTEM.App_LocalResources;
+﻿using Itenso.TimePeriod;
+using MVC_SYSTEM.App_LocalResources;
 using MVC_SYSTEM.Attributes;
 using MVC_SYSTEM.Class;
 using MVC_SYSTEM.log;
@@ -9,7 +10,11 @@ using MVC_SYSTEM.ViewingModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Dynamic;
+//using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using static MVC_SYSTEM.Class.GlobalFunction;
@@ -1928,7 +1933,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         //fatin added - 25/04/2023
-        public ActionResult EstateLevelTemporaryManagement()
+        public ActionResult EstateLevelTemporaryManagement(int page = 1, string sort = "fld_CreatedDT", string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -1961,7 +1966,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _EstateLevelTemporaryManagementList(int? WilayahList, int? LadangList, int page = 1, string sortdir = "ASC")
+        public ActionResult _EstateLevelTemporaryManagementList(int? WilayahList, int? LadangList, int page = 1, string sort = "fld_CreatedDT", string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -1987,6 +1992,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 message = "Sila pilih untuk mencari data";
             }
+
 
             records.Content = GetTransferPkt;
             records.TotalRecords = GetTransferPkt.Count();
@@ -2022,12 +2028,12 @@ namespace MVC_SYSTEM.Controllers
             ladangList1.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
             ViewBag.LadangList1 = ladangList1;
 
-            List<SelectListItem> JnisAktvt = new List<SelectListItem>();
-            //var GetJenisAktvtyDesc = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "activityLevel" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => new { s.fldOptConfValue, s.fldOptConfDesc }).ToList(); JnisAktvt = new SelectList(GetJenisAktvtyDesc.Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
-            var tbl_JenisAktiviti = db.tbl_JenisAktiviti.Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).ToList();
-            JnisAktvt = new SelectList(tbl_JenisAktiviti.OrderBy(o => o.fld_KodJnsAktvt).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_KodJnsAktvt + " - " + s.fld_Desc }), "Value", "Text").ToList();
-            JnisAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" }));
-            ViewBag.JnisAktvt = JnisAktvt;
+            //List<SelectListItem> JnisAktvt = new List<SelectListItem>();
+            ////var GetJenisAktvtyDesc = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "activityLevel" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => new { s.fldOptConfValue, s.fldOptConfDesc }).ToList(); JnisAktvt = new SelectList(GetJenisAktvtyDesc.Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            //var tbl_JenisAktiviti = db.tbl_JenisAktiviti.Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).ToList();
+            //JnisAktvt = new SelectList(tbl_JenisAktiviti.OrderBy(o => o.fld_KodJnsAktvt).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_KodJnsAktvt + " - " + s.fld_Desc }), "Value", "Text").ToList();
+            //JnisAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" }));
+            //ViewBag.JnisAktvt = JnisAktvt;
 
             List<SelectListItem> JnisPkt = new List<SelectListItem>();
             JnisPkt = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "jnspkt" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
@@ -2124,12 +2130,14 @@ namespace MVC_SYSTEM.Controllers
                 tbl_PktPinjam.fld_KodPkt = KodPkt + DivisionIDAsal + "P";
                 tbl_PktPinjam.fld_NamaPkt = NamaPkt + " - (Pinjam)";
                 tbl_PktPinjam.fld_DivisionID = 0;
+                //fld_LadangID & fld_WilayahID adalah merujuk kepada ladang dan wilayah asal
                 tbl_PktPinjam.fld_LadangID = CustMod_TransferPkt.ladangList2;
                 tbl_PktPinjam.fld_WilayahID = CustMod_TransferPkt.wilayahList2;
                 tbl_PktPinjam.fld_SyarikatID = SyarikatID;
                 tbl_PktPinjam.fld_NegaraID = NegaraID;
                 //tbl_PktPinjam.fld_DivisionIDAsal = DivisionIDAsal;
-                tbl_PktPinjam.fld_LadangIDAsal = LadangIDAsal;
+                //fld_LadangIDAsal & fld_WilayahIDAsal adalah merujuk kepada ladang dan wilayah pinjam
+                tbl_PktPinjam.fld_LadangIDAsal = LadangIDAsal; 
                 tbl_PktPinjam.fld_WilayahIDAsal = WilayahIDAsal;
                 tbl_PktPinjam.fld_SyarikatIDAsal = SyarikatID;
                 tbl_PktPinjam.fld_NegaraIDAsal = NegaraIDAsl;
@@ -2178,7 +2186,99 @@ namespace MVC_SYSTEM.Controllers
             }
         }
 
-        public ActionResult _EstateLevelTemporaryManagementDelete(int id, int wil)
+        //fatin added - 12/09/2023
+        public ActionResult _EstateLevelTemporaryManagementEdit(int id, int wil)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            Connection.GetConnection(out host, out catalog, out user, out pass, wil, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+
+
+            List<SelectListItem> PilihanPkt = new List<SelectListItem>();
+            PilihanPkt.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.PilihanPkt = PilihanPkt;
+
+         
+            var GetLevelDetail = estateConnection.tbl_PktPinjam.Find(id);
+
+            return PartialView(GetLevelDetail);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _EstateLevelTemporaryManagementEdit(tbl_PktPinjam tbl_PktPinjam)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            Connection.GetConnection(out host, out catalog, out user, out pass, tbl_PktPinjam.fld_WilayahID, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+            ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+            var DateNow = ChangeTimeZone.gettimezone();
+            var message = "";
+
+            try
+            {
+                
+                var pktPinjamData = estateConnection.tbl_PktPinjam.Find(tbl_PktPinjam.fld_ID);
+
+                pktPinjamData.fld_EndDT = tbl_PktPinjam.fld_EndDT;
+                                
+
+                estateConnection.Entry(pktPinjamData).State = EntityState.Modified;
+                estateConnection.SaveChanges();
+
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = GlobalResCorp.msgUpdate,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "1",
+                    div = "SearchingData",
+                    rootUrl = domain,
+                    action = "_EstateLevelTemporaryManagementList",
+                    controller = "EstateDataManagement"
+                });
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+        //end
+
+            public ActionResult _EstateLevelTemporaryManagementDelete(int id, int wil)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -2249,6 +2349,7 @@ namespace MVC_SYSTEM.Controllers
                 db.Dispose();
             }
         }
+
         public JsonResult GetLadang(int WilayahID)
         {
             List<SelectListItem> ladanglist = new List<SelectListItem>();
@@ -2276,7 +2377,7 @@ namespace MVC_SYSTEM.Controllers
             return Json(ladanglist);
         }
 
-        public JsonResult GetPkt(string JnisAktvt, byte JnsPkt, int WilayahList, int LadangList)
+        public JsonResult GetPkt(byte JnsPkt, int WilayahList, int LadangList) // fatin modified remove JnisAktvt - 13/09/2023
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
