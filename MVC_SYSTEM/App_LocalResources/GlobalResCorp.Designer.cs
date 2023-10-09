@@ -988,6 +988,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombor Akaun.
+        /// </summary>
+        public static string lblAccNo {
+            get {
+                return ResourceManager.GetString("lblAccNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status Akaun.
         /// </summary>
         public static string lblAccStatus {
@@ -2023,6 +2032,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Batch Klien.
+        /// </summary>
+        public static string lblClientBatchID {
+            get {
+                return ResourceManager.GetString("lblClientBatchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kod IO.
         /// </summary>
         public static string lblCodeIO {
@@ -2280,6 +2298,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblCompanyInfo {
             get {
                 return ResourceManager.GetString("lblCompanyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat Syarikat.
+        /// </summary>
+        public static string lblCompanyInfoUpdate {
+            get {
+                return ResourceManager.GetString("lblCompanyInfoUpdate", resourceCulture);
             }
         }
         
@@ -2640,6 +2667,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableUpdate {
             get {
                 return ResourceManager.GetString("lblContributionTableUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Korporat.
+        /// </summary>
+        public static string lblCorpID {
+            get {
+                return ResourceManager.GetString("lblCorpID", resourceCulture);
             }
         }
         
