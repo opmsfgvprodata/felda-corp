@@ -893,6 +893,7 @@
     <Compile Include="ModelsCorporate\tbl_GajiMinimaLdg.cs" />
     <Compile Include="ModelsCorporate\tbl_GLSAP.cs" />
     <Compile Include="ModelsCorporate\tbl_HargaGetahSMR.cs" />
+    <Compile Include="ModelsCorporate\tbl_HargaKesukaran.cs" />
     <Compile Include="ModelsCorporate\tbl_HargaSawitRange.cs" />
     <Compile Include="ModelsCorporate\tbl_HargaSawitSemasa.cs" />
     <Compile Include="ModelsCorporate\tbl_HargaSemasa.cs" />

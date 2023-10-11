@@ -1,5 +1,6 @@
 ﻿@using MVC_SYSTEM.Class
-@model MVC_SYSTEM.ModelsCorporate.tblOptionConfigsWeb
+@*Modified by Shazana 18/7/2023*@
+@model MVC_SYSTEM.ModelsCorporate.tbl_HargaKesukaran
 
 @{
     @Scripts.Render("~/bundles/jqueryval")
@@ -10,13 +11,16 @@
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        @if (Model.fldDeleted == false)
+        @*Modified by Shazana 18/7/2023*@
+        @if (Model.fld_Deleted == false)
         {
-            <h3 class="modal-title">@GlobalResCorp.lblDifficultyPriceDelete</h3>
+
+            <h3 class="modal-title">Hapus Harga Kesukaran</h3>
         }
         else
         {
-            <h3 class="modal-title">@GlobalResCorp.lblDifficultyPriceUnDelete</h3>
+
+            <h3 class="modal-title">Guna Semula Harga @ViewBag.DifficultyName</h3>
         }
     </div>
     @using (Html.BeginForm())
@@ -25,31 +29,43 @@
         <div class="modal-body">
             <div class="form-horizontal">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">@GlobalResCorp.lblDifficultyPriceInfo</div>
+                    @*Modify by Shazana 18/6/2023*@
+                    @if (Model.fld_Deleted == false)
+                    {
+                        <div class="panel-heading">Hapus Harga Kesukaran</div>
+                    }
+                    else
+                    {
+                        <div class="panel-heading">Guna Semula Harga @ViewBag.DifficultyName</div>
+                    }
+
+
+
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblDifficultyPriceCode:</label>
-                            <div class="col-sm-2">
-                                @Html.TextBoxFor(model => model.fldOptConfValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            <div class="col-sm-8">
+                                @*Modified by Shazana 18/7/2023*@
+                                @Html.TextBoxFor(model => model.fld_KodHargaKesukaran, htmlAttributes: new { @class = "form-control", @disabled = "true" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
                             <div class="col-sm-8">
-                                @Html.TextBoxFor(model => model.fldOptConfDesc, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @*Modified by Shazana 18/7/2023*@
+                                @Html.TextBoxFor(model => model.fld_Keterangan, htmlAttributes: new { @class = "form-control", @disabled = "true" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3">@GlobalResCorp.lblDifficultyPrice:</label>
+                            @*Modify by Shazana 18/6/2023*@
+                            <label class="control-label col-sm-3">Harga Kesukaran(RM):</label>
                             <div class="col-sm-4">
-                                @*Added by Shazana 14/6/2023*@
-                                @*Commented by Shazana 22/7/2023*@
-                                @*@Html.TextBoxFor(model => model.fldOptConfFlag3, htmlAttributes: new { @class = "form-control", @disabled = "true" })*@
-                                @*Added by Shazana 22/7/2023*@
-                                @Html.TextBoxFor(model => model.fldOptConfFlag2, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                @*Modified by Shazana 18/7/2023*@
+                                @Html.TextBoxFor(model => model.fld_HargaKesukaran, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+
                             </div>
                         </div>
-                        @Html.HiddenFor(model => model.fldOptConfID)
+                        @Html.HiddenFor(model => model.fld_Id)
                     </div>
                 </div>
             </div>
