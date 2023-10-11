@@ -34,6 +34,34 @@
 }
 <script>
     $(document).ready(function () {
+
+                //yana added - 11/10/2023
+ $("#SyarikatList").change(function () {
+    debugger
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah", "EstateSelection")";
+    SyarikatList.type = "POST";
+     SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#WilayahIDList").empty();
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#SyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+        }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+ });
+//end
         if ($("#WilayahIDList").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";
@@ -44,6 +72,8 @@
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {
                 $("#LadangIDList").empty();
+                /*yana added - 11/10/2023*/
+                $("#LadangIDList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
                 for (var i = 0; i < ladanglist.length; i++) {
                     if ($("#WilayahIDList").val() == 0)
                     {
