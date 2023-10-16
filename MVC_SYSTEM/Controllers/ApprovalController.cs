@@ -2417,6 +2417,7 @@ namespace MVC_SYSTEM.Controllers
                 else
                 {
                     wilayahlist = new SelectList(db.tbl_Wilayah.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID2 && x.fld_ID == WilayahID && x.fld_Deleted == false).OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
+                    wilayahlist.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" })); //fatin added - 16/10/2023
                     ladanglist.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
                 }
             }
