@@ -2125,54 +2125,73 @@ namespace MVC_SYSTEM.Controllers
                         break;
                 }
 
-                tbl_PktPinjam.fld_JenisPkt = CustMod_TransferPkt.JnisPkt;
-                tbl_PktPinjam.fld_JnsLot = JenisLot;
-                tbl_PktPinjam.fld_KodPkt = KodPkt + DivisionIDAsal + "P";
-                tbl_PktPinjam.fld_NamaPkt = NamaPkt + " - (Pinjam)";
-                tbl_PktPinjam.fld_DivisionID = 0;
-                //fld_LadangID & fld_WilayahID adalah merujuk kepada ladang dan wilayah asal
-                tbl_PktPinjam.fld_LadangID = CustMod_TransferPkt.ladangList2;
-                tbl_PktPinjam.fld_WilayahID = CustMod_TransferPkt.wilayahList2;
-                tbl_PktPinjam.fld_SyarikatID = SyarikatID;
-                tbl_PktPinjam.fld_NegaraID = NegaraID;
-                //tbl_PktPinjam.fld_DivisionIDAsal = DivisionIDAsal;
-                //fld_LadangIDAsal & fld_WilayahIDAsal adalah merujuk kepada ladang dan wilayah pinjam
-                tbl_PktPinjam.fld_LadangIDAsal = LadangIDAsal; 
-                tbl_PktPinjam.fld_WilayahIDAsal = WilayahIDAsal;
-                tbl_PktPinjam.fld_SyarikatIDAsal = SyarikatID;
-                tbl_PktPinjam.fld_NegaraIDAsal = NegaraIDAsl;
-                tbl_PktPinjam.fld_SAPCode = SAPCode;
-                tbl_PktPinjam.fld_OriginPktID = CustMod_TransferPkt.PilihanPkt;
-                tbl_PktPinjam.fld_EndDT = CustMod_TransferPkt.DateEnd;
-                tbl_PktPinjam.fld_CreatedBy = getuserid;
-                tbl_PktPinjam.fld_CreatedDT = CurrentDT;
-                EstateConnTo.tbl_PktPinjam.Add(tbl_PktPinjam);
-                EstateConnTo.SaveChanges();
+                //fatin added - 10/10/2023
+                var pktPinjamExisting = EstateConnFrom.tbl_PktPinjam.SingleOrDefault(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == CustMod_TransferPkt.wilayahList2 && x.fld_LadangID == CustMod_TransferPkt.ladangList2 && x.fld_WilayahIDAsal == WilayahIDAsal && x.fld_LadangIDAsal == LadangIDAsal && x.fld_SAPCode == SAPCode);
 
-                EstateConnFrom.Dispose();
-                EstateConnTo.Dispose();
-
-                string appname = Request.ApplicationPath;
-                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-                var lang = Request.RequestContext.RouteData.Values["lang"];
-
-                if (appname != "/")
+                if (pktPinjamExisting == null)
                 {
-                    domain = domain + appname;
+                //end
+                    tbl_PktPinjam.fld_JenisPkt = CustMod_TransferPkt.JnisPkt;
+                    tbl_PktPinjam.fld_JnsLot = JenisLot;
+                    tbl_PktPinjam.fld_KodPkt = KodPkt + DivisionIDAsal + "P";
+                    tbl_PktPinjam.fld_NamaPkt = NamaPkt + " - (Pinjam)";
+                    tbl_PktPinjam.fld_DivisionID = 0;
+                    //fld_LadangID & fld_WilayahID adalah merujuk kepada ladang dan wilayah asal
+                    tbl_PktPinjam.fld_LadangID = CustMod_TransferPkt.ladangList2;
+                    tbl_PktPinjam.fld_WilayahID = CustMod_TransferPkt.wilayahList2;
+                    tbl_PktPinjam.fld_SyarikatID = SyarikatID;
+                    tbl_PktPinjam.fld_NegaraID = NegaraID;
+                    //tbl_PktPinjam.fld_DivisionIDAsal = DivisionIDAsal;
+                    //fld_LadangIDAsal & fld_WilayahIDAsal adalah merujuk kepada ladang dan wilayah pinjam
+                    tbl_PktPinjam.fld_LadangIDAsal = LadangIDAsal;
+                    tbl_PktPinjam.fld_WilayahIDAsal = WilayahIDAsal;
+                    tbl_PktPinjam.fld_SyarikatIDAsal = SyarikatID;
+                    tbl_PktPinjam.fld_NegaraIDAsal = NegaraIDAsl;
+                    tbl_PktPinjam.fld_SAPCode = SAPCode;
+                    tbl_PktPinjam.fld_OriginPktID = CustMod_TransferPkt.PilihanPkt;
+                    tbl_PktPinjam.fld_EndDT = CustMod_TransferPkt.DateEnd;
+                    tbl_PktPinjam.fld_CreatedBy = getuserid;
+                    tbl_PktPinjam.fld_CreatedDT = CurrentDT;
+                    EstateConnTo.tbl_PktPinjam.Add(tbl_PktPinjam);
+                    EstateConnTo.SaveChanges();
+
+                    EstateConnFrom.Dispose();
+                    EstateConnTo.Dispose();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgAdd,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "4",
+                        div = "SearchingData",
+                        rootUrl = domain,
+                        action = "_EstateLevelTemporaryManagementList",
+                        controller = "EstateDataManagement"
+                    });
+                //fatin added - 10/10/2023
                 }
-
-                return Json(new
+                else
                 {
-                    success = true,
-                    msg = GlobalResCorp.msgAdd,
-                    status = "success",
-                    checkingdata = "0",
-                    method = "4",
-                    div = "SearchingData",
-                    rootUrl = domain,
-                    action = "_EstateLevelTemporaryManagementList",
-                    controller = "EstateDataManagement"
-                });
+                    return Json(new
+                    {
+                        success = false,
+                        msg = "IO pinjam telah wujud . Sila lanjutkan tarikh akhir",
+                        status = "warning",
+                        checkingdata = "0"
+                    });
+                }
+                //end
             }
             else
             {
