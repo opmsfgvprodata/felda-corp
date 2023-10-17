@@ -16785,6 +16785,8 @@ namespace MVC_SYSTEM.Controllers
                 var harvestingDifficultyPriceData = db.tbl_HargaKesukaran.SingleOrDefault(
                 x => x.fld_Id == HargaKesukaran.fld_Id && x.fld_NegaraId == NegaraID && x.fld_SyarikatId == SyarikatID);
                 harvestingDifficultyPriceData.fld_HargaKesukaran = HargaKesukaran.fld_HargaKesukaran;
+                //Added by Shazana 17/10/2023
+                harvestingDifficultyPriceData.fld_Keterangan = HargaKesukaran.fld_Keterangan;
                 harvestingDifficultyPriceData.fld_ModifiedBy = getuserid.ToString();
                 harvestingDifficultyPriceData.fld_ModifiedDate = DateTime.Today;
 
