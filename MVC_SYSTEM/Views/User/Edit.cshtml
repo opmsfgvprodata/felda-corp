@@ -149,7 +149,35 @@
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);
         }*@
-            /*end here 051023*/
+    /*end here 051023*/
+
+                    //yana added - 11/10/2023
+    $("#fldSyarikatList").change(function () {
+    debugger
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah2", "User")";
+    SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#fldSyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#fldWilayahID").empty();
+        $("#fldLadangID").empty();
+        $("#fldLadangID").append("<option value=0>All</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#fldSyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#fldWilayahID").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+        }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+ });
+//end
 
       $("#fldWilayahID").change(function () {
             var WilayahIDList = {};
