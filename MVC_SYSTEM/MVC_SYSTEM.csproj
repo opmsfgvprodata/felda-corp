@@ -1051,6 +1051,12 @@
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MyegDetail_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -1073,9 +1079,6 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptRumKedKepPekLad_Result.cs">
-      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\get_NSWL.cs" />
