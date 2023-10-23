@@ -81,7 +81,7 @@
                             int bil = 1;
                             <div class="audittrailinfo">
                                 <p><b>@GlobalResAuditTrail.lblWilayahName : @GetWilayah.GetWilayahName(wilayahID)</b></p>
-                                <p><b>@GlobalResAuditTrail.lblTotalLadang : @GetLadang.JumlahLadang(wilayahID)</b></p>
+                                <p><b>@GlobalResAuditTrail.lblTotalLadang : @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</b></p>
                             </div>
                                 <table class="table table-hover table-bordered">
                                     <thead>
@@ -134,7 +134,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var codeladang in GetLadang.GetCodeLadang(wilayahID, "AuditTrail", ViewBag.Year))
+                                        @foreach (var codeladang in GetLadang.GetCodeLadang3(wilayahID, "AuditTrail", ViewBag.Year, ViewBag.Comcode))
                                         {
                                             Html.RenderAction("AuditTrailDetail", "AuditTrail", new { wilid = wilayahID, ladcd = codeladang, year = ViewBag.Year, bil = bil });
                                             bil++;
@@ -143,36 +143,36 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="3" class="text-center-tfoot"><b>@GlobalResAuditTrail.lblTotal</b></td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 1, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 2, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 3, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 4, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 5, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 6, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 7, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 8, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 9, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 10, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 11, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
-                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 12, wilayahID) / @GetLadang.JumlahLadang(wilayahID)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 1, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 2, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 3, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 4, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 5, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 6, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 7, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 8, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 9, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 10, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 11, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
+                                            <td class="text-center-tfoot">@GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 12, wilayahID, ViewBag.Comcode) / @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</td>
                                         </tr>
                                     </tfoot>
                                 </table>
                                 <hr class="style5" />
                             {
-                                totalM1 = totalM1 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 1, wilayahID);
-                                totalM2 = totalM2 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 2, wilayahID);
-                                totalM3 = totalM3 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 3, wilayahID);
-                                totalM4 = totalM4 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 4, wilayahID);
-                                totalM5 = totalM5 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 5, wilayahID);
-                                totalM6 = totalM6 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 6, wilayahID);
-                                totalM7 = totalM7 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 7, wilayahID);
-                                totalM8 = totalM8 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 8, wilayahID);
-                                totalM9 = totalM9 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 9, wilayahID);
-                                totalM10 = totalM10 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 10, wilayahID);
-                                totalM11 = totalM11 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 11, wilayahID);
-                                totalM12 = totalM12 + GetCalculateTotal.GetTotalAuditTrail(ViewBag.Year, 12, wilayahID);
-                                totalAllLdg = totalAllLdg + GetLadang.JumlahLadang(wilayahID);
+                                totalM1 = totalM1 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 1, wilayahID, ViewBag.Comcode);
+                                totalM2 = totalM2 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 2, wilayahID, ViewBag.Comcode);
+                                totalM3 = totalM3 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 3, wilayahID, ViewBag.Comcode);
+                                totalM4 = totalM4 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 4, wilayahID, ViewBag.Comcode);
+                                totalM5 = totalM5 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 5, wilayahID, ViewBag.Comcode);
+                                totalM6 = totalM6 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 6, wilayahID, ViewBag.Comcode);
+                                totalM7 = totalM7 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 7, wilayahID, ViewBag.Comcode);
+                                totalM8 = totalM8 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 8, wilayahID, ViewBag.Comcode);
+                                totalM9 = totalM9 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 9, wilayahID, ViewBag.Comcode);
+                                totalM10 = totalM10 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 10, wilayahID, ViewBag.Comcode);
+                                totalM11 = totalM11 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 11, wilayahID, ViewBag.Comcode);
+                                totalM12 = totalM12 + GetCalculateTotal.GetTotalAuditTrail2(ViewBag.Year, 12, wilayahID, ViewBag.Comcode);
+                                totalAllLdg = totalAllLdg + GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode);
                             }
                         }
                         <p><b>@GlobalResAuditTrail.sltConclusion</b></p>
@@ -245,7 +245,7 @@
                         {
                             int bil = 1;
                             <p><b>@GlobalResAuditTrail.lblWilayahName : @GetWilayah.GetWilayahName(wilayahID)</b></p>
-                            <p><b>@GlobalResAuditTrail.lblTotalLadang : @GetLadang.JumlahLadang(wilayahID)</b></p>
+                            <p><b>@GlobalResAuditTrail.lblTotalLadang : @GetLadang.JumlahLadang2(wilayahID, ViewBag.Comcode)</b></p>
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -330,6 +330,33 @@
                                             }
 <script>
     $(document).ready(function () {
+                        //yana added - 11/10/2023
+ $("#SyarikatList").change(function () {
+    debugger
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah", "AuditTrail")";
+    SyarikatList.type = "POST";
+     SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#WilayahIDList").empty();
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResAuditTrail.sltAll</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#SyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+        }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+ });
+//end
         if ($("#WilayahIDList").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";

@@ -73,6 +73,45 @@ namespace MVC_SYSTEM.Class
             return CodeLadang;
         }
 
+        public List<int?> GetCodeLadang3(int wlyhid, string flag, int year, string Comcode)
+        {
+            var CodeLadang = new List<int?>();
+
+            switch (flag)
+            {
+                case "Permit":
+                    var CodeLadang1 = db.vw_PermitPassportDetail.Where(x => x.fld_BilBlnTmtPrmnt <= 3 && x.fld_WlyhID == wlyhid && x.fld_Kdaktf == "1").Select(s => new { s.fld_LadangID, s.fld_LdgName }).Distinct().OrderBy(o => o.fld_LdgName).ToList();
+                    CodeLadang = CodeLadang1.Select(s => s.fld_LadangID).ToList();
+                    break;
+
+                case "Passport":
+                    var CodeLadang2 = db.vw_PermitPassportDetail.Where(x => x.fld_BilBlnTmtPsprt <= 3 && x.fld_WlyhID == wlyhid && x.fld_Kdaktf == "1").Select(s => new { s.fld_LadangID, s.fld_LdgName }).Distinct().OrderBy(o => o.fld_LdgName).ToList();
+                    CodeLadang = CodeLadang2.Select(s => s.fld_LadangID).ToList();
+                    break;
+
+                case "AuditTrail":
+                    var CodeLadang3 = db.vw_AuditTrail.Where(x => x.fld_Thn == year && x.fld_WilayahID == wlyhid && x.fld_CostCentre == Comcode).Distinct().OrderBy(o => o.fld_LdgName).ToList();
+                    CodeLadang = CodeLadang3.Select(s => s.fld_LadangID).ToList();
+                    break;
+
+                case "WorkerTransac":
+                    var CodeLadang4 = db.vw_AuditTrail.Where(x => x.fld_Thn == year && x.fld_WilayahID == wlyhid).Select(s => new { s.fld_LadangID, s.fld_LdgName }).Distinct().OrderBy(o => o.fld_LdgName).ToList();
+                    CodeLadang = CodeLadang4.Select(s => s.fld_LadangID).ToList();
+                    break;
+
+                case "NewWorkerApp":
+                    var CodeLadang5 = db.tblTaskRemainders.Join(db.vw_NSWL, j => j.fldLadangID, k => k.fld_LadangID, (j, k) => new { j.fldWilayahID, j.fldPurpose, j.fldStatus, j.fldLadangID, k.fld_NamaLadang }).Where(x => x.fldWilayahID == wlyhid && x.fldPurpose == "01" && x.fldStatus == 0).Distinct().OrderBy(o => o.fld_NamaLadang).ToList();
+                    CodeLadang = CodeLadang5.Select(s => s.fldLadangID).ToList();
+                    break;
+
+                case "NewUserIDApp":
+                    var CodeLadang6 = db.tblTaskRemainders.Join(db.vw_NSWL, j => j.fldLadangID, k => k.fld_LadangID, (j, k) => new { j.fldWilayahID, j.fldPurpose, j.fldStatus, j.fldLadangID, k.fld_NamaLadang }).Where(x => x.fldWilayahID == wlyhid && x.fldPurpose == "02" && x.fldStatus == 0).Distinct().OrderBy(o => o.fld_NamaLadang).ToList();
+                    CodeLadang = CodeLadang6.Select(s => s.fldLadangID).ToList();
+                    break;
+            }
+            return CodeLadang;
+        }
+
         public int GetCodeLadangFromID(int ladangid)
         {
             int CodeLadang = 0;
@@ -93,6 +132,16 @@ namespace MVC_SYSTEM.Class
         {
             MVC_SYSTEM_ModelsCorporate corporateConnection = new MVC_SYSTEM_ModelsCorporate();
             int getjmlhldg = corporateConnection.tbl_Ladang.Count(x => x.fld_WlyhID == wlyhID && x.fld_Deleted == false);
+
+            corporateConnection.Dispose();
+
+            return getjmlhldg;
+        }
+
+        public int JumlahLadang2(int wlyhID, string Comcode)
+        {
+            MVC_SYSTEM_ModelsCorporate corporateConnection = new MVC_SYSTEM_ModelsCorporate();
+            int getjmlhldg = corporateConnection.tbl_Ladang.Count(x => x.fld_WlyhID == wlyhID && x.fld_Deleted == false && x.fld_CostCentre == Comcode);
 
             corporateConnection.Dispose();
 
