@@ -12990,6 +12990,7 @@ namespace MVC_SYSTEM.Controllers
                     incentiveCategoryData.fld_FixedValue = jenisInsentif.fld_FixedValue;
                     incentiveCategoryData.fld_DailyFixedValue = jenisInsentif.fld_DailyFixedValue;
                     incentiveCategoryData.fld_KelayakanKepada = jenisInsentif.fld_KelayakanKepada;
+                    incentiveCategoryData.fld_AdaORP = jenisInsentif.fld_AdaORP; /*fatin added - 20/10/2023*/
 
                     db.SaveChanges();
 

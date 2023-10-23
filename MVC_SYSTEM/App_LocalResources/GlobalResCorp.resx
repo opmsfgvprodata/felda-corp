@@ -3765,4 +3765,7 @@
   <data name="lblDifficultyPriceUnDelete" xml:space="preserve">
     <value>Guna Semula Pilihan Harga Kesukaran Menuai</value>
   </data>
+  <data name="lblIncInOrp" xml:space="preserve">
+    <value>Termasuk Dalam ORP?</value>
+  </data>
 </root>
