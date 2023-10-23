@@ -109,7 +109,7 @@
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RptGajiMinima" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
@@ -128,7 +128,7 @@
           <Parameter Name="LadangID" Type="int" Mode="In" />
           <Parameter Name="AktifStatus" Type="int" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RptMasterDataPkj" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
@@ -138,6 +138,8 @@
           <Parameter Name="Kdrytan" Type="nvarchar" Mode="In" />
           <Parameter Name="StatusAktif" Type="nvarchar" Mode="In" />
           <Parameter Name="KategoriPkj" Type="nvarchar" Mode="In" />
+          <Parameter Name="pembekalList" Type="nvarchar" Mode="In" />
+          <Parameter Name="jantinaList" Type="nvarchar" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
         </Function>
@@ -148,7 +150,7 @@
           <Parameter Name="LadangID" Type="int" Mode="In" />
           <Parameter Name="AktifStatus" Type="int" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RptSkb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
@@ -269,7 +271,7 @@
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="CostCentre" Mode="In" Type="String" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RptGajiMinima" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptGajiMinima_Result)">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -288,7 +290,7 @@
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
             <Parameter Name="AktifStatus" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="CostCentre" Mode="In" Type="String" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RptMasterDataPkj" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptMasterDataPkj_Result)">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -298,6 +300,8 @@
             <Parameter Name="Kdrytan" Mode="In" Type="String" />
             <Parameter Name="StatusAktif" Mode="In" Type="String" />
             <Parameter Name="KategoriPkj" Mode="In" Type="String" />
+            <Parameter Name="pembekalList" Mode="In" Type="String" />
+            <Parameter Name="jantinaList" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="CostCentre" Mode="In" Type="String" />
           </FunctionImport>
@@ -308,7 +312,7 @@
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
             <Parameter Name="AktifStatus" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="CostCentre" Mode="In" Type="String" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RptSkb">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -557,7 +561,7 @@
           <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
           <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_CompCode" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="sp_RptGajiMinima_Result">
           <Property Type="Guid" Name="fld_ID" Nullable="false" />
@@ -617,7 +621,7 @@
           <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
           <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_CompCode" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="sp_RptMasterDataPkj_Result">
           <Property Type="Guid" Name="fld_ID" Nullable="false" />
@@ -694,7 +698,7 @@
           <Property Type="Int32" Name="fld_others" Nullable="true" />
           <Property Type="Int32" Name="fld_TKPH" Nullable="true" />
           <Property Type="Int32" Name="fld_TKPHS" Nullable="true" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_CompCode" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1006,7 +1010,7 @@
                 <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
                 <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
-                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_CompCode" ColumnName="fld_CompCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1074,7 +1078,7 @@
                 <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
                 <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
-                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_CompCode" ColumnName="fld_CompCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1159,7 +1163,7 @@
                 <ScalarProperty Name="fld_others" ColumnName="fld_others" />
                 <ScalarProperty Name="fld_TKPH" ColumnName="fld_TKPH" />
                 <ScalarProperty Name="fld_TKPHS" ColumnName="fld_TKPHS" />
-                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_CompCode" ColumnName="fld_CompCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
