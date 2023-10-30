@@ -10,17 +10,18 @@
     string worker = ViewBag.WorkerList;
     int bil = 0;
     decimal? totalNetPay = 0;
-    string uniquefilename = "rcms";
     string telNo = "";
     string nokp = "";
     string passport = "";
     string paymentmode = "";
     string clientid = "";
+
+    string uniquefilename = "M2E BURUH (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.WilayahName + " " + ViewBag.MonthList + ViewBag.YearList;
 }
 
 @if (Model != null && Model.Count() != 0)
 {
-    <div id="scrollArea2" class="modal-body">
+    <div id="scrollArea" class="modal-body">
 
         <p style="font-size: 11px" align="right">@ViewBag.Date | @ViewBag.Time</p>
 
@@ -213,6 +214,9 @@
     <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
         <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
     </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
     <a class="btn btn-default btn-sm" href="#" id="downloadtxt">
         <span><img src="~/Asset/Images/notepad.png" width="20px" height="20px" /></span> Download Txt File
     </a>
@@ -222,7 +226,7 @@
 
 @if (Model.Count() == 0)
 {
-    <div id="scrollArea2" class="modal-body" style="text-align: center">
+    <div id="scrollArea" class="modal-body" style="text-align: center">
         <p style="color: red">@ViewBag.Message</p>
 
     </div>
@@ -239,7 +243,7 @@
 <script>
     $(document).ready(function () {
         $("#printpage").click(function () {
-            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var DivElement = document.getElementById("scrollArea").innerHTML;
             var oldPage = document.body.innerHTML;
             document.body.innerHTML = DivElement;
             window.print();
@@ -276,7 +280,7 @@
         })
 
         $("#downloadpdf").click(function () {
-          var myHtml = document.getElementById('scrollArea2').innerHTML;
+          var myHtml = document.getElementById('scrollArea').innerHTML;
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("ConvertPDF2", "Report")',
