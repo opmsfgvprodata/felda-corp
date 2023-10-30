@@ -204,14 +204,11 @@
     <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
         <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
     </a>
-    <a class="btn btn-default btn-sm" href="#" id="downloadtxt">
-        <span><img src="~/Asset/Images/notepad.png" width="20px" height="20px" /></span> Download Txt File
-    </a>
-    @*<a class="btn btn-default btn-sm" href="#" id="HTMLtoExcel('@uniquefilename')">
-            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-        </a>*@
     <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
         <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadtxt">
+        <span><img src="~/Asset/Images/notepad.png" width="20px" height="20px" /></span> Download Txt File
     </a>
 </div>
     }
