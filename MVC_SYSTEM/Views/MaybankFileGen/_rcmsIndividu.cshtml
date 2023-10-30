@@ -105,29 +105,38 @@
                     {
                         paymentmode = "";
                     }
-
-                    <tr>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bil.</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_LdgCode - @item.fld_LdgName</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_Nopkj</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">
-                            @if (item.fld_NoAkaun == null || item.fld_NoAkaun == "" || item.fld_RcmsBankCode == null || item.fld_RcmsBankCode == "" || item.fld_NamaBank == null || item.fld_NamaBank == "")
-                            {
-                                <font color="red">@item.fld_Nama.ToUpper()</font>
-                            }
-                            else
-                            {
-                                @item.fld_Nama.ToUpper()
-                            }
-                        </td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@nokp</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@passport</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@paymentmode</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_RcmsBankCode</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NamaBank</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NoAkaun</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.fld_GajiBersih</td>
-                    </tr>
+                    if (item.fld_NoAkaun == null || item.fld_NoAkaun == "" || item.fld_RcmsBankCode == null || item.fld_RcmsBankCode == "" || item.fld_NamaBank == null || item.fld_NamaBank == "")
+                    {
+                        <tr>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="red">@bil.</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_LdgCode - @item.fld_LdgName</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_Nopkj</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_Nama.ToUpper()</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@nokp</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@passport</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@paymentmode</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_RcmsBankCode</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_NamaBank</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_NoAkaun</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="red">@item.fld_GajiBersih</font></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bil.</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_LdgCode - @item.fld_LdgName</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_Nopkj</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_Nama.ToUpper()</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@nokp</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@passport</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@paymentmode</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_RcmsBankCode</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NamaBank.ToUpper()</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NoAkaun</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.fld_GajiBersih</td>
+                        </tr>
+                    }
                 }
 
                 <tr>
@@ -213,12 +222,13 @@
             var Wilayah = $("#WilayahList").val();
             var filter = $("#filter").val();
             var WorkerId = $("#WorkerId").val();
+            var PaymentDate = $("#PaymentDate").val();
             $("#UpdateProgress1").css("display", "");
             var ajxfn = {};
             ajxfn.url = "@Url.Action("DownloadText", "MaybankFileGen")";
             ajxfn.type = "POST";
             ajxfn.async = false;
-            ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode, Wilayah: Wilayah, filter: filter, WorkerId: WorkerId });
+            ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode, Wilayah: Wilayah, filter: filter, WorkerId: WorkerId, PaymentDate: PaymentDate});
             ajxfn.datatype = "json";
             ajxfn.contentType = "application/json";
             ajxfn.success = function (result) {

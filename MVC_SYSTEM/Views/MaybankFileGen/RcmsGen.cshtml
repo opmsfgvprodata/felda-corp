@@ -29,11 +29,11 @@
             @Html.AntiForgeryToken()
             <div class="row">
                 <div class="form-group">
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <label>@GlobalResCorp.lblMonth</label>
                         @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <label>@GlobalResCorp.lblYear</label>
                         @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
                     </div>
@@ -49,7 +49,13 @@
                         @Html.Label("Client ID")
                         @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
                     </div>
-                    <div class="col-sm-2" style="padding-top:25px;">
+                    <div class="col-sm-2">
+                        <label>Tarikh Bayaran</label>
+                        @*<div class='input-group date' id='datetimepicker1'>*@
+                        <input type="date" class="form-control" name="PaymentDate" id="PaymentDate" onkeydown="return false" required />
+                        @*</div>*@
+                    </div>
+                    <div class="col-sm-1" style="padding-top:25px;">
                         <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="Lihat" />
                     </div>
                 </div>
@@ -141,8 +147,30 @@
                 $("#UpdateProgress1").css("display", "none");
             };
             $.ajax(ajxfn);
-        })
+        });
 
+        $("#CompCodeList").change(function () {
+            debugger
+            var CompCodeList = {};
+            var disableoption = "";
+            CompCodeList.url = "@Url.Action("GetWilayah", "MaybankFileGen")";
+            CompCodeList.type = "POST";
+            CompCodeList.data = JSON.stringify({ SyarikatID: $("#CompCodeList").val() });
+            CompCodeList.datatype = "json";
+            CompCodeList.contentType = "application/json";
+            CompCodeList.success = function (wilayahlist) {
+                $("#WilayahList").empty();
+                for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#CompCodeList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+            };
+
+            CompCodeList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(CompCodeList);
+        });
     });
 
 
