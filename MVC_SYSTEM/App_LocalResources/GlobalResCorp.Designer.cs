@@ -10897,6 +10897,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maklumat RCMS Maybank Syarikat.
+        /// </summary>
+        public static string titleRCMSMaybankSyarikat {
+            get {
+                return ResourceManager.GetString("titleRCMSMaybankSyarikat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat RCMS Maybank Syarikat.
+        /// </summary>
+        public static string titleRCMSMaybankSyarikatEdit {
+            get {
+                return ResourceManager.GetString("titleRCMSMaybankSyarikatEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Daftar Maklumat Baru.
         /// </summary>
         public static string titleRegister {

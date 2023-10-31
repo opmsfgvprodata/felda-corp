@@ -1,7 +1,7 @@
 ﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tblOptionConfigsWeb>
 @using MVC_SYSTEM.Class;
 @{
-    ViewBag.Title = "Maklumat Syarikat";
+    ViewBag.Title = "Maklumat RCMS Maybank Syarikat";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 
     AjaxOptions options = new AjaxOptions
@@ -40,7 +40,7 @@
     <div class="well" style="margin-top:7px;">
         <div class="modal-body">
             <div class="panel panel-primary">
-                <div class="panel-heading">@GlobalResCorp.lblKiraan</div>
+                <div class="panel-heading">@GlobalResCorp.titleRCMSMaybankSyarikat</div>
                 <div class="panel-body">
                     <div id="MaklumatSyarikatDetails">
                         @Html.Action("_MaklumatSyarikat", "Maintenance", null)

@@ -15,7 +15,7 @@
 
     if (@grid.TotalRowCount > 0)
     {
-        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblKiraanCount)</div>
+        @*<div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblKiraanCount)</div>*@
 
         @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
                  tableStyle: "table table-bordered table-striped table-list table-hover",

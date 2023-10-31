@@ -3777,4 +3777,10 @@
   <data name="lblCompanyInfoUpdate" xml:space="preserve">
     <value>Kemaskini Maklumat Syarikat</value>
   </data>
+  <data name="titleRCMSMaybankSyarikat" xml:space="preserve">
+    <value>Maklumat RCMS Maybank Syarikat</value>
+  </data>
+  <data name="titleRCMSMaybankSyarikatEdit" xml:space="preserve">
+    <value>Kemaskini Maklumat RCMS Maybank Syarikat</value>
+  </data>
 </root>
