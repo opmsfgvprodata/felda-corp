@@ -1051,6 +1051,9 @@
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -2040,6 +2043,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="libman.json" />
     <EntityDeploy Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MVC_SYSTEM_SP2_Models.Designer.cs</LastGenOutput>
@@ -2047,7 +2051,6 @@
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx.diagram">
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
     </Content>
-    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\MVC_SYSTEM.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
