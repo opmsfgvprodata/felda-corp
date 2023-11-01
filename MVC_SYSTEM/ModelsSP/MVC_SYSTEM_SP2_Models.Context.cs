@@ -287,7 +287,6 @@ namespace MVC_SYSTEM.ModelsSP
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MapaReport_Result>("sp_MapaReport", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
-    
         public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
         {
             var negaraIDParameter = negaraID.HasValue ?

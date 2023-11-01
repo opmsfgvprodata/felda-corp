@@ -8800,7 +8800,6 @@ namespace MVC_SYSTEM.Controllers
                     yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
                 }
             }
-
             ViewBag.YearList = yearlist;
 
             int month = timezone.gettimezone().Month;
