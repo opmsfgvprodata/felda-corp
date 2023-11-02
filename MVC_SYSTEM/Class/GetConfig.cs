@@ -474,8 +474,8 @@ namespace MVC_SYSTEM.Class
             { SyarikatFullName = ""; }
             else
             {
-             var SyarikatFullNameInfo = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == syarikatInfo.fld_SyarikatID && x.fld_NoSyarikat.Contains(syarikatInfo.fldOptConfDesc) && x.fld_NegaraID == syarikatInfo.fld_NegaraID).Select(s => s.fld_NamaSyarikat).FirstOrDefault();
-            if (SyarikatFullNameInfo != null)
+                var SyarikatFullNameInfo = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == syarikatInfo.fld_SyarikatID && x.fld_NoSyarikat.Contains(syarikatInfo.fldOptConfDesc) && x.fld_NegaraID == syarikatInfo.fld_NegaraID).Select(s => s.fld_NamaSyarikat).FirstOrDefault();
+                if (SyarikatFullNameInfo != null)
                 {
                     SyarikatFullName = SyarikatFullNameInfo;
                 }
@@ -493,7 +493,7 @@ namespace MVC_SYSTEM.Class
             { SyarikatName = ""; }
             else
             { SyarikatName = SyarikatNameInfo; }
-            
+
             return SyarikatName;
         }
     }

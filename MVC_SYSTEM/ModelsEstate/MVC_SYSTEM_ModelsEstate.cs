@@ -48,7 +48,6 @@ namespace MVC_SYSTEM.ModelsEstate
         public virtual DbSet<tbl_Blok> tbl_Blok { get; set; }
         public virtual DbSet<tbl_SubPkt> tbl_SubPkt { get; set; }
         //end
-
         public virtual DbSet<tbl_ByrCarumanTambahan> tbl_ByrCarumanTambahan { get; set; }//Added by Shazana 15/8/2023
         public virtual DbSet<vw_PaySheetPekerja> vw_PaySheetPekerja { get; set; } //Added by Shazana 15/8/2023
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

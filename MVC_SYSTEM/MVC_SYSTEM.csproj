@@ -57,9 +57,12 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.5.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -1011,17 +1014,22 @@
     <Compile Include="ModelsSAP\SAPCC.cs" />
     <Compile Include="ModelsSAP\SAPGL.cs" />
     <Compile Include="ModelsSAP\SAPIO.cs" />
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.cs" />
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.cs" />
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Designer.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Designer.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
@@ -1060,6 +1068,9 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
@@ -2059,14 +2070,14 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="libman.json" />
     <EntityDeploy Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models.Designer.cs</LastGenOutput>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx.diagram">
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
     </Content>
-    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\MVC_SYSTEM.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -2074,13 +2085,11 @@
     </None>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models.Context.cs</LastGenOutput>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models.Context1.cs</LastGenOutput>
     </Content>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models.cs</LastGenOutput>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -2138,9 +2147,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\i18n\angular-locale_af-na.js" />
-    <Content Include="Scripts\i18n\angular-locale_af-za.js" />
-    <Content Include="Scripts\i18n\angular-locale_af.js" />
     <Content Include="Scripts\i18n\angular-locale_agq-cm.js" />
     <Content Include="Scripts\i18n\angular-locale_agq.js" />
     <Content Include="Scripts\i18n\angular-locale_ak-gh.js" />
@@ -2727,50 +2733,6 @@
     <Content Include="Scripts\i18n\angular-locale_ru-kz.js" />
     <Content Include="Scripts\i18n\angular-locale_ru-md.js" />
     <Content Include="Scripts\i18n\angular-locale_ru-ru.js" />
-    <Content Include="Scripts\i18n\angular-locale_ru-ua.js" />
-    <Content Include="Scripts\i18n\angular-locale_ru.js" />
-    <Content Include="Scripts\i18n\angular-locale_rw-rw.js" />
-    <Content Include="Scripts\i18n\angular-locale_rw.js" />
-    <Content Include="Scripts\i18n\angular-locale_rwk-tz.js" />
-    <Content Include="Scripts\i18n\angular-locale_rwk.js" />
-    <Content Include="Scripts\i18n\angular-locale_sah-ru.js" />
-    <Content Include="Scripts\i18n\angular-locale_sah.js" />
-    <Content Include="Scripts\i18n\angular-locale_saq-ke.js" />
-    <Content Include="Scripts\i18n\angular-locale_saq.js" />
-    <Content Include="Scripts\i18n\angular-locale_sbp-tz.js" />
-    <Content Include="Scripts\i18n\angular-locale_sbp.js" />
-    <Content Include="Scripts\i18n\angular-locale_se-fi.js" />
-    <Content Include="Scripts\i18n\angular-locale_se-no.js" />
-    <Content Include="Scripts\i18n\angular-locale_se-se.js" />
-    <Content Include="Scripts\i18n\angular-locale_se.js" />
-    <Content Include="Scripts\i18n\angular-locale_seh-mz.js" />
-    <Content Include="Scripts\i18n\angular-locale_seh.js" />
-    <Content Include="Scripts\i18n\angular-locale_ses-ml.js" />
-    <Content Include="Scripts\i18n\angular-locale_ses.js" />
-    <Content Include="Scripts\i18n\angular-locale_sg-cf.js" />
-    <Content Include="Scripts\i18n\angular-locale_sg.js" />
-    <Content Include="Scripts\i18n\angular-locale_sh.js" />
-    <Content Include="Scripts\i18n\angular-locale_shi-latn-ma.js" />
-    <Content Include="Scripts\i18n\angular-locale_shi-latn.js" />
-    <Content Include="Scripts\i18n\angular-locale_shi-tfng-ma.js" />
-    <Content Include="Scripts\i18n\angular-locale_shi-tfng.js" />
-    <Content Include="Scripts\i18n\angular-locale_shi.js" />
-    <Content Include="Scripts\i18n\angular-locale_si-lk.js" />
-    <Content Include="Scripts\i18n\angular-locale_si.js" />
-    <Content Include="Scripts\i18n\angular-locale_sk-sk.js" />
-    <Content Include="Scripts\i18n\angular-locale_sk.js" />
-    <Content Include="Scripts\i18n\angular-locale_sl-si.js" />
-    <Content Include="Scripts\i18n\angular-locale_sl.js" />
-    <Content Include="Scripts\i18n\angular-locale_smn-fi.js" />
-    <Content Include="Scripts\i18n\angular-locale_smn.js" />
-    <Content Include="Scripts\i18n\angular-locale_sn-zw.js" />
-    <Content Include="Scripts\i18n\angular-locale_sn.js" />
-    <Content Include="Scripts\i18n\angular-locale_so-dj.js" />
-    <Content Include="Scripts\i18n\angular-locale_so-et.js" />
-    <Content Include="Scripts\i18n\angular-locale_so-ke.js" />
-    <Content Include="Scripts\i18n\angular-locale_so-so.js" />
-    <Content Include="Scripts\i18n\angular-locale_so.js" />
-    <Content Include="Scripts\i18n\angular-locale_sq-al.js" />
     <Content Include="Scripts\i18n\angular-locale_sq-mk.js" />
     <Content Include="Scripts\i18n\angular-locale_sq-xk.js" />
     <Content Include="Scripts\i18n\angular-locale_sq.js" />
@@ -2778,23 +2740,6 @@
     <Content Include="Scripts\i18n\angular-locale_sr-cyrl-me.js" />
     <Content Include="Scripts\i18n\angular-locale_sr-cyrl-rs.js" />
     <Content Include="Scripts\i18n\angular-locale_sr-cyrl-xk.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-cyrl.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-latn-ba.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-latn-me.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-latn-rs.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-latn-xk.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr-latn.js" />
-    <Content Include="Scripts\i18n\angular-locale_sr.js" />
-    <Content Include="Scripts\i18n\angular-locale_sv-ax.js" />
-    <Content Include="Scripts\i18n\angular-locale_sv-fi.js" />
-    <Content Include="Scripts\i18n\angular-locale_sv-se.js" />
-    <Content Include="Scripts\i18n\angular-locale_sv.js" />
-    <Content Include="Scripts\i18n\angular-locale_sw-cd.js" />
-    <Content Include="Scripts\i18n\angular-locale_sw-ke.js" />
-    <Content Include="Scripts\i18n\angular-locale_sw-tz.js" />
-    <Content Include="Scripts\i18n\angular-locale_sw-ug.js" />
-    <Content Include="Scripts\i18n\angular-locale_sw.js" />
-    <Content Include="Scripts\i18n\angular-locale_ta-in.js" />
     <Content Include="Scripts\i18n\angular-locale_ta-lk.js" />
     <Content Include="Scripts\i18n\angular-locale_ta-my.js" />
     <Content Include="Scripts\i18n\angular-locale_ta-sg.js" />

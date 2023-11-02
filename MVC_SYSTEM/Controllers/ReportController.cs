@@ -8917,7 +8917,6 @@ namespace MVC_SYSTEM.Controllers
         //    }
         //}
 
-        //Added by Shazana 15/8/2023
         public ActionResult MapaReport()
         {
             ViewBag.Report = "class = active";
@@ -9002,7 +9001,6 @@ namespace MVC_SYSTEM.Controllers
                     yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
                 }
             }
-
             ViewBag.YearList = yearlist;
 
             int month = timezone.gettimezone().Month;
@@ -9041,6 +9039,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.MonthList = MonthList;
             //Added by Shazana 15/8/2023
             var namapenuhsyarikat = GetConfig.GetSyarikatFullName(CompCodeList);
+            if (namapenuhsyarikat == "") { namapenuhsyarikat = "-"; }
             var namasyarikat = GetConfig.GetSyarikatName(CompCodeList);
             ViewBag.costcentre = CompCodeList;
             ViewBag.namapenuhsyarikat = namapenuhsyarikat.ToUpper();
@@ -9067,7 +9066,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     if (WilayahList == 0)
                     {
-                        
+
                         if (LadangList == 0)
                         {
                             dbSP.SetCommandTimeout(3600);
@@ -9079,7 +9078,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (LadangList == 0)
                         {
-
+                            dbSP.SetCommandTimeout(3600);
                             MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList && x.fld_WilayahID == WilayahList).OrderBy(o => o.fld_WilayahID).ToList();
@@ -9089,6 +9088,7 @@ namespace MVC_SYSTEM.Controllers
                         }
                         else
                         {
+                            dbSP.SetCommandTimeout(3600);
                             MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList && x.fld_WilayahID == WilayahList && x.fld_LadangID == LadangList).OrderBy(o => o.fld_WilayahID).ToList();
