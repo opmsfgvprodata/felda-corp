@@ -51,6 +51,12 @@
                         @Html.Label("Client ID")
                         @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
                     </div>
+                    <div class="col-sm-2">
+                        <label>Tarikh Bayaran</label>
+                        @*<div class='input-group date' id='datetimepicker1'>*@
+                        <input type="date" class="form-control" name="PaymentDate" id="PaymentDate" onkeydown="return false" required />
+                        @*</div>*@
+                    </div>
                 </div>
                 <div class="form-group">
                     <br />
@@ -157,23 +163,45 @@
     });
 
     $("#WilayahList").change(function () {
-    var WilayahIDList = {};
-    var disableoption = "";
-    WilayahIDList.url = "@Url.Action("GetWorker", "TNGFileGen")";
-    WilayahIDList.type = "POST";
-        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), CompCode: $("#CompCodeList").val(), Year: $("#YearList").val(), Month: $("#MonthList").val() });
-    WilayahIDList.datatype = "json";
-    WilayahIDList.contentType = "application/json";
-        WilayahIDList.success = function (workerList) {
-        $("#WorkerId").empty();
-        $("#WorkerId").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
-            for (var i = 0; i < workerList.length; i++) {
-                $("#WorkerId").append("<option value=" + workerList[i].Value + ">" + workerList[i].Text + "</option>");
-        }
-    };
-    WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
-    $.ajax(WilayahIDList);
-});
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetWorker", "TNGFileGen")";
+        WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), CompCode: $("#CompCodeList").val(), Year: $("#YearList").val(), Month: $("#MonthList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (workerList) {
+            $("#WorkerId").empty();
+            $("#WorkerId").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < workerList.length; i++) {
+                    $("#WorkerId").append("<option value=" + workerList[i].Value + ">" + workerList[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+    $("#CompCodeList").change(function () {
+        var CompCodeList = {};
+        var disableoption = "";
+        CompCodeList.url = "@Url.Action("GetWilayah", "TNGFileGen")";
+        CompCodeList.type = "POST";
+        CompCodeList.data = JSON.stringify({ SyarikatID: $("#CompCodeList").val() });
+        CompCodeList.datatype = "json";
+        CompCodeList.contentType = "application/json";
+        CompCodeList.success = function (wilayahlist) {
+            $("#WilayahList").empty();
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#CompCodeList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+        };
+
+        CompCodeList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(CompCodeList);
+    });
 
     $(".js-example-placeholder-multiple").select2({
         placeholder: "Sila Pilih"

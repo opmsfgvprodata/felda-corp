@@ -94,7 +94,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         [HttpPost]
-        public ActionResult DownloadText(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId)
+        public ActionResult DownloadText(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId, DateTime PaymentDate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -152,7 +152,7 @@ namespace MVC_SYSTEM.Controllers
 
                 var WilayahDetail = db.tbl_Wilayah.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_ID == Wilayah).FirstOrDefault();
 
-                filePath = GetGenerateFile.GenFileTNG(tNGList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, out filename);
+                filePath = GetGenerateFile.GenFileTNG(tNGList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, PaymentDate, out filename);
 
                 link = Url.Action("Download", "TNGFileGen", new { filePath, filename });
 
@@ -171,7 +171,86 @@ namespace MVC_SYSTEM.Controllers
             return Json(new { msg, statusmsg, link });
         }
 
-        public JsonResult CheckGenDataDetail(int Month, int Year, string CompCode, int Wilayah, string[] WorkerId)
+        [HttpPost]
+        public ActionResult DownloadTextIndividu(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId, DateTime PaymentDate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            string msg = "";
+            string statusmsg = "";
+            string filePath = "";
+            string filename = "";
+
+            string stringyear = "";
+            string stringmonth = "";
+            string link = "";
+            stringyear = Year.ToString();
+            stringmonth = Month.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            try
+            {
+                GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+                List<TNGPaymentReport> tNGList = new List<TNGPaymentReport>();
+
+                if (WorkerId == null)
+                    WorkerId = new string[] { "0" };
+
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID.Value);
+                    parameters.Add("SyarikatID", SyarikatID.Value);
+                    parameters.Add("WilayahID", Wilayah);
+                    parameters.Add("Year", Year);
+                    parameters.Add("Month", Month);
+                    parameters.Add("UserID", getuserid);
+                    parameters.Add("CompCode", CompCode);
+                    connection();
+                    con.Open();
+                    tNGList = SqlMapper.Query<TNGPaymentReport>(con, "sp_MaybankTNG", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                if (WorkerId.Contains("0"))
+                {
+                   
+                }
+                else
+                {
+                    tNGList = tNGList.Where(x => WorkerId.Contains(x.fld_Nopkj)).ToList();
+                }
+
+                var WilayahDetail = db.tbl_Wilayah.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_ID == Wilayah).FirstOrDefault();
+
+                filePath = GetGenerateFile.GenFileTNG(tNGList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, PaymentDate, out filename);
+
+                link = Url.Action("Download", "TNGFileGen", new { filePath, filename });
+
+                //dbr.Dispose();
+
+                msg = GlobalResCorp.msgGenerateSuccess;
+                statusmsg = "success";
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                msg = GlobalResCorp.msgGenerateFailed;
+                statusmsg = "warning";
+            }
+
+            return Json(new { msg, statusmsg, link });
+        }
+
+
+        public JsonResult CheckGenDataDetail(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId, DateTime PaymentDate)
         {
             string msg = "";
             string statusmsg = "";
