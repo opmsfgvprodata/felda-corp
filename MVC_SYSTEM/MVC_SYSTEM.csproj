@@ -3658,6 +3658,9 @@
     <Content Include="Views\MaybankFileGen\RcmsGenIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\Index.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikat.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikatEdit.cshtml" />
+    <Content Include="Views\Maintenance\MaklumatSyarikat.cshtml" />
     <Content Include="Views\TNGFileGen\_TNG.cshtml" />
     <Content Include="Views\TNGFileGen\_TNGIndividu.cshtml" />
     <Content Include="Views\TNGFileGen\Index.cshtml" />
