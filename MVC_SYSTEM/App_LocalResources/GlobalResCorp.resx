@@ -3765,4 +3765,22 @@
   <data name="lblDifficultyPriceUnDelete" xml:space="preserve">
     <value>Guna Semula Pilihan Harga Kesukaran Menuai</value>
   </data>
+  <data name="lblAccNo" xml:space="preserve">
+    <value>Nombor Akaun</value>
+  </data>
+  <data name="lblClientBatchID" xml:space="preserve">
+    <value>ID Batch Klien</value>
+  </data>
+  <data name="lblCorpID" xml:space="preserve">
+    <value>ID Korporat</value>
+  </data>
+  <data name="lblCompanyInfoUpdate" xml:space="preserve">
+    <value>Kemaskini Maklumat Syarikat</value>
+  </data>
+  <data name="titleRCMSMaybankSyarikat" xml:space="preserve">
+    <value>Maklumat RCMS Maybank Syarikat</value>
+  </data>
+  <data name="titleRCMSMaybankSyarikatEdit" xml:space="preserve">
+    <value>Kemaskini Maklumat RCMS Maybank Syarikat</value>
+  </data>
 </root>
