@@ -446,16 +446,22 @@ namespace MVC_SYSTEM.Controllers
             List<SelectListItem> JnsAktvt = new List<SelectListItem>();
             List<SelectListItem> unitlist = new List<SelectListItem>();
             List<SelectListItem> Flaglist = new List<SelectListItem>();
+            List<SelectListItem> SyarikatList = new List<SelectListItem>(); //fatin added - 08/11/2023
             JnsAktvt = new SelectList(db.tbl_JenisAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).OrderBy(o => o.fld_ID).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_Desc }), "Value", "Text").ToList();
             JnsAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
             unitlist = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "unit" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
             unitlist.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
             Flaglist = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "upahflag" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
             Flaglist.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
+            //fatin added - 08/11/2023
+            SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            SyarikatList.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
+
 
             ViewBag.fld_DisabledFlag = Flaglist;
             ViewBag.fld_Unit = unitlist;
             ViewBag.fld_KodJenisAktvt = JnsAktvt;
+            ViewBag.fld_compcode = SyarikatList; //fatin added - 08/11/2023
             db.Dispose();
             return PartialView();
         }
@@ -480,7 +486,8 @@ namespace MVC_SYSTEM.Controllers
                     UpahAktiviti.fld_Harga = UpahAktiviti.fld_Harga;
                     UpahAktiviti.fld_KodJenisAktvt = UpahAktiviti.fld_KodJenisAktvt;
                     UpahAktiviti.fld_DisabledFlag = UpahAktiviti.fld_DisabledFlag;
-                   
+                    UpahAktiviti.fld_compcode = UpahAktiviti.fld_compcode; //fatin added - 08/11/2023
+
                     //UpahAktiviti.
                     UpahAktiviti.fld_Deleted = false;
                     UpahAktiviti.fld_NegaraID = NegaraID;
