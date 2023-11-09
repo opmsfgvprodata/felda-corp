@@ -558,11 +558,11 @@ namespace MVC_SYSTEM.Class
             string LastAccess;
             LastAccess = "";
             //aini update orderby desc 15062023
-            AuditTrail = db.tblUserAuditTrail.Where(u => u.fld_CreatedBy == userid).Distinct().OrderByDescending(c => c.fld_CreatedDT).FirstOrDefault();
-            if (AuditTrail != null)
-            {
-                LastAccess = AuditTrail.fld_CreatedDT.ToString();
-            }
+            //AuditTrail = db.tblUserAuditTrail.Where(u => u.fld_CreatedBy == userid).Distinct().OrderByDescending(c => c.fld_CreatedDT).FirstOrDefault();
+            //if (AuditTrail != null)
+            //{
+            //    LastAccess = AuditTrail.fld_CreatedDT.ToString();
+            //}
 
             return LastAccess;
         }

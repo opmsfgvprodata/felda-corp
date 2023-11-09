@@ -33,7 +33,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(50)]
         public string fld_LogoName { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+        //[Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         [StringLength(100)]
         public string fld_SyarikatEmail { get; set; }
 

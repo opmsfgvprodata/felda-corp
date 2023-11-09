@@ -3653,6 +3653,9 @@
     <Content Include="Views\MaybankFileGen\RcmsGenIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\Index.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikat.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikatEdit.cshtml" />
+    <Content Include="Views\Maintenance\MaklumatSyarikat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
