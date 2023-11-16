@@ -446,16 +446,22 @@ namespace MVC_SYSTEM.Controllers
             List<SelectListItem> JnsAktvt = new List<SelectListItem>();
             List<SelectListItem> unitlist = new List<SelectListItem>();
             List<SelectListItem> Flaglist = new List<SelectListItem>();
+            List<SelectListItem> SyarikatList = new List<SelectListItem>(); //fatin added - 08/11/2023
             JnsAktvt = new SelectList(db.tbl_JenisAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).OrderBy(o => o.fld_ID).Select(s => new SelectListItem { Value = s.fld_KodJnsAktvt, Text = s.fld_Desc }), "Value", "Text").ToList();
             JnsAktvt.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
             unitlist = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "unit" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
             unitlist.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
             Flaglist = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "upahflag" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfID).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
             Flaglist.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
+            //fatin added - 08/11/2023
+            SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            SyarikatList.Insert(0, (new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" }));
+
 
             ViewBag.fld_DisabledFlag = Flaglist;
             ViewBag.fld_Unit = unitlist;
             ViewBag.fld_KodJenisAktvt = JnsAktvt;
+            ViewBag.fld_compcode = SyarikatList; //fatin added - 08/11/2023
             db.Dispose();
             return PartialView();
         }
@@ -480,7 +486,8 @@ namespace MVC_SYSTEM.Controllers
                     UpahAktiviti.fld_Harga = UpahAktiviti.fld_Harga;
                     UpahAktiviti.fld_KodJenisAktvt = UpahAktiviti.fld_KodJenisAktvt;
                     UpahAktiviti.fld_DisabledFlag = UpahAktiviti.fld_DisabledFlag;
-                   
+                    UpahAktiviti.fld_compcode = UpahAktiviti.fld_compcode; //fatin added - 08/11/2023
+
                     //UpahAktiviti.
                     UpahAktiviti.fld_Deleted = false;
                     UpahAktiviti.fld_NegaraID = NegaraID;
@@ -34107,6 +34114,208 @@ namespace MVC_SYSTEM.Controllers
             }
 
         }
+
+        public ActionResult MaklumatSyarikat(string filter, int page = 1, string sort = "fld_SyarikatID",
+   string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.Maintenance = "class = active";
+
+            return View();
+        }
+
+        public ActionResult _MaklumatSyarikat(string filter, int page = 1,
+            string sort = "fld_SyarikatID",
+            string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            var records = new PagedList<ModelsCorporate.tbl_Syarikat>();
+            int role = GetIdentity.RoleID(getuserid).Value;
+
+            var syarikatData = db.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_Deleted == false);
+
+
+            records.Content = syarikatData.OrderBy(sort + " " + sortdir)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            records.TotalRecords = syarikatData
+                .Count();
+
+
+            records.CurrentPage = page;
+            records.PageSize = pageSize;
+            ViewBag.RoleID = role;
+            ViewBag.pageSize = 1;
+
+            return View(records);
+        }
+
+        public ActionResult _MaklumatSyarikatEdit(int id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            var syarikatData = db.tbl_Syarikat.Find(id);
+
+            //var syarikatData = db.tbl_Syarikat.SingleOrDefault(
+            // x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID);
+
+            //ModelsCorporate.tbl_SyarikatViewModel syarikatViewModel = new ModelsCorporate.tbl_SyarikatViewModel();
+
+            //PropertyCopy.Copy(syarikatViewModel, syarikatData);
+
+            return PartialView(syarikatData);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult _MaklumatSyarikatEdit(ModelsCorporate.tbl_Syarikat tbl_Syarikat)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            try
+            {
+                //if (ModelState.IsValid)
+                //{
+                var syarikatData = db.tbl_Syarikat.Find(tbl_Syarikat.fld_SyarikatID);
+
+                syarikatData.fld_NamaSyarikat = tbl_Syarikat.fld_NamaSyarikat;
+                syarikatData.fld_NoSyarikat = tbl_Syarikat.fld_NoSyarikat;
+                syarikatData.fld_CorporateID = tbl_Syarikat.fld_CorporateID;
+                syarikatData.fld_ClientBatchID = tbl_Syarikat.fld_ClientBatchID;
+                syarikatData.fld_AccountNo = tbl_Syarikat.fld_AccountNo;
+
+                db.Entry(syarikatData).State = EntityState.Modified;
+                db.SaveChanges();
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = GlobalResCorp.msgUpdate,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "1",
+                    div = "MaklumatSyarikatDetails",
+                    rootUrl = domain,
+                    action = "_MaklumatSyarikat",
+                    controller = "Maintenance"
+                });
+                //}
+
+                //else
+                //{
+                //    return Json(new
+                //    {
+                //        success = false,
+                //        msg = GlobalResCorp.msgErrorData,
+                //        status = "danger",
+                //        checkingdata = "0"
+                //    });
+                //}
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+
+            //try
+            //{
+
+            //    var syarikatData = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == tbl_Syarikat.fld_SyarikatID).FirstOrDefault();
+
+            //        syarikatData.fld_NamaSyarikat = tbl_Syarikat.fld_NamaSyarikat;
+            //        syarikatData.fld_NoSyarikat = tbl_Syarikat.fld_NoSyarikat;
+            //        syarikatData.fld_CorporateID = tbl_Syarikat.fld_CorporateID;
+            //        syarikatData.fld_ClientBatchID = tbl_Syarikat.fld_ClientBatchID;
+            //        syarikatData.fld_AccountNo = tbl_Syarikat.fld_AccountNo;
+
+            //        //db.Entry(syarikatData).State = EntityState.Modified;
+            //        db.SaveChanges();
+
+            //    //return Json(new { success = true, msg = GlobalResCorp.msgUpdate, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+
+            //    string appname = Request.ApplicationPath;
+            //    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+            //    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+            //    if (appname != "/")
+            //    {
+            //        domain = domain + appname;
+            //    }
+
+            //    return Json(new
+            //    {
+            //        success = true,
+            //        msg = GlobalResCorp.msgUpdate,
+            //        status = "success",
+            //        checkingdata = "0",
+            //        method = "1",
+            //        div = "MaklumatSyarikatDetails",
+            //        rootUrl = domain,
+            //        action = "_MaklumatSyarikat",
+            //        controller = "Maintenance"
+            //    });
+
+            //}
+
+            //catch (Exception ex)
+            //{
+            //    geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+            //    return Json(new
+            //    {
+            //        success = false,
+            //        msg = GlobalResCorp.msgError,
+            //        status = "danger",
+            //        checkingdata = "0"
+            //    });
+            //}
+
+            //finally
+            //{
+            //    db.Dispose();
+            //}
+        }
+
         //end
     }
 }
