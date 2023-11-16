@@ -1729,7 +1729,7 @@ namespace MVC_SYSTEM.Controllers
 
         //role id authorization ( adding super power user)  - modified by farahin - 17/06/2022
         [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Viewer")]
-        public ViewResult _MasterDataPkjReport(string StatusList, int? WilayahList, int? LadangList, string KategoriPekerjaList, string KerakyatanList, string filter, string print, string SyarikatList)
+        public ViewResult _MasterDataPkjReport(string StatusList, int? WilayahList, int? LadangList, string KategoriPekerjaList, string KerakyatanList, string filter, string print, string SyarikatList, string pembekalList, string jantinaList)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -1767,7 +1767,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                               KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
+                               KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
                            .ToList();
 
                         var filter1 = rptMasterDataPkjResults.Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
@@ -1775,7 +1775,7 @@ namespace MVC_SYSTEM.Controllers
                                     x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).Select(s => s.fld_WilayahID).FirstOrDefault();
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, filter1, LadangList,
-                                KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
+                                KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
                             .Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoPkj.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).ToList();
@@ -1784,7 +1784,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                                KerakyatanList, StatusList, KategoriPekerjaList,getuserid, SyarikatList)
+                                KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
                             .Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoPkj.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).ToList();
@@ -1796,7 +1796,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     dbSP.SetCommandTimeout(600);
                     rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                               KerakyatanList, StatusList, KategoriPekerjaList,getuserid, SyarikatList)
+                               KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
                            .ToList();
                 }
 
