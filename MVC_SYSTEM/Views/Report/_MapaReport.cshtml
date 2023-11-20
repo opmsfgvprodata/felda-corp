@@ -25,6 +25,9 @@
     decimal? totalcarumanmajikan = 0;
     decimal? totaljumlahwangdipohon = 0;
     decimal? jumlahwangdipohon = 0;
+    decimal? totalfld_CheckRollRML = 0;
+    decimal? totalfld_CheckRollManual = 0;
+    decimal? totalfld_CheckRollManualPax = 0;
     ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
     DateTime Todaydate = ChangeTimeZone.gettimezone();
     string uniquefilename = "LaporanPermohonanWang" + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
@@ -51,6 +54,9 @@
     decimal? grandtotalsip = 0;
     decimal? grandtotallainpotongan = 0;
     decimal? grandtotalgajibersih = 0;
+    decimal? grandtotalfld_CheckRollRML = 0;
+    decimal? grandtotalfld_CheckRollManual = 0;
+    decimal? grandtotalfld_CheckRollManualPax = 0;
     int? grandtotalcashpax = 0;
     int? grandtotalchequepax = 0;
     int? grandtotalcdmaspax = 0;
@@ -73,7 +79,7 @@
     decimal? M2E = 0;
 }
 
-<section class="content-wrapper main-content clear-fix">
+<section class="content-wrapper main-content">
 
     @if (Model != null && Model.Count() != 0)
     {
@@ -90,6 +96,9 @@
                 grandtotalM2E = 0;
                 grandtotalgajibersih = 0;
                 grandtotalkwsp = 0;
+                grandtotalfld_CheckRollRML = 0;
+                grandtotalfld_CheckRollManual = 0;
+                grandtotalfld_CheckRollManualPax = 0;
                 grandtotalsocso = 0;
                 grandtotalsbkp = 0;
                 grandtotalsip = 0;
@@ -106,6 +115,8 @@
                 grandtotalcarumanmajikankwsp = 0;
                 grandtotalcarumanmajikan = 0;
                 grandtotaljumlahwangdipohon = 0;
+                
+
             }
             @foreach (var wilayah in Model.Select(s => s.sp_RptMAPA.fld_WilayahID).Distinct())
             {
@@ -121,7 +132,7 @@
                 totalsocso = 0;
                 totalsbkp = 0;
                 totalsip = 0;
-                totallainpotongan = 0; 
+                totallainpotongan = 0;
 
                 totalcashpax = 0;
                 totalchequepax = 0;
@@ -135,14 +146,17 @@
                 totalcarumanmajikankwsp = 0;
                 totalcarumanmajikan = 0;
                 totaljumlahwangdipohon = 0;
+                totalfld_CheckRollRML = 0;
+                totalfld_CheckRollManual = 0;
+                totalfld_CheckRollManualPax = 0;
 
-                <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                <table class="table table-hover table-bordered w-100" style="font-size: 11px;" border="0">
                     <thead>
                         <tr>
-                            <th colspan="29" style="color: black; text-align: center; vertical-align: middle !important" align="center" class="center-me">
+                            <th colspan="28" style="color: black; text-align: center; vertical-align: middle !important" align="center" class="center-me">
                                 @ViewBag.namapenuhsyarikat
                                 <br />
-                                @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.namasyarikat
+                                @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.nosyarikat
                                 <br />
                                 RUMUSAN PERMOHONAN WANG GAJI PEKERJA LADANG(MAPA)
                                 <br />
@@ -153,7 +167,7 @@
                         </tr>
 
                         <tr>
-                            <th colspan="29" bgcolor="#CC6600" style="color: black; text-align: left; vertical-align: middle !important; border: 1px solid black;" border="1" align="left">
+                            <th colspan="28" bgcolor="#CC6600" style="color: black; text-align: left; vertical-align: middle !important; border: 1px solid black;" border="1" align="left">
                                 <font color="white">WILAYAH : @GetConfig.GetWilayahNameFromID(wilayah)</font>
                                 <br />
                                 <font color="white">BULAN : @ViewBag.namabulan @ViewBag.YearList</font>
@@ -176,7 +190,6 @@
                             <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">POSTING DATE SISTEM </th>
                             <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">*NO. DOKUMEN  F-43 (HANYA SATU (1)<br />NOMBOR SAHAJA YANG DIBENARKAN)<br />M2E - HQ & CIT</th>
                             <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">*NO. DOKUMEN  F-43 (HANYA SATU (1)<br />NOMBOR SAHAJA YANG DIBENARKAN)<br />MERCHANTRADE</th>
-                            <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1"></th>
                             <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BANK CIT </th>
 
                         </tr>
@@ -300,104 +313,103 @@
                             var carumanInfo = @paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).FirstOrDefault();
                             jumlahwangdipohon = M2E + (paymentModeData.sp_RptMAPA.fld_Cash) + carumanInfo.fld_CarumanMajikanKwsp + carumanInfo.fld_CarumanMajikan;
 
-                        <tr>
-                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @bil
-                            </td>
+                            <tr>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @bil
+                                </td>
 
-                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_LdgCode - @paymentModeData.sp_RptMAPA.fld_LdgName
-                            </td>
+                                <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_LdgCode - @paymentModeData.sp_RptMAPA.fld_LdgName
+                                </td>
 
-                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_BranchName
-                            </td>
+                                <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_BranchName
+                                </td>
 
-                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_NoAcc
-                            </td>
-                            @*//Added by Shazana 15/8/2023*@
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @carumanInfo.fld_NoGL
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @carumanInfo.fld_zonCIT
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @pax
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @gajikasar
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @potonganlain
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_LainPotongan)
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(totaleachladang)
-                            </td>
-
-
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @fld_M2EPax
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_M2E)
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @fld_EwalletPax
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Ewallet)
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @fld_CashPax
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Cash)
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @carumanInfo.fld_CarumanMajikanKwsp
-                            </td>
-
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @carumanInfo.fld_CarumanMajikan
-                            </td>
+                                <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_NoAcc
+                                </td>
+                                @*//Added by Shazana 15/8/2023*@
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @carumanInfo.fld_NoGL
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                  
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @carumanInfo.fld_zonCIT
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @pax
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollRML)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollManual)
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @potonganlain
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_LainPotongan)
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(totaleachladang)
+                                </td>
 
 
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @jumlahwangdipohon
-                            </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @fld_M2EPax
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_M2E)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @fld_EwalletPax
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Ewallet)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @fld_CashPax
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Cash)
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
+                                </td>
 
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_PostingDate
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @NoDocSAP
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_NoDocSAPEwallet
-                            </td>
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            </td>
-
-                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                @paymentModeData.sp_RptMAPA.fld_BranchName
-                            </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @potonganlain
+                                </td>
 
 
-                        </tr>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @jumlahwangdipohon
+                                </td>
+
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_PostingDate
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @NoDocSAP
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_NoDocSAPEwallet
+                                </td>
+                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @paymentModeData.sp_RptMAPA.fld_BranchName
+                                </td>
+
+
+                            </tr>
                             totalcash = totalcash + paymentModeData.sp_RptMAPA.fld_Cash;
                             totalcheque = totalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
                             totalcdmas = totalcdmas + paymentModeData.sp_RptMAPA.fld_Cdmas;
@@ -414,7 +426,7 @@
                             totallainpotongan = totallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
                             totalcarumanmajikankwsp = totalcarumanmajikankwsp + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikanKwsp).FirstOrDefault();
                             totalcarumanmajikan = totalcarumanmajikan + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikan).FirstOrDefault();
-
+                            totalfld_CheckRollManualPax = 0;
 
                             paymentModeData.sp_RptMAPA.fld_CashPax = paymentModeData.sp_RptMAPA.fld_CashPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CashPax;
                             paymentModeData.sp_RptMAPA.fld_ChequePax = paymentModeData.sp_RptMAPA.fld_ChequePax == null ? 0 : paymentModeData.sp_RptMAPA.fld_ChequePax;
@@ -430,6 +442,9 @@
                             totalM2Epax = totalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
                             totalpax = totalcashpax + totalchequepax + totalcdmaspax + totalewalletpax + totalM2Upax + totalM2Epax;
                             totaljumlahwangdipohon = totaljumlahwangdipohon + jumlahwangdipohon;
+                            totalfld_CheckRollRML = totalfld_CheckRollRML + paymentModeData.sp_RptMAPA.fld_CheckRollRML;
+                            totalfld_CheckRollManual = totalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
+
 
                             grandtotalcash = grandtotalcash + paymentModeData.sp_RptMAPA.fld_Cash;
                             grandtotalcheque = grandtotalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
@@ -439,6 +454,9 @@
                             var fldm2e = (paymentModeData.sp_RptMAPA.fld_M2E == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2E);
                             grandtotalM2E = grandtotalM2E + fldm2e;
                             grandtotalkwsp = grandtotalkwsp + paymentModeData.sp_RptMAPA.fld_Kwsp;
+                            grandtotalfld_CheckRollManualPax = 0;
+                            grandtotalfld_CheckRollRML = grandtotalfld_CheckRollRML + (paymentModeData.sp_RptMAPA.fld_CheckRollRML == null? 0: paymentModeData.sp_RptMAPA.fld_CheckRollRML);
+                            grandtotalfld_CheckRollManual = grandtotalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
                             grandtotalsocso = grandtotalsocso + paymentModeData.sp_RptMAPA.fld_Socso;
                             grandtotalsbkp = grandtotalsbkp + paymentModeData.sp_RptMAPA.fld_Sbkp;
                             grandtotalsip = grandtotalsip + paymentModeData.sp_RptMAPA.fld_Sip;
@@ -476,9 +494,9 @@
                         <tr>
                             <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah (RM)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalpax</th>
-                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalgajikasar)</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalfld_CheckRollRML)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
-                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalfld_CheckRollManual)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalkwsp </th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalpotonglain </th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totallainpotongan </th>
@@ -489,8 +507,8 @@
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalewallet)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalcashpax </th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalcash) </th>
-                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalcarumanmajikankwsp) </th>
-                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totalcarumanmajikan) </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalkwsp </th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalpotonglain </th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(totaljumlahwangdipohon) </th>
 
                             <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
@@ -498,28 +516,28 @@
 
                         @if (totalwilayah == wholewilayah)
                         {
-                    <tr>
-                        <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Keseluruhan(RM)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotalpax</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalgajikasar)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalkwsp)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalpotonglain)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotallainpotongan) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalgajibersih) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalM2Epax </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalM2E) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalewalletpax </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalewallet)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalcashpax </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">  @GetTriager.GetTotalForMoney(grandtotalcash) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalcarumanmajikankwsp) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalcarumanmajikan) </th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotaljumlahwangdipohon) </th>
-                        <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                            <tr>
+                                <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Keseluruhan(RM)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotalpax</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalfld_CheckRollRML)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalfld_CheckRollManual)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalkwsp)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalpotonglain)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotallainpotongan) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalgajibersih) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalM2Epax </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalM2E) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalewalletpax </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalewallet)</th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @grandtotalcashpax </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">  @GetTriager.GetTotalForMoney(grandtotalcash) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalkwsp) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalpotonglain) </th>
+                                <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotaljumlahwangdipohon) </th>
+                                <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
 
-                    </tr>
+                            </tr>
 
                         }
 
@@ -637,6 +655,7 @@
         text-align: center;
         vertical-align: middle !important;
     }
+
     .center-me {
         text-align: center;
     }

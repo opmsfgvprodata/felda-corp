@@ -8840,9 +8840,11 @@ namespace MVC_SYSTEM.Controllers
             var namapenuhsyarikat = GetConfig.GetSyarikatFullName(CompCodeList);
             if (namapenuhsyarikat == "") { namapenuhsyarikat = "-"; }
             var namasyarikat = GetConfig.GetSyarikatName(CompCodeList);
+            var nosyarikat = GetConfig.GetSyarikatName(CompCodeList);
             ViewBag.costcentre = CompCodeList;
             ViewBag.namapenuhsyarikat = namapenuhsyarikat.ToUpper();
             ViewBag.namasyarikat = namasyarikat.ToUpper();
+            ViewBag.nosyarikat = nosyarikat.ToUpper();
 
             List<sp_MapaReport_Result> MapaData = new List<sp_MapaReport_Result>();
             List<vw_MapaCustomModel> PaySheetPekerjaList = new List<vw_MapaCustomModel>();

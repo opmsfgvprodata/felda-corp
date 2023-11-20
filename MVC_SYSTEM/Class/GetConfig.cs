@@ -469,17 +469,12 @@ namespace MVC_SYSTEM.Class
         {
             tblOptionConfigsWeb OptionConfigsWeb = new tblOptionConfigsWeb();
             var SyarikatFullName = "";
-            var syarikatInfo = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fldOptConfValue == costcentre).FirstOrDefault();
+            var syarikatInfo = db.tbl_Syarikat.Where(x => x.fld_SAPComCode == costcentre && x.fld_Deleted == false).Select(x=>x.fld_NamaSyarikat).FirstOrDefault();
             if (syarikatInfo == null)
             { SyarikatFullName = ""; }
             else
-            {
-                var SyarikatFullNameInfo = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == syarikatInfo.fld_SyarikatID && x.fld_NoSyarikat.Contains(syarikatInfo.fldOptConfDesc) && x.fld_NegaraID == syarikatInfo.fld_NegaraID).Select(s => s.fld_NamaSyarikat).FirstOrDefault();
-                if (SyarikatFullNameInfo != null)
-                {
-                    SyarikatFullName = SyarikatFullNameInfo;
-                }
-            }
+            { SyarikatFullName = syarikatInfo; }
+
             return SyarikatFullName;
         }
 
@@ -495,6 +490,18 @@ namespace MVC_SYSTEM.Class
             { SyarikatName = SyarikatNameInfo; }
 
             return SyarikatName;
+        }
+
+        public string GetSyarikatNo(string costcentre)
+        {
+            var SyarikatNo = "";
+            var SyarikatNoInfo = db.tbl_Syarikat.Where(x => x.fld_SAPComCode == costcentre && x.fld_Deleted == false).Select(s => s.fld_NoSyarikat).FirstOrDefault();
+            if (SyarikatNoInfo == null)
+            { SyarikatNo = ""; }
+            else
+            { SyarikatNo = SyarikatNoInfo; }
+
+            return SyarikatNo;
         }
     }
 }
