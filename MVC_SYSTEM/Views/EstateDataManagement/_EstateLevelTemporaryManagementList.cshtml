@@ -32,10 +32,30 @@
                      grid.Column("fld_KodPkt", "Kod Peringkat", style: "tahun"),
                      grid.Column("fld_NamaPkt", "Nama Peringkat", style: "kod"),
                      grid.Column("fld_SAPCode", "Kod IO/CC", style: "kod"),
+                     //fatin added - 12/09/2023
+                     grid.Column("Ladang Pinjam", format: (item) =>
+                     {
+                         return getConfig.GetLadangNameFromID(item.fld_LadangIDAsal);
+                     }, canSort: false, style: "kod"),
+                      grid.Column("Ladang Asal", format: (item) =>
+                      {
+                          return getConfig.GetLadangNameFromID(item.fld_LadangID);
+                      }, canSort: false, style: "kod"),
+                        grid.Column("Tarikh Akhir", format: (item) =>
+                        {
+                            var tarikh = String.Format("{0:dd/MM/yyyy}", item.fld_EndDT);
+                            return @Html.Raw(tarikh);
+                        }, canSort: false, style: "tahun"),
+                     //end
                      grid.Column("Tindakan", format: (item) =>
                      {
-                         var tindakan = "<a data-modal1='' href='" + @Url.Action("_EstateLevelTemporaryManagementDelete", "EstateDataManagement") + "/?id=" + item.fld_ID + "&wil=" + item.fld_WilayahID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-remove'></i></a>&nbsp;";
+                         //fatin added - 17/09/2023
+                         var tindakan = "<a data-modal1='' href='" + @Url.Action("_EstateLevelTemporaryManagementEdit", "EstateDataManagement") + "/?id=" + item.fld_ID + "&wil=" + item.fld_WilayahID + "'class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o fa-lg'></i></a>&nbsp;" +
+                                        "<a data-modal1='' href='" + @Url.Action("_EstateLevelTemporaryManagementDelete", "EstateDataManagement") + "/?id=" + item.fld_ID + "&wil=" + item.fld_WilayahID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
                          return @Html.Raw(tindakan);
+
+                         //var tindakan = "<a data-modal1='' href='" + @Url.Action("_EstateLevelTemporaryManagementDelete", "EstateDataManagement") + "/?id=" + item.fld_ID + "&wil=" + item.fld_WilayahID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-remove'></i></a>&nbsp;";
+                         //return @Html.Raw(tindakan);
 
                      }, canSort: false, style: "tindakan")
                      )

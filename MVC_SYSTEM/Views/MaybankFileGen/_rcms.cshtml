@@ -1,0 +1,341 @@
+﻿
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_MaybankRcms_Result>
+
+
+@{
+    int? month = ViewBag.MonthList;
+    int? year = ViewBag.YearList;
+    string worker = ViewBag.WorkerList;
+    int bil = 0;
+    decimal? totalNetPay = 0;
+    string telNo = "";
+    string nokp = "";
+    string passport = "";
+    string paymentmode = "";
+    string clientid = "";
+
+    string uniquefilename = "M2E BURUH (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.WilayahName + " " + ViewBag.MonthList + ViewBag.YearList;
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea" class="modal-body">
+
+        <p style="font-size: 11px" align="right">@ViewBag.Date | @ViewBag.Time</p>
+
+        <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
+            <thead>
+                <tr>
+                    <th colspan="11" style="text-align: center; vertical-align: middle; border: none;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (@GlobalResCorp.lblCompanyNo : @ViewBag.NoSyarikat)
+                        <br />
+                        LAPORAN BAYARAN MELALUI M2E @ViewBag.MonthList/@ViewBag.YearList
+                        <br />
+                        WILAYAH @ViewBag.WilayahName
+                        <br />
+                    </th>
+                </tr>
+                <tr>
+                    @*<th colspan="10" style="text-align: left; vertical-align: middle; border: none;">
+                        Tajuk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Laporan Bayaran Melalui M2E
+                        <br />
+                        Wilayah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.WilayahName
+                    </th>
+                    @*<th colspan="10" style="text-align: left; vertical-align: middle; border: none;">
+                        Tajuk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Laporan Bayaran Melalui M2E
+                        <br />
+                        Wilayah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.WilayahName
+                    </th>
+                    <th colspan="2" style="text-align:right;vertical-align:top; border: none;">
+                        Tempoh&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.MonthList/@ViewBag.YearList
+                    </th>*@
+                </tr>
+                <tr>
+                    <th style="border: none;">
+                        
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="11" style="text-align: left; vertical-align: middle; border: none;">
+                        ID Korporat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.CorpID
+                        <br />
+                        @if (ViewBag.filter == "" || ViewBag.filter == null)
+                        {
+                            clientid = ViewBag.ClientID;
+                        }
+                        else
+                        {
+                            clientid = ViewBag.filter;
+                        }
+                        ID Klien&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @clientid
+                        <br />
+                        Nombor Akaun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.AccNo
+                    </th>
+                    <!--<th colspan="6" style="text-align: left; vertical-align: middle; border: none;">
+                        Tarikh Bayaran&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: "tarikh"
+                        <br />
+                        Tempoh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.MonthList/@ViewBag.YearList
+                        <br />-->
+                        @*Payment Desc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.MonthList/@ViewBag.YearList*@
+                    <!--</th>-->
+                </tr>
+            <tr>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResCorp.hdrNo</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Rancangan / Projek</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">No. Pekerja</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResCorp.hdrName</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">No. KP</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">No. Passport</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Mod Bayaran</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Kod Bank</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Bank</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">No. Akaun</th>
+                <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Jumlah Bersih (RM)</th>
+            </tr>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    bil = bil + 1;
+
+                    totalNetPay += item.fld_GajiBersih;
+
+                    if (item.fld_Kdrkyt == "MA")
+                    {
+                        nokp = item.fld_Nokp;
+                        passport = "-";
+                    }
+                    else
+                    {
+                        nokp = "-";
+                        passport = item.fld_Nokp;
+                    }
+
+                    if (item.fld_PaymentMode == "6")
+                    {
+                        paymentmode = "M2E-HQ";
+                    }
+                    else
+                    {
+                        paymentmode = "";
+                    }
+
+                    if (item.fld_NoAkaun == null || item.fld_NoAkaun == "" || item.fld_RcmsBankCode == null || item.fld_RcmsBankCode == "" || item.fld_NamaBank == null || item.fld_NamaBank == "")
+                    {
+                        <tr>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="red">@bil.</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_LdgCode - @item.fld_LdgName</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_Nopkj</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_Nama.ToUpper()</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@nokp</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@passport</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@paymentmode</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_RcmsBankCode</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_NamaBank</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="red">@item.fld_NoAkaun</font></td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="red">@item.fld_GajiBersih</font></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@bil.</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_LdgCode - @item.fld_LdgName</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_Nopkj</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_Nama.ToUpper()</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@nokp</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@passport</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@paymentmode</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_RcmsBankCode</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NamaBank.ToUpper()</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_NoAkaun</td>
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.fld_GajiBersih</td>
+                        </tr>
+                    }
+                }
+
+                @*<tr>
+            <th style="border: none;">
+
+            </th>
+        </tr>*@
+                <tr>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: left; border-right: none; border-left: none; font-weight:bold">Bilangan :</td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: left; border-right: none; border-left: none; font-weight:bold">@ViewBag.RecordNo</td>
+                    @*<td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>*@
+                </tr>
+                <tr>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: left; border-right: none; border-left: none; font-weight:bold">@GlobalResCorp.lblTotal :</td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: left; border-right: none; border-left: none; font-weight:bold">RM @totalNetPay</td>
+                    @*<td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>*@
+
+            </tbody>
+        </table>
+
+        @*<br />
+        <br />*@
+
+        <newpage />
+
+    </div>
+
+    if (ViewBag.Print == null)
+    {
+<div style="text-align:right; margin-top:10px">
+    <a class="btn btn-default btn-sm" href="#" id="printpage">
+        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+    </a>
+    @* <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadExcel
+        </a>*@
+    <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+    </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadtxt">
+        <span><img src="~/Asset/Images/notepad.png" width="20px" height="20px" /></span> Download Txt File
+    </a>
+</div>
+    }
+}
+
+@if (Model.Count() == 0)
+{
+    <div id="scrollArea" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadtxt").click(function () {
+            var Month = $("#MonthList").val();
+            var Year = $("#YearList").val();
+            var CompCode = $("#CompCodeList").val();
+            var Wilayah = $("#WilayahList").val();
+            var filter = $("#filter").val();
+            var PaymentDate = $("#PaymentDate").val();
+            $("#UpdateProgress1").css("display", "");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("DownloadText", "MaybankFileGen")";
+            ajxfn.type = "POST";
+            ajxfn.async = false;
+            ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode, Wilayah: Wilayah, filter: filter, PaymentDate: PaymentDate });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $.simplyToast(result.msg, result.statusmsg);
+                var win = window.open(result.link, '_blank');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+
+            return false;
+        })
+
+        $("#downloadpdf").click(function () {
+          var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "M2EReport" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+
+        @*$("#downloadpdf").click(function () {
+            var RadioGroup = $('input[name=RadioGroup]:checked').val();
+            var MonthList = $("#MonthList").val();
+            var YearList = $("#YearList").val();
+            var SelectionList = $("#SelectionList").val();
+            //var StatusList = $("#StatusList").val();
+            //var WorkCategoryList = $("#WorkCategoryList").val();
+
+            var StatusList = '';
+            var WorkCategoryList = '';
+
+            var param = '/?RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&SelectionList=' + SelectionList + '&StatusList=' + StatusList + '&WorkCategoryList=' + WorkCategoryList;
+            var controller = 'Report';
+            var action = 'PrintPaySheetPdf';
+
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("PDFIndetifier", "PdfCreator")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ controller: controller, action: action, param: param });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                //var win = window.open(result.link, '_blank');
+                //win.focus();
+                PDFObject.embed(result.link, "#searchResultWorkerPaySheetRptInfo", { height: "450px" });
+            };
+
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResEstate.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+
+            return false;
+        });*@
+    });
+</script>

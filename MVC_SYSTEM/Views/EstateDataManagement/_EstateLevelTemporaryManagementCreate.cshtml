@@ -30,12 +30,12 @@
                                 @Html.DropDownList("ladangList1", null, htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label class="control-label col-sm-3">Jenis Aktiviti:</label>
                             <div class="col-sm-8">
                                 @Html.DropDownList("JnisAktvt", null, htmlAttributes: new { @class = "form-control" })
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label class="control-label col-sm-3">Jenis Peringkat:</label>
                             <div class="col-sm-8">
@@ -183,7 +183,7 @@
                 var ajxfn = {};
                 ajxfn.url = "@Url.Action("GetPkt", "EstateDataManagement")";
                 ajxfn.type = "POST";
-                ajxfn.data = JSON.stringify({ JnisAktvt: $("#JnisAktvt").val(), JnsPkt: $("#JnisPkt").val(), WilayahList: $("#wilayahList1").val(), LadangList: $("#ladangList1").val() });
+                ajxfn.data = JSON.stringify({ JnsPkt: $("#JnisPkt").val(), WilayahList: $("#wilayahList1").val(), LadangList: $("#ladangList1").val() }); //fatin modified remove JnisAktvt- 13/09/2023
                 ajxfn.datatype = "json";
                 ajxfn.contentType = "application/json";
                 ajxfn.success = function (result) {

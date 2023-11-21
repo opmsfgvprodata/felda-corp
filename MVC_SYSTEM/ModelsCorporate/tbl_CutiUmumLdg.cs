@@ -47,6 +47,11 @@ namespace MVC_SYSTEM.ModelsCorporate
         public Guid fld_CutiUmumLdgID { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+
+        //fatin added - 10/08/2023
+        public int? fld_SyarikatID { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         public int? fld_WilayahID { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]

@@ -50,39 +50,45 @@
 @using (Html.BeginForm("WorkerSalary", "Report", FormMethod.Post, new { id = "Report" }))
 {
     @Html.AntiForgeryToken()
-<section class="content-wrapper main-content clear-fix">
-    <div class="well bottom" style="padding-bottom: 16px">
-        <div class="row">
-            <div class="col-sm-2">
-                @Html.Label(GlobalResWorkerSalary.lblMonth)
-                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                @Html.Label(GlobalResWorkerSalary.lblYear)
-                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                @Html.Label(GlobalResWorkerSalary.lblWilayah)
-                @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                @Html.Label(GlobalResWorkerSalary.lblLadang)
-                @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                @Html.Label(GlobalResWorkerSalary.lblKrkytan)
-                @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2" style="padding-top:25px;">
-                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerSalary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                <div class="col-sm-1">
+                    @Html.Label(GlobalResWorkerSalary.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1">
+                    @Html.Label(GlobalResWorkerSalary.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*sarah added*@
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblKrkytan)
+                    @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerSalary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
             </div>
         </div>
-    </div>
-    <div id="DataTable" class="well" style="margin-top: 7px">
-        <p style="text-align:center;"><label>@GlobalResWorkerSalary.hdrReportTitle</label></p>
-        @if (ViewBag.GetFlag == 2)
-        {
-            <div id="scrollArea" class="modal-body">
+        <div id="DataTable" class="well" style="margin-top: 7px">
+            <p style="text-align:center;"><label>@GlobalResWorkerSalary.hdrReportTitle</label></p>
+            @if (ViewBag.GetFlag == 2)
+            {
+        <div id="scrollArea" class="modal-body">
+
                 <logo />
                 @foreach (var krytan in GetKrytans)
                 {
@@ -403,30 +409,32 @@
                             }
                         </tfoot>
                     </table>
-                    bill++;
+                                bill++;
                     <newpage />
 
-                    bill2++;
-                }
+                                    bill2++;
+                                }
+                                
             </div>
 
-            @*//farahin-20012021*@
-            <br />
-            <div style="text-align:right; margin-top:10px">
-                <a class="btn btn-default btn-sm" href="" id="printpage">
-                    <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
-                </a>
-                <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
-                    <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
-                </a>
-                <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
-                    <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-                </a>
-            </div>
-        }
+                @*//farahin-20012021*@
+                <br />
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
 
-    </div>
-</section>
+            }
+
+        </div>
+    </section>
 }
 <script src="~/Asset/Scripts/FromHTML.js"></script>
 <script src="~/Asset/Scripts/FileSaver.js"></script>
@@ -483,7 +491,57 @@
             });
             return false;
         });
-        if ($("#WilayahIDList").val() == 0) {
+
+        $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+        var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang4", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                debugger
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+        @*if ($("#WilayahIDList").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";
             WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
@@ -526,7 +584,7 @@
             };
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);
-        });
+        });*@
     });
 </script>
 <script>

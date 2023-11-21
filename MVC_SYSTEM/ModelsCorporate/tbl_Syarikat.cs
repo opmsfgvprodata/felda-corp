@@ -33,7 +33,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(50)]
         public string fld_LogoName { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+        //[Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         [StringLength(100)]
         public string fld_SyarikatEmail { get; set; }
 
@@ -47,5 +47,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         //farahin tambah 22/09/2021
         public string fld_SAPComCode { get; set; }
+
+        //add by faeza 28.08.2023
+        public string fld_CorporateID { get; set; }
+        public string fld_ClientBatchID { get; set; }
+        public string fld_AccountNo { get; set; }
     }
 }
