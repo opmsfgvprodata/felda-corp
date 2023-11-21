@@ -28,9 +28,13 @@ namespace MVC_SYSTEM.Controllers
         GetWilayah getwilyah = new GetWilayah();
         Connection Connection = new Connection();
         errorlog geterror = new errorlog();
+        //Commented by Shazana 21/11/2023
+        //string IDFelda = "WF-BATCH"; string pwdFelda = "@12345bnm";
+        //string IDFPM = "FELDAOPMSRFC"; string pwdFPM = "@12345bnm";
 
-        string IDFelda = "WF-BATCH"; string pwdFelda = "@12345bnm";
-        string IDFPM = "FELDAOPMSRFC"; string pwdFPM = "@12345bnm";
+        //Added by Shazana 21/11/2023
+        string IDFelda = "FLDOPMS-BOT"; string pwdFelda = "@12345bnm";
+        string IDFPM = "FPMOPMS-BOT"; string pwdFPM = "@12345bnm";
 
         // GET: SAPMasterData
         public ActionResult Index()
