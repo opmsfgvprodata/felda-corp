@@ -3783,4 +3783,7 @@
   <data name="titleRCMSMaybankSyarikatEdit" xml:space="preserve">
     <value>Kemaskini Maklumat RCMS Maybank Syarikat</value>
   </data>
+  <data name="lblRcmsBankCode" xml:space="preserve">
+    <value>Kod Bank Rcms</value>
+  </data>
 </root>

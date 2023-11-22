@@ -26,6 +26,7 @@
                                       * grid.RowsPerPage * grid.PageIndex, style: "count"),
                 grid.Column(columnName: "fld_KodBank", header: GlobalResCorp.lblBankCode, style: "kod"),
                 grid.Column(columnName: "fld_NamaBank", header: GlobalResCorp.lblBankName, style: "keterangan"),
+                grid.Column(columnName: "fld_RcmsBankCode", header: GlobalResCorp.lblRcmsBankCode, style: "kod"),
                 grid.Column(GlobalResCorp.hdrAction, format: (item) =>
                 {
                     if (item.fld_Deleted == false)

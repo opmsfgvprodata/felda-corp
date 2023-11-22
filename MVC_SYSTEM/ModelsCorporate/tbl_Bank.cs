@@ -21,6 +21,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(50)]
         public string fld_NamaBank { get; set; }
 
+        [StringLength(50)]
+        public string fld_RcmsBankCode { get; set; }
+
         public int? fld_SyarikatID { get; set; }
 
         public int? fld_NegaraID { get; set; }

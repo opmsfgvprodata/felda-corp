@@ -7477,6 +7477,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kod Bank Rcms.
+        /// </summary>
+        public static string lblRcmsBankCode {
+            get {
+                return ResourceManager.GetString("lblRcmsBankCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sebab.
         /// </summary>
         public static string lblReason {
