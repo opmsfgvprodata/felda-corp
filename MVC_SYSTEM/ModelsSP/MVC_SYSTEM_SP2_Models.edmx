@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MVC_SYSTEM_SP2_Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MVC_SYSTEM_SP2_Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="sp_DashAllKerakyatan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SyarikatID" Type="int" Mode="In" />
           <Parameter Name="Type" Type="int" Mode="In" />
@@ -69,6 +69,15 @@
           <Parameter Name="Costcentre" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_MaybankRcms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_MaybankTNG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
           <Parameter Name="SyarikatID" Type="int" Mode="In" />
           <Parameter Name="WilayahID" Type="int" Mode="In" />
@@ -148,7 +157,7 @@
           <Parameter Name="LadangID" Type="int" Mode="In" />
           <Parameter Name="AktifStatus" Type="int" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RptSkb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
@@ -159,8 +168,7 @@
           <Parameter Name="Year" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="MVC_SYSTEM_SP2_ModelsStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MVC_SYSTEM_SP2_Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -308,7 +316,7 @@
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
             <Parameter Name="AktifStatus" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="CostCentre" Mode="In" Type="String" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RptSkb">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -317,6 +325,15 @@
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MaybankTNG" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankTNG_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_DashAllKerakyatan_Result">
@@ -695,6 +712,27 @@
           <Property Type="Int32" Name="fld_TKPH" Nullable="true" />
           <Property Type="Int32" Name="fld_TKPHS" Nullable="true" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_MaybankTNG_Result">
+          <Property Type="Guid" Name="fld_ID" Nullable="true" />
+          <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="fld_RcmsBankCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_NamaBank" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_NoAkaun" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="fld_GajiBersih" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="fld_Year" Nullable="true" />
+          <Property Type="Int32" Name="fld_Month" Nullable="true" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1164,6 +1202,31 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RptSkb" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptSkb" />
+          <FunctionImportMapping FunctionImportName="sp_MaybankTNG" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankTNG">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankTNG_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_Nokp" ColumnName="fld_Nokp" />
+                <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+                <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
+                <ScalarProperty Name="fld_RcmsBankCode" ColumnName="fld_RcmsBankCode" />
+                <ScalarProperty Name="fld_NamaBank" ColumnName="fld_NamaBank" />
+                <ScalarProperty Name="fld_NoAkaun" ColumnName="fld_NoAkaun" />
+                <ScalarProperty Name="fld_GajiBersih" ColumnName="fld_GajiBersih" />
+                <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
+                <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
+                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
+                <ScalarProperty Name="fld_Kdrkyt" ColumnName="fld_Kdrkyt" />
+                <ScalarProperty Name="fld_PaymentMode" ColumnName="fld_PaymentMode" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
