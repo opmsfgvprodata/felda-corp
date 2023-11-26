@@ -3659,6 +3659,10 @@
     <Content Include="Views\Maintenance\_MaklumatSyarikat.cshtml" />
     <Content Include="Views\Maintenance\_MaklumatSyarikatEdit.cshtml" />
     <Content Include="Views\Maintenance\MaklumatSyarikat.cshtml" />
+    <Content Include="Views\MaybankFileGen\TngGen.cshtml" />
+    <Content Include="Views\MaybankFileGen\TngGenIndividu.cshtml" />
+    <Content Include="Views\MaybankFileGen\_tng.cshtml" />
+    <Content Include="Views\MaybankFileGen\_tngIndividu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
