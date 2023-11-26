@@ -405,39 +405,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptGajiMinima_Result>("sp_RptGajiMinima", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter, userIDParameter, costCentreParameter);
         }
     
-        public virtual IEnumerable<sp_RptMakPekTem_Result> sp_RptMakPekTem(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> aktifStatus, Nullable<int> userID, string costCentre)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var wilayahIDParameter = wilayahID.HasValue ?
-                new ObjectParameter("WilayahID", wilayahID) :
-                new ObjectParameter("WilayahID", typeof(int));
-    
-            var ladangIDParameter = ladangID.HasValue ?
-                new ObjectParameter("LadangID", ladangID) :
-                new ObjectParameter("LadangID", typeof(int));
-    
-            var aktifStatusParameter = aktifStatus.HasValue ?
-                new ObjectParameter("AktifStatus", aktifStatus) :
-                new ObjectParameter("AktifStatus", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var costCentreParameter = costCentre != null ?
-                new ObjectParameter("CostCentre", costCentre) :
-                new ObjectParameter("CostCentre", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptMakPekTem_Result>("sp_RptMakPekTem", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, userIDParameter, costCentreParameter);
-        }
-    
         public virtual IEnumerable<sp_RptMasterDataPkj_Result> sp_RptMasterDataPkj(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, string kdrytan, string statusAktif, string kategoriPkj, Nullable<int> userID, string costCentre)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -541,39 +508,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RptSkb", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter);
         }
     
-        public virtual IEnumerable<sp_MaybankTNG_Result> sp_MaybankTNG(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var wilayahIDParameter = wilayahID.HasValue ?
-                new ObjectParameter("WilayahID", wilayahID) :
-                new ObjectParameter("WilayahID", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var compCodeParameter = compCode != null ?
-                new ObjectParameter("CompCode", compCode) :
-                new ObjectParameter("CompCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankTNG_Result>("sp_MaybankTNG", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
-        }
-    
         public virtual IEnumerable<sp_RptBulPenPekLad_Result> sp_RptBulPenPekLad(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, string kdrytan, Nullable<int> month, Nullable<int> year, Nullable<int> userID, string costCentre)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -613,6 +547,39 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("CostCentre", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptBulPenPekLad_Result>("sp_RptBulPenPekLad", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, kdrytanParameter, monthParameter, yearParameter, userIDParameter, costCentreParameter);
+        }
+    
+        public virtual IEnumerable<sp_RptMakPekTem_Result> sp_RptMakPekTem(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> aktifStatus, Nullable<int> userID, string costCentre)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var ladangIDParameter = ladangID.HasValue ?
+                new ObjectParameter("LadangID", ladangID) :
+                new ObjectParameter("LadangID", typeof(int));
+    
+            var aktifStatusParameter = aktifStatus.HasValue ?
+                new ObjectParameter("AktifStatus", aktifStatus) :
+                new ObjectParameter("AktifStatus", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var costCentreParameter = costCentre != null ?
+                new ObjectParameter("CostCentre", costCentre) :
+                new ObjectParameter("CostCentre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptMakPekTem_Result>("sp_RptMakPekTem", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, userIDParameter, costCentreParameter);
         }
     }
 }
