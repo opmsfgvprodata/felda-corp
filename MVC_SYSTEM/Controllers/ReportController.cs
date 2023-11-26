@@ -6964,8 +6964,6 @@ namespace MVC_SYSTEM.Controllers
 
 
 
-
-
         public JsonResult GetList(int wlyh, int ldg, int RadioGroup, string StatusList)
         {
             Connection Connection = new Connection();
@@ -7227,8 +7225,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Print = print;
             ViewBag.YearList = YearList;
             ViewBag.MonthList = MonthList;
-
-            // Added by Shazana 3 / 4 / 2023
+            // Added by Shazana 3/4/2023
             String namabulan = db.tblOptionConfigsWeb.Where(x => x.fldOptConfValue == MonthList.ToString()).Select(x => x.fldOptConfFlag2).FirstOrDefault();
             if (namabulan != null)
             { ViewBag.namabulan = namabulan.ToUpper(); }
@@ -7236,6 +7233,7 @@ namespace MVC_SYSTEM.Controllers
             { ViewBag.namabulan = ""; }
             ViewBag.WilayahList = WilayahList;
             ViewBag.LadangList = LadangList;
+            ViewBag.CompCodeList = CompCodeList;
             try
             {
 
@@ -7484,7 +7482,7 @@ namespace MVC_SYSTEM.Controllers
             Paragraph para = new Paragraph();
 
             pdfDoc.Open();
-
+     
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             //MVC_SYSTEM_MasterModels MasterModel = new MVC_SYSTEM_MasterModels();
             int? getuserid = getidentity.ID(User.Identity.Name);
