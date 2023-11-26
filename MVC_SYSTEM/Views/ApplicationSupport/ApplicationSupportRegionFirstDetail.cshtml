@@ -109,15 +109,18 @@
                             <p>CASH</p>
                             <p>CHEQUE</p>
                             <p>CDMAS</p>
-                            <p>EWALLET</p>
+                            <p>EWALLET MTA</p>
                             @*Commented by Shazana 19/8/2023*@
                             <!--<p>M2U</p>
-                            <p>M2E</p>--> @*Added by Shazana 25/7/2023*@
+    <p>M2E</p>-->
+                            @*Added by Shazana 25/7/2023*@
                             @*Added by Shazana 19/8/2023*@
                             <p>M2E-E</p>
                             <p>M2E-HQ</p>
+                            <p>EWALLET TNG</p>
                         </div>
                         <div class="column" width: 20%;>
+                            <p>:</p>
                             <p>:</p>
                             <p>:</p>
                             <p>:</p>
@@ -132,6 +135,7 @@
                             <p>@GetTriager.GetTotalForMoney(item.fld_JumlahEwallet)</p>
                             <p>@GetTriager.GetTotalForMoney(item.fld_JumlahM2U)</p>
                             <p>@GetTriager.GetTotalForMoney(item.fld_JumlahM2E)</p>
+                            <p>@GetTriager.GetTotalForMoney(item.fld_JumlahEwalletTnG)</p>
                         </div>
                     </div>
                 </td>
@@ -203,9 +207,13 @@
 
                                     if (item.fld_JumlahM2E == null)
                                     { item.fld_JumlahM2E = 0; }
+
+                                    if (item.fld_JumlahEwalletTnG == null)
+                                    { item.fld_JumlahEwalletTnG = 0; }
+
                                     totalprmhnnwng = totalprmhnnwng + item.fld_JumlahPermohonan;
                                     //Modified by Shazana 6/3/2023
-                                    totalpaymentmode = totalpaymentmode + item.fld_JumlahCash + item.fld_JumlahCheque + item.fld_JumlahCdmas + item.fld_JumlahEwallet + item.fld_JumlahM2U + item.fld_JumlahM2E;
+                                    totalpaymentmode = totalpaymentmode + item.fld_JumlahCash + item.fld_JumlahCheque + item.fld_JumlahCdmas + item.fld_JumlahEwallet + item.fld_JumlahM2U + item.fld_JumlahM2E + item.fld_JumlahEwalletTnG;
                                     bill++;
                                 }
         </tbody>
