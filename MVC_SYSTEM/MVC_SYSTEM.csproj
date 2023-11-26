@@ -1014,22 +1014,17 @@
     <Compile Include="ModelsSAP\SAPCC.cs" />
     <Compile Include="ModelsSAP\SAPGL.cs" />
     <Compile Include="ModelsSAP\SAPIO.cs" />
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.cs" />
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context1.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.cs" />
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Designer.cs">
-      <DependentUpon>MVC_SYSTEM_SP2_Models.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models1.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models1.Designer.cs">
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
@@ -1076,6 +1071,9 @@
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MaybankTNG_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MyegDetail_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -1091,6 +1089,9 @@
     <Compile Include="ModelsSP\sp_RptGajiMinima_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptGajiMinima_test_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -1098,9 +1099,6 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptRumKedKepPekLad_Result.cs">
-      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\get_NSWL.cs" />
@@ -2073,7 +2071,7 @@
     <Content Include="libman.json" />
     <EntityDeploy Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models1.Designer.cs</LastGenOutput>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx.diagram">
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
@@ -2085,11 +2083,13 @@
     </None>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models.Context1.cs</LastGenOutput>
+      <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models.Context.cs</LastGenOutput>
     </Content>
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models1.cs</LastGenOutput>
+      <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />

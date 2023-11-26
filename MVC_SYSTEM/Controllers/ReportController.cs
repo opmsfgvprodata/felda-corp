@@ -1772,7 +1772,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                               KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
+                               KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
                            .ToList();
 
                         var filter1 = rptMasterDataPkjResults.Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
@@ -1780,7 +1780,7 @@ namespace MVC_SYSTEM.Controllers
                                     x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).Select(s => s.fld_WilayahID).FirstOrDefault();
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, filter1, LadangList,
-                                KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
+                                KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
                             .Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoPkj.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).ToList();
@@ -1789,7 +1789,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         dbSP.SetCommandTimeout(600);
                         rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                                KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
+                                KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
                             .Where(x => x.fld_Nama.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoPkj.ToUpper().Contains(filter.ToUpper()) ||
                                         x.fld_NoKP.ToUpper().Contains(filter.ToUpper())).ToList();
@@ -1801,7 +1801,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     dbSP.SetCommandTimeout(600);
                     rptMasterDataPkjResults = dbSP.sp_RptMasterDataPkj(NegaraID, SyarikatID, WilayahList, LadangList,
-                               KerakyatanList, StatusList, KategoriPekerjaList, pembekalList, jantinaList, getuserid, SyarikatList)
+                               KerakyatanList, StatusList, KategoriPekerjaList, getuserid, SyarikatList)
                            .ToList();
                 }
 
