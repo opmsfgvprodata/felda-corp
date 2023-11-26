@@ -16,7 +16,7 @@ namespace MVC_SYSTEM.Class
         private static ChangeTimeZone timezone = new ChangeTimeZone();
         private GetTriager GetTriager = new GetTriager();
         private static GetNSWL GetNSWL = new GetNSWL();
-        public static string GenFileMaybank(List<ModelsSP.sp_MaybankRcms_Result> maybankrcmsList, tbl_Wilayah tbl_Wilayah, string bulan, string tahun, int? NegaraID, int? SyarikatID, int? WilayahID, string CompCode, string filter, out string filename)
+        public static string GenFileMaybank(List<ModelsSP.sp_MaybankRcms_Result> maybankrcmsList, tbl_Wilayah tbl_Wilayah, string bulan, string tahun, int? NegaraID, int? SyarikatID, int? WilayahID, string CompCode, string filter, DateTime PaymentDate, out string filename)
         {
             decimal? TotalGaji = 0;
             int CountData = 0;
@@ -38,10 +38,10 @@ namespace MVC_SYSTEM.Class
             string InitialName = "";
             string AccNoWorker = "";
             char onechar;
-            //DateTime NowDate = timezone.gettimezone();
-            DateTime? date = timezone.gettimezone();
-            DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
-            DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 6);
+            //DateTime? date = timezone.gettimezone();
+            //DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
+            //DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 5);
+            DateTime? PaymentDateFormat = new DateTime(PaymentDate.Year, PaymentDate.Month, PaymentDate.Day);
 
             GetNSWL.GetSyarikatRCMSDetail(CompCode, out CorpID, out ClientID, out AccNo, out InitialName);
             string filePath = "~/MaybankFile/" + tahun + "/" + bulan + "/" + NegaraID.ToString() + "_" + SyarikatID.ToString() + "/" + WilayahID.ToString() + "/";
@@ -258,7 +258,7 @@ namespace MVC_SYSTEM.Class
                             }
                             else if (i == 4) //5
                             {
-                                Body.Insert(i, string.Format("{0:ddMMyyyy}", PaymentDate) + "|");
+                                Body.Insert(i, string.Format("{0:ddMMyyyy}", PaymentDateFormat) + "|");
                             }
                             else if (i == 7) //8
                             {

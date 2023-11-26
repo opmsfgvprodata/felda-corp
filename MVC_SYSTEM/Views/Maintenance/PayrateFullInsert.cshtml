@@ -23,6 +23,14 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">@*Maklumat*@</div>
                     <div class="panel-body">
+                        @*fatin added - 08/11/2023*@
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.lblCompany:</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("fld_compcode", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_compcode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">@GlobalResCorp.hdrWorkAktvt:</label>
                             <div class="col-md-9">
@@ -88,13 +96,13 @@
                             </div>
                         </div>*@
                         @*<div class="form-group">
-                <label class="control-label col-md-2">@GlobalResCorp.hdrProductvt</label>
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.fld_Produktvt, new { htmlAttributes = new { @class = "form-control required", @autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.fld_Produktvt, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-              </div>
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrProductvt</label>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fld_Produktvt, new { htmlAttributes = new { @class = "form-control required", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.fld_Produktvt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                    </div>
            </div>
         </div>
      </div>

@@ -14,7 +14,7 @@ using MVC_SYSTEM.ModelsSP;
 
 namespace MVC_SYSTEM.Controllers
 {
-    [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1")]
+    [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3")]
     public class MaybankFileGenController : Controller
     {
         private MVC_SYSTEM_ModelsCorporate dbC = new MVC_SYSTEM_ModelsCorporate();
@@ -26,7 +26,7 @@ namespace MVC_SYSTEM.Controllers
         private errorlog geterror = new errorlog();
         private GetConfig GetConfig = new GetConfig();
         private GetIdentity GetIdentity = new GetIdentity();
-        private GetWilayah GetWilayah = new GetWilayah();
+        private GetWilayah getWilayah = new GetWilayah();
         private Connection Connection = new Connection();
         private MVC_SYSTEM_SP2_Models dbSP = new MVC_SYSTEM_SP2_Models();
         //private GetGenerateFile GetGenerateFile = new GetGenerateFile();
@@ -82,7 +82,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         [HttpPost]
-        public ActionResult DownloadText(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId)
+        public ActionResult DownloadText(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId, DateTime PaymentDate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -120,7 +120,65 @@ namespace MVC_SYSTEM.Controllers
 
                 var WilayahDetail = db.tbl_Wilayah.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_ID == Wilayah).FirstOrDefault();
 
-                filePath = GetGenerateFile.GenFileMaybank(maybankrcmsList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, out filename);
+                filePath = GetGenerateFile.GenFileMaybank(maybankrcmsList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, PaymentDate, out filename);
+
+                link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
+
+                //dbr.Dispose();
+
+                msg = GlobalResCorp.msgGenerateSuccess;
+                statusmsg = "success";
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                msg = GlobalResCorp.msgGenerateFailed;
+                statusmsg = "warning";
+            }
+
+            return Json(new { msg, statusmsg, link });
+        }
+
+        [HttpPost]
+        public ActionResult DownloadTextIndividu(int Month, int Year, string CompCode, int Wilayah, string filter, string[] WorkerId, DateTime PaymentDate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            string msg = "";
+            string statusmsg = "";
+            string filePath = "";
+            string filename = "";
+
+            string stringyear = "";
+            string stringmonth = "";
+            string link = "";
+            stringyear = Year.ToString();
+            stringmonth = Month.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            try
+            {
+                GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+                List<sp_MaybankRcms_Result> maybankrcmsList = new List<sp_MaybankRcms_Result>();
+
+                if (WorkerId == null)
+                    WorkerId = new string[] { "0" };
+
+                if (WorkerId.Contains("0"))
+                {
+                    maybankrcmsList = dbSP.sp_MaybankRcms(NegaraID.Value, SyarikatID.Value, Wilayah, Year, Month, getuserid, CompCode).ToList();
+                }
+                else
+                {
+                    maybankrcmsList = dbSP.sp_MaybankRcms(NegaraID.Value, SyarikatID.Value, Wilayah, Year, Month, getuserid, CompCode).Where(x => WorkerId.Contains(x.fld_Nopkj)).ToList();
+                }
+
+                var WilayahDetail = db.tbl_Wilayah.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_ID == Wilayah).FirstOrDefault();
+
+                filePath = GetGenerateFile.GenFileMaybank(maybankrcmsList, WilayahDetail, stringmonth, stringyear, NegaraID, SyarikatID, Wilayah, CompCode, filter, PaymentDate, out filename);
 
                 link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
 
@@ -261,21 +319,46 @@ namespace MVC_SYSTEM.Controllers
 
             ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
 
+            //List<SelectListItem> CompCodeList = new List<SelectListItem>();
+            //CompCodeList = new SelectList(
+            //    dbC.tblOptionConfigsWebs
+            //        .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+            //        .OrderBy(o => o.fldOptConfDesc)
+            //        .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+            //    "Value", "Text").ToList();
+            //CompCodeList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
+            //ViewBag.CompCodeList = CompCodeList;
+
+            //List<SelectListItem> WilayahList = new List<SelectListItem>();
+            //WilayahList = new SelectList(dbC.tbl_Wilayah.Where(x => x.fld_Deleted == false && x.fld_SyarikatID == SyarikatID)
+            //    .OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
+            //WilayahList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
+            //ViewBag.WilayahList = WilayahList;
+
+
             List<SelectListItem> CompCodeList = new List<SelectListItem>();
-            CompCodeList = new SelectList(
-                dbC.tblOptionConfigsWebs
-                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                    .OrderBy(o => o.fldOptConfDesc)
-                    .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
-                "Value", "Text").ToList();
+            List<SelectListItem> WilayahList = new List<SelectListItem>();
+            if (WilayahID == 0 && LadangID == 0)
+            {
+                WilayahList = new SelectList(
+                db.tbl_Wilayah
+                    .Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).OrderBy(o => o.fld_WlyhName)
+                    .Select(
+                        s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
+
+                CompCodeList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == 1 && x.fld_NegaraID == 1).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            }
+            else
+            {
+                WilayahList = new SelectList(db.tbl_Wilayah.Where(x => x.fld_ID == WilayahID), "fld_ID", "fld_WlyhName").ToList();
+                CompCodeList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == 1 && x.fld_NegaraID == 1).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+            }
             CompCodeList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
             ViewBag.CompCodeList = CompCodeList;
 
-            List<SelectListItem> WilayahList = new List<SelectListItem>();
-            WilayahList = new SelectList(dbC.tbl_Wilayah.Where(x => x.fld_Deleted == false && x.fld_SyarikatID == SyarikatID)
-                .OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
             WilayahList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
             ViewBag.WilayahList = WilayahList;
+
 
             ViewBag.UserID = getuserid;
             //dbC.Dispose();
@@ -344,9 +427,9 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Print = print;
             //ViewBag.WilayahName = WilayahName;
             ViewBag.Description = "Wilayah " + WilayahName + " - Salary payment for " + MonthList + "/" + YearList;
-            if (MonthList == null && YearList == null)
+            if (MonthList == null || YearList == null || CompCodeList == "0" || WilayahList == 0)
             {
-                ViewBag.Message = "Sila pilih Bulan, Tahun, Syarikat dan Wilayah";
+                ViewBag.Message = "Sila pilih Bulan, Tahun, Syarikat, Wilayah dan Tarikh Bayaran";
                 return View(maybankrcmsList);
             }
             else
@@ -525,5 +608,43 @@ namespace MVC_SYSTEM.Controllers
 
             return Json(workerList);
         }
+
+        public JsonResult GetWilayah(string SyarikatID)
+        {
+            List<SelectListItem> wilayahlist = new List<SelectListItem>();
+            //List<SelectListItem> ladanglist = new List<SelectListItem>();
+
+            int? NegaraID = 0;
+            int? SyarikatID2 = 0;
+            int? WilayahID = 0;
+            int? LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID2, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            var syarikatCodeId = dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fldOptConfValue == SyarikatID.ToString() && x.fld_NegaraID == NegaraID).Select(x => x.fld_SyarikatID).FirstOrDefault();
+            int SyarikatCode = Convert.ToInt16(syarikatCodeId);
+
+            if (getWilayah.GetAvailableWilayah(SyarikatCode))
+            {
+                if (WilayahID == 0)
+                {
+                    //dapatkan ladang filter by costcenter
+                    var listladang2 = db.tbl_Ladang.Where(x => x.fld_CostCentre == SyarikatID && x.fld_SyarikatID == SyarikatCode && x.fld_Deleted == false).Select(x => x.fld_WlyhID).ToList();
+                    var listwilayah1 = db.tbl_Wilayah.Where(x => x.fld_Deleted == false && listladang2.Contains(x.fld_ID)).ToList();
+                    wilayahlist = new SelectList(listwilayah1.OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
+                    wilayahlist.Insert(0, (new SelectListItem { Text = @GlobalResCorp.lblChoose, Value = "0" }));
+                    //ladanglist.Insert(0, (new SelectListItem { Text = @GlobalResCorp.lblChoose, Value = "0" }));
+                }
+                else
+                {
+                    wilayahlist = new SelectList(db.tbl_Wilayah.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID2 && x.fld_ID == WilayahID && x.fld_Deleted == false).OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
+                    wilayahlist.Insert(0, (new SelectListItem { Text = @GlobalResCorp.lblChoose, Value = "0" })); 
+                    //ladanglist.Insert(0, (new SelectListItem { Text = @GlobalResCorp.lblChoose, Value = "0" }));
+                }
+            }
+
+            return Json(wilayahlist);
+        }
+
     }
 }

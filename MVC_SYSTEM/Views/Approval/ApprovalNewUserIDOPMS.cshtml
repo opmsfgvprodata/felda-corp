@@ -32,7 +32,7 @@
                 </div>
                 @*fatin added - 17/07/2023*@
                 <div class="col-sm-2">
-                    <label>Kod Syarikat</label>
+                    <label>Syarikat</label>
                     @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 @*end*@
@@ -93,6 +93,35 @@
 }
 <script>
     $(document).ready(function () {
+
+         //fatin added - 11/10/2023
+         $("#SyarikatList").change(function () {
+            debugger
+            var SyarikatList = {};
+            var disableoption = "";
+            SyarikatList.url = "@Url.Action("GetWilayah", "Approval")";
+            SyarikatList.type = "POST";
+            SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+            SyarikatList.datatype = "json";
+            SyarikatList.contentType = "application/json";
+            SyarikatList.success = function (wilayahlist) {
+                $("#WilayahIDList").empty();
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#SyarikatList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+
+            };
+
+            SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(SyarikatList);
+         });
+        //end
+
         $("#WilayahIDList").change(function () {
             var WilayahIDList = {};
             var disableoption = "";

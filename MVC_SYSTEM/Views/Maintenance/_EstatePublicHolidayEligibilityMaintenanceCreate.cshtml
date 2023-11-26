@@ -26,6 +26,15 @@
                                 @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        @*fatin added - 07/08/2023*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Syarikat:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.SyarikatList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*end*@
                         <div class="form-group">
                             <label class="control-label col-sm-2">@GlobalResCorp.lblRegion:</label>
                             <div class="col-sm-9">
@@ -117,9 +126,9 @@
         else {
 
             var WilayahList = {};
-            WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+            WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin modified GetLadang to GetLadang2 - 07/08/2023
             WilayahList.type = "POST";
-            WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+            WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), SyarikatList: $("#fld_SyarikatID").val() }); //fatin modified add SyarikatList - 07/08/2023
             WilayahList.datatype = "json";
             WilayahList.contentType = "application/json";
             WilayahList.success = function (ladanglist) {

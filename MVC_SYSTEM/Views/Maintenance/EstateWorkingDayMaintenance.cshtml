@@ -25,6 +25,12 @@
         {
             @Html.AntiForgeryToken()
         <div class="row">
+            @*fatin added - 05/08/2023*@
+            <div class="col-sm-2">
+                <label>Syarikat</label>
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            @*end*@
             <div class="col-sm-3">
                 @Html.Label(GlobalResCorp.lblRegion)
                 @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
@@ -84,6 +90,34 @@
         document.getElementById('btnCari').click();
     }
 
+      //fatin added - 29/09/2023
+        $("#SyarikatList").change(function () {
+            debugger
+            var SyarikatList = {};
+            var disableoption = "";
+            SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+            SyarikatList.type = "POST";
+            SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+            SyarikatList.datatype = "json";
+            SyarikatList.contentType = "application/json";
+            SyarikatList.success = function (wilayahlist) {
+                $("#WilayahList").empty();
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#SyarikatList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+
+                };
+
+            SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(SyarikatList);
+        });
+        //end
+
     $("#WilayahList").change(function () {
         if ($("#WilayahList").val() === "") {
             $("#LadangList").empty();
@@ -94,14 +128,17 @@
         else {
 
             var WilayahList = {};
-            WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+            @*WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";*@
+            WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin added - 05/08/2023
             WilayahList.type = "POST";
-            WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            /*WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });*/
+            WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() }); //fatin added - 05/08/2023
             WilayahList.datatype = "json";
             WilayahList.contentType = "application/json";
             WilayahList.success = function (ladanglist) {
 
                 $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResCorp.lblChoose</option>"); //fatin added - 29/09/2023
 
                 if (ladanglist.length === 0) {
                     $("#LadangList").append("<option value=" +
@@ -118,11 +155,11 @@
                         $("#LadangList").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
                     }
                 }
-                
+
             };
             WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahList);
-        }        
+        }
     });
 </script>
 

@@ -33,6 +33,13 @@
                 @Html.Label(GlobalResCorp.lblYear)
                 @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
             </div>
+            @*yana add 030823*@
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("SyarikatList", (SelectList)null, "Sila Pilih", htmlAttributes: new { @class = "form-control" })*@
+            </div>
+            @*end here 030823*@
             <div class="col-sm-2">
                 @Html.Label(GlobalResCorp.lblRegion)
                 @Html.DropDownList("WlyhList", null, htmlAttributes: new { @class = "form-control" })
@@ -89,12 +96,42 @@
     //}
 
     $(document).ready(function () {
+
+        //fatin added - 26/10/2023
+         $("#SyarikatList").change(function () {
+            debugger
+            var SyarikatList = {};
+            var disableoption = "";
+            SyarikatList.url = "@Url.Action("GetWilayah", "UnblockCheckroll")";
+            SyarikatList.type = "POST";
+             SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+            SyarikatList.datatype = "json";
+            SyarikatList.contentType = "application/json";
+            SyarikatList.success = function (wilayahlist) {
+                $("#WlyhList").empty();
+                $("#EstList").empty();
+                $("#EstList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+                for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#SyarikatList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WlyhList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+
+             };
+
+            SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(SyarikatList);
+         });
+        //end
+
         $("#WlyhList").change(function () {
             var Wlyhlist = {};
             var disableoption = "";
-            Wlyhlist.url = "@Url.Action("GetSubEst", "UnblockCheckroll")";
+            Wlyhlist.url = "@Url.Action("GetSubEst2", "UnblockCheckroll")";
             Wlyhlist.type = "POST";
-            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val() });
+            @* yana update 030823 - add SyarikatList: $("#SyarikatList").val() *@
+            Wlyhlist.data = JSON.stringify({ WilayahID: $("#WlyhList").val(), SyarikatList: $("#SyarikatList").val() });
             Wlyhlist.datatype = "json";
             Wlyhlist.contentType = "application/json";
             Wlyhlist.success = function (result) {
@@ -114,9 +151,9 @@
         if ($("#WlyhList").val() == 1) {
             var Wlyhlist = {};
             var disableoption = "";
-            Wlyhlist.url = "@Url.Action("GetSubEst", "UnblockCheckroll")";
+            Wlyhlist.url = "@Url.Action("GetSubEst2", "UnblockCheckroll")";
             Wlyhlist.type = "POST";
-            Wlyhlist.data = JSON.stringify({ Wlyh: $("#WlyhList").val() });
+            Wlyhlist.data = JSON.stringify({ WilayahID: $("#WlyhList").val() });
             Wlyhlist.datatype = "json";
             Wlyhlist.contentType = "application/json";
             Wlyhlist.success = function (result) {

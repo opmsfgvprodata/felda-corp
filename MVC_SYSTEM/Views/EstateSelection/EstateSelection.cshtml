@@ -9,6 +9,12 @@
     <div class="modal-body">
         <div class="form-horizontal">
             <div class="form-group">
+                @*yana add 030823*@
+                <div class="col-md-12">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", (SelectList)null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*end here 030823*@
                 <div class="col-md-12">
                     @Html.Label("Wilayah")
                     @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
@@ -55,7 +61,9 @@
             var disableoption = "";
             WilayahIDList.url = "@Url.Action("GetLadang", "EstateSelection")";
             WilayahIDList.type = "POST";
-            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            // yana update 030823 - add SyarikatList: $("#SyarikatList").val()
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatList: $("#SyarikatList").val() });
+            // end here 030823
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {

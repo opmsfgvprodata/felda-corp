@@ -29,5 +29,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         public short? fld_Tahun { get; set; }
 
         public int? bilangan_cuti { get; set; }
+
+        //fatin added - 04/08/2023
+        [StringLength(50)]
+        public string fld_CostCentre { get; set; }
     }
 }

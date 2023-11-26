@@ -62,6 +62,6 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<int> fld_others { get; set; }
         public Nullable<int> fld_TKPH { get; set; }
         public Nullable<int> fld_TKPHS { get; set; }
-        public string fld_CostCentre { get; set; }
+        public string fld_CompCode { get; set; }
     }
 }
