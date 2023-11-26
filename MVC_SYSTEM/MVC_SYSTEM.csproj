@@ -1065,10 +1065,10 @@
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
+    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsSP\sp_MaybankTNG_Result.cs">
+    <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_MaybankTNG_Result.cs">
@@ -1087,9 +1087,6 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptGajiMinima_Result.cs">
-      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelsSP\sp_RptGajiMinima_test_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
