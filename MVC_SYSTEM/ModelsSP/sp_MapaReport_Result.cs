@@ -11,7 +11,7 @@ namespace MVC_SYSTEM.ModelsSP
 {
     using System;
     
-    public partial class sp_PaymentModeReport_Result
+    public partial class sp_MapaReport_Result
     {
         public System.Guid fld_Id { get; set; }
         public string fld_LdgCode { get; set; }
