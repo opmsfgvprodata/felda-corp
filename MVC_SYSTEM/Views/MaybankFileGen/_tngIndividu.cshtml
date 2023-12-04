@@ -1,7 +1,7 @@
 ﻿
 @using MVC_SYSTEM.Class
 @using MVC_SYSTEM.Models
-@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_MaybankRcms_Result>
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_MaybankTNG_Result>
 
 
 @{
@@ -15,7 +15,7 @@
     string passport = "";
     string paymentmode = "";
     string clientid = "";
-    string uniquefilename = "M2E BURUH (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.WilayahName + " " + ViewBag.MonthList + ViewBag.YearList;
+    string uniquefilename = "TNG BURUH (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.WilayahName + " " + ViewBag.MonthList + ViewBag.YearList;
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -32,7 +32,7 @@
                         <br />
                         (@GlobalResCorp.lblCompanyNo : @ViewBag.NoSyarikat)
                         <br />
-                        LAPORAN BAYARAN MELALUI M2E @ViewBag.MonthList/@ViewBag.YearList
+                        LAPORAN BAYARAN MELALUI EWALLET TOUCH N GO @ViewBag.MonthList/@ViewBag.YearList
                         <br />
                         WILAYAH @ViewBag.WilayahName
                         <br />
@@ -97,9 +97,9 @@
                         passport = item.fld_Nokp;
                     }
 
-                    if (item.fld_PaymentMode == "6")
+                    if (item.fld_PaymentMode == "7")
                     {
-                        paymentmode = "M2E-HQ";
+                        paymentmode = "eWallet TnG";
                     }
                     else
                     {
@@ -225,7 +225,7 @@
             var PaymentDate = $("#PaymentDate").val();
             $("#UpdateProgress1").css("display", "");
             var ajxfn = {};
-            ajxfn.url = "@Url.Action("DownloadText", "MaybankFileGen")";
+            ajxfn.url = "@Url.Action("DownloadTextTNG", "MaybankFileGen")";
             ajxfn.type = "POST";
             ajxfn.async = false;
             ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode, Wilayah: Wilayah, filter: filter, WorkerId: WorkerId, PaymentDate: PaymentDate});

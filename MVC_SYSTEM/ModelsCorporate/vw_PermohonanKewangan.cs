@@ -63,6 +63,7 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [Column(TypeName = "numeric")]
         public decimal? fld_JumlahCdmas { get; set; }
+
         //end
         public int? fld_TolakWil_By { get; set; }
 
@@ -138,6 +139,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(50)]
         public string fld_CostCentre { get; set; }
 
+        //Added by Shazana 30/10/2023
+        [Column(TypeName = "numeric")]
+        public decimal? fld_JumlahEwalletTnG { get; set; }
 
     }
 }

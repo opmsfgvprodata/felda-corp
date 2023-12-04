@@ -1054,6 +1054,9 @@
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MaybankTNG_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MyegDetail_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3659,6 +3662,10 @@
     <Content Include="Views\Maintenance\_MaklumatSyarikat.cshtml" />
     <Content Include="Views\Maintenance\_MaklumatSyarikatEdit.cshtml" />
     <Content Include="Views\Maintenance\MaklumatSyarikat.cshtml" />
+    <Content Include="Views\MaybankFileGen\TngGen.cshtml" />
+    <Content Include="Views\MaybankFileGen\TngGenIndividu.cshtml" />
+    <Content Include="Views\MaybankFileGen\_tng.cshtml" />
+    <Content Include="Views\MaybankFileGen\_tngIndividu.cshtml" />
     <Content Include="Views\Report\PermohonanPekerjaBaruReport.cshtml" />
     <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
   </ItemGroup>
