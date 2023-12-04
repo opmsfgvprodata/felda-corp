@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResReport {
@@ -70,6 +70,87 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Syarikat.
+        /// </summary>
+        public static string hdrCmpnyNo {
+            get {
+                return ResourceManager.GetString("hdrCmpnyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bil.
+        /// </summary>
+        public static string hdrNo {
+            get {
+                return ResourceManager.GetString("hdrNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DILULUSKAN.
+        /// </summary>
+        public static string lblDiluluskan {
+            get {
+                return ResourceManager.GetString("lblDiluluskan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DILULUSKAN OLEH.
+        /// </summary>
+        public static string lblDiluluskanOleh {
+            get {
+                return ResourceManager.GetString("lblDiluluskanOleh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JENIS PEKERJAAN.
+        /// </summary>
+        public static string lblJnsPkerjaan {
+            get {
+                return ResourceManager.GetString("lblJnsPkerjaan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ladang.
+        /// </summary>
+        public static string lblLadang {
+            get {
+                return ResourceManager.GetString("lblLadang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bulan.
+        /// </summary>
+        public static string lblMonth {
+            get {
+                return ResourceManager.GetString("lblMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NAMA BATCH.
+        /// </summary>
+        public static string lblNamaBatch {
+            get {
+                return ResourceManager.GetString("lblNamaBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAPORAN PERMOHONAN PEKERJA BARU.
+        /// </summary>
+        public static string lblPermPekBarReport {
+            get {
+                return ResourceManager.GetString("lblPermPekBarReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senarai Laporan.
         /// </summary>
         public static string lblReportList {
@@ -79,11 +160,110 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEBAB KEMASUKAN.
+        /// </summary>
+        public static string lblSbbMasuk {
+            get {
+                return ResourceManager.GetString("lblSbbMasuk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEMUA.
+        /// </summary>
+        public static string lblSemua {
+            get {
+                return ResourceManager.GetString("lblSemua", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string lblStatus {
+            get {
+                return ResourceManager.GetString("lblStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STATUS PERMOHONAN.
+        /// </summary>
+        public static string lblStatusPerm {
+            get {
+                return ResourceManager.GetString("lblStatusPerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARIKH PERMOHONAN KE HQ.
+        /// </summary>
+        public static string lblTarikhHq {
+            get {
+                return ResourceManager.GetString("lblTarikhHq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARIKH SAMPAI KLIA/TARIKH LANTIKAN.
+        /// </summary>
+        public static string lblTarikhKLIA {
+            get {
+                return ResourceManager.GetString("lblTarikhKLIA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARIKH KELULUSAN.
+        /// </summary>
+        public static string lblTarikhLulus {
+            get {
+                return ResourceManager.GetString("lblTarikhLulus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TIDAK DILULUSKAN.
+        /// </summary>
+        public static string lblTdkDiluluskan {
+            get {
+                return ResourceManager.GetString("lblTdkDiluluskan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Laporan.
         /// </summary>
         public static string lblTitle {
             get {
                 return ResourceManager.GetString("lblTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WARGANEGARA.
+        /// </summary>
+        public static string lblWarganegara {
+            get {
+                return ResourceManager.GetString("lblWarganegara", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wilayah.
+        /// </summary>
+        public static string lblWilayah {
+            get {
+                return ResourceManager.GetString("lblWilayah", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tahun.
+        /// </summary>
+        public static string lblYear {
+            get {
+                return ResourceManager.GetString("lblYear", resourceCulture);
             }
         }
         
