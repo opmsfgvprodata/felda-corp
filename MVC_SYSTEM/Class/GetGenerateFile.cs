@@ -808,7 +808,16 @@ namespace MVC_SYSTEM.Class
                             }
                             else if (i == 137) //138
                             {
-                                Body.Insert(i, "MY|");
+                                ResidentIInd = maybankrcms.fld_Kdrkyt == "MA" ? "Y" : "N";
+                                Body.Insert(i, ResidentIInd + "|");
+                            }
+                            else if (i == 138) //139
+                            {
+                                Body.Insert(i, maybankrcms.fld_Kdrkytbank + "|");
+                            }
+                            else if (i == 139) //140
+                            {
+                                Body.Insert(i, "02|");
                             }
                             else if (i == 187) //188
                             {

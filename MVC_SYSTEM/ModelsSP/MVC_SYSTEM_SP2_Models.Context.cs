@@ -545,39 +545,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptMakPekTem_Result>("sp_RptMakPekTem", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, userIDParameter, costCentreParameter);
         }
     
-        public virtual IEnumerable<sp_MaybankTNG_Result> sp_MaybankTNG(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var wilayahIDParameter = wilayahID.HasValue ?
-                new ObjectParameter("WilayahID", wilayahID) :
-                new ObjectParameter("WilayahID", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var compCodeParameter = compCode != null ?
-                new ObjectParameter("CompCode", compCode) :
-                new ObjectParameter("CompCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankTNG_Result>("sp_MaybankTNG", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
-        }
-    
         public virtual IEnumerable<sp_PaymentModeReport_Result> sp_PaymentModeReport(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -613,6 +580,76 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("CompCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PaymentModeReport_Result>("sp_PaymentModeReport", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+        }
+    
+        public virtual IEnumerable<sp_MapaReport_Result> sp_MapaReport(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var ladangIDParameter = ladangID.HasValue ?
+                new ObjectParameter("LadangID", ladangID) :
+                new ObjectParameter("LadangID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MapaReport_Result>("sp_MapaReport", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+        }
+    
+        public virtual IEnumerable<sp_MaybankTNG_Result> sp_MaybankTNG(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankTNG_Result>("sp_MaybankTNG", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     }
 }
