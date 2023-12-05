@@ -815,10 +815,6 @@ namespace MVC_SYSTEM.Class
                             {
                                 Body.Insert(i, maybankrcms.fld_Kdrkytbank + "|");
                             }
-                            else if (i == 139) //140
-                            {
-                                Body.Insert(i, "02|");
-                            }
                             else if (i == 187) //188
                             {
                                 Body.Insert(i, "FT|");
