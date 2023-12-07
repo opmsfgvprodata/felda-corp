@@ -120,11 +120,65 @@
   <data name="btnViewReport" xml:space="preserve">
     <value>View Report</value>
   </data>
+  <data name="lbIDPengguna" xml:space="preserve">
+    <value>USER ID</value>
+  </data>
+  <data name="lblDiluluskan" xml:space="preserve">
+    <value>APPROVED</value>
+  </data>
+  <data name="lblDiluluskanOleh" xml:space="preserve">
+    <value>APPROVED BY</value>
+  </data>
+  <data name="lblLadang" xml:space="preserve">
+    <value>Estate</value>
+  </data>
+  <data name="lblMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="lblNama" xml:space="preserve">
+    <value>NAME</value>
+  </data>
+  <data name="lblNamaFail" xml:space="preserve">
+    <value>FILE NAME</value>
+  </data>
+  <data name="lblNamaLadang" xml:space="preserve">
+    <value>ESTATE </value>
+  </data>
+  <data name="lblPermIDPenBarReport" xml:space="preserve">
+    <value>NEW USER APPLICATION REPORT</value>
+  </data>
   <data name="lblReportList" xml:space="preserve">
     <value>Reports List</value>
   </data>
+  <data name="lblReportList1" xml:space="preserve">
+    <value>Report Registration</value>
+  </data>
+  <data name="lblRole" xml:space="preserve">
+    <value>ROLE</value>
+  </data>
+  <data name="lblSemua" xml:space="preserve">
+    <value>ALL</value>
+  </data>
+  <data name="lblStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblStatusKelulusan" xml:space="preserve">
+    <value>APPROVAL STATUS</value>
+  </data>
+  <data name="lblTahun" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="lblTarikhKelulusan" xml:space="preserve">
+    <value>APPROVAL DATE</value>
+  </data>
+  <data name="lblTarikhPermohonan" xml:space="preserve">
+    <value>APPLICATION DATE</value>
+  </data>
   <data name="lblTitle" xml:space="preserve">
     <value>Reports</value>
+  </data>
+  <data name="lblWilayah" xml:space="preserve">
+    <value>Region</value>
   </data>
   <data name="sltAll" xml:space="preserve">
     <value>ALL</value>

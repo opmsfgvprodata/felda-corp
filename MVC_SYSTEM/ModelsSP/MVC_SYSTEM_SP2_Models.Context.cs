@@ -6,7 +6,6 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
 namespace MVC_SYSTEM.ModelsSP
 {
     using System;
@@ -650,6 +649,43 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("CompCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankTNG_Result>("sp_MaybankTNG", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+        }
+    
+        public virtual IEnumerable<sp_RptPermohonanIDPenggunaBaruReport_Result> sp_RptPermohonanIDPenggunaBaruReport(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, Nullable<int> statusApproved, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var ladangIDParameter = ladangID.HasValue ?
+                new ObjectParameter("LadangID", ladangID) :
+                new ObjectParameter("LadangID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var statusApprovedParameter = statusApproved.HasValue ?
+                new ObjectParameter("StatusApproved", statusApproved) :
+                new ObjectParameter("StatusApproved", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptPermohonanIDPenggunaBaruReport_Result>("sp_RptPermohonanIDPenggunaBaruReport", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, statusApprovedParameter, compCodeParameter);
         }
     }
 }

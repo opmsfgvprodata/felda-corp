@@ -160,6 +160,16 @@
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_RptPermohonanIDPenggunaBaruReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="StatusApproved" Type="int" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_RptRumKedKepPekLad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
           <Parameter Name="SyarikatID" Type="int" Mode="In" />
@@ -353,6 +363,16 @@
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptPermohonanIDPenggunaBaruReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptPermohonanIDPenggunaBaruReport_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="StatusApproved" Mode="In" Type="Int32" />
             <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -825,6 +845,23 @@
           <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="fld_Kdrkytbank" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_RptPermohonanIDPenggunaBaruReport_Result">
+          <Property Type="Int32" Name="fld_ID" Nullable="false" />
+          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="fldUserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fldNama" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="fldRoleName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="fldTarikh" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="fldDateTimeApprove" Nullable="true" Precision="23" />
+          <Property Type="String" Name="fldStatus" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fldFileName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fldActionBy" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1392,6 +1429,27 @@
                 <ScalarProperty Name="fld_PaymentMode" ColumnName="fld_PaymentMode" />
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
                 <ScalarProperty Name="fld_Kdrkytbank" ColumnName="fld_Kdrkytbank" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptPermohonanIDPenggunaBaruReport" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptPermohonanIDPenggunaBaruReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptPermohonanIDPenggunaBaruReport_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
+                <ScalarProperty Name="fldUserName" ColumnName="fldUserName" />
+                <ScalarProperty Name="fldNama" ColumnName="fldNama" />
+                <ScalarProperty Name="fldRoleName" ColumnName="fldRoleName" />
+                <ScalarProperty Name="fldTarikh" ColumnName="fldTarikh" />
+                <ScalarProperty Name="fldDateTimeApprove" ColumnName="fldDateTimeApprove" />
+                <ScalarProperty Name="fldStatus" ColumnName="fldStatus" />
+                <ScalarProperty Name="fldFileName" ColumnName="fldFileName" />
+                <ScalarProperty Name="fldActionBy" ColumnName="fldActionBy" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
