@@ -3666,6 +3666,9 @@
     <Content Include="Views\MaybankFileGen\TngGenIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\_tng.cshtml" />
     <Content Include="Views\MaybankFileGen\_tngIndividu.cshtml" />
+    <Content Include="Views\Maintenance\ShowAttendanceMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_ShowAttendanceMaintenanceEdit.cshtml" />
+    <Content Include="Views\Maintenance\_ShowAttendanceMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3783,4 +3783,25 @@
   <data name="titleRCMSMaybankSyarikatEdit" xml:space="preserve">
     <value>Kemaskini Maklumat RCMS Maybank Syarikat</value>
   </data>
+  <data name="lblShowAttendanceInfo" xml:space="preserve">
+    <value>Maklumat Kehadiran Pekerja Bulan Lepas</value>
+  </data>
+  <data name="lblShowAttendanceMaintenance" xml:space="preserve">
+    <value>Penyelenggaraan Paparan Kehadiran Kehadiran Bulan Lepas</value>
+  </data>
+  <data name="lblShowAttendancePeriod" xml:space="preserve">
+    <value>Tempoh Paparan Kehadiran Pekerja Bulan Lepas</value>
+  </data>
+  <data name="lblShowAttendanceUpdate" xml:space="preserve">
+    <value>Kemaskini Tempoh Paparan Kehadiran Pekerja Bulan Lepas</value>
+  </data>
+  <data name="lblBilanganHari" xml:space="preserve">
+    <value>Bilangan Hari</value>
+  </data>
+  <data name="lblMaximum" xml:space="preserve">
+    <value>Bilangan Hari Maksima</value>
+  </data>
+  <data name="lblShowAttendance" xml:space="preserve">
+    <value>Maklumat Paparan Kehadiran Pekerja Bulan Lepas</value>
+  </data>
 </root>

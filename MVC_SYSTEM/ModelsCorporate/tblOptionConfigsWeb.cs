@@ -543,6 +543,38 @@ namespace MVC_SYSTEM.ModelsCorporate
     }
 
     [Table("tblOptionConfigsWeb")]
+    public partial class tblOptionConfigsWebShowAttendanceUpdate
+    {
+        [Key]
+        public int fldOptConfID { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+        [Range(0, 30, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxSmallIntegerModelValidation1")]
+        //[RegularExpression("^[0-3][0-9]*$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
+        [StringLength(50)]
+        public string fldOptConfValue { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+        [StringLength(50)]
+        public string fldOptConfDesc { get; set; }
+
+        [StringLength(50)]
+        public string fldOptConfFlag1 { get; set; }
+
+        [StringLength(50)]
+        public string fldOptConfFlag2 { get; set; }
+
+        public bool? fldDeleted { get; set; }
+
+        [StringLength(50)]
+        public string fldOptConfFlag3 { get; set; }
+
+        public int? fld_NegaraID { get; set; }
+
+        public int? fld_SyarikatID { get; set; }
+    }
+
+    [Table("tblOptionConfigsWeb")]
     public partial class tblOptionConfigsWebBangsa
     {
         [Key]

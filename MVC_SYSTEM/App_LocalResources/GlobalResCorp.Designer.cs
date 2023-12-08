@@ -1537,6 +1537,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bilangan Hari.
+        /// </summary>
+        public static string lblBilanganHari {
+            get {
+                return ResourceManager.GetString("lblBilanganHari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bilangan Pokok.
         /// </summary>
         public static string lblBilPokok {
@@ -5974,6 +5983,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bilangan Hari Maksima.
+        /// </summary>
+        public static string lblMaximum {
+            get {
+                return ResourceManager.GetString("lblMaximum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sangat Tidak Memuaskan.
         /// </summary>
         public static string lblMin {
@@ -7752,6 +7770,51 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblSelection {
             get {
                 return ResourceManager.GetString("lblSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Paparan Kehadiran Pekerja Bulan Lepas.
+        /// </summary>
+        public static string lblShowAttendance {
+            get {
+                return ResourceManager.GetString("lblShowAttendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Kehadiran Pekerja Bulan Lepas.
+        /// </summary>
+        public static string lblShowAttendanceInfo {
+            get {
+                return ResourceManager.GetString("lblShowAttendanceInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Penyelenggaraan Paparan Kehadiran Kehadiran Bulan Lepas.
+        /// </summary>
+        public static string lblShowAttendanceMaintenance {
+            get {
+                return ResourceManager.GetString("lblShowAttendanceMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempoh Paparan Kehadiran Pekerja Bulan Lepas.
+        /// </summary>
+        public static string lblShowAttendancePeriod {
+            get {
+                return ResourceManager.GetString("lblShowAttendancePeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Tempoh Paparan Kehadiran Pekerja Bulan Lepas.
+        /// </summary>
+        public static string lblShowAttendanceUpdate {
+            get {
+                return ResourceManager.GetString("lblShowAttendanceUpdate", resourceCulture);
             }
         }
         

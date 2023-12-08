@@ -20086,6 +20086,190 @@ namespace MVC_SYSTEM.Controllers
             }
         }
 
+        public ActionResult ShowAttendanceMaintenance(string filter, int page = 1, string sort = "fldOptConfFlag1",
+           string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.Maintenance = "class = active";
+
+            return View();
+        }
+
+        public ActionResult _ShowAttendanceMaintenance(string filter, int page = 1,
+            string sort = "fldOptConfFlag1",
+            string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            var records = new PagedList<ModelsCorporate.tblOptionConfigsWeb>();
+            int role = GetIdentity.RoleID(getuserid).Value;
+
+            var unitData = db.tblOptionConfigsWebs
+                .Where(x => x.fldOptConfFlag1 == "DateToShowLastMonth" &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID);
+
+            if (!String.IsNullOrEmpty(filter))
+            {
+                records.Content = unitData
+                    .Where(x => x.fldOptConfDesc.ToUpper().Contains(filter.ToUpper()) ||
+                                x.fldOptConfValue.ToUpper().Contains(filter.ToUpper()))
+                    .OrderBy(sort + " " + sortdir)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                records.TotalRecords = unitData
+                    .Count(x => x.fldOptConfDesc.ToUpper().Contains(filter.ToUpper()) ||
+                                x.fldOptConfValue.ToUpper().Contains(filter.ToUpper()));
+
+
+            }
+
+            else
+            {
+                records.Content = unitData.OrderBy(sort + " " + sortdir)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                records.TotalRecords = unitData
+                    .Count();
+            }
+
+            records.CurrentPage = page;
+            records.PageSize = pageSize;
+            ViewBag.RoleID = role;
+            ViewBag.pageSize = 1;
+
+            return View(records);
+        }
+
+        public ActionResult _ShowAttendanceMaintenanceEdit(int id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            var unitData = db.tblOptionConfigsWebs.SingleOrDefault(
+                x => x.fldOptConfID == id && x.fldOptConfFlag1 == "DateToShowLastMonth" &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID);
+
+            tblOptionConfigsWebShowAttendanceUpdate unitViewModel = new tblOptionConfigsWebShowAttendanceUpdate();
+
+            PropertyCopy.Copy(unitViewModel, unitData);
+
+            return View(unitViewModel);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ShowAttendanceMaintenanceEdit(ModelsCorporate.tblOptionConfigsWebShowAttendanceUpdate optionConfigsWeb)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var unitData = db.tblOptionConfigsWebs.SingleOrDefault(
+                        x => x.fldOptConfID == optionConfigsWeb.fldOptConfID && x.fldOptConfFlag1 == "DateToShowLastMonth" &&
+                             x.fld_NegaraID == NegaraID &&
+                             x.fld_SyarikatID == SyarikatID);
+
+
+                    int no = Convert.ToInt32(unitData.fldOptConfValue);
+                    int max = Convert.ToInt32(unitData.fldOptConfFlag2);
+
+                    if (no > max)
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            msg = GlobalResCorp.lblError,
+                            status = "danger",
+                            checkingdata = "0"
+                        });
+                    }
+
+                    else
+                    {
+
+                        unitData.fldOptConfValue = optionConfigsWeb.fldOptConfValue.ToUpper();
+                        unitData.fldOptConfDesc = GetConfig.UppercaseFirst(optionConfigsWeb.fldOptConfDesc);
+
+                        db.SaveChanges();
+
+                        string appname = Request.ApplicationPath;
+                        string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                        var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                        if (appname != "/")
+                        {
+                            domain = domain + appname;
+                        }
+
+                        return Json(new
+                        {
+                            success = true,
+                            msg = GlobalResCorp.msgUpdate,
+                            status = "success",
+                            checkingdata = "0",
+                            method = "1",
+                            div = "ShowAttendanceMaintenanceDetails",
+                            rootUrl = domain,
+                            action = "_ShowAttendanceMaintenance",
+                            controller = "Maintenance"
+                        });
+                    }
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResCorp.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
         public ActionResult BangsaMaintenance(string filter, int page = 1, string sort = "fldOptConfFlag1",
             string sortdir = "ASC")
         {
