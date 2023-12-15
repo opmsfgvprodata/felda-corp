@@ -12751,6 +12751,7 @@ namespace MVC_SYSTEM.Controllers
                                 CustomerVendorGLMap.fld_JnsLot = lot;
                                 CustomerVendorGLMap.fld_Paysheet = paysheet;
                                 CustomerVendorGLMap.fld_StatusTnmn = staTanaman;
+                                CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
 
                                 db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
                                 db.SaveChanges();
@@ -12772,6 +12773,7 @@ namespace MVC_SYSTEM.Controllers
                                 CustomerVendorGLMap.fld_JnsLot = lot;
                                 CustomerVendorGLMap.fld_Paysheet = paysheet;
                                 CustomerVendorGLMap.fld_StatusTnmn = staTanaman;
+                                CustomerVendorGLMap.fld_compcode = fld_KodGL;  //fatin added - 05/12/2023
 
                                 db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
                                 db.SaveChanges();
@@ -12794,6 +12796,7 @@ namespace MVC_SYSTEM.Controllers
                             CustomerVendorGLMap.fld_WIlayahID = 0;
                             CustomerVendorGLMap.fld_LadangID = 0;
                             CustomerVendorGLMap.fld_Deleted = false;
+                            CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
                             //CustomerVendorGLMap.fld_JnsLot = "";
                             //CustomerVendorGLMap.fld_Paysheet = "";
                             //CustomerVendorGLMap.fld_StatusTnmn = "";
@@ -12815,6 +12818,7 @@ namespace MVC_SYSTEM.Controllers
                             CustomerVendorGLMap.fld_WIlayahID = 0;
                             CustomerVendorGLMap.fld_LadangID = 0;
                             CustomerVendorGLMap.fld_Deleted = false;
+                            CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
                             //CustomerVendorGLMap.fld_JnsLot = "";
                             //CustomerVendorGLMap.fld_Paysheet = "";
                             //CustomerVendorGLMap.fld_StatusTnmn = "";
@@ -12970,7 +12974,7 @@ namespace MVC_SYSTEM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult _IncentiveMaintenanceEdit(ModelsCorporate.tbl_JenisInsentif jenisInsentif)
+        public ActionResult _IncentiveMaintenanceEdit(ModelsCorporate.tbl_JenisInsentif jenisInsentif, ModelsCorporate.tbl_CustomerVendorGLMap CustomerVendorGLMap)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -12999,6 +13003,17 @@ namespace MVC_SYSTEM.Controllers
                     incentiveCategoryData.fld_KelayakanKepada = jenisInsentif.fld_KelayakanKepada;
 
                     db.SaveChanges();
+                    
+                    //fatin added - 13/12/2023
+                    var CVGLMap = db.tbl_CustomerVendorGLMap.Where(x => x.fld_KodAktiviti == jenisInsentif.fld_KodAktvt && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).ToList(); ;
+
+                    foreach (var kodGL in CVGLMap)
+                    {
+                        kodGL.fld_compcode = jenisInsentif.fld_KodGL;
+
+                        db.Entry(kodGL).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
 
                     string appname = Request.ApplicationPath;
                     string domain = Request.Url.GetLeftPart(UriPartial.Authority);
