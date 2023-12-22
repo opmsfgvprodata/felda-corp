@@ -824,6 +824,7 @@
           <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_Kdrkytbank" Nullable="true" MaxLength="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1390,6 +1391,7 @@
                 <ScalarProperty Name="fld_Kdrkyt" ColumnName="fld_Kdrkyt" />
                 <ScalarProperty Name="fld_PaymentMode" ColumnName="fld_PaymentMode" />
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_Kdrkytbank" ColumnName="fld_Kdrkytbank" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
