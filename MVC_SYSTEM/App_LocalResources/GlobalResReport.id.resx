@@ -120,11 +120,71 @@
   <data name="btnViewReport" xml:space="preserve">
     <value>Lihat Laporan</value>
   </data>
+  <data name="hdrCmpnyNo" xml:space="preserve">
+    <value>No. Syarikat</value>
+  </data>
+  <data name="hdrNo" xml:space="preserve">
+    <value>Bil</value>
+  </data>
+  <data name="lblDiluluskan" xml:space="preserve">
+    <value>DILULUSKAN</value>
+  </data>
+  <data name="lblDiluluskanOleh" xml:space="preserve">
+    <value>DILULUSKAN OLEH</value>
+  </data>
+  <data name="lblJnsPkerjaan" xml:space="preserve">
+    <value>JENIS PEKERJAAN</value>
+  </data>
+  <data name="lblLadang" xml:space="preserve">
+    <value>Ladang</value>
+  </data>
+  <data name="lblMonth" xml:space="preserve">
+    <value>Bulan</value>
+  </data>
+  <data name="lblNamaBatch" xml:space="preserve">
+    <value>NAMA BATCH</value>
+  </data>
+  <data name="lblPermPekBarReport" xml:space="preserve">
+    <value>LAPORAN PERMOHONAN PEKERJA BARU</value>
+  </data>
   <data name="lblReportList" xml:space="preserve">
     <value>Daftar Laporan</value>
   </data>
+  <data name="lblSbbMasuk" xml:space="preserve">
+    <value>SEBAB KEMASUKAN</value>
+  </data>
+  <data name="lblSemua" xml:space="preserve">
+    <value>SEMUA</value>
+  </data>
+  <data name="lblStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblStatusPerm" xml:space="preserve">
+    <value>STATUS PERMOHONAN</value>
+  </data>
+  <data name="lblTarikhHq" xml:space="preserve">
+    <value>TARIKH PERMOHONAN KE HQ</value>
+  </data>
+  <data name="lblTarikhKLIA" xml:space="preserve">
+    <value>TARIKH SAMPAI KLIA/TARIKH LANTIKAN</value>
+  </data>
+  <data name="lblTarikhLulus" xml:space="preserve">
+    <value>TARIKH KELULUSAN</value>
+  </data>
+  <data name="lblTdkDiluluskan" xml:space="preserve">
+    <value>TIDAK DILULUSKAN</value>
+  </data>
   <data name="lblTitle" xml:space="preserve">
     <value>Laporan</value>
+  </data>
+  <data name="lblWarganegara" xml:space="preserve">
+    <value>WARGANEGARA</value>
+  </data>
+  <data name="lblWilayah" xml:space="preserve">
+    <value>Wilayah</value>
+  </data>
+  <data name="lblYear" xml:space="preserve">
+    <value>Tahun</value>
   </data>
   <data name="sltActive" xml:space="preserve">
     <value>ACTIVE</value>

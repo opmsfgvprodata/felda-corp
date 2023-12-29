@@ -58,17 +58,5 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<int> fld_M2UPax { get; set; }
         public Nullable<int> fld_M2EPax { get; set; }
         public string fld_CompCode { get; set; }
-        public Nullable<decimal> fld_SocsoMjkn { get; set; }
-        public Nullable<decimal> fld_KwspMjkn { get; set; }
-        public Nullable<decimal> fld_SipMjkn { get; set; }
-        public Nullable<decimal> fld_SbkpMjkn { get; set; }
-        public string fld_AkaunMerchProj { get; set; }
-        public Nullable<int> fld_JumlahPax { get; set; }
-        public Nullable<decimal> fld_CheckRollManual { get; set; }
-        public Nullable<decimal> fld_MerchEwallet { get; set; }
-        public string fld_NoDocSAPEwallet { get; set; }
-        public Nullable<decimal> fld_CheckRollRML { get; set; }
-        public Nullable<decimal> fld_EwalletTnG { get; set; }
-        public Nullable<int> fld_EwalletTnGPax { get; set; }
     }
 }
