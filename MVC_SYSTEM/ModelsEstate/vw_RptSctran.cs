@@ -60,5 +60,7 @@ namespace MVC_SYSTEM.ModelsEstate
 
         [StringLength(10)]
         public string fld_GL { get; set; }
+
+        public string fld_CostCentre { get; set; }
     }
 }
