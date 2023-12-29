@@ -67,5 +67,10 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_KodGL { get; set; }
 
         public bool? fld_Deleted { get; set; }
+
+        //fatin added - 19/10/2023
+        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
+        public bool? fld_AdaORP { get; set; }
+        
     }
 }
