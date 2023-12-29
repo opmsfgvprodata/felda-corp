@@ -1,0 +1,195 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_WBSSAP>
+@using MVC_SYSTEM.Class
+@{
+
+    ViewBag.Title = "WBS Element";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "wbsListDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+
+    int? bil = 0;
+    GetConfig getconfig = new GetConfig();
+    ChangeTimeZone time = new ChangeTimeZone();
+    DateTime Todaydate = time.gettimezone();
+    string uniquefilename = "Master Data WBS" + ViewBag.UserID + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom"  style="padding-bottom: 16px">
+        <div class="row">
+            @using (Html.BeginForm("wbsList", "SAPMasterData", new { id = "" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-2">
+                    @Html.Label("WBS Element")
+                    @Html.TextBox("wbsCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label("Keterangan")
+                    @Html.TextBox("wbsDesc", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
+            }
+        </div>
+    </div>
+    <div id="wbsListDetails">
+        <div class="well" style="margin-top:7px;">
+            <div class="modal-body">
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">WBS ELEMENT</div>
+                    <div class="panel-body">
+                        @if (Model != null && Model.Count() != 0)
+                        {
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div id="scrollArea" class="col-sm-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod WBS</th>
+                                                <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan</th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    Tindakan Oleh
+                                                </th>
+                                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    Tarikh
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var wbsDetails in Model)
+                                            {
+                                                bil = bil + 1;
+                                                <tr @if (wbsDetails.fld_createdDate == DateTime.Today || wbsDetails.fld_updatedDate == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@wbsDetails.fld_wbsElement</td>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@wbsDetails.fld_wbsDescription </td>
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                        @if (wbsDetails.fld_updatedby == "" || wbsDetails.fld_updatedby == null)
+                                                        {
+                                                            @Html.DisplayFor(modelItem => wbsDetails.fld_createdby)
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(modelItem => wbsDetails.fld_updatedby)
+                                                        }
+
+                                                    </td>
+
+                                                    <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                        @if (wbsDetails.fld_updatedDate == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                        {
+                                                            @String.Format("{0:dd/MM/yyyy}", wbsDetails.fld_createdDate)
+                                                        }
+                                                        else
+                                                        {
+                                                            @String.Format("{0:dd/MM/yyyy}", wbsDetails.fld_updatedDate)
+                                                        }
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div id="scrollArea" class="col-sm-12">
+                                @GlobalResCorp.msgDataNotFound
+                            </div>
+                        }
+
+                        <br />
+
+                    </div>
+                </div>
+                <div class="modal-footer col-md-12">
+
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                    <a href=@Url.Action("wbsRequest", "SAPMasterData") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">New WBS</a>
+                    <a href=@Url.Action("Index", "SAPMasterData") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SAPMasterData")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>

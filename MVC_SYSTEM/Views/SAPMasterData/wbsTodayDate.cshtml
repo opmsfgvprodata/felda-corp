@@ -1,7 +1,7 @@
-﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_GLSAP>
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_WBSSAP>
 
 @{
-    ViewBag.Title = "Master Data GL";
+    ViewBag.Title = "Master Data WBS";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
 }
@@ -13,19 +13,12 @@
         </label>
     </div>
 </div>
-@*<div id='myModal1' class='modal fade in'>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id='myModalContent' data-refresh="true"></div>
-        </div>
-    </div>
-</div>*@
 
 <section class="content-wrapper main-content clear-fix">
 
     <div class="modal-body">
         <div class="form-horizontal">
-            <div class="panel panel-heading">GL SAP Inbound : @ViewBag.Date</div>
+            <div class="panel panel-heading">WBS SAP Inbound : @ViewBag.Date</div>
             <div class="panel panel-body">
                 @if (Model != null && Model.Count() != 0)
                 {
@@ -39,7 +32,7 @@
                                     <th bgcolor="#ffcc80" width="2%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
 
                                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                        GL No
+                                        Kod WBS
                                     </th>
                                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
                                         Keterangan
@@ -58,21 +51,21 @@
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
 
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                            @Html.DisplayFor(modelItem => item.fld_GLcode)
+                                            @Html.DisplayFor(modelItem => item.fld_wbsElement)
                                         </td>
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                            @Html.DisplayFor(modelItem => item.fld_Desc)
+                                            @Html.DisplayFor(modelItem => item.fld_wbsDescription)
                                         </td>
 
 
                                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                            @if (item.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                            @if (item.fld_updatedDate == Convert.ToDateTime("1900-01-01 00:00:00.000"))
                                             {
-                                                @String.Format("{0:dd/MM/yyyy}", item.fld_DTCreated.Date)
+                                                @String.Format("{0:dd/MM/yyyy}", item.fld_createdDate.Value.Date)
                                             }
                                             else
                                             {
-                                                @String.Format("{0:dd/MM/yyyy}", item.fld_DTModified.Date)
+                                                @String.Format("{0:dd/MM/yyyy}", item.fld_updatedDate.Value.Date)
                                             }
                                         </td>
                                     </tr>
@@ -89,7 +82,7 @@
                 }
             </div>
             <div class="col-sm-12" style="text-align:right;">
-                <a href="@Url.Action("glList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+                <a href="@Url.Action("wbsList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
             </div>
         </div>
     </div>
@@ -104,12 +97,12 @@
     }
 </script>
 @*<script type="text/javascript">
-    $(window).on("load", function () {
-        $('#myModalContent').load("@Url.Action("glTodayDate", "SAPMasterData", null, this.Request.Url.Scheme)", function () {
-            $('#myModal1').modal({
-                backdrop: 'static', keyboard: false
-            }, 'show');
-            return false;
-        })
-    });
-</script>*@
+        $(window).on("load", function () {
+            $('#myModalContent').load("@Url.Action("glTodayDate", "SAPMasterData", null, this.Request.Url.Scheme)", function () {
+                $('#myModal1').modal({
+                    backdrop: 'static', keyboard: false
+                }, 'show');
+                return false;
+            })
+        });
+    </script>*@

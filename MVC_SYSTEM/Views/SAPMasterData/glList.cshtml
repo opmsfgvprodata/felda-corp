@@ -1,12 +1,26 @@
 ﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_GLSAP>
-
+@using MVC_SYSTEM.Class
 @{
     ViewBag.Title = "Master Data GL";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
     int? bil = 0;
-}
+    GetConfig GetConfig = new GetConfig();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "DataGLSAP_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
 
+}
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
 <div id="UpdateProgress1" style="display:none;">
     <div class="progressTest">
         <label>
@@ -16,11 +30,15 @@
 </div>
 
 <section class="content-wrapper main-content clear-fix">
-    @using (Html.BeginForm("glList", "SAPMasterData", new { id = "" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
-            <div class="row">
+    <div class="well bottom" style="padding-bottom: 16px">
+        <div class="row">
+            @using (Html.BeginForm("glList", "SAPMasterData", new { id = "" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-2">
+                    @Html.Label("Kod Syarikat")
+                    @Html.DropDownList("CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
                 <div class="col-sm-2">
                     @Html.Label("Kod GL")
                     @Html.TextBox("GLCode", null, htmlAttributes: new { @class = "form-control" })
@@ -29,114 +47,137 @@
                     @Html.Label("Keterangan")
                     @Html.TextBox("GLDesc", null, htmlAttributes: new { @class = "form-control" })
                 </div>
-                <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                <div class="col-sm-3 btn-group" style="padding-top:24px;">
                     <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
-
                 </div>
-            </div>
-            <br />
+            }
         </div>
-    }
-    <br />
+    </div>
+    <div class="well" style="margin-top: 7px">
+        <div class="panel panel-primary">
 
-    <div class="panel panel-primary">
+            <div class="panel-heading">Data GL SAP</div>
+            <div class="panel-body">
 
-        <div class="panel-heading">Data GL SAP</div>
-        <div class="panel-body">
+                @*<div class="col-sm-12" style="text-align:right;">
+                    <a href="@Url.Action("glRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
+                </div>*@
 
-            <div class="col-sm-12" style="text-align:right;">
-                <a href="@Url.Action("glRequest", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-success glyphicon glyphicon-plus"></a>
-            </div>
+                <br />
 
-            <br />
-           
-            <div class="col-sm-12" style="text-align:center;">
-                @if (Model != null && Model.Count() != 0)
-                {
+                <div class="col-sm-12" style="text-align:center;">
+                    @if (Model != null && Model.Count() != 0)
+                    {
 
 
-                <div id="scrollArea" class="col-sm-12">
+                        <div id="scrollArea" class="col-sm-12">
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th bgcolor="#ffcc80" width="2%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
-                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                   Syarikat
-                                </th>
-                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    GL No
-                                </th>
-                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    Keterangan
-                                </th>
-                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    Tindakan Oleh
-                                </th>
-                                <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    Tarikh
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                bil = bil + 1;
-                            <tr @if (item.fld_DTCreated == DateTime.Today || item.fld_DTModified == DateTime.Today)
-                                     { <text> style="background-color:lightgrey;" </text>  }>
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                @Html.DisplayFor(modelItem => item.fld_CompanyCode)</td>
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    @Html.DisplayFor(modelItem => item.fld_GLcode)
-                                </td>
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    @Html.DisplayFor(modelItem => item.fld_Desc)
-                                </td>
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    @if (item.fld_ModifiedBy == "" || item.fld_ModifiedBy == null)
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th bgcolor="#ffcc80" width="2%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            Syarikat
+                                        </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            GL No
+                                        </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            Keterangan
+                                        </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            Tindakan Oleh
+                                        </th>
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            Tarikh
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
                                     {
-                                        @Html.DisplayFor(modelItem => item.fld_CreatedBy)
-                                    }
-                                    else
-                                    {
-                                        @Html.DisplayFor(modelItem => item.fld_ModifiedBy)
-                                    }
+                                        bil = bil + 1;
+                                        <tr @if (item.fld_DTCreated == DateTime.Today || item.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @Html.DisplayFor(modelItem => item.fld_CompanyCode)
+                                            </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @Html.DisplayFor(modelItem => item.fld_GLcode)
+                                            </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @Html.DisplayFor(modelItem => item.fld_Desc)
+                                            </td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @if (item.fld_ModifiedBy == "" || item.fld_ModifiedBy == null)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.fld_CreatedBy)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.fld_ModifiedBy)
+                                                }
 
-                                </td>
+                                            </td>
 
-                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                    @if (item.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
-                                    {
-                                        @String.Format("{0:dd/MM/yyyy}", item.fld_DTCreated.Date)
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @if (item.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", item.fld_DTCreated.Date)
+                                                }
+                                                else
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", item.fld_DTModified.Date)
+                                                }
+                                            </td>
+                                        </tr>
                                     }
-                                    else
-                                    {
-                                        @String.Format("{0:dd/MM/yyyy}", item.fld_DTModified.Date)
-                                    }
-                                </td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                </tbody>
+                            </table>
+                        </div>
 
-                }
-
-                else
-                {
-                <div id="scrollArea" class="col-sm-12">
-                    @GlobalResCorp.msgDataNotFound
-                </div>
                     }
-                    <div class="col-sm-12" style="text-align:right;">
+
+                    else
+                    {
+                        <div id="scrollArea" class="col-sm-12">
+                            @GlobalResCorp.msgDataNotFound
+                        </div>
+                    }
+                    <div></div>
+                    <br />
+                    <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
+                        @*Commented by Shazana 20/11/2023*@
+                        @*<input type="button" id="btnDisplaySearchResults" value="New GL" onclick="location.href='@Url.Action("glRequest", "SAPMasterData")'" class="btn btn-success " />*@
+                        @*Added by Shazana 20/11/2023*@
+                        <a class="btn btn-default btn-sm" href="" id="printpage">
+                            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                        </a>
+                        <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                        </a>
+                        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                        </a>
+                        <a href=@Url.Action("glRequest", "SAPMasterData") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">New GL</a>
                         <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+
                     </div>
                 </div>
-
+            </div>
         </div>
-</div>
+    </div>
 </section>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
 
 <script>
     function DisplayProgressMessage(ctl) {
@@ -144,6 +185,46 @@
         //$(".submit-progress").removeClass("hidden");
         $("#UpdateProgress1").css("display", "");
         return true;
+    }
+</script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SAPMasterData")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+<script>
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
     }
 </script>
 
