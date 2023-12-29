@@ -3783,4 +3783,7 @@
   <data name="titleRCMSMaybankSyarikatEdit" xml:space="preserve">
     <value>Kemaskini Maklumat RCMS Maybank Syarikat</value>
   </data>
+  <data name="lblIncInOrp" xml:space="preserve">
+    <value>Termasuk Dalam ORP?</value>
+  </data>
 </root>
