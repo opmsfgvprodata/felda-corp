@@ -168,24 +168,7 @@ namespace MVC_SYSTEM.App_LocalResources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to DILULUSKAN.
-        /// </summary>
-        public static string lblDiluluskan {
-            get {
-                return ResourceManager.GetString("lblDiluluskan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DILULUSKAN OLEH.
-        /// </summary>
-        public static string lblDiluluskanOleh {
-            get {
-                return ResourceManager.GetString("lblDiluluskanOleh", resourceCulture);
-            }
-        }
-        
+               
         /// <summary>
         ///   Looks up a localized string similar to JENIS PEKERJAAN.
         /// </summary>
@@ -195,24 +178,7 @@ namespace MVC_SYSTEM.App_LocalResources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Ladang.
-        /// </summary>
-        public static string lblLadang {
-            get {
-                return ResourceManager.GetString("lblLadang", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bulan.
-        /// </summary>
-        public static string lblMonth {
-            get {
-                return ResourceManager.GetString("lblMonth", resourceCulture);
-            }
-        }
-        
+                
         /// <summary>
         ///   Looks up a localized string similar to NAMA BATCH.
         /// </summary>
@@ -329,25 +295,7 @@ namespace MVC_SYSTEM.App_LocalResources {
                 return ResourceManager.GetString("lblRole", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SEMUA.
-        /// </summary>
-        public static string lblSemua {
-            get {
-                return ResourceManager.GetString("lblSemua", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status.
-        /// </summary>
-        public static string lblStatus {
-            get {
-                return ResourceManager.GetString("lblStatus", resourceCulture);
-            }
-        }
-        
+                
         /// <summary>
         ///   Looks up a localized string similar to STATUS KELULUSAN.
         /// </summary>
@@ -419,16 +367,7 @@ namespace MVC_SYSTEM.App_LocalResources {
                 return ResourceManager.GetString("lblYear", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wilayah.
-        /// </summary>
-        public static string lblWilayah {
-            get {
-                return ResourceManager.GetString("lblWilayah", resourceCulture);
-            }
-        }
-        
+                
         /// <summary>
         ///   Looks up a localized string similar to ACTIVE.
         /// </summary>
