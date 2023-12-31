@@ -68,5 +68,7 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<decimal> fld_MerchEwallet { get; set; }
         public string fld_NoDocSAPEwallet { get; set; }
         public Nullable<decimal> fld_CheckRollRML { get; set; }
+        public Nullable<decimal> fld_EwalletTnG { get; set; }
+        public Nullable<int> fld_EwalletTnGPax { get; set; }
     }
 }

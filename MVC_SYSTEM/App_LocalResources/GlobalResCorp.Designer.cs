@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResCorp {
@@ -984,6 +984,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblAbsentDayX {
             get {
                 return ResourceManager.GetString("lblAbsentDayX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombor Akaun.
+        /// </summary>
+        public static string lblAccNo {
+            get {
+                return ResourceManager.GetString("lblAccNo", resourceCulture);
             }
         }
         
@@ -2023,6 +2032,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Batch Klien.
+        /// </summary>
+        public static string lblClientBatchID {
+            get {
+                return ResourceManager.GetString("lblClientBatchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kod IO.
         /// </summary>
         public static string lblCodeIO {
@@ -2280,6 +2298,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblCompanyInfo {
             get {
                 return ResourceManager.GetString("lblCompanyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat Syarikat.
+        /// </summary>
+        public static string lblCompanyInfoUpdate {
+            get {
+                return ResourceManager.GetString("lblCompanyInfoUpdate", resourceCulture);
             }
         }
         
@@ -2640,6 +2667,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableUpdate {
             get {
                 return ResourceManager.GetString("lblContributionTableUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Korporat.
+        /// </summary>
+        public static string lblCorpID {
+            get {
+                return ResourceManager.GetString("lblCorpID", resourceCulture);
             }
         }
         
@@ -4881,6 +4917,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblIncentiveValueUpdate {
             get {
                 return ResourceManager.GetString("lblIncentiveValueUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Termasuk Dalam ORP?.
+        /// </summary>
+        public static string lblIncInOrp {
+            get {
+                return ResourceManager.GetString("lblIncInOrp", resourceCulture);
             }
         }
         
@@ -10857,6 +10902,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string titlePullPublicHolidayMaintenanceGenerate {
             get {
                 return ResourceManager.GetString("titlePullPublicHolidayMaintenanceGenerate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat RCMS Maybank Syarikat.
+        /// </summary>
+        public static string titleRCMSMaybankSyarikat {
+            get {
+                return ResourceManager.GetString("titleRCMSMaybankSyarikat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat RCMS Maybank Syarikat.
+        /// </summary>
+        public static string titleRCMSMaybankSyarikatEdit {
+            get {
+                return ResourceManager.GetString("titleRCMSMaybankSyarikatEdit", resourceCulture);
             }
         }
         

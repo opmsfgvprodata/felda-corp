@@ -92,6 +92,33 @@
     $("form").removeData("unobtrusiveValidation");
     $.validator.unobtrusive.parse("form");
 
+    //fatin added - 07/11/2023
+    $("#fld_SyarikatID").change(function () {
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#fld_SyarikatID").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#fld_WilayahID").empty();
+            $("#fld_LadangID").empty();
+            $("#fld_LadangID").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#fld_SyarikatID").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#fld_WilayahID").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+            };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+    //end
+
     $(document).ready(function() {
         $("#fld_WilayahID").change(function () {
             if ($("#fld_WilayahID").val() === '') {

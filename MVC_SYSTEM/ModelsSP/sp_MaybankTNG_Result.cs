@@ -32,5 +32,6 @@ namespace MVC_SYSTEM.ModelsSP
         public string fld_Kdrkyt { get; set; }
         public string fld_PaymentMode { get; set; }
         public string fld_CostCentre { get; set; }
+        public string fld_Kdrkytbank { get; set; }
     }
 }

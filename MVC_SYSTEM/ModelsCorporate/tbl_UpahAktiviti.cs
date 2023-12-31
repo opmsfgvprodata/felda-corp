@@ -59,6 +59,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(2)]
         public string fld_KategoriAktvt { get; set; }
+
+        //fatin added - 8/11/2023
+        [StringLength(5)]
+        public string fld_compcode { get; set; }
     }
 
     [Table("tbl_UpahAktiviti")]
@@ -109,6 +113,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(1)]
         public string fld_Kategori { get; set; }
+
+        //fatin added - 8/11/2023
+        [StringLength(5)]
+        public string fld_compcode { get; set; }
 
     }
 
@@ -162,6 +170,10 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(1)]
         public string fld_Kategori { get; set; }
 
+        //fatin added - 8/11/2023
+        [StringLength(5)]
+        public string fld_compcode { get; set; }
+
     }
 
     [Table("tbl_UpahAktiviti")]
@@ -212,6 +224,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(1)]
         public string fld_Kategori { get; set; }
+
+        //fatin added - 8/11/2023
+        [StringLength(5)]
+        public string fld_compcode { get; set; }
 
     }
 }

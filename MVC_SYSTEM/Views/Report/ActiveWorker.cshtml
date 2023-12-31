@@ -138,7 +138,7 @@
             @if (Model.Count() != 0)
             {
                 <div id="scrollArea" class="modal-body">
-                    @foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
+                    @foreach (var costcentre in Model.Select(s => s.fld_CompCode).Distinct())
                     {
                         var namasyarikat = GetConfig.GetSyarikatName(costcentre);
                         var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
@@ -220,9 +220,8 @@
                                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKK</th>
                                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKTH</th>
                                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKV</th>
-                                    @*sarah added 10/05/2023*@
-                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
-                                        <a data-toggle="modal" data-target="#exampleModal" href="#">@GlobalResActiveWorker.hdrother</a>
+                                    @*sarah modified 23/10/2023*@
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrother</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -451,8 +450,9 @@
 
         </div>
 
+        @*sarah comment 23/10/2023*@
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -506,7 +506,7 @@
                                     </tr>
                                     {
 
-                                        tkother = tkother + item.fld_other;
+                                        //tkother = tkother + item.fld_other;
                                     }
 
                                 }
@@ -518,7 +518,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         @section scripts{
             @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
@@ -615,7 +615,7 @@
         $("#WilayahIDList").change(function () {
             var WilayahIDList = {};
         var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang4", "Report")";
+            WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
             WilayahIDList.type = "POST";
             WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
             WilayahIDList.datatype = "json";
@@ -682,6 +682,156 @@
         });*@
     });
 </script>
+<!--<script>
+    $(document).ready(function () {
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf2").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });-->
+        @*$("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });*@
+
+        <!--$("#SyarikatList").change(function () {
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) ;
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+        });
+
+        /*sarah comment*/-->
+        @*if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });*@
+<!--</script>-->
 <script>
     function DisplayProgressMessage(ctl) {
         //$("body").addClass("submit-progress-bg");
