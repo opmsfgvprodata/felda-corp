@@ -8,6 +8,7 @@
     var isKwspSocso = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_AdaCaruman).ToString(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID);
     var GLDesc = config.GetGLDesc(Model.fld_KodGL, Model.fld_NegaraID, Model.fld_SyarikatID);
     var workerType = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_KelayakanKepada).ToString(), "jenisKelayakanInsentif", Model.fld_NegaraID, Model.fld_SyarikatID);
+    var isAdaOrp = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_AdaORP).ToString(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID); @*fatin added - 20/10/2023*@
 }
 
 <section class="content-wrapper main-content clear-fix">
@@ -60,7 +61,7 @@
                             </div>
                             <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveIsFixedValue:</label>
                             <div class="col-sm-3">
-                                @Html.TextBoxFor(model => model.fld_TetapanNilai, htmlAttributes: new {@class = "form-control", @disabled = "true", @Value = isFixed})
+                                @Html.TextBoxFor(model => model.fld_TetapanNilai, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = isFixed })
                             </div>
                         </div>
                         <div class="form-group">
@@ -82,6 +83,13 @@
                             <div class="col-sm-3">
                                 @Html.TextBoxFor(model => model.fld_DailyFixedValue, htmlAttributes: new { @class = "form-control", @disabled = "true" })
                                 @Html.ValidationMessageFor(model => model.fld_DailyFixedValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*fatin added - 20/10/2023*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncInOrp:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_AdaORP, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = isAdaOrp })
                             </div>
                         </div>
                         <div class="form-group">

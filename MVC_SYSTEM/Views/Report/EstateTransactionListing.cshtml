@@ -34,27 +34,32 @@
         @using (Ajax.BeginForm("_TransactionListingRptSearch", "Report", null, options, new { @id = "TransactionListingRptSearch" }))
         {
             @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="col-sm-2">
-                    <label>@GlobalResCorp.lblRegion</label>
-                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-3">
-                    <label>@GlobalResCorp.lblEstate</label>
-                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
-                </div>
-                <div class="col-sm-2">
-                    <label>@GlobalResCorp.lblYear</label>
-                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <label>@GlobalResCorp.lblMonth</label>
-                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2" style="padding-top: 24px;">
-                    <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
-                </div>
+        <div class="row">
+            @*sarah added*@
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
             </div>
+            <div class="col-sm-2">
+                <label>@GlobalResCorp.lblRegion</label>
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-3">
+                <label>@GlobalResCorp.lblEstate</label>
+                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+            </div>
+            <div class="col-sm-2">
+                <label>@GlobalResCorp.lblYear</label>
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <label>@GlobalResCorp.lblMonth</label>
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2" style="padding-top: 24px;">
+                <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+            </div>
+        </div>
         }
     </div>
 
@@ -92,6 +97,34 @@
         document.getElementById('btnCari').click();
     }
 
+  /*  sarah added*/
+    $(document).ready(function () {
+     $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahList").empty();
+            $("#LadangList").empty();
+            $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
      $("#WilayahList").change(function () {
             if ($("#WilayahList").val() === '') {
                 $("#LadangList").prop("disabled", true);
@@ -99,9 +132,10 @@
             } else {
 
                 var WilayahList = {};
-                WilayahList.url = "@Url.Action("GetLadang", "Json")";
+                WilayahList.url = "@Url.Action("GetLadang4", "Report")";
+                @*WilayahList.url = "@Url.Action("GetLadang", "Json")";*@
                 WilayahList.type = "POST";
-                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatID: $("#SyarikatList").val() });
                 WilayahList.datatype = "json";
                 WilayahList.contentType = "application/json";
                 WilayahList.success = function(ladanglist) {
@@ -118,7 +152,7 @@
             }
         });
 
-    $(document).ready(function() {
+        @*$(document).ready(function() {
         $("#WilayahList").change(function () {
             if ($("#WilayahList").val() === '') {
                 $("#LadangList").prop("disabled", true);
@@ -126,8 +160,9 @@
             } else {
 
                 var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang4", "Report")";-->-->
                 WilayahList.url = "@Url.Action("GetLadang", "Json")";
-                WilayahList.type = "POST";
+                <!--<!--WilayahList.type = "POST";
                 WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
                 WilayahList.datatype = "json";
                 WilayahList.contentType = "application/json";
@@ -143,7 +178,7 @@
                 WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
                 $.ajax(WilayahList);
             }
-        });
+        });*@
 
         $("#LadangList").change(function() {
             if ($("#LadangList").val() === '') {

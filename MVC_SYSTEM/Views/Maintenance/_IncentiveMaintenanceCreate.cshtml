@@ -93,6 +93,14 @@
                                 @Html.ValidationMessageFor(model => model.fld_DailyFixedValue, "", new { @class = "validation text-danger" })
                             </div>
                         </div>
+                        @*fatin added - 19/10/2023*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncInOrp:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_AdaORP, new SelectList(ViewBag.OptionList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_AdaORP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblWorkerType:</label>
                             <div class="col-sm-8">
@@ -107,7 +115,6 @@
                                 @Html.DropDownListFor(model => model.fld_KodGL, new SelectList(ViewBag.CompanyCode, "Value", "Text"), new { @class = "kodSyarikat form-control" })
                                 @Html.ValidationMessageFor(model => model.fld_KodGL, "", new { @class = "text-danger" })
                             </div>
-                        
                             <div class="col-sm-5">
                                 <div id="tablecompany"></div>
                             </div>
