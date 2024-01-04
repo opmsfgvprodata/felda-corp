@@ -1,0 +1,202 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptPermohonanIDPenggunaBaruReport_Result>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+    ChangeTimeZone time = new ChangeTimeZone();
+
+    int year = time.gettimezone().Year;
+    int month = time.gettimezone().Month;
+    int day = time.gettimezone().Day;
+    int hour = time.gettimezone().Hour;
+    int minute = time.gettimezone().Minute;
+    int second = time.gettimezone().Second;
+    int bil = 0;
+    string uniquefilename = "PermohonanIDPenggunaBaru_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string selectionheader = "0";
+
+    if (ViewBag.IncLdg2 == 1)
+    {
+        selectionheader = "";
+    }
+    else if (ViewBag.IncLdg2 == 2)
+    {
+        selectionheader = ViewBag.WilayahName;
+    }
+    else
+    {
+        selectionheader = ViewBag.WilayahName + " - (" + ViewBag.LadangCode + " - " + ViewBag.LadangName + ")";
+    }
+}
+
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea" class="modal-body">
+        @foreach (var wilayah in Model.Select(s => s.fld_WilayahID).Distinct())
+        {
+
+
+            foreach (var ladang in Model.Where(x => x.fld_WilayahID == wilayah).Select(s => s.fld_LadangID).Distinct())
+            {
+                foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
+                {
+                    var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+                    <logo/>
+
+                    <br/>
+
+                    <table class="table table-hover" style="font-size: 11px;" border="0">
+                        <thead>
+                            <tr>
+                                <th colspan="10" style="text-align:center;vertical-align:middle;">
+                                    @namapenuhsyarikat
+                                    <br/>
+                                    (@namasyarikat)
+                                    <br/>
+                                    @GlobalResReport.lblPermIDPenBarReport
+                                    <br/>
+                                    @ViewBag.Year
+                                    <br/>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="10" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+
+                                    <font color="white">@GlobalResCorp.lblRegion : @GetConfig.GetWilayahNameFromID(wilayah)</font>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="10" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+
+                                    <font color="white">@GetConfig.GetLadangKodFromID(ladang) - @GetConfig.GetLadangNameFromID(ladang)</font>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResLocalWorkerInfo.hdrNo</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblNamaLadang</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lbIDPengguna</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblNama</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblRole</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblTarikhPermohonan</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblTarikhKelulusan</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblStatusKelulusan</th>
+                                <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblNamaFail</th>
+                                <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResReport.lblDiluluskanOleh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var PermIDPenBaru in Model.Where(x => x.fld_LadangID == ladang))
+                            {
+                                bil += 1;
+
+                                <tr>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @bil
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fld_LdgName
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fldUserName
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fldNama
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fldRoleName
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @String.Format("{0:dd/MM/yyyy}", @PermIDPenBaru.fldTarikh)
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @String.Format("{0:dd/MM/yyyy}", @PermIDPenBaru.fldDateTimeApprove)
+                                    </td>
+                                    @if (PermIDPenBaru.fldStatus == "TIDAK DILULUSKAN")
+                                    {
+                                        <td align="center" style="color: red; vertical-align: middle !important; border: 1px solid black;" border="1">@PermIDPenBaru.fldStatus</td>
+                                    }
+                                    else
+                                    {
+                                        <td align="center" style="color: green; vertical-align: middle !important; border: 1px solid black;" border="1">@PermIDPenBaru.fldStatus</td>
+                                    }
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fldFileName
+                                    </td>
+                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @PermIDPenBaru.fldActionBy
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+        }
+    </div>
+    @* farahin commnet button asal *@
+    @*<a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>*@
+
+    @*//farahin-21012021*@
+    <div style="text-align:right; margin-top:10px">
+        <a class="btn btn-default btn-sm" href="#" id="printpage">
+            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+        </a>
+        <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+        </a>
+        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+        </a>
+    </div>
+
+
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+@*//farahin-20012021*@
+<script>
+    $(document).ready(function () {
+
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "PermIDPenggunaBaru" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>

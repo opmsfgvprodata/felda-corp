@@ -679,7 +679,7 @@ namespace MVC_SYSTEM.Class
                             else if (i == 1) //2
                             {
                                 //PaymentCode = maybankrcms.fld_RcmsBankCode == "MBBEMYKL" ? "IT" : "IG";
-                                PaymentCode = "DN";
+                                PaymentCode = "CN";
                                 Body.Insert(i, PaymentCode + "|");
                             }
                             else if (i == 2) //3
@@ -805,6 +805,19 @@ namespace MVC_SYSTEM.Class
                             else if (i == 109) //110
                             {
                                 Body.Insert(i, "01|");
+                            }
+                            else if (i == 137) //138
+                            {
+                                ResidentIInd = maybankrcms.fld_Kdrkyt == "MA" ? "Y" : "N";
+                                Body.Insert(i, ResidentIInd + "|");
+                            }
+                            else if (i == 138) //139
+                            {
+                                Body.Insert(i, maybankrcms.fld_Kdrkytbank + "|");
+                            }
+                            else if (i == 187) //188
+                            {
+                                Body.Insert(i, "FT|");
                             }
                             else
                             {

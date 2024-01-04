@@ -1051,6 +1051,9 @@
     <Compile Include="ModelsSP\sp_DatatablePermitExpired_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MapaReport_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -1076,6 +1079,12 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptMasterDataPkj_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_RptPermohonanIDPenggunaBaruReport_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_RptPermohonanPekerjaBru_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptRumKedKepPekLad_Result.cs">
@@ -3663,6 +3672,8 @@
     <Content Include="Views\MaybankFileGen\TngGenIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\_tng.cshtml" />
     <Content Include="Views\MaybankFileGen\_tngIndividu.cshtml" />
+    <Content Include="Views\Report\PermohonanPekerjaBaruReport.cshtml" />
+    <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
