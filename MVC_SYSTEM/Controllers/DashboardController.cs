@@ -206,10 +206,17 @@ namespace MVC_SYSTEM.Controllers
 
             GetNSWL.GetSyarikat(out SyarikatID, getuserid, User.Identity.Name);
 
-            int month = DateTime.Now.Month - 1;
-            int year = DateTime.Now.Year;
+            //original code
+            //int month = DateTime.Now.Month - 1;
+            //int year = DateTime.Now.Year;
             int type = 1;
             int wilayah = 0;
+
+            //fatin modified - 02/01/2024
+            DateTime currentDate = DateTime.Now;
+            DateTime previousMonthDate = currentDate.AddMonths(-1);
+            int month = previousMonthDate.Month;
+            int year = (currentDate.Month == 1) ? currentDate.Year - 1 : currentDate.Year;
 
             List<sp_DashStatusAkaun_Result> dashStatusAkaun = new List<sp_DashStatusAkaun_Result>();
 
@@ -233,8 +240,15 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetSyarikat(out SyarikatID, getuserid, User.Identity.Name);
 
             var WilayahID = db2.tbl_Wilayah.Where(x => x.fld_WlyhName == wilayah).FirstOrDefault();
-            int month = DateTime.Now.Month - 1;
-            int year = DateTime.Now.Year;
+            //original code
+            //int month = DateTime.Now.Month - 1;
+            //int year = DateTime.Now.Year;
+
+            //fatin modified - 02/01/2023
+            DateTime currentDate = DateTime.Now;
+            DateTime previousMonthDate = currentDate.AddMonths(-1);
+            int month = previousMonthDate.Month;
+            int year = (currentDate.Month == 1) ? currentDate.Year - 1 : currentDate.Year;
             int type = 3;
 
             List<sp_DashStatusAkaun_Result> dashStatusAkaun = new List<sp_DashStatusAkaun_Result>();

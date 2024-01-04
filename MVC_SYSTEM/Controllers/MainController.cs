@@ -47,8 +47,13 @@ namespace MVC_SYSTEM.Controllers
 
             kerakyatanresult = dbSP.sp_DashAllKerakyatan(SyarikatID, 1).Where(x => x.fld_Jumlah != 0).ToList();
 
-            int currentMonth = DateTime.Now.Month - 1;
-            int currentYear = DateTime.Now.Year;
+            //int currentMonth = DateTime.Now.Month - 1;
+            //int currentYear = DateTime.Now.Year;
+
+            DateTime currentDate = DateTime.Now;
+            DateTime previousMonthDate = currentDate.AddMonths(-1);
+            int currentMonth = previousMonthDate.Month;
+            int currentYear = (currentDate.Month == 1) ? currentDate.Year - 1 : currentDate.Year;
 
             ViewBag.month = currentMonth;
             ViewBag.year = currentYear;
