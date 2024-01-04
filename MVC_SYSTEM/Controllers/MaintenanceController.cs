@@ -12781,52 +12781,52 @@ namespace MVC_SYSTEM.Controllers
                         }
                     }
                     //fatin added - 13/04/2023
-                    else if (fld_KodGL == "8800")
-                    {
-                        //Earning
-                        if (jenisInsentif.fld_KodAktvt.Substring(0, 2) == "32")
-                        {
+                    //else if (fld_KodGL == "8800")
+                    //{
+                    //    //Earning
+                    //    if (jenisInsentif.fld_KodAktvt.Substring(0, 2) == "32")
+                    //    {
 
-                            CustomerVendorGLMap.fld_KodAktiviti = fld_KodAktvt;
-                            CustomerVendorGLMap.fld_Flag = "2";
-                            CustomerVendorGLMap.fld_TypeCode = "GL";
-                            CustomerVendorGLMap.fld_SAPCode = "602";
-                            CustomerVendorGLMap.fld_NegaraID = NegaraID;
-                            CustomerVendorGLMap.fld_SyarikatID = SyarikatID;
-                            CustomerVendorGLMap.fld_WIlayahID = 0;
-                            CustomerVendorGLMap.fld_LadangID = 0;
-                            CustomerVendorGLMap.fld_Deleted = false;
-                            CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
-                            //CustomerVendorGLMap.fld_JnsLot = "";
-                            //CustomerVendorGLMap.fld_Paysheet = "";
-                            //CustomerVendorGLMap.fld_StatusTnmn = "";
+                    //        CustomerVendorGLMap.fld_KodAktiviti = fld_KodAktvt;
+                    //        CustomerVendorGLMap.fld_Flag = "2";
+                    //        CustomerVendorGLMap.fld_TypeCode = "GL";
+                    //        CustomerVendorGLMap.fld_SAPCode = "602";
+                    //        CustomerVendorGLMap.fld_NegaraID = NegaraID;
+                    //        CustomerVendorGLMap.fld_SyarikatID = SyarikatID;
+                    //        CustomerVendorGLMap.fld_WIlayahID = 0;
+                    //        CustomerVendorGLMap.fld_LadangID = 0;
+                    //        CustomerVendorGLMap.fld_Deleted = false;
+                    //        CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
+                    //        //CustomerVendorGLMap.fld_JnsLot = "";
+                    //        //CustomerVendorGLMap.fld_Paysheet = "";
+                    //        //CustomerVendorGLMap.fld_StatusTnmn = "";
 
-                            db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
-                            db.SaveChanges();
+                    //        db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
+                    //        db.SaveChanges();
 
-                        }
+                    //    }
 
-                        //Deduction
-                        else if (jenisInsentif.fld_KodAktvt.Substring(0, 2) == "35")
-                        {
-                            CustomerVendorGLMap.fld_KodAktiviti = fld_KodAktvt;
-                            CustomerVendorGLMap.fld_Flag = "5";
-                            CustomerVendorGLMap.fld_TypeCode = "GL";
-                            CustomerVendorGLMap.fld_SAPCode = "602";
-                            CustomerVendorGLMap.fld_NegaraID = NegaraID;
-                            CustomerVendorGLMap.fld_SyarikatID = SyarikatID;
-                            CustomerVendorGLMap.fld_WIlayahID = 0;
-                            CustomerVendorGLMap.fld_LadangID = 0;
-                            CustomerVendorGLMap.fld_Deleted = false;
-                            CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
-                            //CustomerVendorGLMap.fld_JnsLot = "";
-                            //CustomerVendorGLMap.fld_Paysheet = "";
-                            //CustomerVendorGLMap.fld_StatusTnmn = "";
+                    //    //Deduction
+                    //    else if (jenisInsentif.fld_KodAktvt.Substring(0, 2) == "35")
+                    //    {
+                    //        CustomerVendorGLMap.fld_KodAktiviti = fld_KodAktvt;
+                    //        CustomerVendorGLMap.fld_Flag = "5";
+                    //        CustomerVendorGLMap.fld_TypeCode = "GL";
+                    //        CustomerVendorGLMap.fld_SAPCode = "602";
+                    //        CustomerVendorGLMap.fld_NegaraID = NegaraID;
+                    //        CustomerVendorGLMap.fld_SyarikatID = SyarikatID;
+                    //        CustomerVendorGLMap.fld_WIlayahID = 0;
+                    //        CustomerVendorGLMap.fld_LadangID = 0;
+                    //        CustomerVendorGLMap.fld_Deleted = false;
+                    //        CustomerVendorGLMap.fld_compcode = fld_KodGL; //fatin added - 05/12/2023
+                    //        //CustomerVendorGLMap.fld_JnsLot = "";
+                    //        //CustomerVendorGLMap.fld_Paysheet = "";
+                    //        //CustomerVendorGLMap.fld_StatusTnmn = "";
 
-                            db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
-                            db.SaveChanges();
-                        }
-                    }
+                    //        db.tbl_CustomerVendorGLMap.Add(CustomerVendorGLMap);
+                    //        db.SaveChanges();
+                    //    }
+                    //}
                     //end
 
                     string appname = Request.ApplicationPath;
