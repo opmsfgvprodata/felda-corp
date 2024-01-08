@@ -46,5 +46,9 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(1)]
         public string fld_StatusTnmn { get; set; }
+
+        //fatin added - 05/12/2023
+        [StringLength(5)]
+        public string fld_compcode { get; set; }
     }
 }
