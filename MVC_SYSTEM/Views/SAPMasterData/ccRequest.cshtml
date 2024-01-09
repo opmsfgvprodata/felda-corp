@@ -3,6 +3,7 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @*@Scripts.Render("~/bundles/jqueryval")*@
 }
 
 <div id="UpdateProgress1" style="display:none;">
@@ -13,7 +14,6 @@
     </div>
 </div>
 <section class="content-wrapper main-content clear-fix">
-    
 
     @using (Html.BeginForm("_ccRequest", "SAPMasterData", new { id = "" }))
     {
@@ -33,22 +33,22 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_CstCnter, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_CstCnter, new { htmlAttributes = new { @class = "form-control required", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.fld_CstCnter, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-sm-1 text-center">
                                 -
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_CstCnter2, new { htmlAttributes = new { @class = "form-control" } })
 
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
-
+                        <div class="col-sm-12" style="text-align:right; padding-top:7px;">
                             <input class="btn btn-success" type="submit" value="Sent" />
+                            <a href="@Url.Action("ccList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
 
                         </div>
                     </div>

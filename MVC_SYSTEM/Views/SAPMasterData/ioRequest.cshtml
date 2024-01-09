@@ -1,16 +1,14 @@
 ﻿@model MVC_SYSTEM.ModelsCorporate.vw_SAPIODetailsCreate
 
 @{
-    ViewBag.Title = "ioRequest";
+    ViewBag.Title = "Request New IO";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @*@Scripts.Render("~/bundles/jqueryval")*@
 }
 
 <section class="content-wrapper main-content clear-fix">
-   
-
     @using (Html.BeginForm("_ioRequest", "SAPMasterData", new { id = "" }))
     {
-
         <div class="modal-body">
             <div class="form-horizontal">
                 <div class="panel panel-primary">
@@ -83,18 +81,14 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="col-sm-9 right">
-
+                        <div class="col-sm-12" style="text-align:right; padding-top:7px;">
                             <input class="btn btn-success right" type="submit" value="Sent" />
                             <a href="@Url.Action("IOList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </div>
         </div>
-
     }
 
 </section>
@@ -163,5 +157,4 @@
             }
         });
     })
-
 </script>

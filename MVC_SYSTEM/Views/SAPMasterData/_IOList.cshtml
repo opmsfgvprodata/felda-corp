@@ -5,18 +5,22 @@
 @{
     //ViewBag.Title = "Index";
     //Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
+    int? bil = 0;
+    int? bil4 = 0;
     GetConfig getconfig = new GetConfig();
     MVC_SYSTEM_ModelsCorporate db = new MVC_SYSTEM_ModelsCorporate();
     ChangeTimeZone time = new ChangeTimeZone();
     DateTime Todaydate = time.gettimezone();
 
-
-    string uniquefilename = "Master Data IO" + ViewBag.UserID + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
-
-
-    string dateformat = getconfig.GetData("dateformat3");
-    int bil = 0, bil1 = 0, bil2 = 0, bil3 = 0, bil4 = 0;
+    GetConfig GetConfig = new GetConfig();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "MasterData_IO_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -34,7 +38,6 @@
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Rancangan</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO Code</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">IO FPM</th>
-                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod WBS</th>
                     <th bgcolor="#ffcc80" width="5%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Indikator</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Peringkat</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Sub Peringkat</th>
@@ -43,7 +46,7 @@
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Luas Kawasan Tanaman</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Luas Kawasan Berhasil</th>
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
-                    <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
+                    @*<th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>*@
                     <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
                 </tr>
             </thead>
@@ -58,10 +61,6 @@
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgName </td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_IOcode</td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_ZIOFPM</td>
-                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;"
-                            border="1">
-                            @IODetails.fld_WBS
-                        </td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LdgIndicator </td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_PktCode</td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_SubPktCode</td>
@@ -70,7 +69,7 @@
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawTnmn</td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_LuasKawBerhasil</td>
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@IODetails.fld_CreatedBy</td>
-                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTCreated) </td>
+                        @*<td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTCreated) </td>*@
                         <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @IODetails.fld_DTModified)</td>
                     </tr>
 
@@ -79,35 +78,56 @@
         </table>
 
     </div>
-    <div style="text-align:right; margin-top:10px">
-        <a class="btn btn-default btn-sm" href="#" id="printpage">
-            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
-        </a>
-        <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
-            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
-        </a>
-        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
-            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-        </a>
-    </div>
+    //dania tambah back button 13/4/2023
+<div class="col-sm-12" style="text-align:right;">
+    <a class="btn btn-default btn-sm" href="" id="printpage">
+        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+    </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+    <a href=@Url.Action("ioRequest", "SAPMasterData") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">New IO</a>
+    <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
 
-    <br />
-    <br />
-    <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
-        <input type="button" id="btnDisplaySearchResults" value="New IO" onclick="location.href='@Url.Action("ioRequest", "SAPMasterData")'" class="btn btn-success " />
-        <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
-
-    </div>
-
-
+</div>
+    @*<div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage5">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf5">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel2('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>*@
 
 }
 
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
 <script src="~/Asset/Scripts/FromHTML.js"></script>
 <script src="~/Asset/Scripts/FileSaver.js"></script>
 <script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+<script>
+
     $(document).ready(function () {
-        //farahin tambah function print-23022021
+
         $("#printpage").click(function () {
             var DivElement = document.getElementById("scrollArea").innerHTML;
             var oldPage = document.body.innerHTML;
@@ -115,30 +135,25 @@
             window.print();
             document.body.innerHTML = oldPage;
         })
-        //farahin edit function download pdf - 23022021
-        $("#downloadpdf").click(function () { //tukar id downloadpdf > downloadpdf2
+
+        $("#downloadpdf2").click(function () {
             var myHtml = document.getElementById('scrollArea').innerHTML;
             $.ajax({
                 type: 'POST',
-                rl: '@Url.Action("ConvertPDF2", "SAPMasterData")', //tukar action convertpdf > convertpdf2
+                url: '@Url.Action("ConvertPDF2", "SAPMasterData")',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "MasterData IO" }),
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
                 success: function (result) {
                     if (result.success) {
-                        var win = window.open(result.id, '_blank');
+                        var win = window.open(result.link, '_blank');
                         win.focus();
                     } else {
                         $.simplyToast(result.msg, result.status);
                     }
                 },
-                //tambah function error
-                error: function (error) {
-                    $.simplyToast('Sorry to many data', 'danger');
-                }
             });
             return false;
         });
-
-    }
+    });
 </script>

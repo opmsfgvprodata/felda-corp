@@ -10,6 +10,7 @@ using MVC_SYSTEM.ModelsCorporate;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -28,6 +29,7 @@ namespace MVC_SYSTEM.Controllers
         GetWilayah getwilyah = new GetWilayah();
         Connection Connection = new Connection();
         errorlog geterror = new errorlog();
+        private GetIdentity getidentity = new GetIdentity();
         //Commented by Shazana 21/11/2023
         //string IDFelda = "WF-BATCH"; string pwdFelda = "@12345bnm";
         //string IDFPM = "FELDAOPMSRFC"; string pwdFPM = "@12345bnm";
@@ -35,7 +37,7 @@ namespace MVC_SYSTEM.Controllers
         //Added by Shazana 21/11/2023
         string IDFelda = "FLDOPMS-BOT"; string pwdFelda = "@12345bnm";
         string IDFPM = "FPMOPMS-BOT"; string pwdFPM = "@12345bnm";
-
+        private ChangeTimeZone timezone = new ChangeTimeZone();
         // GET: SAPMasterData
         public ActionResult Index()
         {
@@ -150,7 +152,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((GLCode == null || GLCode == "") && (GLDesc == null || GLDesc == ""))
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_CompanyCode).ThenBy(o=>o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -164,7 +166,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLCode != null && GLCode != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode)).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -177,7 +179,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLDesc != null && GLDesc != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc)).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -194,7 +196,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((GLCode == null || GLCode == "") && (GLDesc == null || GLDesc == ""))
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -208,7 +210,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLCode != null && GLCode != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -221,7 +223,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLDesc != null && GLDesc != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -251,6 +253,7 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
+
             //farahin tukar linq
             List<SelectListItem> SyarikatList = new List<SelectListItem>();
             SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
@@ -270,10 +273,7 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
-
-
-
+            DateTime getdatetime = timezone.gettimezone();
             if (_GLSAPCreate.fld_GLcode == "")
             {
                 _GLSAPCreate.fld_GLcode = "ALL";
@@ -304,7 +304,6 @@ namespace MVC_SYSTEM.Controllers
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
             string exception = "";
-
             //FELDA
             var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
             var request = new SAPMD_FLQ.ZfmOpmsMaster();
@@ -392,8 +391,8 @@ namespace MVC_SYSTEM.Controllers
                                     _glSAP.fld_Desc = txt50;
                                     _glSAP.fld_NegaraID = NegaraID;
                                     _glSAP.fld_SyarikatID = SyarikatID;
-                                    _glSAP.fld_DTCreated = DateTime.Today;
-                                    _glSAP.fld_DTModified = DateTime.Today;
+                                    _glSAP.fld_DTCreated = getdatetime;
+                                    _glSAP.fld_DTModified = getdatetime;
                                     _glSAP.fld_CreatedBy = "SAP";
                                     _glSAP.fld_CompanyCode = bukrs;
 
@@ -419,7 +418,7 @@ namespace MVC_SYSTEM.Controllers
                                     getGL.fld_GLcode = saknr;
                                     getGL.fld_Desc = txt50;
                                     getGL.fld_CompanyCode = bukrs;
-                                    getGL.fld_DTModified = DateTime.Today;
+                                    getGL.fld_DTModified = getdatetime;
                                     getGL.fld_ModifiedBy = "SAP";
 
                                     if (xloeb == "")
@@ -443,7 +442,7 @@ namespace MVC_SYSTEM.Controllers
                                     getGL.fld_GLcode = saknr;
                                     getGL.fld_Desc = txt50;
                                     getGL.fld_CompanyCode = bukrs;
-                                    getGL.fld_DTModified = DateTime.Today;
+                                    getGL.fld_DTModified = getdatetime;
                                     getGL.fld_ModifiedBy = "SAP";
 
                                     if (xloeb == "")
@@ -584,8 +583,8 @@ namespace MVC_SYSTEM.Controllers
                                     _glSAP.fld_Desc = a.TXT50;
                                     _glSAP.fld_NegaraID = NegaraID;
                                     _glSAP.fld_SyarikatID = SyarikatID;
-                                    _glSAP.fld_DTCreated = DateTime.Today;
-                                    _glSAP.fld_DTModified = DateTime.Today;
+                                    _glSAP.fld_DTCreated = getdatetime;
+                                    _glSAP.fld_DTModified = getdatetime;
                                     _glSAP.fld_CreatedBy = "SAP";
                                     _glSAP.fld_CompanyCode = a.BUKRS;
 
@@ -611,7 +610,7 @@ namespace MVC_SYSTEM.Controllers
                                     getGL.fld_GLcode = a.SAKNR;
                                     getGL.fld_Desc = a.TXT50;
                                     getGL.fld_CompanyCode = a.BUKRS;
-                                    getGL.fld_DTModified = DateTime.Today;
+                                    getGL.fld_DTModified = getdatetime;
                                     getGL.fld_ModifiedBy = "SAP";
 
                                     if (a.XLOEB == "")
@@ -635,7 +634,7 @@ namespace MVC_SYSTEM.Controllers
                                     getGL.fld_GLcode = a.SAKNR;
                                     getGL.fld_Desc = a.TXT50;
                                     getGL.fld_CompanyCode = a.BUKRS;
-                                    getGL.fld_DTModified = DateTime.Today;
+                                    getGL.fld_DTModified = getdatetime;
                                     getGL.fld_ModifiedBy = "SAP";
 
                                     if (a.XLOEB == "")
@@ -730,7 +729,6 @@ namespace MVC_SYSTEM.Controllers
             return RedirectToAction("glTodayDate");
         }
 
-
         public ActionResult glTodayDate()
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -738,13 +736,23 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
-            DateTime today = DateTime.Today;
-            var result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated == today || w.fld_DTModified == today)).OrderByDescending(o => o.fld_DTModified);
+            DateTime getdatetime = timezone.gettimezone();
+            //DateTime today = DateTime.Today;
+            DateTime? dt = (DateTime.Today.Date)  ;
+            //DateTime? dt = (DateTime.Today.Date)  ;
+            var today = DateTime.Today;
+            //var birthDate = DateTime.ParseExact(dt.ToShortDateString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+            //Convert.ToDateTime(createdDate).Date
+
+            var BirthDate = DateTime.Today.ToShortDateString();
+            var birthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+            
+            var result = db.tbl_GLSAP.AsEnumerable().Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated.Date == birthDate || w.fld_DTModified.Date == birthDate)).OrderBy(x=>x.fld_DTModified).ThenBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
             if (!result.Any())
             {
                 ViewBag.Message = "Tiada Record";
-                return View();
+                //return View();
 
             }
 
@@ -759,7 +767,6 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             string CompCode = "";
             var result = new List<tbl_CCSAP>();
-
             //GLCode = 0;
             //GLDesc = "";
 
@@ -784,7 +791,7 @@ namespace MVC_SYSTEM.Controllers
 
                 if ((ccCode == null || ccCode == "") && (ccDesc == null || ccDesc == ""))
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(x=>x.fld_CompanyCode).ThenBy(x=>x.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -798,7 +805,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (ccCode != null && ccCode != "")
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CstCnter.Contains(ccCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CstCnter.Contains(ccCode)).OrderBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -811,7 +818,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (ccDesc != null && ccDesc != "")
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(ccDesc)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(ccDesc)).OrderBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
 
 
 
@@ -831,7 +838,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((ccCode == null || ccCode == "") && (ccDesc == null || ccDesc == ""))
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CompanyCode == CompCode).OrderBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -845,7 +852,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (ccCode != null && ccCode != "")
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CstCnter.Contains(ccCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CstCnter.Contains(ccCode) && w.fld_CompanyCode == CompCode).OrderBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -858,7 +865,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (ccDesc != null && ccDesc != "")
                 {
-                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(ccDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(ccDesc) && w.fld_CompanyCode == CompCode).OrderBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
 
 
 
@@ -881,6 +888,7 @@ namespace MVC_SYSTEM.Controllers
                 return View(result);
             }
 
+
         }
 
         public ActionResult ccRequest()
@@ -889,6 +897,7 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
 
 
             //farahin tukar linq
@@ -910,7 +919,7 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
+            DateTime getdatetime = timezone.gettimezone();
             if (_CCSAPCreate.fld_CstCnter == "")
             {
                 _CCSAPCreate.fld_CstCnter = "ALL";
@@ -941,7 +950,6 @@ namespace MVC_SYSTEM.Controllers
             string KOKRS = "", KOSTL = "", LTEXT = "", BKZKP = "";
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
-
             //FELDA
             var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
             var request = new SAPMD_FLQ.ZfmOpmsMaster();
@@ -1026,8 +1034,8 @@ namespace MVC_SYSTEM.Controllers
                                     _ccSAP.fld_Desc = LTEXT;
                                     _ccSAP.fld_NegaraID = NegaraID;
                                     _ccSAP.fld_SyarikatID = SyarikatID;
-                                    _ccSAP.fld_DTCreated = DateTime.Today;
-                                    _ccSAP.fld_DTModified = DateTime.Today;
+                                    _ccSAP.fld_DTCreated = getdatetime;
+                                    _ccSAP.fld_DTModified = getdatetime;
                                     _ccSAP.fld_CreatedBy = "SAP";
                                     _ccSAP.fld_CompanyCode = KOKRS;
 
@@ -1052,7 +1060,7 @@ namespace MVC_SYSTEM.Controllers
 
                                     getCC.fld_CstCnter = KOSTL;
                                     getCC.fld_Desc = LTEXT;
-                                    getCC.fld_DTModified = DateTime.Today;
+                                    getCC.fld_DTModified = getdatetime;
                                     getCC.fld_ModifiedBy = "SAP";
                                     if (BKZKP == "") { getCC.fld_Deleted = false; }
                                     else { getCC.fld_Deleted = true; };
@@ -1067,7 +1075,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = KOSTL;
                                 tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItCc.Count());
                                 tbl_SAPLog.fld_system = "SAP CC";
-                                tbl_SAPLog.fld_logDate = DateTime.Today;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = "SAP";
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -1084,7 +1092,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 getCC.fld_CstCnter = KOSTL;
                                 getCC.fld_Desc = LTEXT;
-                                getCC.fld_DTModified = DateTime.Today;
+                                getCC.fld_DTModified = getdatetime;
                                 getCC.fld_ModifiedBy = "SAP";
                                 if (BKZKP == "") { getCC.fld_Deleted = false; }
                                 else { getCC.fld_Deleted = true; };
@@ -1099,7 +1107,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = KOSTL;
                                 tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItCc.Count());
                                 tbl_SAPLog.fld_system = "SAP CC";
-                                tbl_SAPLog.fld_logDate = DateTime.Today;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = "SAP";
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -1155,7 +1163,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -1216,8 +1224,8 @@ namespace MVC_SYSTEM.Controllers
                                     _ccSAP.fld_Desc = a.LTEXT;
                                     _ccSAP.fld_NegaraID = NegaraID;
                                     _ccSAP.fld_SyarikatID = SyarikatID;
-                                    _ccSAP.fld_DTCreated = DateTime.Today;
-                                    _ccSAP.fld_DTModified = DateTime.Today;
+                                    _ccSAP.fld_DTCreated = getdatetime;
+                                    _ccSAP.fld_DTModified = getdatetime;
                                     _ccSAP.fld_CreatedBy = "SAP";
                                     _ccSAP.fld_CompanyCode = a.KOKRS;
 
@@ -1243,7 +1251,7 @@ namespace MVC_SYSTEM.Controllers
                                     getCC.fld_CstCnter = a.KOSTL;
                                     getCC.fld_Desc = a.LTEXT;
                                     getCC.fld_CompanyCode = a.KOKRS;
-                                    getCC.fld_DTModified = DateTime.Today;
+                                    getCC.fld_DTModified = getdatetime;
                                     getCC.fld_ModifiedBy = "SAP";
 
                                     if (a.BKZKP == "")
@@ -1267,7 +1275,7 @@ namespace MVC_SYSTEM.Controllers
                                     getCC.fld_CstCnter = a.KOSTL;
                                     getCC.fld_Desc = a.LTEXT;
                                     getCC.fld_CompanyCode = a.KOKRS;
-                                    getCC.fld_DTModified = DateTime.Today;
+                                    getCC.fld_DTModified = getdatetime;
                                     getCC.fld_ModifiedBy = "SAP";
 
                                     if (a.BKZKP == "")
@@ -1292,7 +1300,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = a.KOSTL;
                                 tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_CC.Count());
                                 tbl_SAPLog.fld_system = "SAP CC";
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -1333,7 +1341,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -1368,8 +1376,10 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             DateTime today = DateTime.UtcNow.Date;
+            DateTime getdatetime = timezone.gettimezone();
+            DateTime dt = getdatetime.Date;
 
-            var result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated == today || w.fld_DTModified == today)).OrderByDescending(o => o.fld_DTModified);
+            var result = db.tbl_CCSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && ((DbFunctions.TruncateTime(w.fld_DTCreated) == DbFunctions.TruncateTime(dt) || DbFunctions.TruncateTime(w.fld_DTModified) == DbFunctions.TruncateTime(dt)))).OrderByDescending(o => o.fld_DTModified).ThenBy(x => x.fld_CompanyCode).ThenBy(x => x.fld_Desc);
 
             if (!result.Any())
             {
@@ -1414,7 +1424,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((vdCode == null || vdCode == "") && (vdDesc == null || vdDesc == ""))
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_CompanyCode).ThenBy(o=>o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -1428,7 +1438,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (vdCode != null && vdCode != "")
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_VendorNo.Contains(vdCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_VendorNo.Contains(vdCode)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -1441,7 +1451,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (vdDesc != null && vdDesc != "")
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(vdDesc)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(vdDesc)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
 
 
@@ -1461,7 +1471,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((vdCode == null || vdCode == "") && (vdDesc == null || vdDesc == ""))
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CompanyCode == CompCode).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -1475,7 +1485,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (vdCode != null && vdCode != "")
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_VendorNo.Contains(vdCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_VendorNo.Contains(vdCode) && w.fld_CompanyCode == CompCode).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -1488,7 +1498,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (vdDesc != null && vdDesc != "")
                 {
-                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(vdDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(vdDesc) && w.fld_CompanyCode == CompCode).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
 
 
@@ -1538,6 +1548,7 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
+            DateTime getdatetime = timezone.gettimezone();
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             if (_VDSAPCreate.fld_VendorNo == "")
@@ -1570,7 +1581,6 @@ namespace MVC_SYSTEM.Controllers
             string bukrs = "", lifnr = "", name1 = "", loevm = "";
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
-
             //FELDA
             var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
             var request = new SAPMD_FLQ.ZfmOpmsMaster();
@@ -1654,8 +1664,8 @@ namespace MVC_SYSTEM.Controllers
                                     _vdSAP.fld_Desc = name1;
                                     _vdSAP.fld_NegaraID = NegaraID;
                                     _vdSAP.fld_SyarikatID = SyarikatID;
-                                    _vdSAP.fld_DTCreated = DateTime.Today;
-                                    _vdSAP.fld_DTModified = DateTime.Today;
+                                    _vdSAP.fld_DTCreated = getdatetime;
+                                    _vdSAP.fld_DTModified = getdatetime;
                                     _vdSAP.fld_CreatedBy = User.Identity.Name;
                                     _vdSAP.fld_CompanyCode = bukrs;
 
@@ -1679,7 +1689,7 @@ namespace MVC_SYSTEM.Controllers
                                                 .Single(x => x.fld_VendorNo == lifnr);
 
                                     getVD.fld_Desc = name1;
-                                    getVD.fld_DTModified = DateTime.Today;
+                                    getVD.fld_DTModified = getdatetime;
                                     getVD.fld_ModifiedBy = User.Identity.Name;
 
                                     if (loevm == "")
@@ -1701,7 +1711,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = lifnr;
                                 tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItVend.Count());
                                 tbl_SAPLog.fld_system = "SAP VD";
-                                tbl_SAPLog.fld_logDate = DateTime.Today;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = "SAP";
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -1754,7 +1764,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -1817,8 +1827,8 @@ namespace MVC_SYSTEM.Controllers
                                     _vdSAP.fld_Desc = a.NAME1;
                                     _vdSAP.fld_NegaraID = NegaraID;
                                     _vdSAP.fld_SyarikatID = SyarikatID;
-                                    _vdSAP.fld_DTCreated = DateTime.Today;
-                                    _vdSAP.fld_DTModified = DateTime.Today;
+                                    _vdSAP.fld_DTCreated = getdatetime;
+                                    _vdSAP.fld_DTModified = getdatetime;
                                     _vdSAP.fld_CreatedBy = "SAP";
                                     _vdSAP.fld_CompanyCode = a.BUKRS;
 
@@ -1844,7 +1854,7 @@ namespace MVC_SYSTEM.Controllers
                                     getVD.fld_VendorNo = a.LIFNR;
                                     getVD.fld_Desc = a.NAME1;
                                     getVD.fld_CompanyCode = a.BUKRS;
-                                    getVD.fld_DTModified = DateTime.Today;
+                                    getVD.fld_DTModified = getdatetime;
                                     getVD.fld_ModifiedBy = "SAP";
 
                                     if (a.LOEVM == "")
@@ -1868,7 +1878,7 @@ namespace MVC_SYSTEM.Controllers
                                     getVD.fld_VendorNo = a.LIFNR;
                                     getVD.fld_Desc = a.NAME1;
                                     getVD.fld_CompanyCode = a.BUKRS;
-                                    getVD.fld_DTModified = DateTime.Today;
+                                    getVD.fld_DTModified = getdatetime;
                                     getVD.fld_ModifiedBy = "SAP";
 
                                     if (a.LOEVM == "")
@@ -1893,7 +1903,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = a.LIFNR;
                                 tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_CC.Count());
                                 tbl_SAPLog.fld_system = "SAP CC";
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -1934,7 +1944,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -1969,8 +1979,10 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             DateTime today = DateTime.UtcNow.Date;
+            DateTime getdatetime = timezone.gettimezone();
+            DateTime dt = getdatetime.Date;
 
-            var result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated == today || w.fld_DTModified == today)).OrderByDescending(o => o.fld_DTModified);
+            var result = db.tbl_VDSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (DbFunctions.TruncateTime(w.fld_DTCreated) == DbFunctions.TruncateTime(dt) || DbFunctions.TruncateTime(w.fld_DTModified) == DbFunctions.TruncateTime(dt))).OrderByDescending(o => o.fld_DTModified).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc);
 
             if (!result.Any())
             {
@@ -1994,7 +2006,6 @@ namespace MVC_SYSTEM.Controllers
 
             //GLCode = 0;
             //GLDesc = "";
-
             //farahin tambah - 28/4/2023
             string CompCode = "";
             var result = new List<tbl_CMSAP>();
@@ -2021,7 +2032,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((cmCode == null || cmCode == "") && (cmDesc == null || cmDesc == ""))
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_CompanyCode).ThenBy(o=>o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -2035,7 +2046,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (cmCode != null && cmCode != "")
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CustomerNo.Contains(cmCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CustomerNo.Contains(cmCode)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -2048,7 +2059,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (cmDesc != null && cmDesc != "")
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(cmDesc)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(cmDesc)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
 
 
@@ -2067,7 +2078,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((cmCode == null || cmCode == "") && (cmDesc == null || cmDesc == ""))
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
                     if (!result.Any())
                     {
@@ -2081,7 +2092,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (cmCode != null && cmCode != "")
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CustomerNo.Contains(cmCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CustomerNo.Contains(cmCode)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -2094,7 +2105,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (cmDesc != null && cmDesc != "")
                 {
-                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(cmDesc)).OrderByDescending(o => o.fld_DTModified).ToList();
+                    result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(cmDesc)).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
 
 
 
@@ -2116,6 +2127,7 @@ namespace MVC_SYSTEM.Controllers
                 return View(result);
             }
 
+
         }
 
         public ActionResult cmRequest()
@@ -2124,6 +2136,7 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
 
             List<SelectListItem> SyarikatList = new List<SelectListItem>();
             SyarikatList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
@@ -2143,7 +2156,7 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
+            DateTime getdatetime = timezone.gettimezone();
             if (_CMSAPCreate.fld_CustomerNo == "")
             {
                 _CMSAPCreate.fld_CustomerNo = "ALL";
@@ -2256,8 +2269,8 @@ namespace MVC_SYSTEM.Controllers
                                     _cmSAP.fld_Desc = name1;
                                     _cmSAP.fld_NegaraID = NegaraID;
                                     _cmSAP.fld_SyarikatID = SyarikatID;
-                                    _cmSAP.fld_DTCreated = DateTime.Today;
-                                    _cmSAP.fld_DTModified = DateTime.Today;
+                                    _cmSAP.fld_DTCreated = getdatetime;
+                                    _cmSAP.fld_DTModified = getdatetime;
                                     _cmSAP.fld_CompanyCode = bukrs;
                                     _cmSAP.fld_CreatedBy = "SAP";
 
@@ -2281,7 +2294,7 @@ namespace MVC_SYSTEM.Controllers
                                                 .Single(x => x.fld_CustomerNo == kunnr);
 
                                     getCM.fld_Desc = name1;
-                                    getCM.fld_DTModified = DateTime.Today;
+                                    getCM.fld_DTModified = getdatetime;
                                     getCM.fld_ModifiedBy = "SAP";
                                     if (loevm == "")
                                     { getCM.fld_Deleted = false; }
@@ -2298,7 +2311,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = kunnr;
                                 tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItCust.Count());
                                 tbl_SAPLog.fld_system = "SAP CM";
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -2351,7 +2364,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -2412,8 +2425,8 @@ namespace MVC_SYSTEM.Controllers
                                     _cmSAP.fld_Desc = a.NAME1;
                                     _cmSAP.fld_NegaraID = NegaraID;
                                     _cmSAP.fld_SyarikatID = SyarikatID;
-                                    _cmSAP.fld_DTCreated = DateTime.Today;
-                                    _cmSAP.fld_DTModified = DateTime.Today;
+                                    _cmSAP.fld_DTCreated = getdatetime;
+                                    _cmSAP.fld_DTModified = getdatetime;
                                     _cmSAP.fld_CreatedBy = "SAP";
                                     _cmSAP.fld_CompanyCode = a.BUKRS;
 
@@ -2439,7 +2452,7 @@ namespace MVC_SYSTEM.Controllers
                                     getCS.fld_CustomerNo = a.KUNNR;
                                     getCS.fld_Desc = a.NAME1;
                                     getCS.fld_CompanyCode = a.BUKRS;
-                                    getCS.fld_DTModified = DateTime.Today;
+                                    getCS.fld_DTModified = getdatetime;
                                     getCS.fld_ModifiedBy = "SAP";
 
                                     if (a.LOEVM == "")
@@ -2463,7 +2476,7 @@ namespace MVC_SYSTEM.Controllers
                                     getCS.fld_CustomerNo = a.KUNNR;
                                     getCS.fld_Desc = a.NAME1;
                                     getCS.fld_CompanyCode = a.BUKRS;
-                                    getCS.fld_DTModified = DateTime.Today;
+                                    getCS.fld_DTModified = getdatetime;
                                     getCS.fld_ModifiedBy = "SAP";
 
                                     if (a.LOEVM == "")
@@ -2488,7 +2501,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_msg1 = a.KUNNR;
                                 tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_CC.Count());
                                 tbl_SAPLog.fld_system = "SAP CC";
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -2529,7 +2542,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                tbl_SAPLog.fld_logDate = DateTime.Now;
+                                tbl_SAPLog.fld_logDate = getdatetime;
 
                                 db.tbl_SAPLog.Add(tbl_SAPLog);
                                 db.SaveChanges();
@@ -2570,8 +2583,10 @@ namespace MVC_SYSTEM.Controllers
             DateTime today = DateTime.Today;
 
             ViewBag.Date = today;
+            DateTime getdatetime = timezone.gettimezone();
+            DateTime dt = getdatetime.Date;
 
-            var result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated == today || w.fld_DTModified == today)).OrderByDescending(o => o.fld_DTModified);
+            var result = db.tbl_CMSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (DbFunctions.TruncateTime(w.fld_DTCreated) == DbFunctions.TruncateTime(dt) || DbFunctions.TruncateTime(w.fld_DTModified) == DbFunctions.TruncateTime(dt))).OrderByDescending(o => o.fld_DTModified).ThenBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc);
 
             if (!result.Any())
             {
@@ -2641,33 +2656,33 @@ namespace MVC_SYSTEM.Controllers
             List<vw_SAPIODetails> result = new List<vw_SAPIODetails>();
 
             if (CompanyCode == "0" || CompanyCode == "" || CompanyCode == null)
-            {         
-                    //All list
-                    if ((IOCode == null || IOCode == "") && (WilayahList == 0 || WilayahList == null) && (LadangList == 0 || LadangList == null))
+            {
+                //All list
+                if ((IOCode == null || IOCode == "") && (WilayahList == 0 || WilayahList == null) && (LadangList == 0 || LadangList == null))
+                {
+                    result = db.vw_SAPIODetails.OrderByDescending(o => o.fld_DTModified).ToList();
+
+                    if (!result.Any())
                     {
-                        result = db.vw_SAPIODetails.OrderByDescending(o => o.fld_DTModified).ToList();
-
-                        if (!result.Any())
-                        {
-                            ViewBag.Message = "Tiada Record";
-                            return View();
-
-                        }
-                    }
-                    //search by IO Code
-                    else if ((IOCode != null && IOCode != "") && (WilayahList == 0) && (LadangList == 0))
-                    {
-                        result = db.vw_SAPIODetails.Where(w => w.fld_IOcode.Contains(IOCode)).OrderByDescending(o => o.fld_DTModified).ToList();
-
-                        if (!result.Any())
-                        {
-                            ViewBag.Message = "Tiada Record";
-                            return View();
-
-                        }
-
+                        ViewBag.Message = "Tiada Record";
+                        return View();
 
                     }
+                }
+                //search by IO Code
+                else if ((IOCode != null && IOCode != "") && (WilayahList == 0) && (LadangList == 0))
+                {
+                    result = db.vw_SAPIODetails.Where(w => w.fld_IOcode.Contains(IOCode)).OrderByDescending(o => o.fld_DTModified).ToList();
+
+                    if (!result.Any())
+                    {
+                        ViewBag.Message = "Tiada Record";
+                        return View();
+
+                    }
+
+
+                }
                 //kalau wilayah ade value tapi IO dan ladang == 0
                 else if ((IOCode == null || IOCode == "") && WilayahList != 0 && (LadangList == 0))
                 {
@@ -2777,6 +2792,7 @@ namespace MVC_SYSTEM.Controllers
                 result = new List<vw_SAPIODetails>();
                 return View(result);
             }
+
         }
 
         //farahin ubah whole function - 20 May 2023
@@ -2846,7 +2862,7 @@ namespace MVC_SYSTEM.Controllers
             string Action;
             string error;
             string CompanyCode = ""; string IOFPM = "";
-
+            DateTime getdatetime = timezone.gettimezone();
 
             string selectLadang = _IOSAPCreate.fld_LadangID.ToString().PadLeft(3, '0');
 
@@ -2878,7 +2894,7 @@ namespace MVC_SYSTEM.Controllers
             SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
             SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
-           
+
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
@@ -2896,13 +2912,10 @@ namespace MVC_SYSTEM.Controllers
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
 
-
-
             oClient.Open(); FPMClient.Open();
 
             try
             {
-
                 if (_IOSAPCreate.fld_CompanyCode == "1000")
                 {
                     request = new SAPMD_FLQ.ZfmOpmsMaster();
@@ -2967,7 +2980,7 @@ namespace MVC_SYSTEM.Controllers
                             ioFelda = a.Ziofld;
                             ioFPM = a.Ziofpm;
                             wbsNo = a.ZprpsPosid1; //untuk rise
-
+                          //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
                             //save db
                             if (a.Zpsnd1 != null && a.Zpsnd1 != "")
                             {
@@ -2992,8 +3005,8 @@ namespace MVC_SYSTEM.Controllers
                                     _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
                                     _ioSAP.fld_LadangID = LdgID;
                                     _ioSAP.fld_Deleted = false;
-                                    _ioSAP.fld_DTCreated = DateTime.Today;
-                                    _ioSAP.fld_DTModified = DateTime.Today;
+                                    _ioSAP.fld_DTCreated = getdatetime;
+                                    _ioSAP.fld_DTModified = getdatetime;
                                     _ioSAP.fld_thnPembangunan = thnPembangunan;
                                     _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
                                     _ioSAP.fld_busArea = busArea;
@@ -3083,7 +3096,7 @@ namespace MVC_SYSTEM.Controllers
                                     _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
                                     _ioSAP.fld_LadangID = LdgID;
                                     _ioSAP.fld_Deleted = false;
-                                    _ioSAP.fld_DTModified = DateTime.Today;
+                                    _ioSAP.fld_DTModified = getdatetime;
                                     _ioSAP.fld_thnPembangunan = thnPembangunan;
                                     _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
                                     _ioSAP.fld_busArea = busArea;
@@ -3180,7 +3193,7 @@ namespace MVC_SYSTEM.Controllers
                                 tbl_SAPLog.fld_message = "IO inbound success";
                                 tbl_SAPLog.fld_msg1 = IO1;
                                 tbl_SAPLog.fld_system = "SLP IO";
-                                tbl_SAPLog.fld_logDate = DateTime.Today;
+                                tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
                                 tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -3194,7 +3207,7 @@ namespace MVC_SYSTEM.Controllers
                         tbl_SAPLog.fld_message = "IO inbound success";
                         tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItSlp.Count());
                         tbl_SAPLog.fld_system = "SLP IO";
-                        tbl_SAPLog.fld_logDate = DateTime.Today;
+                        tbl_SAPLog.fld_logDate = getdatetime;
                         tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                         tbl_SAPLog.fld_negaraID = "1";
                         tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -3203,7 +3216,7 @@ namespace MVC_SYSTEM.Controllers
                         db.tbl_SAPLog.Add(tbl_SAPLog);
                         db.SaveChanges();
 
-                      
+
                     }
 
                     if (iresponse.Return.Count() - 1 >= 1)
@@ -3286,8 +3299,8 @@ namespace MVC_SYSTEM.Controllers
                                 _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
                                 _ioSAP.fld_LadangID = LdgID;
                                 _ioSAP.fld_Deleted = false;
-                                _ioSAP.fld_DTCreated = DateTime.Today;
-                                _ioSAP.fld_DTModified = DateTime.Today;
+                                _ioSAP.fld_DTCreated = getdatetime;
+                                _ioSAP.fld_DTModified = getdatetime;
 
 
                                 db.tbl_IOSAP.Add(_ioSAP);
@@ -3307,8 +3320,8 @@ namespace MVC_SYSTEM.Controllers
                                 _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
                                 _ioSAP.fld_LadangID = LdgID;
                                 _ioSAP.fld_Deleted = false;
-                                _ioSAP.fld_DTCreated = DateTime.Today;
-                                _ioSAP.fld_DTModified = DateTime.Today;
+                                _ioSAP.fld_DTCreated = getdatetime;
+                                _ioSAP.fld_DTModified = getdatetime;
 
                                 db.SaveChanges();
                                 db.Entry(_ioSAP).State = EntityState.Detached;
@@ -3318,7 +3331,7 @@ namespace MVC_SYSTEM.Controllers
                             tbl_SAPLog.fld_message = "IO inbound success";
                             tbl_SAPLog.fld_msg1 = _ioSAP.fld_ZIOFPM;
                             tbl_SAPLog.fld_system = "SAP IO";
-                            tbl_SAPLog.fld_logDate = DateTime.Today;
+                            tbl_SAPLog.fld_logDate = getdatetime;
                             tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                             tbl_SAPLog.fld_negaraID = "1";
                             tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -3332,7 +3345,7 @@ namespace MVC_SYSTEM.Controllers
                     tbl_SAPLog.fld_message = "IO inbound success";
                     tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
                     tbl_SAPLog.fld_system = "SAP IO";
-                    tbl_SAPLog.fld_logDate = DateTime.Today;
+                    tbl_SAPLog.fld_logDate = getdatetime;
                     tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                     tbl_SAPLog.fld_negaraID = "1";
                     tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
@@ -3364,7 +3377,7 @@ namespace MVC_SYSTEM.Controllers
 
                 tbl_SAPLog.fld_negaraID = NegaraID.ToString();
                 tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                tbl_SAPLog.fld_logDate = DateTime.Today;
+                tbl_SAPLog.fld_logDate = getdatetime;
 
 
                 db.tbl_SAPLog.Add(tbl_SAPLog);
@@ -3410,10 +3423,12 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             DateTime today = DateTime.Today;
+            DateTime getdatetime = timezone.gettimezone();
+            DateTime dt = getdatetime.Date;
 
             List<vw_SAPIODetails> result = new List<vw_SAPIODetails>();
 
-            result = db.vw_SAPIODetails.Where(w => w.fld_DTCreated == today || w.fld_DTModified == today).OrderByDescending(o => o.fld_DTModified).ToList();
+            result = db.vw_SAPIODetails.Where(w => (DbFunctions.TruncateTime(w.fld_DTCreated) == DbFunctions.TruncateTime(dt) || DbFunctions.TruncateTime(w.fld_DTModified) == DbFunctions.TruncateTime(dt))).OrderByDescending(o => o.fld_DTModified).ToList();
 
             if (!result.Any())
             {
@@ -3474,7 +3489,7 @@ namespace MVC_SYSTEM.Controllers
             int? WilayahID = 0;
             int? LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
-            string width = "1700", height = "1190";
+            string width = "1684", height = "1190";
             string imagepath = Server.MapPath("~/Asset/Images/");
 
             var gethtml = db3.tblHtmlReports.Find(id);
@@ -3522,7 +3537,7 @@ namespace MVC_SYSTEM.Controllers
 
             if ((wbsCode == null || wbsCode == "") && (wbsDesc == null || wbsDesc == ""))
             {
-                result = db.tbl_WBSSAP.OrderByDescending(o => o.fld_updatedDate).ToList();
+                result = db.tbl_WBSSAP.OrderBy(o => o.fld_wbsDescription).ThenByDescending(o=>o.fld_updatedDate).ToList();
 
                 if (!result.Any())
                 {
@@ -3534,7 +3549,7 @@ namespace MVC_SYSTEM.Controllers
 
             else if (wbsCode != null && wbsCode != "")
             {
-                result = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(wbsCode)).OrderBy(o => o.fld_wbsDescription).ThenByDescending(o => o.fld_updatedDate).ToList();
                 if (!result.Any())
                 {
                     ViewBag.Message = "Tiada Record";
@@ -3545,7 +3560,7 @@ namespace MVC_SYSTEM.Controllers
 
             else if (wbsDesc != null && wbsDesc != "")
             {
-                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc)).OrderByDescending(o => o.fld_updatedDate).ToList();
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc)).OrderBy(o => o.fld_wbsDescription).ThenByDescending(o => o.fld_updatedDate).ToList();
 
                 if (!result.Any())
                 {
@@ -3557,7 +3572,7 @@ namespace MVC_SYSTEM.Controllers
 
             else if (wbsCode != null && wbsDesc != "")
             {
-                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc) || w.fld_wbsElement.Contains(wbsCode)).OrderByDescending(o => o.fld_updatedDate).ToList();
+                result = db.tbl_WBSSAP.Where(w => w.fld_wbsDescription.Contains(wbsDesc) || w.fld_wbsElement.Contains(wbsCode)).OrderBy(o => o.fld_wbsDescription).ThenByDescending(o => o.fld_updatedDate).ToList();
 
                 if (!result.Any())
                 {
@@ -3585,15 +3600,14 @@ namespace MVC_SYSTEM.Controllers
 
             return PartialView();
         }
-
         [HttpPost]
-        public ActionResult _wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate)
+        public ActionResult _wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
+            DateTime getdatetime = timezone.gettimezone();
             var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
             var request = new SAPMD_FLQ.ZfmOpmsMaster();
             SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
@@ -3604,8 +3618,33 @@ namespace MVC_SYSTEM.Controllers
             SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
             SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
 
+            //Added by Shazana 20/12/2023 -check wbselement in tbliosap
+            SAPMD_FLQ.Zopmsslp[] zopmsslp = new SAPMD_FLQ.Zopmsslp[1];
+            SAPMD_FLQ.Zopmsslp zopmsslps = new SAPMD_FLQ.Zopmsslp();
+
+            SAPMD_FLQ.Bapiret2[] bapirtn1 = new SAPMD_FLQ.Bapiret2[1];
+            SAPMD_FLQ.Bapiret2 bapiret2_return1 = new SAPMD_FLQ.Bapiret2();
+
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
+
+
+
+            //declaration FPM
+            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+
+            FPMMD_FTQ.ZOPMSIO[] zopmsio = new FPMMD_FTQ.ZOPMSIO[1];
+            FPMMD_FTQ.ZOPMSIO zopmsios = new FPMMD_FTQ.ZOPMSIO();
+
+            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
+            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+
+            FPMClient.ClientCredentials.UserName.UserName = IDFPM;
+            FPMClient.ClientCredentials.UserName.Password = pwdFPM;
+
+            FPMClient.Open();
 
             oClient.Open();
 
@@ -3636,9 +3675,8 @@ namespace MVC_SYSTEM.Controllers
                         tbl_WBSSAP.fld_wbsDescription = a.Description;
                         tbl_WBSSAP.fld_Deleted = false;
                         tbl_WBSSAP.fld_createdby = getuserid.ToString();
-                        tbl_WBSSAP.fld_createdDate = DateTime.Today;
-                        tbl_WBSSAP.fld_updatedDate = DateTime.Today;
-
+                        tbl_WBSSAP.fld_createdDate = getdatetime;
+                        tbl_WBSSAP.fld_updatedDate = getdatetime;
 
                         db.tbl_WBSSAP.Add(tbl_WBSSAP);
                         db.SaveChanges();
@@ -3647,19 +3685,499 @@ namespace MVC_SYSTEM.Controllers
 
                     else
                     {
-                        if (wbsCode.fld_wbsElement.Contains(a.WbsElement))
-                        {
-                            //ModelsCorporate.tbl_WBSSAP _WBSSAP = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).Single();
+                        wbsCode.fld_updatedby = getuserid.ToString();
+                        wbsCode.fld_updatedDate = getdatetime;
+                        wbsCode.fld_wbsDescription = a.Description;
+                        db.Entry(wbsCode).State = EntityState.Modified;
+                        db.SaveChanges();
 
-
-                            wbsCode.fld_wbsDescription = a.Description;
-                            wbsCode.fld_updatedby = getuserid.ToString();
-                            wbsCode.fld_updatedDate = DateTime.Today;
-
-                            db.SaveChanges();
-                        }
+                        //ModelsCorporate.tbl_WBSSAP _WBSSAP = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).Single();
+                        //Commented by Shazana 1/11/2023
+                        //wbsCode.fld_wbsDescription = a.Description;
+                        //wbsCode.fld_updatedby = getuserid.ToString();
+                        //wbsCode.fld_updatedDate = getdatetime;
+                        //db.SaveChanges();
                     }
                 }
+
+                //Added by Shazana 1/11/2023
+                foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
+                {
+                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
+
+                    string LadangCode = "";
+                    int? LdgID = 0;
+                    int? WlyhID = 0;
+                    string kodwilayah = wbsCode.fld_wbsElement.Substring(3, 2);
+                    string kodladang = wbsCode.fld_wbsElement.Substring(5, 3);
+                    var GetLadangDetail = db.tbl_Ladang.Where(x => (x.fld_LdgCode == kodladang && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
+                    var GetWilayahDetail = db.tbl_Wilayah.Where(x => (x.fld_UrlRoute == kodwilayah && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
+
+                    tbl_IOSAP _ioSAP;
+
+                    if (GetLadangDetail != null)
+                    {
+                        LadangCode = GetLadangDetail.fld_LdgCode;
+                        LdgID = GetLadangDetail.fld_ID;
+                    }
+                    if (GetWilayahDetail != null)
+                    {
+                        WlyhID = GetWilayahDetail.fld_ID;
+                    }
+                    string today = DateTime.Today.ToString("yyyyMMdd");
+                    string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
+                    string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
+                    string kodComp = "", IndRanc = "", kodRanc = "", kodPkt = "", kodSubPkt = "", thnPembangunan = "", thnPembangunantanamsemula = "", busArea = "", IO1 = "", IO2 = "", IO3 = "", IO4 = "", IO5 = "", IO6 = "", tkhTanamMulaBhsl = "", PktPembgnn = "", tkhTahapPmbgnn = "", tkhMulaTanam = "", jnsTanaman = "", kodBlok = "", indJnsKiraan = "", jnsBlok = "", jnsKawasan = "", bilPenerokadlmBlok = "", ioFelda = "", ioFPM = "", wbsNo = "";
+                    decimal bilPeneroka = 0M, bilPenerokaPkt = 0M, jumLuasKeseluruhan = 0M, luasKwsnTanaman = 0M, luasKwsnBhasil = 0M, luasKwsnBhasilFelda = 0M, LuasKwsnBhasilPeneroka = 0M, jumLuasLotLdgFelda = 0M, jumLuasLotLdgPeneroka = 0M, bilKwsnUtama = 0M, bilKwsnRezab = 0M;
+
+                    //oClient.Open();
+
+
+                    try
+                    {
+
+                        if (_IOSAPCreate.fld_CompanyCode == "1000")
+                        {
+                            request = new SAPMD_FLQ.ZfmOpmsMaster();
+
+                            request.DateBegin = "";
+                            request.DateEnd = "";
+                            request.SlpComp = "1000";
+                            request.SlpIndBegin = "1";
+                            request.SlpIndEnd = "9";
+                            request.SlpPktBegin = "001";
+                            request.SlpPktEnd = "999";
+                            request.SlpRanBegin = LadangCode; //Nana modify jadikan ladang code 000-999
+                            request.SlpRanEnd = LadangCode;//Nana modify jadikan ladang code 000-999
+                            request.ItSlp = zopmsslp;
+
+                            iresponse = oClient.ZfmOpmsMaster(request);
+
+                            bapirtn1 = iresponse.Return;
+                            zopmsslp = iresponse.ItSlp;
+
+                            if (zopmsslp.Count() - 1 >= 0)
+                            {
+                                foreach (SAPMD_FLQ.Zopmsslp a1 in zopmsslp)
+                                {
+
+                                    kodComp = a1.Zbukrs;
+                                    IndRanc = a1.Zkdrgi;
+                                    kodRanc = a1.Zkdrgn;
+                                    kodPkt = a1.Zkdpkt;
+                                    kodSubPkt = a1.Zkdpk2;
+                                    thnPembangunan = a1.Zthnpb;
+                                    thnPembangunantanamsemula = a1.Zthpts;
+                                    busArea = a1.Zgpcos;
+                                    IO1 = a1.Zpsnd1;
+                                    IO2 = a1.Zpsnd2;
+                                    IO3 = a1.Zpsnd3;
+                                    IO4 = a1.Zpsnd4;
+                                    IO5 = a1.Zpsnd5;
+                                    IO6 = a1.Zpsnd6;
+                                    tkhTanamMulaBhsl = a1.Zthtmb;
+                                    PktPembgnn = a1.Zpkpbg;
+                                    tkhTahapPmbgnn = a1.Zththp;
+                                    tkhMulaTanam = a1.Zthmtm;
+                                    jnsTanaman = a1.Zjstnm;
+                                    kodBlok = a1.Zkdblk;
+                                    indJnsKiraan = a1.Zjenki;
+                                    jnsBlok = a1.Zjsblk;
+                                    jnsKawasan = a1.Zjskws;
+
+                                    bilPenerokadlmBlok = a1.Zblpr3;
+                                    bilPeneroka = a1.Zblpn2;
+                                    bilPenerokaPkt = a1.Zblot2;
+                                    jumLuasKeseluruhan = a1.Zjmltf;
+                                    luasKwsnTanaman = a1.Zlkwtn;
+                                    luasKwsnBhasil = a1.Zlskbh;
+                                    luasKwsnBhasilFelda = a1.Zlskbf;
+                                    LuasKwsnBhasilPeneroka = a1.Zlskbp;
+                                    jumLuasLotLdgFelda = a1.Zldltf;
+                                    jumLuasLotLdgPeneroka = a1.Zldltp;
+                                    bilKwsnUtama = a1.Zblkwu;
+                                    bilKwsnRezab = a1.Zblkwr;
+                                    ioFelda = a1.Ziofld;
+                                    ioFPM = a1.Ziofpm;
+                                    wbsNo = a1.ZprpsPosid1; //untuk rise
+                                                            //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
+                                                            //save db
+                                    if (a1.Zpsnd1 != null && a1.Zpsnd1 != "")
+                                    {
+                                        var getIODetails = db.tbl_IOSAP.Where(x => x.fld_IOcode == IO1 && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+
+                                        if (wbsCode.fld_wbsElement == wbsNo) //Nana tambah code ni
+                                        {
+                                            _ioSAP = new tbl_IOSAP();
+
+                                            _ioSAP.fld_PktCode = kodPkt;
+                                            _ioSAP.fld_SubPktCode = kodSubPkt;
+                                            _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                            _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                            _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                            _ioSAP.fld_LdgIndicator = IndRanc;
+                                            _ioSAP.fld_LdgKod = kodRanc;
+                                            _ioSAP.fld_JnsLot = "";
+                                            _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                            _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                            _ioSAP.fld_WilayahID = WlyhID;
+                                            _ioSAP.fld_LadangID = LdgID;
+                                            _ioSAP.fld_Deleted = false;
+                                            _ioSAP.fld_DTModified = getdatetime;
+                                            _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                            _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                            _ioSAP.fld_busArea = busArea;
+                                            _ioSAP.fld_IO2 = IO2;
+                                            _ioSAP.fld_IO3 = IO3;
+                                            _ioSAP.fld_IO4 = IO4;
+                                            _ioSAP.fld_IO5 = IO5;
+                                            _ioSAP.fld_IO6 = IO6;
+                                            _ioSAP.fld_PktPembgnn = PktPembgnn;
+
+                                            _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                            _ioSAP.fld_kodBlok = kodBlok;
+                                            _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                            _ioSAP.fld_jnsBlok = jnsBlok;
+                                            _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                            _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                            _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                            _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                            _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                            _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                            _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                            _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                            _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                            _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+
+                                            _ioSAP.fld_CreatedBy = "SAP";
+                                            _ioSAP.fld_ZIOFLD = ioFelda;
+                                            _ioSAP.fld_ZIOFPM = ioFPM;
+                                            _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                            if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                            {
+                                                _ioSAP.fld_CompanyCode = "8800";
+                                            }
+                                            else
+                                            {
+                                                _ioSAP.fld_CompanyCode = "1000";
+                                            }
+
+                                            db.SaveChanges();
+                                            db.Entry(_ioSAP).State = EntityState.Detached;
+                                        }
+
+                                        else if (tbl_WBSSAPCreate.fld_wbsElement.ToString() != wbsNo && getIODetails == null)
+                                        {
+                                            _ioSAP = new tbl_IOSAP();
+
+                                            _ioSAP.fld_IOcode = IO1;
+                                            _ioSAP.fld_PktCode = kodPkt;
+                                            _ioSAP.fld_SubPktCode = kodSubPkt;
+                                            _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                            _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                            _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                            _ioSAP.fld_LdgIndicator = IndRanc;
+                                            _ioSAP.fld_LdgKod = kodRanc;
+                                            //tbl_IOSAP.fld_StatusUsed = "NULL";
+                                            _ioSAP.fld_JnsLot = "";
+                                            _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                            _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                            _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                            _ioSAP.fld_LadangID = LdgID;
+                                            _ioSAP.fld_Deleted = false;
+                                            _ioSAP.fld_DTCreated = getdatetime;
+                                            _ioSAP.fld_DTModified = getdatetime;
+                                            _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                            _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                            _ioSAP.fld_busArea = busArea;
+                                            _ioSAP.fld_IO2 = IO2;
+                                            _ioSAP.fld_IO3 = IO3;
+                                            _ioSAP.fld_IO4 = IO4;
+                                            _ioSAP.fld_IO5 = IO5;
+                                            _ioSAP.fld_IO6 = IO6;
+                                            _ioSAP.fld_PktPembgnn = PktPembgnn;
+                                            if (tkhTanamMulaBhsl != "0000-00-00")
+                                            {
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+
+
+                                            if (tkhTahapPmbgnn != "0000-00-00")
+                                            {
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                            if (tkhMulaTanam != "0000-00-00")
+                                            {
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+
+                                            _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                            _ioSAP.fld_kodBlok = kodBlok;
+                                            _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                            _ioSAP.fld_jnsBlok = jnsBlok;
+                                            _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                            _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                            _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                            _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                            _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                            _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                            _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                            _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                            _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                            _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+                                            _ioSAP.fld_CreatedBy = "SAP";
+                                            _ioSAP.fld_ZIOFLD = ioFelda;
+                                            _ioSAP.fld_ZIOFPM = ioFPM;
+                                            _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                            if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                            {
+                                                _ioSAP.fld_CompanyCode = "8800";
+                                            }
+                                            else
+                                            {
+                                                _ioSAP.fld_CompanyCode = "1000";
+                                            }
+
+                                            db.tbl_IOSAP.Add(_ioSAP);
+                                            db.SaveChanges();
+                                            db.Entry(_ioSAP).State = EntityState.Detached;
+                                        }
+                                        tbl_SAPLog.fld_type = "S";
+                                        tbl_SAPLog.fld_message = "IO inbound success";
+                                        tbl_SAPLog.fld_msg1 = IO1;
+                                        tbl_SAPLog.fld_system = "SLP IO";
+                                        tbl_SAPLog.fld_logDate = getdatetime;
+                                        tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                        tbl_SAPLog.fld_negaraID = "1";
+                                        tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+                                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                                        db.SaveChanges();
+                                    }
+                                }
+
+                                tbl_SAPLog.fld_type = "S";
+                                tbl_SAPLog.fld_message = "IO inbound success";
+                                tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItSlp.Count());
+                                tbl_SAPLog.fld_system = "SLP IO";
+                                tbl_SAPLog.fld_logDate = getdatetime;
+                                tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                tbl_SAPLog.fld_negaraID = "1";
+                                tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+
+                                db.tbl_SAPLog.Add(tbl_SAPLog);
+                                db.SaveChanges();
+
+
+                            }
+
+                            if (iresponse.Return.Count() - 1 >= 1)
+                            {
+                                foreach (SAPMD_FLQ.Bapiret2 a1 in bapirtn1)
+                                {
+                                    type = a1.Type;
+                                    id = a1.Id;
+                                    number = a1.Number;
+                                    logno = a1.LogNo;
+                                    logmsgno = a1.LogMsgNo;
+                                    message = a1.Message;
+                                    message1 = a1.MessageV1;
+                                    message2 = a1.MessageV2;
+                                    message3 = a1.MessageV3;
+                                    message4 = a1.MessageV4;
+                                    parameter = a1.Parameter;
+                                    row = a1.Row.ToString();
+                                    field = a1.Field;
+                                    system = a1.System;
+
+                                    //save dlm db
+
+                                    tbl_SAPLog.fld_type = type;
+                                    tbl_SAPLog.fld_number = number;
+                                    tbl_SAPLog.fld_id = id;
+                                    tbl_SAPLog.fld_logno = logno;
+                                    tbl_SAPLog.fld_logmsgno = logmsgno;
+                                    tbl_SAPLog.fld_message = message;
+                                    tbl_SAPLog.fld_msg1 = message1;
+                                    tbl_SAPLog.fld_msg2 = message2;
+                                    tbl_SAPLog.fld_msg3 = message3;
+                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                    tbl_SAPLog.fld_parameter = parameter;
+                                    tbl_SAPLog.fld_row = row;
+                                    tbl_SAPLog.fld_field = field;
+                                    tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
+
+                                    tbl_SAPLog.fld_negaraID = NegaraID.ToString();
+                                    tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
+                                    tbl_SAPLog.fld_logDate = getdatetime;
+
+                                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                                    db.SaveChanges();
+                                }
+
+                            }
+                        }
+                        else if (_IOSAPCreate.fld_CompanyCode == "8800")
+                        {
+                            //FPM
+
+                            FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                            FPMReq.DATE_BEGIN = "";
+                            FPMReq.DATE_END = "";
+                            FPMReq.ORDERID_BEGIN = _IOSAPCreate.fld_IOCodeBegin;
+                            FPMReq.ORDERID_END = _IOSAPCreate.fld_IOCodeEnd;
+                            FPMReq.IT_IO = zopmsio;
+
+                            FPMRespond = FPMClient.ZFM_OPMS_MASTER(FPMReq);
+
+                            bAPIRET = FPMRespond.RETURN;
+                            zopmsio = FPMRespond.IT_IO;
+
+                            if (zopmsio.Count() - 1 >= 0)
+                            {
+                                foreach (FPMMD_FTQ.ZOPMSIO ab in zopmsio)
+                                {
+                                    var getIODetails = db.tbl_IOSAP.Where(x => x.fld_ZIOFPM == ab.AUFNR && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+
+                                    if (getIODetails == null)
+                                    {
+                                        _ioSAP = new tbl_IOSAP();
+
+                                        _ioSAP.fld_CompanyCode = ab.BUKRS;
+                                        _ioSAP.fld_ZIOFPM = ab.AUFNR;
+                                        _ioSAP.fld_LdgKod = LadangCode;
+                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                        _ioSAP.fld_LadangID = LdgID;
+                                        _ioSAP.fld_Deleted = false;
+                                        _ioSAP.fld_DTCreated = getdatetime;
+                                        _ioSAP.fld_DTModified = getdatetime;
+
+
+                                        db.tbl_IOSAP.Add(_ioSAP);
+                                        db.SaveChanges();
+                                        db.Entry(_ioSAP).State = EntityState.Detached;
+
+                                    }
+                                    else
+                                    {
+                                        _ioSAP = new tbl_IOSAP();
+
+                                        _ioSAP.fld_CompanyCode = ab.BUKRS;
+                                        _ioSAP.fld_ZIOFPM = ab.AUFNR;
+                                        _ioSAP.fld_LdgKod = LadangCode;
+                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                        _ioSAP.fld_LadangID = LdgID;
+                                        _ioSAP.fld_Deleted = false;
+                                        _ioSAP.fld_DTCreated = getdatetime;
+                                        _ioSAP.fld_DTModified = getdatetime;
+
+                                        db.SaveChanges();
+                                        db.Entry(_ioSAP).State = EntityState.Detached;
+                                    }
+
+                                    tbl_SAPLog.fld_type = "S";
+                                    tbl_SAPLog.fld_message = "IO inbound success";
+                                    tbl_SAPLog.fld_msg1 = _ioSAP.fld_ZIOFPM;
+                                    tbl_SAPLog.fld_system = "SAP IO";
+                                    tbl_SAPLog.fld_logDate = getdatetime;
+                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                    tbl_SAPLog.fld_negaraID = "1";
+                                    tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+                                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                                    db.SaveChanges();
+                                }
+                            }
+
+                            tbl_SAPLog.fld_type = "S";
+                            tbl_SAPLog.fld_message = "IO inbound success";
+                            tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
+                            tbl_SAPLog.fld_system = "SAP IO";
+                            tbl_SAPLog.fld_logDate = getdatetime;
+                            tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                            tbl_SAPLog.fld_negaraID = "1";
+                            tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+
+                            db.tbl_SAPLog.Add(tbl_SAPLog);
+                            db.SaveChanges();
+
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        tbl_SAPLog.fld_type = type;
+                        tbl_SAPLog.fld_number = number;
+                        tbl_SAPLog.fld_id = id;
+                        tbl_SAPLog.fld_logno = logno;
+                        tbl_SAPLog.fld_logmsgno = logmsgno;
+                        tbl_SAPLog.fld_message = Convert.ToString(ex);
+                        tbl_SAPLog.fld_msg1 = LadangCode;
+                        tbl_SAPLog.fld_msg2 = message2;
+                        tbl_SAPLog.fld_msg3 = message3;
+                        tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                        tbl_SAPLog.fld_parameter = parameter;
+                        tbl_SAPLog.fld_row = row;
+                        tbl_SAPLog.fld_field = field;
+                        tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
+
+                        tbl_SAPLog.fld_negaraID = NegaraID.ToString();
+                        tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
+                        tbl_SAPLog.fld_logDate = getdatetime;
+
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+
+                        if (ex.InnerException == null)
+                        {
+
+                        }
+                        else
+                        {
+                            string msg = ex.InnerException.ToString().Substring(63, 3);
+
+                            if (msg == "401")
+                            {
+                                ViewBag.msg = "Error 401: System Credential blocked. Kindly contact SAP basis team to unblock.";
+                            }
+
+                        }
+
+                    }
+                    finally
+                    {
+                        oClient.Close();
+                    }
+
+
+                    //Close Added by Shazana 18/12/2023
+
+
+                }
+                //Close by Shazana 1/11/2023
 
                 foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
                 {
@@ -3680,7 +4198,7 @@ namespace MVC_SYSTEM.Controllers
                         fld_row = Convert.ToString(b.Row),
                         fld_field = b.Field,
                         fld_system = "SAP WBS",
-                        fld_logDate = DateTime.Today
+                        fld_logDate = getdatetime
                     };
 
                     db.tbl_SAPLog.Add(tbl_SAPLog);
@@ -3688,27 +4206,28 @@ namespace MVC_SYSTEM.Controllers
                     db.Entry(tbl_SAPLog).State = EntityState.Detached;
                 }
 
-                string appname = Request.ApplicationPath;
-                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-                var lang = Request.RequestContext.RouteData.Values["lang"];
+                //string appname = Request.ApplicationPath;
+                //string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                //var lang = Request.RequestContext.RouteData.Values["lang"];
 
-                if (appname != "/")
-                {
-                    domain = domain + appname;
-                }
+                //if (appname != "/")
+                //{
+                //    domain = domain + appname;
+                //}
 
-                return Json(new
-                {
-                    success = true,
-                    msg = GlobalResCorp.msgUpdate,
-                    status = "success",
-                    checkingdata = "0",
-                    method = "1",
-                    //div = "",
-                    rootUrl = domain,
-                    action = "wbsList",
-                    controller = "SAPMasterData"
-                });
+                //return Json(new
+                //{
+                //    success = true,
+                //    msg = GlobalResCorp.msgUpdate,
+                //    status = "success",
+                //    checkingdata = "0",
+                //    method = "1",
+                //    //div = "",
+                //    rootUrl = domain,
+                //    action = "wbsList",
+                //    controller = "SAPMasterData"
+                //});
+
             }
             catch (Exception ex)
             {
@@ -3733,7 +4252,7 @@ namespace MVC_SYSTEM.Controllers
                             fld_row = Convert.ToString(b.Row),
                             fld_field = b.Field,
                             fld_system = "SAP WBS", //return dari SAP
-                            fld_logDate = DateTime.Today
+                            fld_logDate = getdatetime
                         };
 
                         db.tbl_SAPLog.Add(tbl_SAPLog);
@@ -3753,7 +4272,7 @@ namespace MVC_SYSTEM.Controllers
                             fld_message = msg,
                             fld_msg1 = "Unauthorized. Kindly check the ID with Basis Team.",
                             fld_system = "OPMS WBS", //return dari source code
-                            fld_logDate = DateTime.Today
+                            fld_logDate = getdatetime
                         };
 
                         db.tbl_SAPLog.Add(tbl_SAPLog);
@@ -3768,7 +4287,7 @@ namespace MVC_SYSTEM.Controllers
 
                             fld_message = ex.Message,
                             fld_system = "OPMS WBS", //return dari source code
-                            fld_logDate = DateTime.Today
+                            fld_logDate = getdatetime
                         };
 
                         db.tbl_SAPLog.Add(tbl_SAPLog);
@@ -3787,9 +4306,94 @@ namespace MVC_SYSTEM.Controllers
                 });
 
             }
-
-
-
+            return RedirectToAction("wbsTodayDate");
         }
+
+    public ActionResult wbsTodayDate()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            DateTime today = DateTime.Today;
+            DateTime getdatetime = timezone.gettimezone();
+            DateTime dt = getdatetime.Date;
+            var result = db.tbl_WBSSAP.Where(w=> (DbFunctions.TruncateTime(w.fld_createdDate) == DbFunctions.TruncateTime(dt) || DbFunctions.TruncateTime(w.fld_updatedDate) == DbFunctions.TruncateTime(dt))).OrderByDescending(o => o.fld_updatedDate);
+
+            if (!result.Any())
+            {
+                ViewBag.Message = "Tiada Record";
+                //return View();
+            }
+
+            ViewBag.Date = today.ToString("dd/MM/yyyy");
+            return View(result);
+        }
+
+
+        //[HttpPost]
+        //public ActionResult ConvertPDF3(string myHtml, string filename, string reportname)
+        //{
+        //    bool success = false;
+        //    string msg = "";
+        //    string status = "";
+        //    Models.tblHtmlReport tblHtmlReport = new Models.tblHtmlReport();
+
+        //    tblHtmlReport.fldHtlmCode = myHtml;
+        //    tblHtmlReport.fldFileName = filename;
+        //    tblHtmlReport.fldReportName = reportname;
+
+        //    db.tblHtmlReport.Add(tblHtmlReport);
+        //    db.SaveChanges();
+
+        //    success = true;
+        //    status = "success";
+
+        //    return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF3", "SAPMasterData", null, "http") + "/" + tblHtmlReport.fldID });
+        //}
+
+        ////kamalia - 03022021
+        //public ActionResult GetPDF3(int id)
+        //{
+        //    int? NegaraID = 0;
+        //    int? SyarikatID = 0;
+        //    int? WilayahID = 0;
+        //    int? LadangID = 0;
+        //    int? getuserid = getidentity.ID(User.Identity.Name);
+        //    string width = "1700", height = "1190";
+        //    string imagepath = Server.MapPath("~/Asset/Images/");
+
+        //    var gethtml = db.tblHtmlReport.Find(id);
+
+        //    GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+        //    var logosyarikat = db2.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
+
+
+        //    Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+
+        //    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+        //    pdfDoc.Open();
+
+        //    using (TextReader sr = new StringReader(gethtml.fldHtlmCode))
+        //    {
+        //        using (var htmlWorker = new HTMLWorkerExtended(pdfDoc, imagepath + logosyarikat))
+        //        {
+        //            htmlWorker.Open();
+        //            htmlWorker.Parse(sr);
+        //        }
+        //    }
+        //    pdfDoc.Close();
+        //    Response.ContentType = "application/pdf";
+        //    Response.AddHeader("content-disposition", "attachment;filename=" + gethtml.fldFileName + ".pdf");
+        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    Response.Write(pdfDoc);
+        //    Response.End();
+
+        //    db.Entry(gethtml).State = EntityState.Deleted;
+        //    db.SaveChanges();
+        //    return View();
+        //}
+
     }
-}
+    }

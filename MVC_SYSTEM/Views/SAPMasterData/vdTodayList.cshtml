@@ -30,7 +30,6 @@
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Vendor</th>
                                         <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan </th>
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh </th>
-                                        
 
                                     </tr>
                                 </thead>
@@ -38,22 +37,22 @@
                                     @foreach (var vdDetails in Model)
                                     {
                                         bil = bil + 1;
-                                        <tr>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_CompanyCode</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_VendorNo</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_Desc </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                                @if (vdDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
-                                                {
-                                                    @String.Format("{0:dd/MM/yyyy}", vdDetails.fld_DTCreated)
-                                                }
-                                                else
-                                                {
-                                                    @String.Format("{0:dd/MM/yyyy}", vdDetails.fld_DTModified)
-                                                }
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_CompanyCode</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_VendorNo</td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@vdDetails.fld_Desc </td>
+                                        <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                            @if (vdDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                            {
+                                                @String.Format("{0:dd/MM/yyyy}", vdDetails.fld_DTCreated)
+                                            }
+                                            else
+                                            {
+                                                @String.Format("{0:dd/MM/yyyy}", vdDetails.fld_DTModified)
+                                            }
+                                        </td>
+                                    </tr>
 
                                     }
                                 </tbody>
@@ -67,7 +66,7 @@
             else
             {
                 <div id="scrollArea" class="col-sm-12">
-                    Tiada data untuk hari ini.
+                    Tiada data
                 </div>
             }
 

@@ -1,10 +1,26 @@
 ﻿@model IEnumerable<MVC_SYSTEM.ModelsCorporate.tbl_CCSAP>
+@using MVC_SYSTEM.Class
 @{
     //ViewBag.Title = "ccList"; Dania comment
     ViewBag.Title = "Master Data CC "; //dania tambah
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
     int? bil = 0;
+    GetConfig GetConfig = new GetConfig();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "DataCCSAP_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+
+}
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
 }
 
 <div id="UpdateProgress1" style="display:none;">
@@ -16,11 +32,11 @@
 </div>
 
 <section class="content-wrapper main-content clear-fix">
-    @using (Html.BeginForm("ccList", "SAPMasterData", new { id = "" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="well bottom" style="margin-left : 10px; margin-right : 7px; margin-top : 10px; margin-bottom : 10px">
-            <div class="row">
+    <div class="well bottom" style="padding-bottom: 16px">
+        <div class="row">
+            @using (Html.BeginForm("ccList", "SAPMasterData", new { id = "" }))
+            {
+                @Html.AntiForgeryToken()
                 <div class="col-sm-2">
                     @Html.Label("Kod Syarikat")
                     @Html.DropDownList("CompanyCode", null, htmlAttributes: new { @class = "form-control" })
@@ -37,102 +53,123 @@
                     <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
 
                 </div>
-            </div>
-            <br />
+
+            }
         </div>
-    }
-    <br />
+    </div>
+    <div class="well" style="margin-top: 7px">
+        <div class="panel panel-primary">
 
-    <div class="panel panel-primary">
-
-        <div class="panel-heading">Data CC SAP</div>
-        <div class="panel-body">
-
-
-            @if (Model != null && Model.Count() != 0)
-            {
+            <div class="panel-heading">Data CC SAP</div>
+            <div class="panel-body">
 
 
+                @if (Model != null && Model.Count() != 0)
+                {
 
-                <br />
+                    <br />
 
-                <div class="col-sm-12" style="text-align:center;">
-                    <div id="scrollArea" class="col-sm-12">
+                    <div class="col-sm-12" style="text-align:center;">
+                        <div id="scrollArea" class="col-sm-12">
 
-                        <div class="CCList">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Syarikat</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Cost Center</th>
-                                        <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan Cost Center</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                            Tindakan Oleh
-                                        </th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                            Tarikh
-                                        </th>
+                            <div class="CCList">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Bil</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Syarikat</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Cost Center</th>
+                                            <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan Cost Center</th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                Tindakan Oleh
+                                            </th>
+                                            <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                Tarikh
+                                            </th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var ccDetails in Model)
-                                    {
-                                        bil = bil + 1;
-                                        <tr @if (ccDetails.fld_DTCreated == DateTime.Today || ccDetails.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CompanyCode</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CstCnter</td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_Desc </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                                @if (ccDetails.fld_ModifiedBy == "" || ccDetails.fld_ModifiedBy == null)
-                                                {
-                                                    @Html.DisplayFor(modelItem => ccDetails.fld_CreatedBy)
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => ccDetails.fld_ModifiedBy)
-                                                }
-
-                                            </td>
-
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
-                                                @if (ccDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
-                                                {
-                                                    @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTCreated)
-                                                }
-                                                else
-                                                {
-                                                    @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTModified)
-                                                }
-                                            </td>
                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ccDetails in Model)
+                                        {
+                                            bil = bil + 1;
+                                            <tr @if (ccDetails.fld_DTCreated == DateTime.Today || ccDetails.fld_DTModified == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CompanyCode</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CstCnter</td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_Desc </td>
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    @if (ccDetails.fld_ModifiedBy == "" || ccDetails.fld_ModifiedBy == null)
+                                                    {
+                                                        @Html.DisplayFor(modelItem => ccDetails.fld_CreatedBy)
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(modelItem => ccDetails.fld_ModifiedBy)
+                                                    }
 
-                                    }
-                                </tbody>
-                            </table>
+                                                </td>
+
+                                                <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                    @if (ccDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                    {
+                                                        @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTCreated)
+                                                    }
+                                                    else
+                                                    {
+                                                        @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTModified)
+                                                    }
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-
                     </div>
+                }
+
+                else
+                {
+                    <div id="scrollArea" class="col-sm-12">
+                        @GlobalResCorp.msgDataNotFound
+                    </div>
+                }
+
+
+
+                <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
+                    @*<input type="button" id="btnDisplaySearchResults" value="New Cost Center" onclick="location.href='@Url.Action("ccRequest", "SAPMasterData")'" class="btn btn-success " />
+                        <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>*@
+                    @*Added by Shazana 20/11/2023*@
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                    <a href=@Url.Action("ccRequest", "SAPMasterData") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">New Cost Centre</a>
+                    <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
+
                 </div>
-            }
-
-            else
-            {
-                <div id="scrollArea" class="col-sm-12">
-                    @GlobalResCorp.msgDataNotFound
-                </div>
-            }
-
-
-            <div class="col-sm-12 modal-footer" style="text-align:right; padding-top:7px;">
-                <input type="button" id="btnDisplaySearchResults" value="New Cost Center" onclick="location.href='@Url.Action("ccRequest", "SAPMasterData")'" class="btn btn-success " />
-                <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
             </div>
         </div>
     </div>
 </section>
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
 
 <script>
     function DisplayProgressMessage(ctl) {
@@ -141,4 +178,38 @@
         $("#UpdateProgress1").css("display", "");
         return true;
     }
+</script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "SAPMasterData")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
 </script>
