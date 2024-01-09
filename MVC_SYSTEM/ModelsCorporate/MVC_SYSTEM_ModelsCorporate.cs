@@ -153,7 +153,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         public virtual DbSet<tbl_Customer> tbl_Customer { get; set; }
         public virtual DbSet<tbl_WBSSAP> tbl_WBSSAP { get; set; }
         public virtual DbSet<vw_SAPIODetails> vw_SAPIODetails { get; set; }
-        public virtual DbSet<tbl_WBSSAP> tbl_WBSSAP { get; set; }
+        //public virtual DbSet<tbl_WBSSAP> tbl_WBSSAP { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_SubCarumanTambahan>()
