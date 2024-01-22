@@ -152,7 +152,8 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((GLCode == null || GLCode == "") && (GLDesc == null || GLDesc == ""))
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_CompanyCode).ThenBy(o=>o.fld_Desc).ToList();
+                    //Modified by Shazana 10/1/2024
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_CompanyCode != null).OrderBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_GLcode).ToList();
 
                     if (!result.Any())
                     {
@@ -166,7 +167,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLCode != null && GLCode != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode)).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode) && w.fld_CompanyCode != null).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_GLcode).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -179,7 +180,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLDesc != null && GLDesc != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc)).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc) && w.fld_CompanyCode != null).OrderByDescending(o => o.fld_CompanyCode).ThenBy(o => o.fld_GLcode).ToList();
 
                     if (!result.Any())
                     {
@@ -196,7 +197,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if ((GLCode == null || GLCode == "") && (GLDesc == null || GLDesc == ""))
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_GLcode).ToList();
 
                     if (!result.Any())
                     {
@@ -210,7 +211,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLCode != null && GLCode != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_GLcode.Contains(GLCode) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_GLcode).ToList();
                     if (!result.Any())
                     {
                         ViewBag.Message = "Tiada Record";
@@ -223,7 +224,7 @@ namespace MVC_SYSTEM.Controllers
 
                 else if (GLDesc != null && GLDesc != "")
                 {
-                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_Desc).ToList();
+                    result = db.tbl_GLSAP.Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && w.fld_Desc.Contains(GLDesc) && w.fld_CompanyCode == CompCode).OrderByDescending(o => o.fld_CompanyCode).ThenBy(x => x.fld_GLcode).ToList();
 
                     if (!result.Any())
                     {
@@ -245,7 +246,6 @@ namespace MVC_SYSTEM.Controllers
             //sampai sini
 
         }
-
         public ActionResult glRequest()
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -265,7 +265,6 @@ namespace MVC_SYSTEM.Controllers
 
             return PartialView("glRequest");
         }
-
         [HttpPost]
         public ActionResult _glRequest(tbl_SAPLog tbl_SAPLog, tbl_GLSAP _glSAP, tbl_GLSAPCreate _GLSAPCreate)
         {
@@ -747,7 +746,7 @@ namespace MVC_SYSTEM.Controllers
             var BirthDate = DateTime.Today.ToShortDateString();
             var birthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
             
-            var result = db.tbl_GLSAP.AsEnumerable().Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated.Date == birthDate || w.fld_DTModified.Date == birthDate)).OrderBy(x=>x.fld_DTModified).ThenBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_Desc).ToList();
+            var result = db.tbl_GLSAP.AsEnumerable().Where(w => w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID && (w.fld_DTCreated.Date == birthDate || w.fld_DTModified.Date == birthDate) && w.fld_CompanyCode != null).OrderBy(x=>x.fld_DTModified).ThenBy(o => o.fld_CompanyCode).ThenBy(o => o.fld_GLcode).ToList();
 
             if (!result.Any())
             {
@@ -2599,7 +2598,6 @@ namespace MVC_SYSTEM.Controllers
 
         }
 
-
         //farahin ubah whole function - 20 May 2023
         public ActionResult IOList(string IOCode, int? WilayahList, int? LadangList)
         {
@@ -2980,13 +2978,14 @@ namespace MVC_SYSTEM.Controllers
                             ioFelda = a.Ziofld;
                             ioFPM = a.Ziofpm;
                             wbsNo = a.ZprpsPosid1; //untuk rise
-                          //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
-                            //save db
+                                                   //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
+                                                   //save db
                             if (a.Zpsnd1 != null && a.Zpsnd1 != "")
                             {
                                 var getIODetails = db.tbl_IOSAP.Where(x => x.fld_IOcode == IO1 && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+                                var getWBSDetails = db.tbl_IOSAP.Where(x => x.fld_WBS == wbsNo && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
 
-                                if (getIODetails == null)
+                                if (getIODetails == null && getWBSDetails == null)
                                 {
                                     _ioSAP = new tbl_IOSAP();
 
@@ -3078,7 +3077,7 @@ namespace MVC_SYSTEM.Controllers
                                     db.Entry(_ioSAP).State = EntityState.Detached;
 
                                 }
-                                else
+                                else if (getIODetails != null && getWBSDetails == null)
                                 {
                                     _ioSAP = new tbl_IOSAP();
 
@@ -3188,7 +3187,117 @@ namespace MVC_SYSTEM.Controllers
                                     db.SaveChanges();
                                     db.Entry(_ioSAP).State = EntityState.Detached;
                                 }
+                                //Added by Shazana 19/1/2024 -if wbselement is exist and io code no value
+                                else if (getIODetails == null && getWBSDetails != null)
+                                {
+                                    _ioSAP = new tbl_IOSAP();
+                                    _ioSAP.fld_IOcode = IO1;
+                                    _ioSAP.fld_PktCode = kodPkt;
+                                    _ioSAP.fld_SubPktCode = kodSubPkt;
+                                    _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                    _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                    _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                    _ioSAP.fld_LdgIndicator = IndRanc;
+                                    _ioSAP.fld_LdgKod = kodRanc;
+                                    //tbl_IOSAP.fld_StatusUsed = "NULL";
+                                    _ioSAP.fld_JnsLot = "";
+                                    _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                    _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                    _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                    _ioSAP.fld_LadangID = LdgID;
+                                    _ioSAP.fld_Deleted = false;
+                                    _ioSAP.fld_DTModified = getdatetime;
+                                    _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                    _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                    _ioSAP.fld_busArea = busArea;
+                                    _ioSAP.fld_IO2 = IO2;
+                                    _ioSAP.fld_IO3 = IO3;
+                                    _ioSAP.fld_IO4 = IO4;
+                                    _ioSAP.fld_IO5 = IO5;
+                                    _ioSAP.fld_IO6 = IO6;
+                                    _ioSAP.fld_PktPembgnn = PktPembgnn;
+                                    if (tkhTanamMulaBhsl != "0000-00-00")
+                                    {
+                                        if (tkhTanamMulaBhsl == "0 - - ")
+                                        {
 
+                                        }
+                                        else
+                                        {
+                                            //_ioSAP.fld_tkhTanamMulaBhsl = Convert.ToDateTime(tkhTanamMulaBhsl);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //_ioSAP.fld_tkhTanamMulaBhsl = Convert.ToDateTime(tkhTanamMulaBhsl);
+                                    }
+
+
+                                    if (tkhTahapPmbgnn != "0000-00-00")
+                                    {
+                                        if (tkhTahapPmbgnn == "0 - - ")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            //_ioSAP.fld_tkhTahapPmbgnn = Convert.ToDateTime(tkhTahapPmbgnn);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //_ioSAP.fld_tkhTahapPmbgnn = Convert.ToDateTime(tkhTahapPmbgnn);
+                                    }
+                                    if (tkhMulaTanam != "0000-00-00")
+                                    {
+                                        if (tkhMulaTanam == "0 - - ")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            //tbl_IOSAP.fld_tkhMulaTanam = Convert.ToDateTime(tkhMulaTanam);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //_ioSAP.fld_tkhMulaTanam = Convert.ToDateTime(tkhMulaTanam);
+                                    }
+                                    _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                    _ioSAP.fld_kodBlok = kodBlok;
+                                    _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                    _ioSAP.fld_jnsBlok = jnsBlok;
+                                    _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                    _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                    _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                    _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                    _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                    _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                    _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                    _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                    _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                    _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+
+                                    _ioSAP.fld_CreatedBy = "SAP";
+                                    _ioSAP.fld_ZIOFLD = ioFelda;
+                                    _ioSAP.fld_ZIOFPM = ioFPM;
+                                   // _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                    if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                    {
+                                        _ioSAP.fld_CompanyCode = "8800";
+                                    }
+                                    else
+                                    {
+                                        _ioSAP.fld_CompanyCode = "1000";
+                                    }
+
+                                    db.SaveChanges();
+                                    db.Entry(_ioSAP).State = EntityState.Detached;
+                                }
                                 tbl_SAPLog.fld_type = "S";
                                 tbl_SAPLog.fld_message = "IO inbound success";
                                 tbl_SAPLog.fld_msg1 = IO1;
@@ -3341,22 +3450,326 @@ namespace MVC_SYSTEM.Controllers
                         }
                     }
 
-                    tbl_SAPLog.fld_type = "S";
-                    tbl_SAPLog.fld_message = "IO inbound success";
-                    tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
-                    tbl_SAPLog.fld_system = "SAP IO";
-                    tbl_SAPLog.fld_logDate = getdatetime;
-                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
-                    tbl_SAPLog.fld_negaraID = "1";
-                    tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+                    //Added by Shazana 18/1/2024
+                    {
+                        request = new SAPMD_FLQ.ZfmOpmsMaster();
+
+                        request.DateBegin = "";
+                        request.DateEnd = "";
+                        request.SlpComp = "1000";
+                        request.SlpIndBegin = "1";
+                        request.SlpIndEnd = "9";
+                        request.SlpPktBegin = "001";
+                        request.SlpPktEnd = "999";
+                        request.SlpRanBegin = LadangCode;
+                        request.SlpRanEnd = LadangCode;
+                        request.ItSlp = zopmsslp;
+
+                        iresponse = oClient.ZfmOpmsMaster(request);
+
+                        bapirtn = iresponse.Return;
+                        zopmsslp = iresponse.ItSlp;
+
+                        if (zopmsslp.Count() - 1 >= 0)
+                        {
+                            foreach (SAPMD_FLQ.Zopmsslp a in zopmsslp)
+                            {
+
+                                kodComp = a.Zbukrs;
+                                IndRanc = a.Zkdrgi;
+                                kodRanc = a.Zkdrgn;
+                                kodPkt = a.Zkdpkt;
+                                kodSubPkt = a.Zkdpk2;
+                                thnPembangunan = a.Zthnpb;
+                                thnPembangunantanamsemula = a.Zthpts;
+                                busArea = a.Zgpcos;
+                                IO1 = a.Zpsnd1;
+                                IO2 = a.Zpsnd2;
+                                IO3 = a.Zpsnd3;
+                                IO4 = a.Zpsnd4;
+                                IO5 = a.Zpsnd5;
+                                IO6 = a.Zpsnd6;
+                                tkhTanamMulaBhsl = a.Zthtmb;
+                                PktPembgnn = a.Zpkpbg;
+                                tkhTahapPmbgnn = a.Zththp;
+                                tkhMulaTanam = a.Zthmtm;
+                                jnsTanaman = a.Zjstnm;
+                                kodBlok = a.Zkdblk;
+                                indJnsKiraan = a.Zjenki;
+                                jnsBlok = a.Zjsblk;
+                                jnsKawasan = a.Zjskws;
+
+                                bilPenerokadlmBlok = a.Zblpr3;
+                                bilPeneroka = a.Zblpn2;
+                                bilPenerokaPkt = a.Zblot2;
+                                jumLuasKeseluruhan = a.Zjmltf;
+                                luasKwsnTanaman = a.Zlkwtn;
+                                luasKwsnBhasil = a.Zlskbh;
+                                luasKwsnBhasilFelda = a.Zlskbf;
+                                LuasKwsnBhasilPeneroka = a.Zlskbp;
+                                jumLuasLotLdgFelda = a.Zldltf;
+                                jumLuasLotLdgPeneroka = a.Zldltp;
+                                bilKwsnUtama = a.Zblkwu;
+                                bilKwsnRezab = a.Zblkwr;
+                                ioFelda = a.Ziofld;
+                                ioFPM = a.Ziofpm;
+                                wbsNo = a.ZprpsPosid1; //untuk rise
+                                                       //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
+                                                       //save db
+                                if (a.Zpsnd1 != null && a.Zpsnd1 != "")
+                                {
+                                    var getIODetails = db.tbl_IOSAP.Where(x => x.fld_IOcode == IO1 && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+
+                                    if (getIODetails == null)
+                                    {
+                                        _ioSAP = new tbl_IOSAP();
+
+                                        _ioSAP.fld_IOcode = IO1;
+                                        _ioSAP.fld_PktCode = kodPkt;
+                                        _ioSAP.fld_SubPktCode = kodSubPkt;
+                                        _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                        _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                        _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                        _ioSAP.fld_LdgIndicator = IndRanc;
+                                        _ioSAP.fld_LdgKod = kodRanc;
+                                        //tbl_IOSAP.fld_StatusUsed = "NULL";
+                                        _ioSAP.fld_JnsLot = "";
+                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                        _ioSAP.fld_LadangID = LdgID;
+                                        _ioSAP.fld_Deleted = false;
+                                        _ioSAP.fld_DTCreated = getdatetime;
+                                        _ioSAP.fld_DTModified = getdatetime;
+                                        _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                        _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                        _ioSAP.fld_busArea = busArea;
+                                        _ioSAP.fld_IO2 = IO2;
+                                        _ioSAP.fld_IO3 = IO3;
+                                        _ioSAP.fld_IO4 = IO4;
+                                        _ioSAP.fld_IO5 = IO5;
+                                        _ioSAP.fld_IO6 = IO6;
+                                        _ioSAP.fld_PktPembgnn = PktPembgnn;
+                                        if (tkhTanamMulaBhsl != "0000-00-00")
+                                        {
 
 
-                    db.tbl_SAPLog.Add(tbl_SAPLog);
-                    db.SaveChanges();
+                                        }
+                                        else
+                                        {
+
+                                        }
 
 
-                }
+                                        if (tkhTahapPmbgnn != "0000-00-00")
+                                        {
 
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                        if (tkhMulaTanam != "0000-00-00")
+                                        {
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+
+                                        _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                        _ioSAP.fld_kodBlok = kodBlok;
+                                        _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                        _ioSAP.fld_jnsBlok = jnsBlok;
+                                        _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                        _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                        _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                        _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                        _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                        _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                        _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                        _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                        _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                        _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+                                        _ioSAP.fld_CreatedBy = "SAP";
+                                        _ioSAP.fld_ZIOFLD = ioFelda;
+                                        _ioSAP.fld_ZIOFPM = ioFPM;
+                                        _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                        if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                        {
+                                            _ioSAP.fld_CompanyCode = "8800";
+                                        }
+                                        else
+                                        {
+                                            _ioSAP.fld_CompanyCode = "1000";
+                                        }
+
+                                        db.tbl_IOSAP.Add(_ioSAP);
+                                        db.SaveChanges();
+                                        db.Entry(_ioSAP).State = EntityState.Detached;
+
+                                    }
+                                    else
+                                    {
+                                        _ioSAP = new tbl_IOSAP();
+
+                                        _ioSAP.fld_PktCode = kodPkt;
+                                        _ioSAP.fld_SubPktCode = kodSubPkt;
+                                        _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                        _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                        _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                        _ioSAP.fld_LdgIndicator = IndRanc;
+                                        _ioSAP.fld_LdgKod = kodRanc;
+                                        //tbl_IOSAP.fld_StatusUsed = "NULL";
+                                        _ioSAP.fld_JnsLot = "";
+                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                        _ioSAP.fld_LadangID = LdgID;
+                                        _ioSAP.fld_Deleted = false;
+                                        _ioSAP.fld_DTModified = getdatetime;
+                                        _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                        _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                        _ioSAP.fld_busArea = busArea;
+                                        _ioSAP.fld_IO2 = IO2;
+                                        _ioSAP.fld_IO3 = IO3;
+                                        _ioSAP.fld_IO4 = IO4;
+                                        _ioSAP.fld_IO5 = IO5;
+                                        _ioSAP.fld_IO6 = IO6;
+                                        _ioSAP.fld_PktPembgnn = PktPembgnn;
+                                        if (tkhTanamMulaBhsl != "0000-00-00")
+                                        {
+                                            if (tkhTanamMulaBhsl == "0 - - ")
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                //_ioSAP.fld_tkhTanamMulaBhsl = Convert.ToDateTime(tkhTanamMulaBhsl);
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //_ioSAP.fld_tkhTanamMulaBhsl = Convert.ToDateTime(tkhTanamMulaBhsl);
+                                        }
+
+
+                                        if (tkhTahapPmbgnn != "0000-00-00")
+                                        {
+                                            if (tkhTahapPmbgnn == "0 - - ")
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                //_ioSAP.fld_tkhTahapPmbgnn = Convert.ToDateTime(tkhTahapPmbgnn);
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //_ioSAP.fld_tkhTahapPmbgnn = Convert.ToDateTime(tkhTahapPmbgnn);
+                                        }
+                                        if (tkhMulaTanam != "0000-00-00")
+                                        {
+                                            if (tkhMulaTanam == "0 - - ")
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                //tbl_IOSAP.fld_tkhMulaTanam = Convert.ToDateTime(tkhMulaTanam);
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //_ioSAP.fld_tkhMulaTanam = Convert.ToDateTime(tkhMulaTanam);
+                                        }
+                                        _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                        _ioSAP.fld_kodBlok = kodBlok;
+                                        _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                        _ioSAP.fld_jnsBlok = jnsBlok;
+                                        _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                        _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                        _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                        _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                        _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                        _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                        _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                        _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                        _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                        _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+
+                                        _ioSAP.fld_CreatedBy = "SAP";
+                                        _ioSAP.fld_ZIOFLD = ioFelda;
+                                        _ioSAP.fld_ZIOFPM = ioFPM;
+                                        _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                        if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                        {
+                                            _ioSAP.fld_CompanyCode = "8800";
+                                        }
+                                        else
+                                        {
+                                            _ioSAP.fld_CompanyCode = "1000";
+                                        }
+
+                                        db.SaveChanges();
+                                        db.Entry(_ioSAP).State = EntityState.Detached;
+                                    }
+
+                                    tbl_SAPLog.fld_type = "S";
+                                    tbl_SAPLog.fld_message = "IO inbound success";
+                                    tbl_SAPLog.fld_msg1 = IO1;
+                                    tbl_SAPLog.fld_system = "SLP IO";
+                                    tbl_SAPLog.fld_logDate = getdatetime;
+                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                    tbl_SAPLog.fld_negaraID = "1";
+                                    tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+                                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                                    db.SaveChanges();
+                                }
+                            }
+
+                            tbl_SAPLog.fld_type = "S";
+                            tbl_SAPLog.fld_message = "IO inbound success";
+                            tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItSlp.Count());
+                            tbl_SAPLog.fld_system = "SLP IO";
+                            tbl_SAPLog.fld_logDate = getdatetime;
+                            tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                            tbl_SAPLog.fld_negaraID = "1";
+                            tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+
+                            db.tbl_SAPLog.Add(tbl_SAPLog);
+                            db.SaveChanges();
+
+
+                        }
+                        tbl_SAPLog.fld_type = "S";
+                        tbl_SAPLog.fld_message = "IO inbound success";
+                        tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
+                        tbl_SAPLog.fld_system = "SAP IO";
+                        tbl_SAPLog.fld_logDate = getdatetime;
+                        tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                        tbl_SAPLog.fld_negaraID = "1";
+                        tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+
+                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                        db.SaveChanges();
+
+
+                    }
+                  
+                }  //Close Added by Shazana 18/1/2024
             }
             catch (Exception ex)
             {
@@ -3628,8 +4041,6 @@ namespace MVC_SYSTEM.Controllers
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
-
-
             //declaration FPM
             var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
             var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
@@ -3654,7 +4065,8 @@ namespace MVC_SYSTEM.Controllers
 
                 request.DateBegin = "";
                 request.DateEnd = "";
-                request.Wbs = tbl_WBSSAPCreate.fld_wbsElement;
+                //Modified by Shazana 15/1/2024
+                request.Wbs = tbl_WBSSAPCreate.fld_wbsElement.Substring(0, 5);
                 request.ItWbs = zopmswbs;
 
                 iresponse = oClient.ZfmOpmsMaster(request);
@@ -3665,8 +4077,9 @@ namespace MVC_SYSTEM.Controllers
 
                 foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
                 {
-                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
-
+                    //Modified by Shazana 15/1/2024
+                    //var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
+                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement == (a.WbsElement)).FirstOrDefault();
                     if (wbsCode == null)
                     {
                         tbl_WBSSAP = new tbl_WBSSAP();
@@ -3703,265 +4116,409 @@ namespace MVC_SYSTEM.Controllers
                 //Added by Shazana 1/11/2023
                 foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
                 {
-                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
+                    //Modified by Shazana 15/1/2024
+                    var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement == a.WbsElement).FirstOrDefault();
+                    string str = wbsCode.fld_wbsElement;
+                    string lastTwoAlphabet = str.Substring((str.Length - 2), 2);
+                    string ExcludeLastTwoAlphabet = str.Substring(0, (str.Length - 2));
 
-                    string LadangCode = "";
-                    int? LdgID = 0;
-                    int? WlyhID = 0;
-                    string kodwilayah = wbsCode.fld_wbsElement.Substring(3, 2);
-                    string kodladang = wbsCode.fld_wbsElement.Substring(5, 3);
-                    var GetLadangDetail = db.tbl_Ladang.Where(x => (x.fld_LdgCode == kodladang && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
-                    var GetWilayahDetail = db.tbl_Wilayah.Where(x => (x.fld_UrlRoute == kodwilayah && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
-
-                    tbl_IOSAP _ioSAP;
-
-                    if (GetLadangDetail != null)
+                    if (lastTwoAlphabet == ".B" && wbsCode.fld_wbsDescription.ToUpper() =="BURUH")
                     {
-                        LadangCode = GetLadangDetail.fld_LdgCode;
-                        LdgID = GetLadangDetail.fld_ID;
-                    }
-                    if (GetWilayahDetail != null)
-                    {
-                        WlyhID = GetWilayahDetail.fld_ID;
-                    }
-                    string today = DateTime.Today.ToString("yyyyMMdd");
-                    string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
-                    string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
-                    string kodComp = "", IndRanc = "", kodRanc = "", kodPkt = "", kodSubPkt = "", thnPembangunan = "", thnPembangunantanamsemula = "", busArea = "", IO1 = "", IO2 = "", IO3 = "", IO4 = "", IO5 = "", IO6 = "", tkhTanamMulaBhsl = "", PktPembgnn = "", tkhTahapPmbgnn = "", tkhMulaTanam = "", jnsTanaman = "", kodBlok = "", indJnsKiraan = "", jnsBlok = "", jnsKawasan = "", bilPenerokadlmBlok = "", ioFelda = "", ioFPM = "", wbsNo = "";
-                    decimal bilPeneroka = 0M, bilPenerokaPkt = 0M, jumLuasKeseluruhan = 0M, luasKwsnTanaman = 0M, luasKwsnBhasil = 0M, luasKwsnBhasilFelda = 0M, LuasKwsnBhasilPeneroka = 0M, jumLuasLotLdgFelda = 0M, jumLuasLotLdgPeneroka = 0M, bilKwsnUtama = 0M, bilKwsnRezab = 0M;
+                        string LadangCode = "";
+                        int? LdgID = 0;
+                        int? WlyhID = 0;
+                        string kodwilayah = wbsCode.fld_wbsElement.Substring(3, 2);
+                        string kodladang = wbsCode.fld_wbsElement.Substring(5, 3);
+                        var GetLadangDetail = db.tbl_Ladang.Where(x => (x.fld_LdgCode == kodladang && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
+                        var GetWilayahDetail = db.tbl_Wilayah.Where(x => (x.fld_ApprovalZone == kodwilayah && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)).FirstOrDefault();
+                        string CompanyCodeWBS = "";
+                        tbl_IOSAP _ioSAP;
 
-                    //oClient.Open();
-
-
-                    try
-                    {
-
-                        if (_IOSAPCreate.fld_CompanyCode == "1000")
+                        if (GetLadangDetail != null)
                         {
-                            request = new SAPMD_FLQ.ZfmOpmsMaster();
+                            LadangCode = GetLadangDetail.fld_LdgCode;
+                            LdgID = GetLadangDetail.fld_ID;
+                            CompanyCodeWBS = GetLadangDetail.fld_CostCentre;
+                        }
+                        if (GetWilayahDetail != null)
+                        {
+                            WlyhID = GetWilayahDetail.fld_ID;
+                        }
+                        string today = DateTime.Today.ToString("yyyyMMdd");
+                        string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
+                        string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
+                        string kodComp = "", IndRanc = "", kodRanc = "", kodPkt = "", kodSubPkt = "", thnPembangunan = "", thnPembangunantanamsemula = "", busArea = "", IO1 = "", IO2 = "", IO3 = "", IO4 = "", IO5 = "", IO6 = "", tkhTanamMulaBhsl = "", PktPembgnn = "", tkhTahapPmbgnn = "", tkhMulaTanam = "", jnsTanaman = "", kodBlok = "", indJnsKiraan = "", jnsBlok = "", jnsKawasan = "", bilPenerokadlmBlok = "", ioFelda = "", ioFPM = "", wbsNo = "";
+                        decimal bilPeneroka = 0M, bilPenerokaPkt = 0M, jumLuasKeseluruhan = 0M, luasKwsnTanaman = 0M, luasKwsnBhasil = 0M, luasKwsnBhasilFelda = 0M, LuasKwsnBhasilPeneroka = 0M, jumLuasLotLdgFelda = 0M, jumLuasLotLdgPeneroka = 0M, bilKwsnUtama = 0M, bilKwsnRezab = 0M;
 
-                            request.DateBegin = "";
-                            request.DateEnd = "";
-                            request.SlpComp = "1000";
-                            request.SlpIndBegin = "1";
-                            request.SlpIndEnd = "9";
-                            request.SlpPktBegin = "001";
-                            request.SlpPktEnd = "999";
-                            request.SlpRanBegin = LadangCode; //Nana modify jadikan ladang code 000-999
-                            request.SlpRanEnd = LadangCode;//Nana modify jadikan ladang code 000-999
-                            request.ItSlp = zopmsslp;
+                        //oClient.Open();
+                        try
+                        {
 
-                            iresponse = oClient.ZfmOpmsMaster(request);
-
-                            bapirtn1 = iresponse.Return;
-                            zopmsslp = iresponse.ItSlp;
-
-                            if (zopmsslp.Count() - 1 >= 0)
+                            if (_IOSAPCreate.fld_CompanyCode == "1000")
                             {
-                                foreach (SAPMD_FLQ.Zopmsslp a1 in zopmsslp)
+                                request = new SAPMD_FLQ.ZfmOpmsMaster();
+
+                                request.DateBegin = "";
+                                request.DateEnd = "";
+                                request.SlpComp = "1000";
+                                request.SlpIndBegin = "1";
+                                request.SlpIndEnd = "9";
+                                request.SlpPktBegin = "001";
+                                request.SlpPktEnd = "999";
+                                request.SlpRanBegin = LadangCode; //Nana modify jadikan ladang code 000-999
+                                request.SlpRanEnd = LadangCode;//Nana modify jadikan ladang code 000-999
+                                request.ItSlp = zopmsslp;
+
+                                iresponse = oClient.ZfmOpmsMaster(request);
+
+                                bapirtn1 = iresponse.Return;
+                                zopmsslp = iresponse.ItSlp;
+
+                                if (zopmsslp.Count() - 1 >= 0)
                                 {
-
-                                    kodComp = a1.Zbukrs;
-                                    IndRanc = a1.Zkdrgi;
-                                    kodRanc = a1.Zkdrgn;
-                                    kodPkt = a1.Zkdpkt;
-                                    kodSubPkt = a1.Zkdpk2;
-                                    thnPembangunan = a1.Zthnpb;
-                                    thnPembangunantanamsemula = a1.Zthpts;
-                                    busArea = a1.Zgpcos;
-                                    IO1 = a1.Zpsnd1;
-                                    IO2 = a1.Zpsnd2;
-                                    IO3 = a1.Zpsnd3;
-                                    IO4 = a1.Zpsnd4;
-                                    IO5 = a1.Zpsnd5;
-                                    IO6 = a1.Zpsnd6;
-                                    tkhTanamMulaBhsl = a1.Zthtmb;
-                                    PktPembgnn = a1.Zpkpbg;
-                                    tkhTahapPmbgnn = a1.Zththp;
-                                    tkhMulaTanam = a1.Zthmtm;
-                                    jnsTanaman = a1.Zjstnm;
-                                    kodBlok = a1.Zkdblk;
-                                    indJnsKiraan = a1.Zjenki;
-                                    jnsBlok = a1.Zjsblk;
-                                    jnsKawasan = a1.Zjskws;
-
-                                    bilPenerokadlmBlok = a1.Zblpr3;
-                                    bilPeneroka = a1.Zblpn2;
-                                    bilPenerokaPkt = a1.Zblot2;
-                                    jumLuasKeseluruhan = a1.Zjmltf;
-                                    luasKwsnTanaman = a1.Zlkwtn;
-                                    luasKwsnBhasil = a1.Zlskbh;
-                                    luasKwsnBhasilFelda = a1.Zlskbf;
-                                    LuasKwsnBhasilPeneroka = a1.Zlskbp;
-                                    jumLuasLotLdgFelda = a1.Zldltf;
-                                    jumLuasLotLdgPeneroka = a1.Zldltp;
-                                    bilKwsnUtama = a1.Zblkwu;
-                                    bilKwsnRezab = a1.Zblkwr;
-                                    ioFelda = a1.Ziofld;
-                                    ioFPM = a1.Ziofpm;
-                                    wbsNo = a1.ZprpsPosid1; //untuk rise
-                                                            //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
-                                                            //save db
-                                    if (a1.Zpsnd1 != null && a1.Zpsnd1 != "")
+                                    foreach (SAPMD_FLQ.Zopmsslp a1 in zopmsslp)
                                     {
-                                        var getIODetails = db.tbl_IOSAP.Where(x => x.fld_IOcode == IO1 && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
 
-                                        if (wbsCode.fld_wbsElement == wbsNo) //Nana tambah code ni
+                                        kodComp = a1.Zbukrs;
+                                        IndRanc = a1.Zkdrgi;
+                                        kodRanc = a1.Zkdrgn;
+                                        kodPkt = a1.Zkdpkt;
+                                        kodSubPkt = a1.Zkdpk2;
+                                        thnPembangunan = a1.Zthnpb;
+                                        thnPembangunantanamsemula = a1.Zthpts;
+                                        busArea = a1.Zgpcos;
+                                        IO1 = a1.Zpsnd1;
+                                        IO2 = a1.Zpsnd2;
+                                        IO3 = a1.Zpsnd3;
+                                        IO4 = a1.Zpsnd4;
+                                        IO5 = a1.Zpsnd5;
+                                        IO6 = a1.Zpsnd6;
+                                        tkhTanamMulaBhsl = a1.Zthtmb;
+                                        PktPembgnn = a1.Zpkpbg;
+                                        tkhTahapPmbgnn = a1.Zththp;
+                                        tkhMulaTanam = a1.Zthmtm;
+                                        jnsTanaman = a1.Zjstnm;
+                                        kodBlok = a1.Zkdblk;
+                                        indJnsKiraan = a1.Zjenki;
+                                        jnsBlok = a1.Zjsblk;
+                                        jnsKawasan = a1.Zjskws;
+
+                                        bilPenerokadlmBlok = a1.Zblpr3;
+                                        bilPeneroka = a1.Zblpn2;
+                                        bilPenerokaPkt = a1.Zblot2;
+                                        jumLuasKeseluruhan = a1.Zjmltf;
+                                        luasKwsnTanaman = a1.Zlkwtn;
+                                        luasKwsnBhasil = a1.Zlskbh;
+                                        luasKwsnBhasilFelda = a1.Zlskbf;
+                                        LuasKwsnBhasilPeneroka = a1.Zlskbp;
+                                        jumLuasLotLdgFelda = a1.Zldltf;
+                                        jumLuasLotLdgPeneroka = a1.Zldltp;
+                                        bilKwsnUtama = a1.Zblkwu;
+                                        bilKwsnRezab = a1.Zblkwr;
+                                        ioFelda = a1.Ziofld;
+                                        ioFPM = a1.Ziofpm;
+                                        wbsNo = a1.ZprpsPosid1; //untuk rise
+                                                                //-- if wbselement = wbsno //18/12/2023 tarik yg kedua
+                                                                //save db
+                                        if (a1.Zpsnd1 != null && a1.Zpsnd1 != "")
                                         {
-                                            _ioSAP = new tbl_IOSAP();
-
-                                            _ioSAP.fld_PktCode = kodPkt;
-                                            _ioSAP.fld_SubPktCode = kodSubPkt;
-                                            _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
-                                            _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
-                                            _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
-                                            _ioSAP.fld_LdgIndicator = IndRanc;
-                                            _ioSAP.fld_LdgKod = kodRanc;
-                                            _ioSAP.fld_JnsLot = "";
-                                            _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
-                                            _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
-                                            _ioSAP.fld_WilayahID = WlyhID;
-                                            _ioSAP.fld_LadangID = LdgID;
-                                            _ioSAP.fld_Deleted = false;
-                                            _ioSAP.fld_DTModified = getdatetime;
-                                            _ioSAP.fld_thnPembangunan = thnPembangunan;
-                                            _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
-                                            _ioSAP.fld_busArea = busArea;
-                                            _ioSAP.fld_IO2 = IO2;
-                                            _ioSAP.fld_IO3 = IO3;
-                                            _ioSAP.fld_IO4 = IO4;
-                                            _ioSAP.fld_IO5 = IO5;
-                                            _ioSAP.fld_IO6 = IO6;
-                                            _ioSAP.fld_PktPembgnn = PktPembgnn;
-
-                                            _ioSAP.fld_jnsTanaman = jnsTanaman;
-                                            _ioSAP.fld_kodBlok = kodBlok;
-                                            _ioSAP.fld_indJnsKiraan = indJnsKiraan;
-                                            _ioSAP.fld_jnsBlok = jnsBlok;
-                                            _ioSAP.fld_jnsKawasan = jnsKawasan;
-                                            _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
-                                            _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
-                                            _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
-                                            _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
-                                            _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
-                                            _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
-                                            _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
-                                            _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
-                                            _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
-
-                                            _ioSAP.fld_CreatedBy = "SAP";
-                                            _ioSAP.fld_ZIOFLD = ioFelda;
-                                            _ioSAP.fld_ZIOFPM = ioFPM;
-                                            _ioSAP.fld_WBS = wbsNo; //untuk rise
-
-                                            if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                            var getIODetails = db.tbl_IOSAP.Where(x => x.fld_IOcode == IO1 && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+                                            if (ExcludeLastTwoAlphabet == wbsNo && getIODetails != null) //Nana tambah code ni
                                             {
-                                                _ioSAP.fld_CompanyCode = "8800";
-                                            }
-                                            else
-                                            {
-                                                _ioSAP.fld_CompanyCode = "1000";
+                                                _ioSAP = new tbl_IOSAP();
+
+                                                _ioSAP.fld_PktCode = kodPkt;
+                                                _ioSAP.fld_SubPktCode = kodSubPkt;
+                                                _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                                _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                                _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                                _ioSAP.fld_LdgIndicator = IndRanc;
+                                                _ioSAP.fld_LdgKod = kodRanc;
+                                                _ioSAP.fld_JnsLot = "";
+                                                _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                                _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                                _ioSAP.fld_WilayahID = WlyhID == null ? null : WlyhID; ;
+                                                _ioSAP.fld_LadangID = LdgID;
+                                                _ioSAP.fld_Deleted = false;
+                                                _ioSAP.fld_DTModified = getdatetime;
+                                                _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                                _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                                _ioSAP.fld_busArea = busArea;
+                                                _ioSAP.fld_IO2 = IO2;
+                                                _ioSAP.fld_IO3 = IO3;
+                                                _ioSAP.fld_IO4 = IO4;
+                                                _ioSAP.fld_IO5 = IO5;
+                                                _ioSAP.fld_IO6 = IO6;
+                                                _ioSAP.fld_PktPembgnn = PktPembgnn;
+
+                                                _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                                _ioSAP.fld_kodBlok = kodBlok;
+                                                _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                                _ioSAP.fld_jnsBlok = jnsBlok;
+                                                _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                                _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                                _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                                _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                                _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                                _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                                _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                                _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                                _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                                _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+
+                                                _ioSAP.fld_CreatedBy = "SAP";
+                                                _ioSAP.fld_ZIOFLD = ioFelda;
+                                                _ioSAP.fld_ZIOFPM = ioFPM;
+                                                _ioSAP.fld_WBS = wbsNo; //untuk rise
+
+                                                if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                                {
+                                                    _ioSAP.fld_CompanyCode = "8800";
+                                                }
+                                                else
+                                                {
+                                                    _ioSAP.fld_CompanyCode = "1000";
+                                                }
+
+                                                db.SaveChanges();
+                                                db.Entry(_ioSAP).State = EntityState.Detached;
                                             }
 
+                                            else if (tbl_WBSSAPCreate.fld_wbsElement.ToString() == ExcludeLastTwoAlphabet && getIODetails == null)
+                                            {
+                                                _ioSAP = new tbl_IOSAP();
+
+                                                _ioSAP.fld_IOcode = IO1;
+                                                _ioSAP.fld_PktCode = kodPkt;
+                                                _ioSAP.fld_SubPktCode = kodSubPkt;
+                                                _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
+                                                _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
+                                                _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
+                                                _ioSAP.fld_LdgIndicator = IndRanc;
+                                                _ioSAP.fld_LdgKod = kodRanc;
+                                                //tbl_IOSAP.fld_StatusUsed = "NULL";
+                                                _ioSAP.fld_JnsLot = "";
+                                                _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                                _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                                _ioSAP.fld_WilayahID = WlyhID== null? null: WlyhID;
+                                                _ioSAP.fld_LadangID = LdgID;
+                                                _ioSAP.fld_Deleted = false;
+                                                _ioSAP.fld_DTCreated = getdatetime;
+                                                _ioSAP.fld_DTModified = getdatetime;
+                                                _ioSAP.fld_thnPembangunan = thnPembangunan;
+                                                _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
+                                                _ioSAP.fld_busArea = busArea;
+                                                _ioSAP.fld_IO2 = IO2;
+                                                _ioSAP.fld_IO3 = IO3;
+                                                _ioSAP.fld_IO4 = IO4;
+                                                _ioSAP.fld_IO5 = IO5;
+                                                _ioSAP.fld_IO6 = IO6;
+                                                _ioSAP.fld_PktPembgnn = PktPembgnn;
+                                                if (tkhTanamMulaBhsl != "0000-00-00")
+                                                {
+
+
+                                                }
+                                                else
+                                                {
+
+                                                }
+
+
+                                                if (tkhTahapPmbgnn != "0000-00-00")
+                                                {
+
+
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                                if (tkhMulaTanam != "0000-00-00")
+                                                {
+
+                                                }
+                                                else
+                                                {
+
+                                                }
+
+                                                _ioSAP.fld_jnsTanaman = jnsTanaman;
+                                                _ioSAP.fld_kodBlok = kodBlok;
+                                                _ioSAP.fld_indJnsKiraan = indJnsKiraan;
+                                                _ioSAP.fld_jnsBlok = jnsBlok;
+                                                _ioSAP.fld_jnsKawasan = jnsKawasan;
+                                                _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
+                                                _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
+                                                _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
+                                                _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
+                                                _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
+                                                _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
+                                                _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
+                                                _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
+                                                _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
+                                                _ioSAP.fld_CreatedBy = "SAP";
+                                                _ioSAP.fld_ZIOFLD = ioFelda;
+                                                _ioSAP.fld_ZIOFPM = ioFPM;
+                                                _ioSAP.fld_WBS = ExcludeLastTwoAlphabet; //untuk rise
+
+                                                if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
+                                                {
+                                                    _ioSAP.fld_CompanyCode = "8800";
+                                                }
+                                                else
+                                                {
+                                                    _ioSAP.fld_CompanyCode = "1000";
+                                                }
+
+                                                _ioSAP.fld_WBS = ExcludeLastTwoAlphabet;
+                                                db.tbl_IOSAP.Add(_ioSAP);
+                                                db.SaveChanges();
+                                                db.Entry(_ioSAP).State = EntityState.Detached;
+                                            }
+
+                                            tbl_SAPLog.fld_type = "S";
+                                            tbl_SAPLog.fld_message = "IO inbound success";
+                                            tbl_SAPLog.fld_msg1 = IO1;
+                                            tbl_SAPLog.fld_system = "SLP IO";
+                                            tbl_SAPLog.fld_logDate = getdatetime;
+                                            tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                            tbl_SAPLog.fld_negaraID = "1";
+                                            tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+                                            db.tbl_SAPLog.Add(tbl_SAPLog);
                                             db.SaveChanges();
-                                            db.Entry(_ioSAP).State = EntityState.Detached;
                                         }
+                                    }
 
-                                        else if (tbl_WBSSAPCreate.fld_wbsElement.ToString() != wbsNo && getIODetails == null)
+                                    tbl_SAPLog.fld_type = "S";
+                                    tbl_SAPLog.fld_message = "IO inbound success";
+                                    tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItSlp.Count());
+                                    tbl_SAPLog.fld_system = "SLP IO";
+                                    tbl_SAPLog.fld_logDate = getdatetime;
+                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                    tbl_SAPLog.fld_negaraID = "1";
+                                    tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+
+
+                                    db.tbl_SAPLog.Add(tbl_SAPLog);
+                                    db.SaveChanges();
+
+
+                                }
+
+                                if (iresponse.Return.Count() - 1 >= 1)
+                                {
+                                    foreach (SAPMD_FLQ.Bapiret2 a1 in bapirtn1)
+                                    {
+                                        type = a1.Type;
+                                        id = a1.Id;
+                                        number = a1.Number;
+                                        logno = a1.LogNo;
+                                        logmsgno = a1.LogMsgNo;
+                                        message = a1.Message;
+                                        message1 = a1.MessageV1;
+                                        message2 = a1.MessageV2;
+                                        message3 = a1.MessageV3;
+                                        message4 = a1.MessageV4;
+                                        parameter = a1.Parameter;
+                                        row = a1.Row.ToString();
+                                        field = a1.Field;
+                                        system = a1.System;
+
+                                        //save dlm db
+
+                                        tbl_SAPLog.fld_type = type;
+                                        tbl_SAPLog.fld_number = number;
+                                        tbl_SAPLog.fld_id = id;
+                                        tbl_SAPLog.fld_logno = logno;
+                                        tbl_SAPLog.fld_logmsgno = logmsgno;
+                                        tbl_SAPLog.fld_message = message;
+                                        tbl_SAPLog.fld_msg1 = message1;
+                                        tbl_SAPLog.fld_msg2 = message2;
+                                        tbl_SAPLog.fld_msg3 = message3;
+                                        tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
+                                        tbl_SAPLog.fld_parameter = parameter;
+                                        tbl_SAPLog.fld_row = row;
+                                        tbl_SAPLog.fld_field = field;
+                                        tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
+
+                                        tbl_SAPLog.fld_negaraID = NegaraID.ToString();
+                                        tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
+                                        tbl_SAPLog.fld_logDate = getdatetime;
+
+                                        db.tbl_SAPLog.Add(tbl_SAPLog);
+                                        db.SaveChanges();
+                                    }
+
+                                }
+                            }
+                            else if (_IOSAPCreate.fld_CompanyCode == "8800")
+                            {
+                                //FPM
+
+                                FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                                FPMReq.DATE_BEGIN = "";
+                                FPMReq.DATE_END = "";
+                                FPMReq.ORDERID_BEGIN = _IOSAPCreate.fld_IOCodeBegin;
+                                FPMReq.ORDERID_END = _IOSAPCreate.fld_IOCodeEnd;
+                                FPMReq.IT_IO = zopmsio;
+
+                                FPMRespond = FPMClient.ZFM_OPMS_MASTER(FPMReq);
+
+                                bAPIRET = FPMRespond.RETURN;
+                                zopmsio = FPMRespond.IT_IO;
+
+                                if (zopmsio.Count() - 1 >= 0)
+                                {
+                                    foreach (FPMMD_FTQ.ZOPMSIO ab in zopmsio)
+                                    {
+                                        var getIODetails = db.tbl_IOSAP.Where(x => x.fld_ZIOFPM == ab.AUFNR && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
+
+                                        if (getIODetails == null)
                                         {
                                             _ioSAP = new tbl_IOSAP();
 
-                                            _ioSAP.fld_IOcode = IO1;
-                                            _ioSAP.fld_PktCode = kodPkt;
-                                            _ioSAP.fld_SubPktCode = kodSubPkt;
-                                            _ioSAP.fld_LuasPkt = jumLuasKeseluruhan;
-                                            _ioSAP.fld_LuasKawTnmn = luasKwsnTanaman;
-                                            _ioSAP.fld_LuasKawBerhasil = luasKwsnBhasil;
-                                            _ioSAP.fld_LdgIndicator = IndRanc;
-                                            _ioSAP.fld_LdgKod = kodRanc;
-                                            //tbl_IOSAP.fld_StatusUsed = "NULL";
-                                            _ioSAP.fld_JnsLot = "";
+                                            _ioSAP.fld_CompanyCode = ab.BUKRS;
+                                            _ioSAP.fld_ZIOFPM = ab.AUFNR;
+                                            _ioSAP.fld_LdgKod = LadangCode;
                                             _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
                                             _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
-                                            _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
+                                            _ioSAP.fld_WilayahID = WlyhID == null ? null : WlyhID;
                                             _ioSAP.fld_LadangID = LdgID;
                                             _ioSAP.fld_Deleted = false;
                                             _ioSAP.fld_DTCreated = getdatetime;
                                             _ioSAP.fld_DTModified = getdatetime;
-                                            _ioSAP.fld_thnPembangunan = thnPembangunan;
-                                            _ioSAP.fld_thnPembangunantanamsemula = thnPembangunantanamsemula;
-                                            _ioSAP.fld_busArea = busArea;
-                                            _ioSAP.fld_IO2 = IO2;
-                                            _ioSAP.fld_IO3 = IO3;
-                                            _ioSAP.fld_IO4 = IO4;
-                                            _ioSAP.fld_IO5 = IO5;
-                                            _ioSAP.fld_IO6 = IO6;
-                                            _ioSAP.fld_PktPembgnn = PktPembgnn;
-                                            if (tkhTanamMulaBhsl != "0000-00-00")
-                                            {
 
-
-                                            }
-                                            else
-                                            {
-
-                                            }
-
-
-                                            if (tkhTahapPmbgnn != "0000-00-00")
-                                            {
-
-
-                                            }
-                                            else
-                                            {
-
-                                            }
-                                            if (tkhMulaTanam != "0000-00-00")
-                                            {
-
-                                            }
-                                            else
-                                            {
-
-                                            }
-
-                                            _ioSAP.fld_jnsTanaman = jnsTanaman;
-                                            _ioSAP.fld_kodBlok = kodBlok;
-                                            _ioSAP.fld_indJnsKiraan = indJnsKiraan;
-                                            _ioSAP.fld_jnsBlok = jnsBlok;
-                                            _ioSAP.fld_jnsKawasan = jnsKawasan;
-                                            _ioSAP.fld_bilPenerokadlmBlok = Convert.ToInt32(bilPenerokadlmBlok);
-                                            _ioSAP.fld_bilPeneroka = Convert.ToInt32(bilPeneroka);
-                                            _ioSAP.fld_bilPenerokaPkt = Convert.ToInt32(bilPenerokaPkt);
-                                            _ioSAP.fld_luasKwsnBhasilFelda = Convert.ToDecimal(luasKwsnBhasilFelda);
-                                            _ioSAP.fld_LuasKwsnBhasilPeneroka = Convert.ToDecimal(LuasKwsnBhasilPeneroka);
-                                            _ioSAP.fld_jumLuasLotLdgFelda = Convert.ToDecimal(jumLuasLotLdgFelda);
-                                            _ioSAP.fld_jumLuasLotLdgPeneroka = Convert.ToDecimal(jumLuasLotLdgPeneroka);
-                                            _ioSAP.fld_bilKwsnUtama = Convert.ToInt32(bilKwsnUtama);
-                                            _ioSAP.fld_bilKwsnRezab = Convert.ToInt32(bilKwsnRezab);
-                                            _ioSAP.fld_CreatedBy = "SAP";
-                                            _ioSAP.fld_ZIOFLD = ioFelda;
-                                            _ioSAP.fld_ZIOFPM = ioFPM;
-                                            _ioSAP.fld_WBS = wbsNo; //untuk rise
-
-                                            if (IndRanc == "2" || IndRanc == "5" || IndRanc == "6")
-                                            {
-                                                _ioSAP.fld_CompanyCode = "8800";
-                                            }
-                                            else
-                                            {
-                                                _ioSAP.fld_CompanyCode = "1000";
-                                            }
 
                                             db.tbl_IOSAP.Add(_ioSAP);
                                             db.SaveChanges();
                                             db.Entry(_ioSAP).State = EntityState.Detached;
+
                                         }
+                                        else
+                                        {
+                                            _ioSAP = new tbl_IOSAP();
+
+                                            _ioSAP.fld_CompanyCode = ab.BUKRS;
+                                            _ioSAP.fld_ZIOFPM = ab.AUFNR;
+                                            _ioSAP.fld_LdgKod = LadangCode;
+                                            _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                                            _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                                            _ioSAP.fld_WilayahID = WlyhID == null ? null : WlyhID;
+                                            _ioSAP.fld_LadangID = LdgID;
+                                            _ioSAP.fld_Deleted = false;
+                                            _ioSAP.fld_DTCreated = getdatetime;
+                                            _ioSAP.fld_DTModified = getdatetime;
+
+                                            db.SaveChanges();
+                                            db.Entry(_ioSAP).State = EntityState.Detached;
+                                        }
+
                                         tbl_SAPLog.fld_type = "S";
                                         tbl_SAPLog.fld_message = "IO inbound success";
-                                        tbl_SAPLog.fld_msg1 = IO1;
-                                        tbl_SAPLog.fld_system = "SLP IO";
+                                        tbl_SAPLog.fld_msg1 = _ioSAP.fld_ZIOFPM;
+                                        tbl_SAPLog.fld_system = "SAP IO";
                                         tbl_SAPLog.fld_logDate = getdatetime;
                                         tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                                         tbl_SAPLog.fld_negaraID = "1";
@@ -3974,8 +4531,8 @@ namespace MVC_SYSTEM.Controllers
 
                                 tbl_SAPLog.fld_type = "S";
                                 tbl_SAPLog.fld_message = "IO inbound success";
-                                tbl_SAPLog.fld_row = Convert.ToString(iresponse.ItSlp.Count());
-                                tbl_SAPLog.fld_system = "SLP IO";
+                                tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
+                                tbl_SAPLog.fld_system = "SAP IO";
                                 tbl_SAPLog.fld_logDate = getdatetime;
                                 tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
                                 tbl_SAPLog.fld_negaraID = "1";
@@ -3987,196 +4544,81 @@ namespace MVC_SYSTEM.Controllers
 
 
                             }
-
-                            if (iresponse.Return.Count() - 1 >= 1)
-                            {
-                                foreach (SAPMD_FLQ.Bapiret2 a1 in bapirtn1)
-                                {
-                                    type = a1.Type;
-                                    id = a1.Id;
-                                    number = a1.Number;
-                                    logno = a1.LogNo;
-                                    logmsgno = a1.LogMsgNo;
-                                    message = a1.Message;
-                                    message1 = a1.MessageV1;
-                                    message2 = a1.MessageV2;
-                                    message3 = a1.MessageV3;
-                                    message4 = a1.MessageV4;
-                                    parameter = a1.Parameter;
-                                    row = a1.Row.ToString();
-                                    field = a1.Field;
-                                    system = a1.System;
-
-                                    //save dlm db
-
-                                    tbl_SAPLog.fld_type = type;
-                                    tbl_SAPLog.fld_number = number;
-                                    tbl_SAPLog.fld_id = id;
-                                    tbl_SAPLog.fld_logno = logno;
-                                    tbl_SAPLog.fld_logmsgno = logmsgno;
-                                    tbl_SAPLog.fld_message = message;
-                                    tbl_SAPLog.fld_msg1 = message1;
-                                    tbl_SAPLog.fld_msg2 = message2;
-                                    tbl_SAPLog.fld_msg3 = message3;
-                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
-                                    tbl_SAPLog.fld_parameter = parameter;
-                                    tbl_SAPLog.fld_row = row;
-                                    tbl_SAPLog.fld_field = field;
-                                    tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
-
-                                    tbl_SAPLog.fld_negaraID = NegaraID.ToString();
-                                    tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                                    tbl_SAPLog.fld_logDate = getdatetime;
-
-                                    db.tbl_SAPLog.Add(tbl_SAPLog);
-                                    db.SaveChanges();
-                                }
-
-                            }
                         }
-                        else if (_IOSAPCreate.fld_CompanyCode == "8800")
+                        catch (Exception ex)
                         {
-                            //FPM
-
-                            FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-                            FPMReq.DATE_BEGIN = "";
-                            FPMReq.DATE_END = "";
-                            FPMReq.ORDERID_BEGIN = _IOSAPCreate.fld_IOCodeBegin;
-                            FPMReq.ORDERID_END = _IOSAPCreate.fld_IOCodeEnd;
-                            FPMReq.IT_IO = zopmsio;
-
-                            FPMRespond = FPMClient.ZFM_OPMS_MASTER(FPMReq);
-
-                            bAPIRET = FPMRespond.RETURN;
-                            zopmsio = FPMRespond.IT_IO;
-
-                            if (zopmsio.Count() - 1 >= 0)
-                            {
-                                foreach (FPMMD_FTQ.ZOPMSIO ab in zopmsio)
-                                {
-                                    var getIODetails = db.tbl_IOSAP.Where(x => x.fld_ZIOFPM == ab.AUFNR && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
-
-                                    if (getIODetails == null)
-                                    {
-                                        _ioSAP = new tbl_IOSAP();
-
-                                        _ioSAP.fld_CompanyCode = ab.BUKRS;
-                                        _ioSAP.fld_ZIOFPM = ab.AUFNR;
-                                        _ioSAP.fld_LdgKod = LadangCode;
-                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
-                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
-                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
-                                        _ioSAP.fld_LadangID = LdgID;
-                                        _ioSAP.fld_Deleted = false;
-                                        _ioSAP.fld_DTCreated = getdatetime;
-                                        _ioSAP.fld_DTModified = getdatetime;
-
-
-                                        db.tbl_IOSAP.Add(_ioSAP);
-                                        db.SaveChanges();
-                                        db.Entry(_ioSAP).State = EntityState.Detached;
-
-                                    }
-                                    else
-                                    {
-                                        _ioSAP = new tbl_IOSAP();
-
-                                        _ioSAP.fld_CompanyCode = ab.BUKRS;
-                                        _ioSAP.fld_ZIOFPM = ab.AUFNR;
-                                        _ioSAP.fld_LdgKod = LadangCode;
-                                        _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
-                                        _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
-                                        _ioSAP.fld_WilayahID = _IOSAPCreate.fld_WilayahID;
-                                        _ioSAP.fld_LadangID = LdgID;
-                                        _ioSAP.fld_Deleted = false;
-                                        _ioSAP.fld_DTCreated = getdatetime;
-                                        _ioSAP.fld_DTModified = getdatetime;
-
-                                        db.SaveChanges();
-                                        db.Entry(_ioSAP).State = EntityState.Detached;
-                                    }
-
-                                    tbl_SAPLog.fld_type = "S";
-                                    tbl_SAPLog.fld_message = "IO inbound success";
-                                    tbl_SAPLog.fld_msg1 = _ioSAP.fld_ZIOFPM;
-                                    tbl_SAPLog.fld_system = "SAP IO";
-                                    tbl_SAPLog.fld_logDate = getdatetime;
-                                    tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
-                                    tbl_SAPLog.fld_negaraID = "1";
-                                    tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
-
-                                    db.tbl_SAPLog.Add(tbl_SAPLog);
-                                    db.SaveChanges();
-                                }
-                            }
-
-                            tbl_SAPLog.fld_type = "S";
-                            tbl_SAPLog.fld_message = "IO inbound success";
-                            tbl_SAPLog.fld_row = Convert.ToString(FPMRespond.IT_IO.Count());
-                            tbl_SAPLog.fld_system = "SAP IO";
-                            tbl_SAPLog.fld_logDate = getdatetime;
+                            tbl_SAPLog.fld_type = type;
+                            tbl_SAPLog.fld_number = number;
+                            tbl_SAPLog.fld_id = id;
+                            tbl_SAPLog.fld_logno = logno;
+                            tbl_SAPLog.fld_logmsgno = logmsgno;
+                            tbl_SAPLog.fld_message = Convert.ToString(ex);
+                            tbl_SAPLog.fld_msg1 = LadangCode;
+                            tbl_SAPLog.fld_msg2 = message2;
+                            tbl_SAPLog.fld_msg3 = message3;
                             tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
-                            tbl_SAPLog.fld_negaraID = "1";
-                            tbl_SAPLog.fld_syarikatID = Convert.ToString(SyarikatID);
+                            tbl_SAPLog.fld_parameter = parameter;
+                            tbl_SAPLog.fld_row = row;
+                            tbl_SAPLog.fld_field = field;
+                            tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
+
+                            tbl_SAPLog.fld_negaraID = NegaraID.ToString();
+                            tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
+                            tbl_SAPLog.fld_logDate = getdatetime;
 
 
                             db.tbl_SAPLog.Add(tbl_SAPLog);
                             db.SaveChanges();
 
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        tbl_SAPLog.fld_type = type;
-                        tbl_SAPLog.fld_number = number;
-                        tbl_SAPLog.fld_id = id;
-                        tbl_SAPLog.fld_logno = logno;
-                        tbl_SAPLog.fld_logmsgno = logmsgno;
-                        tbl_SAPLog.fld_message = Convert.ToString(ex);
-                        tbl_SAPLog.fld_msg1 = LadangCode;
-                        tbl_SAPLog.fld_msg2 = message2;
-                        tbl_SAPLog.fld_msg3 = message3;
-                        tbl_SAPLog.fld_msg4 = getuserid + "-" + User.Identity.Name;
-                        tbl_SAPLog.fld_parameter = parameter;
-                        tbl_SAPLog.fld_row = row;
-                        tbl_SAPLog.fld_field = field;
-                        tbl_SAPLog.fld_system = "SLP IO IN WBS PROCESS";
-
-                        tbl_SAPLog.fld_negaraID = NegaraID.ToString();
-                        tbl_SAPLog.fld_syarikatID = SyarikatID.ToString();
-                        tbl_SAPLog.fld_logDate = getdatetime;
-
-
-                        db.tbl_SAPLog.Add(tbl_SAPLog);
-                        db.SaveChanges();
-
-                        if (ex.InnerException == null)
-                        {
-
-                        }
-                        else
-                        {
-                            string msg = ex.InnerException.ToString().Substring(63, 3);
-
-                            if (msg == "401")
+                            if (ex.InnerException == null)
                             {
-                                ViewBag.msg = "Error 401: System Credential blocked. Kindly contact SAP basis team to unblock.";
+
+                            }
+                            else
+                            {
+                                string msg = ex.InnerException.ToString().Substring(63, 3);
+
+                                if (msg == "401")
+                                {
+                                    ViewBag.msg = "Error 401: System Credential blocked. Kindly contact SAP basis team to unblock.";
+                                }
+
                             }
 
                         }
+                        finally
+                        {
+                            oClient.Close();
+                        }
+
+                        //Add new row in tbl_IOSAP if wbsElement is not exist
+                        var checkingWBSElement = db.tbl_IOSAP.Where(x => x.fld_WBS == ExcludeLastTwoAlphabet).FirstOrDefault();
+                        if (checkingWBSElement == null)
+                        {
+                            _ioSAP = new tbl_IOSAP();
+
+                            _ioSAP.fld_WBS = ExcludeLastTwoAlphabet;
+                            _ioSAP.fld_LdgKod = LadangCode;
+                            _ioSAP.fld_NegaraID = Convert.ToInt32(NegaraID);
+                            _ioSAP.fld_SyarikatID = Convert.ToInt32(SyarikatID);
+                            _ioSAP.fld_WilayahID = WlyhID == null ? null : WlyhID;
+                            _ioSAP.fld_LadangID = LdgID;
+                            _ioSAP.fld_Deleted = false;
+                            _ioSAP.fld_DTCreated = getdatetime;
+                            _ioSAP.fld_CreatedBy = getuserid.ToString();
+                            _ioSAP.fld_DTModified = getdatetime;
+                            _ioSAP.fld_CompanyCode = CompanyCodeWBS;
+
+                            db.tbl_IOSAP.Add(_ioSAP);
+                            db.SaveChanges();
+                            //db.Entry(_ioSAP).State = EntityState.Detached;
+                        }
+                        //Close Added by Shazana 18/12/2023
 
                     }
-                    finally
-                    {
-                        oClient.Close();
-                    }
-
-
-                    //Close Added by Shazana 18/12/2023
-
-
+   
                 }
+
                 //Close by Shazana 1/11/2023
 
                 foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
@@ -4309,7 +4751,7 @@ namespace MVC_SYSTEM.Controllers
             return RedirectToAction("wbsTodayDate");
         }
 
-    public ActionResult wbsTodayDate()
+        public ActionResult wbsTodayDate()
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
