@@ -95,7 +95,9 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [Required(ErrorMessage = "Rancangan is required.")]
         public int? fld_LadangID { get; set; }
-
+        //farahin tambah 20/07/2023
+        public string fld_IOCodeBegin { get; set; }
+        public string fld_IOCodeEnd { get; set; }
         public string fld_LdgIndicator { get; set; }
         public string fld_LdgIndicator2 { get; set; }
         public string fld_PktCode { get; set; }

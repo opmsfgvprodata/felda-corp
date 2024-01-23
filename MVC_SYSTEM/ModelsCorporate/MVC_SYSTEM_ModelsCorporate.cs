@@ -151,6 +151,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         public virtual DbSet<tbl_VDSAP> tbl_VDSAP { get; set; }
         public virtual DbSet<tbl_CMSAP> tbl_CMSAP { get; set; }
         public virtual DbSet<tbl_Customer> tbl_Customer { get; set; }
+        public virtual DbSet<tbl_WBSSAP> tbl_WBSSAP { get; set; }
         public virtual DbSet<vw_SAPIODetails> vw_SAPIODetails { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

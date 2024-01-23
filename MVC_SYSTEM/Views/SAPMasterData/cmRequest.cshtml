@@ -2,13 +2,11 @@
 @using MVC_SYSTEM.Class;
 
 @{
+    //Added and commented by Shazana 20/11/2023
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <section class="content-wrapper main-content clear-fix">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        @*<h3 class="modal-title">Add New User</h3>*@
-    </div>
 
     @using (Html.BeginForm("_cmRequest", "SAPMasterData", new { id = "" }))
     {
@@ -28,23 +26,22 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_CustomerNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_CustomerNo, new { htmlAttributes = new { @class = "form-control required", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.fld_CustomerNo, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-sm-1 text-center">
                                 -
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_CustomerNo2, new { htmlAttributes = new { @class = "form-control" } })
 
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
-
+                        <div class="col-sm-12" style="text-align:right; padding-top:7px;">
                             <input class="btn btn-success" type="submit" value="Sent" />
-
+                            <a href="@Url.Action("cmList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
                         </div>
                     </div>
                 </div>
