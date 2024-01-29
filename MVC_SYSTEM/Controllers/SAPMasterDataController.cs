@@ -303,37 +303,63 @@ namespace MVC_SYSTEM.Controllers
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
             string exception = "";
-            //FELDA
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
 
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            //FELDA -FLP
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
 
-            SAPMD_FLQ.Zopmsgl[] zopmsgl = new SAPMD_FLQ.Zopmsgl[1];
-            SAPMD_FLQ.Zopmsgl zopmsgls = new SAPMD_FLQ.Zopmsgl();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Zopmsgl[] zopmsgl = new SAPMD_FLP.Zopmsgl[1];
+            SAPMD_FLP.Zopmsgl zopmsgls = new SAPMD_FLP.Zopmsgl();
+
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
+
+            //FELDA -FLQ
+            //var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            //var request = new SAPMD_FLP.ZfmOpmsMaster();
+
+            //SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
+
+            //SAPMD_FLP.Zopmsgl[] zopmsgl = new SAPMD_FLP.Zopmsgl[1];
+            //SAPMD_FLP.Zopmsgl zopmsgls = new SAPMD_FLP.Zopmsgl();
+
+            //SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            //SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             List<ZOPMSGL> glAmount = new List<ZOPMSGL>();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
+            //FPM - FTP
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            //FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            FPMMD_FTP.ZOPMSGL[] zopmsGL = new FPMMD_FTP.ZOPMSGL[1];
+            FPMMD_FTP.ZOPMSGL zopmsGLs = new FPMMD_FTP.ZOPMSGL();
 
-            FPMMD_FTQ.ZOPMSGL[] zopmsGL = new FPMMD_FTQ.ZOPMSGL[1];
-            FPMMD_FTQ.ZOPMSGL zopmsGLs = new FPMMD_FTQ.ZOPMSGL();
-
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
+
+            //FPM - FTQ
+            //var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            //var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            //FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
+
+            //FPMMD_FTP.ZOPMSGL[] zopmsGL = new FPMMD_FTP.ZOPMSGL[1];
+            //FPMMD_FTP.ZOPMSGL zopmsGLs = new FPMMD_FTP.ZOPMSGL();
+
+            //FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            //FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
+
+            //FPMClient.ClientCredentials.UserName.UserName = IDFPM;
+            //FPMClient.ClientCredentials.UserName.Password = pwdFPM;
 
 
 
@@ -344,7 +370,7 @@ namespace MVC_SYSTEM.Controllers
                 try
                 {
 
-                    request = new SAPMD_FLQ.ZfmOpmsMaster();
+                    request = new SAPMD_FLP.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -362,7 +388,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (iresponse.ItGl.Count() - 1 >= 0)
                     {
-                        foreach (SAPMD_FLQ.Zopmsgl a in zopmsgl)
+                        foreach (SAPMD_FLP.Zopmsgl a in zopmsgl)
                         {
 
                             bukrs = a.Bukrs;
@@ -485,7 +511,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -546,7 +572,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                    FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
 
                     FPMReq.GL_COMP = _GLSAPCreate.fld_CompanyCode;
                     FPMReq.GL_BEGIN = _GLSAPCreate.fld_GLcode;
@@ -562,7 +588,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (FPMRespond.IT_GL.Count() - 1 >= 0)
                     {
-                        foreach (FPMMD_FTQ.ZOPMSGL a in zopmsGL)
+                        foreach (FPMMD_FTP.ZOPMSGL a in zopmsGL)
                         {
                             //save dlm db
                             //if glcode dah ade dlm db, update desc/deleted je.. kalau tak de baru save.
@@ -677,7 +703,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (FPMRespond.RETURN.Count() - 1 >= 0)
                         {
-                            foreach (FPMMD_FTQ.BAPIRET2 a in bAPIRET)
+                            foreach (FPMMD_FTP.BAPIRET2 a in bAPIRET)
                             {
 
                                 //save dlm db
@@ -950,30 +976,30 @@ namespace MVC_SYSTEM.Controllers
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
             //FELDA
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Zopmscc[] zopmscc = new SAPMD_FLQ.Zopmscc[1];
-            SAPMD_FLQ.Zopmscc zopmsccs = new SAPMD_FLQ.Zopmscc();
+            SAPMD_FLP.Zopmscc[] zopmscc = new SAPMD_FLP.Zopmscc[1];
+            SAPMD_FLP.Zopmscc zopmsccs = new SAPMD_FLP.Zopmscc();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
 
             //FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            FPMMD_FTQ.ZOPMSCC[] zopmsCC = new FPMMD_FTQ.ZOPMSCC[1];
-            FPMMD_FTQ.ZOPMSCC zopmsCCs = new FPMMD_FTQ.ZOPMSCC();
+            FPMMD_FTP.ZOPMSCC[] zopmsCC = new FPMMD_FTP.ZOPMSCC[1];
+            FPMMD_FTP.ZOPMSCC zopmsCCs = new FPMMD_FTP.ZOPMSCC();
 
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
@@ -985,7 +1011,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    request = new SAPMD_FLQ.ZfmOpmsMaster();
+                    request = new SAPMD_FLP.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -1004,7 +1030,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItCc.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLQ.Zopmscc a in zopmscc)
+                        foreach (SAPMD_FLP.Zopmscc a in zopmscc)
                         {
                             KOKRS = a.Kokrs;
                             KOSTL = a.Kostl;
@@ -1126,7 +1152,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -1187,7 +1213,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                    FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
 
                     FPMReq.CC_COMP = _CCSAPCreate.fld_CompanyCode;
                     FPMReq.CC_BEGIN = _CCSAPCreate.fld_CstCnter;
@@ -1203,7 +1229,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (FPMRespond.IT_CC.Count() - 1 >= 0)
                     {
-                        foreach (FPMMD_FTQ.ZOPMSCC a in zopmsCC)
+                        foreach (FPMMD_FTP.ZOPMSCC a in zopmsCC)
                         {
                             //save dlm db
                             //if glcode dah ade dlm db, update desc/deleted je.. kalau tak de baru save.
@@ -1318,7 +1344,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (FPMRespond.RETURN.Count() - 1 >= 0)
                         {
-                            foreach (FPMMD_FTQ.BAPIRET2 a in bAPIRET)
+                            foreach (FPMMD_FTP.BAPIRET2 a in bAPIRET)
                             {
 
                                 //save dlm db
@@ -1581,29 +1607,29 @@ namespace MVC_SYSTEM.Controllers
             string type = "", id = "", number = "", logno = "", logmsgno = "", message = "";
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
             //FELDA
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Zopmsvd[] zopmsvd = new SAPMD_FLQ.Zopmsvd[1];
-            SAPMD_FLQ.Zopmsvd zopmsvds = new SAPMD_FLQ.Zopmsvd();
+            SAPMD_FLP.Zopmsvd[] zopmsvd = new SAPMD_FLP.Zopmsvd[1];
+            SAPMD_FLP.Zopmsvd zopmsvds = new SAPMD_FLP.Zopmsvd();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
             //FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            FPMMD_FTQ.ZOPMSVD[] zopmsVD = new FPMMD_FTQ.ZOPMSVD[1];
-            FPMMD_FTQ.ZOPMSVD zopmsVDs = new FPMMD_FTQ.ZOPMSVD();
+            FPMMD_FTP.ZOPMSVD[] zopmsVD = new FPMMD_FTP.ZOPMSVD[1];
+            FPMMD_FTP.ZOPMSVD zopmsVDs = new FPMMD_FTP.ZOPMSVD();
 
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
@@ -1616,7 +1642,7 @@ namespace MVC_SYSTEM.Controllers
 
                 try
                 {
-                    request = new SAPMD_FLQ.ZfmOpmsMaster();
+                    request = new SAPMD_FLP.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -1635,7 +1661,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItVend.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLQ.Zopmsvd a in zopmsvd)
+                        foreach (SAPMD_FLP.Zopmsvd a in zopmsvd)
                         {
                             bukrs = a.Bukrs;
                             lifnr = a.Lifnr;
@@ -1727,7 +1753,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -1790,7 +1816,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                    FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
 
                     FPMReq.VD_COMP = _VDSAPCreate.fld_CompanyCode;
                     FPMReq.VD_BEGIN = _VDSAPCreate.fld_VendorNo;
@@ -1806,7 +1832,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (FPMRespond.IT_VEND.Count() - 1 >= 0)
                     {
-                        foreach (FPMMD_FTQ.ZOPMSVD a in zopmsVD)
+                        foreach (FPMMD_FTP.ZOPMSVD a in zopmsVD)
                         {
                             //save dlm db
                             //if glcode dah ade dlm db, update desc/deleted je.. kalau tak de baru save.
@@ -1921,7 +1947,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (FPMRespond.RETURN.Count() - 1 >= 0)
                         {
-                            foreach (FPMMD_FTQ.BAPIRET2 a in bAPIRET)
+                            foreach (FPMMD_FTP.BAPIRET2 a in bAPIRET)
                             {
 
                                 //save dlm db
@@ -2188,29 +2214,29 @@ namespace MVC_SYSTEM.Controllers
             string message1 = "", message2 = "", message3 = "", message4 = "", parameter = "", row = "", field = "", system = "";
 
             //FELDA
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Zopmscs[] zopmscs = new SAPMD_FLQ.Zopmscs[1];
-            SAPMD_FLQ.Zopmscs zopmscss = new SAPMD_FLQ.Zopmscs();
+            SAPMD_FLP.Zopmscs[] zopmscs = new SAPMD_FLP.Zopmscs[1];
+            SAPMD_FLP.Zopmscs zopmscss = new SAPMD_FLP.Zopmscs();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
             //FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            FPMMD_FTQ.ZOPMSCS[] zopmsCS = new FPMMD_FTQ.ZOPMSCS[1];
-            FPMMD_FTQ.ZOPMSCS zopmsCSs = new FPMMD_FTQ.ZOPMSCS();
+            FPMMD_FTP.ZOPMSCS[] zopmsCS = new FPMMD_FTP.ZOPMSCS[1];
+            FPMMD_FTP.ZOPMSCS zopmsCSs = new FPMMD_FTP.ZOPMSCS();
 
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
@@ -2223,7 +2249,7 @@ namespace MVC_SYSTEM.Controllers
 
                 try
                 {
-                    request = new SAPMD_FLQ.ZfmOpmsMaster();
+                    request = new SAPMD_FLP.ZfmOpmsMaster();
 
                     //request.DateBegin = tarikhmula;
                     //request.DateEnd = tarikhAkhir;
@@ -2242,7 +2268,7 @@ namespace MVC_SYSTEM.Controllers
                     if (iresponse.ItCust.Count() - 1 >= 0)
                     {
 
-                        foreach (SAPMD_FLQ.Zopmscs a in zopmscs)
+                        foreach (SAPMD_FLP.Zopmscs a in zopmscs)
                         {
                             bukrs = a.Bukrs;
                             kunnr = a.Kunnr;
@@ -2327,7 +2353,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (iresponse.Return.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                            foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                             {
                                 type = a.Type;
                                 id = a.Id;
@@ -2388,7 +2414,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 try
                 {
-                    FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                    FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
 
                     FPMReq.CS_COMP = _CMSAPCreate.fld_CompanyCode;
                     FPMReq.CS_BEGIN = _CMSAPCreate.fld_CustomerNo;
@@ -2404,7 +2430,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (FPMRespond.IT_CUST.Count() - 1 >= 0)
                     {
-                        foreach (FPMMD_FTQ.ZOPMSCS a in zopmsCS)
+                        foreach (FPMMD_FTP.ZOPMSCS a in zopmsCS)
                         {
                             //save dlm db
                             //if glcode dah ade dlm db, update desc/deleted je.. kalau tak de baru save.
@@ -2519,7 +2545,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         if (FPMRespond.RETURN.Count() - 1 >= 0)
                         {
-                            foreach (FPMMD_FTQ.BAPIRET2 a in bAPIRET)
+                            foreach (FPMMD_FTP.BAPIRET2 a in bAPIRET)
                             {
 
                                 //save dlm db
@@ -2882,30 +2908,30 @@ namespace MVC_SYSTEM.Controllers
 
 
             //declaration FELDA
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Zopmsslp[] zopmsslp = new SAPMD_FLQ.Zopmsslp[1];
-            SAPMD_FLQ.Zopmsslp zopmsslps = new SAPMD_FLQ.Zopmsslp();
+            SAPMD_FLP.Zopmsslp[] zopmsslp = new SAPMD_FLP.Zopmsslp[1];
+            SAPMD_FLP.Zopmsslp zopmsslps = new SAPMD_FLP.Zopmsslp();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
             //declaration FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            FPMMD_FTQ.ZOPMSIO[] zopmsio = new FPMMD_FTQ.ZOPMSIO[1];
-            FPMMD_FTQ.ZOPMSIO zopmsios = new FPMMD_FTQ.ZOPMSIO();
+            FPMMD_FTP.ZOPMSIO[] zopmsio = new FPMMD_FTP.ZOPMSIO[1];
+            FPMMD_FTP.ZOPMSIO zopmsios = new FPMMD_FTP.ZOPMSIO();
 
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
@@ -2916,7 +2942,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (_IOSAPCreate.fld_CompanyCode == "1000")
                 {
-                    request = new SAPMD_FLQ.ZfmOpmsMaster();
+                    request = new SAPMD_FLP.ZfmOpmsMaster();
 
                     request.DateBegin = "";
                     request.DateEnd = "";
@@ -2936,7 +2962,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (zopmsslp.Count() - 1 >= 0)
                     {
-                        foreach (SAPMD_FLQ.Zopmsslp a in zopmsslp)
+                        foreach (SAPMD_FLP.Zopmsslp a in zopmsslp)
                         {
 
                             kodComp = a.Zbukrs;
@@ -3330,7 +3356,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (iresponse.Return.Count() - 1 >= 1)
                     {
-                        foreach (SAPMD_FLQ.Bapiret2 a in bapirtn)
+                        foreach (SAPMD_FLP.Bapiret2 a in bapirtn)
                         {
                             type = a.Type;
                             id = a.Id;
@@ -3378,7 +3404,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     //FPM
 
-                    FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                    FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
                     FPMReq.DATE_BEGIN = "";
                     FPMReq.DATE_END = "";
                     FPMReq.ORDERID_BEGIN = _IOSAPCreate.fld_IOCodeBegin;
@@ -3392,7 +3418,7 @@ namespace MVC_SYSTEM.Controllers
 
                     if (zopmsio.Count() - 1 >= 0)
                     {
-                        foreach (FPMMD_FTQ.ZOPMSIO a in zopmsio)
+                        foreach (FPMMD_FTP.ZOPMSIO a in zopmsio)
                         {
                             var getIODetails = db.tbl_IOSAP.Where(x => x.fld_ZIOFPM == a.AUFNR && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
 
@@ -3453,7 +3479,7 @@ namespace MVC_SYSTEM.Controllers
 
                     //Added by Shazana 18/1/2024
                     {
-                        request = new SAPMD_FLQ.ZfmOpmsMaster();
+                        request = new SAPMD_FLP.ZfmOpmsMaster();
 
                         request.DateBegin = "";
                         request.DateEnd = "";
@@ -3473,7 +3499,7 @@ namespace MVC_SYSTEM.Controllers
 
                         if (zopmsslp.Count() - 1 >= 0)
                         {
-                            foreach (SAPMD_FLQ.Zopmsslp a in zopmsslp)
+                            foreach (SAPMD_FLP.Zopmsslp a in zopmsslp)
                             {
 
                                 kodComp = a.Zbukrs;
@@ -4021,36 +4047,36 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             DateTime getdatetime = timezone.gettimezone();
-            var oClient = new SAPMD_FLQ.ZWS_OPMS_MASTERClient();
-            var request = new SAPMD_FLQ.ZfmOpmsMaster();
-            SAPMD_FLQ.ZfmOpmsMasterResponse iresponse = new SAPMD_FLQ.ZfmOpmsMasterResponse();
+            var oClient = new SAPMD_FLP.ZWS_OPMS_MASTERClient();
+            var request = new SAPMD_FLP.ZfmOpmsMaster();
+            SAPMD_FLP.ZfmOpmsMasterResponse iresponse = new SAPMD_FLP.ZfmOpmsMasterResponse();
 
-            SAPMD_FLQ.Bus2054Detail[] zopmswbs = new SAPMD_FLQ.Bus2054Detail[1];
-            SAPMD_FLQ.Bus2054Detail zopmswbss = new SAPMD_FLQ.Bus2054Detail();
+            SAPMD_FLP.Bus2054Detail[] zopmswbs = new SAPMD_FLP.Bus2054Detail[1];
+            SAPMD_FLP.Bus2054Detail zopmswbss = new SAPMD_FLP.Bus2054Detail();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return = new SAPMD_FLP.Bapiret2();
 
             //Added by Shazana 20/12/2023 -check wbselement in tbliosap
-            SAPMD_FLQ.Zopmsslp[] zopmsslp = new SAPMD_FLQ.Zopmsslp[1];
-            SAPMD_FLQ.Zopmsslp zopmsslps = new SAPMD_FLQ.Zopmsslp();
+            SAPMD_FLP.Zopmsslp[] zopmsslp = new SAPMD_FLP.Zopmsslp[1];
+            SAPMD_FLP.Zopmsslp zopmsslps = new SAPMD_FLP.Zopmsslp();
 
-            SAPMD_FLQ.Bapiret2[] bapirtn1 = new SAPMD_FLQ.Bapiret2[1];
-            SAPMD_FLQ.Bapiret2 bapiret2_return1 = new SAPMD_FLQ.Bapiret2();
+            SAPMD_FLP.Bapiret2[] bapirtn1 = new SAPMD_FLP.Bapiret2[1];
+            SAPMD_FLP.Bapiret2 bapiret2_return1 = new SAPMD_FLP.Bapiret2();
 
             oClient.ClientCredentials.UserName.UserName = IDFelda;
             oClient.ClientCredentials.UserName.Password = pwdFelda;
 
             //declaration FPM
-            var FPMClient = new FPMMD_FTQ.ZWS_OPMS_MASTERDATAClient();
-            var FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
-            FPMMD_FTQ.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTQ.ZFM_OPMS_MASTERResponse();
+            var FPMClient = new FPMMD_FTP.ZWS_OPMS_MASTERDATAClient();
+            var FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
+            FPMMD_FTP.ZFM_OPMS_MASTERResponse FPMRespond = new FPMMD_FTP.ZFM_OPMS_MASTERResponse();
 
-            FPMMD_FTQ.ZOPMSIO[] zopmsio = new FPMMD_FTQ.ZOPMSIO[1];
-            FPMMD_FTQ.ZOPMSIO zopmsios = new FPMMD_FTQ.ZOPMSIO();
+            FPMMD_FTP.ZOPMSIO[] zopmsio = new FPMMD_FTP.ZOPMSIO[1];
+            FPMMD_FTP.ZOPMSIO zopmsios = new FPMMD_FTP.ZOPMSIO();
 
-            FPMMD_FTQ.BAPIRET2[] bAPIRET = new FPMMD_FTQ.BAPIRET2[1];
-            FPMMD_FTQ.BAPIRET2 bAPIRETs = new FPMMD_FTQ.BAPIRET2();
+            FPMMD_FTP.BAPIRET2[] bAPIRET = new FPMMD_FTP.BAPIRET2[1];
+            FPMMD_FTP.BAPIRET2 bAPIRETs = new FPMMD_FTP.BAPIRET2();
 
             FPMClient.ClientCredentials.UserName.UserName = IDFPM;
             FPMClient.ClientCredentials.UserName.Password = pwdFPM;
@@ -4061,7 +4087,7 @@ namespace MVC_SYSTEM.Controllers
 
             try
             {
-                request = new SAPMD_FLQ.ZfmOpmsMaster();
+                request = new SAPMD_FLP.ZfmOpmsMaster();
 
                 request.DateBegin = "";
                 request.DateEnd = "";
@@ -4075,7 +4101,7 @@ namespace MVC_SYSTEM.Controllers
                 zopmswbs = iresponse.ItWbs;
 
 
-                foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
+                foreach (SAPMD_FLP.Bus2054Detail a in zopmswbs)
                 {
                     //Modified by Shazana 15/1/2024
                     //var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement.Contains(a.WbsElement)).FirstOrDefault();
@@ -4114,7 +4140,7 @@ namespace MVC_SYSTEM.Controllers
                 }
 
                 //Added by Shazana 1/11/2023
-                foreach (SAPMD_FLQ.Bus2054Detail a in zopmswbs)
+                foreach (SAPMD_FLP.Bus2054Detail a in zopmswbs)
                 {
                     //Modified by Shazana 15/1/2024
                     var wbsCode = db.tbl_WBSSAP.Where(w => w.fld_wbsElement == a.WbsElement).FirstOrDefault();
@@ -4156,7 +4182,7 @@ namespace MVC_SYSTEM.Controllers
 
                             if (_IOSAPCreate.fld_CompanyCode == "1000")
                             {
-                                request = new SAPMD_FLQ.ZfmOpmsMaster();
+                                request = new SAPMD_FLP.ZfmOpmsMaster();
 
                                 request.DateBegin = "";
                                 request.DateEnd = "";
@@ -4176,7 +4202,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 if (zopmsslp.Count() - 1 >= 0)
                                 {
-                                    foreach (SAPMD_FLQ.Zopmsslp a1 in zopmsslp)
+                                    foreach (SAPMD_FLP.Zopmsslp a1 in zopmsslp)
                                     {
 
                                         kodComp = a1.Zbukrs;
@@ -4409,7 +4435,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 if (iresponse.Return.Count() - 1 >= 1)
                                 {
-                                    foreach (SAPMD_FLQ.Bapiret2 a1 in bapirtn1)
+                                    foreach (SAPMD_FLP.Bapiret2 a1 in bapirtn1)
                                     {
                                         type = a1.Type;
                                         id = a1.Id;
@@ -4457,7 +4483,7 @@ namespace MVC_SYSTEM.Controllers
                             {
                                 //FPM
 
-                                FPMReq = new FPMMD_FTQ.ZFM_OPMS_MASTER();
+                                FPMReq = new FPMMD_FTP.ZFM_OPMS_MASTER();
                                 FPMReq.DATE_BEGIN = "";
                                 FPMReq.DATE_END = "";
                                 FPMReq.ORDERID_BEGIN = _IOSAPCreate.fld_IOCodeBegin;
@@ -4471,7 +4497,7 @@ namespace MVC_SYSTEM.Controllers
 
                                 if (zopmsio.Count() - 1 >= 0)
                                 {
-                                    foreach (FPMMD_FTQ.ZOPMSIO ab in zopmsio)
+                                    foreach (FPMMD_FTP.ZOPMSIO ab in zopmsio)
                                     {
                                         var getIODetails = db.tbl_IOSAP.Where(x => x.fld_ZIOFPM == ab.AUFNR && x.fld_LadangID == LdgID && x.fld_WilayahID == _IOSAPCreate.fld_WilayahID).FirstOrDefault();
 
@@ -4621,7 +4647,7 @@ namespace MVC_SYSTEM.Controllers
 
                 //Close by Shazana 1/11/2023
 
-                foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
+                foreach (SAPMD_FLP.Bapiret2 b in bapirtn)
                 {
                     tbl_SAPLog = new tbl_SAPLog
                     {
@@ -4675,7 +4701,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (ex == null)
                 {
-                    foreach (SAPMD_FLQ.Bapiret2 b in bapirtn)
+                    foreach (SAPMD_FLP.Bapiret2 b in bapirtn)
                     {
                         tbl_SAPLog = new tbl_SAPLog
                         {

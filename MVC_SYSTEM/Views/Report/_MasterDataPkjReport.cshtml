@@ -98,7 +98,11 @@
                                     @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhMulaKhidmat)
                                 </td>
                                 <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodSebabTakAktif, "sbbTakAktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                    @*fatin add checking - 18/01/2023*@
+                                    @if (workerMasterData.fld_KodStatusAktif == "2")
+                                    {
+                                        @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodSebabTakAktif, "sbbTakAktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                    }
                                 </td>
                                 <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                                     @if (workerMasterData.fld_TarikhTamatPassport <= time.gettimezone().Date)
