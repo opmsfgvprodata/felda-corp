@@ -1,7 +1,10 @@
 ﻿@model MVC_SYSTEM.ModelsCorporate.tbl_GLSAPCreate
 @using MVC_SYSTEM.Class;
 
-@{ 
+@{
+    ViewBag.Title = "Request New GL";
+    //Added and commented by Shazana 20/11/2023
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -13,14 +16,16 @@
     </div>
 </div>
 @*<div id='myModal1' class='modal fade in'>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id='myModalContent' data-refresh="true"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent' data-refresh="true"></div>
+            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <section class="content-wrapper main-content clear-fix">
-   
+    @*<div class="modal-header" style="border: 0">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>*@
 
     @using (Html.BeginForm("_glRequest", "SAPMasterData", new { id = "" }))
     {
@@ -33,39 +38,40 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_CompanyCode, "SAP Company Code", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-9">
-                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="col-md-2">
+                                @Html.DropDownList("fld_CompanyCode", null, htmlAttributes: new { @class = "form-control required", required = "required" })
+                                @Html.ValidationMessageFor(model => model.fld_CompanyCode, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fld_GLcode, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 @Html.EditorFor(model => model.fld_GLcode, new { htmlAttributes = new { @class = "form-control required", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.fld_GLcode, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-sm-1 text-center">
                                 -
                             </div>
-                            <div class="col-sm-4">
-                                @Html.EditorFor(model => model.fld_GLcode2, new { htmlAttributes = new { @class = "form-control"} })
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_GLcode2, new { htmlAttributes = new { @class = "form-control" } })
 
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-12" style="text-align:right; padding-top:7px;">
 
                             <input class="btn btn-success" type="submit" value="Sent" />
-
+                            <a href="@Url.Action("glList", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
 
-     }
+    }
 
-    </section>
+</section>
 
 <script>
     function DisplayProgressMessage(ctl) {
@@ -76,12 +82,12 @@
     }
 </script>
 @*<script type="text/javascript">
-    $(window).on("load", function () {
-        $('#myModalContent').load("@Url.Action("glTodayDate", "SAPMasterData", null, this.Request.Url.Scheme)", function () {
-            $('#myModal1').modal({
-                backdrop: 'static', keyboard: false
-            }, 'show');
-            return false;
-        })
-    });
-</script>*@
+        $(window).on("load", function () {
+            $('#myModalContent').load("@Url.Action("glTodayDate", "SAPMasterData", null, this.Request.Url.Scheme)", function () {
+                $('#myModal1').modal({
+                    backdrop: 'static', keyboard: false
+                }, 'show');
+                return false;
+            })
+        });
+    </script>*@

@@ -26,8 +26,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(400)]
         public string fld_UrlRoute { get; set; }
 
-        //[StringLength(10)]
-        //public string fld_ApprovalZone { get; set; }
+        //Added by Shazana on 20/1/2024
+        [StringLength(10)]
+        public string fld_ApprovalZone { get; set; }
     }
 
     [Table ("tbl_Wilayah")]
@@ -54,7 +55,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         [StringLength(400)]
         public string fld_UrlRoute { get; set; }
 
-        //[StringLength(10)]
-        //public string fld_ApprovalZone { get; set; }
+        //Added by Shazana on 20/1/2024
+        [StringLength(10)]
+        public string fld_ApprovalZone { get; set; }
     }
 }
