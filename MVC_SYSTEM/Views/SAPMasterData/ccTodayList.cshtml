@@ -38,9 +38,9 @@
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Syarikat</th>
                                         <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Kod Cost Center</th>
                                         <th bgcolor="#ffcc80" width="30%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Keterangan Cost Center</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tindakan Oleh</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh Download</th>
-                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Last Modified</th>
+
+                                        <th bgcolor="#ffcc80" width="10%" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">Tarikh </th>
+
 
                                     </tr>
                                 </thead>
@@ -53,9 +53,16 @@
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CompanyCode</td>
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CstCnter</td>
                                             <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_Desc </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@ccDetails.fld_CreatedBy </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @ccDetails.fld_DTCreated) </td>
-                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1"> @String.Format("{0:dd/MM/yyyy}", @ccDetails.fld_DTModified)</td>
+                                            <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">
+                                                @if (ccDetails.fld_DTModified == Convert.ToDateTime("1900-01-01 00:00:00.000"))
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTCreated)
+                                                }
+                                                else
+                                                {
+                                                    @String.Format("{0:dd/MM/yyyy}", ccDetails.fld_DTModified)
+                                                }
+                                            </td>
                                         </tr>
 
                                     }
@@ -69,9 +76,9 @@
 
             else
             {
-                <div id="scrollArea" class="col-sm-12">
-                    Tiada data untuk hari ini
-                </div>
+        <div id="scrollArea" class="col-sm-12">
+            Tiada data
+        </div>
             }
 
 
