@@ -3647,6 +3647,10 @@
     <Content Include="Views\MaybankFileGen\_tngIndividu.cshtml" />
     <Content Include="Views\Report\PermohonanPekerjaBaruReport.cshtml" />
     <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
+    <Content Include="Views\Report\_PermohonanIDBaruReport.cshtml" />
+    <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
+    <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
+    <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
