@@ -1,5 +1,4 @@
-﻿
-@*@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsEstate.tbl_CutiPeruntukan>*@
+﻿@*@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsEstate.tbl_CutiPeruntukan>*@
 @using MVC_SYSTEM.Class;
 @{
     ViewBag.Title = GlobalResCorp.lblTitlePaidLeaveGenerateMaintenance;
@@ -15,6 +14,8 @@
 }
 
 <script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Asset/select2/css/select2.min.css" rel="stylesheet" />
+<script src="~/Asset/select2/js/select2.min.js"></script>
 
 @section scripts{
     @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
@@ -25,31 +26,35 @@
         @using (Ajax.BeginForm("_PaidLeaveGenerateInfoMaintenance", "Maintenance", null, options, new { @id = "paidLeaveGenerateSearchDetails" }))
         {
             @Html.AntiForgeryToken()
-        <div class="row">
-            <div class="col-sm-2">
-                <label>Syarikat</label>
-                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Syarikat</label>
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblRegion</label>
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                </div>
+                <div class="col-sm-3">
+                    <label>@GlobalResCorp.lblEstate</label>
+                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                </div>
+                <div class="col-sm-3">
+                    <label>@GlobalResCorp.hdrName</label>
+                    <div class="col-12">
+                        <select style="width: 100%; height: 34px;" class="js-example-placeholder-single js-states form-control w-auto" id="PkjList" name="PkjList">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label>@GlobalResCorp.lblYear</label>
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top: 24px;">
+                    <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
             </div>
-            <div class="col-sm-2">
-                <label>@GlobalResCorp.lblRegion</label>
-                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
-            </div>
-            <div class="col-sm-3">
-                <label>@GlobalResCorp.lblEstate</label>
-                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
-            </div>
-            <div class="col-sm-3">
-                <label>@GlobalResCorp.hdrName</label>
-                @Html.DropDownList("PkjList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
-            </div>
-            <div class="col-sm-2">
-                <label>@GlobalResCorp.lblYear</label>
-                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2" style="padding-top: 24px;">
-                <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
-            </div>
-        </div>
         }
     </div>
 
@@ -185,6 +190,15 @@
             }
         });
     });
+
+    
+    $(".js-example-placeholder-single").select2({
+        placeholder: "Sila Pilih",
+    });
+    $("#PkjList").prop("disabled", true);
+    $(".select2-container--default .select2-selection--single").css("height", "34px");
+    $(".select2-container--default .select2-selection--single .select2-selection__rendered").css("line-height", "34px");
+    $(".select2-container--default .select2-selection--single .select2-selection__arrow").css("height", "34px");
 </script>
 
 
