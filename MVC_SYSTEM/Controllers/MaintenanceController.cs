@@ -23151,12 +23151,11 @@ namespace MVC_SYSTEM.Controllers
                                 x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
                             .fldOptConfValue;
 
-                        //fizam added 17 Jan 2024
                         var selectedPublicHolidayCount = db.tbl_CutiUmumLdg.Count(x =>
-                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && 
                             x.fld_WilayahID == ladangData.fld_WlyhID && x.fld_LadangID == ladangID &&
-                            x.fld_Year == tblCutiUmumLdgViewModelCreateHq.fld_Year && x.fld_Deleted == false);
-                        //end
+                            x.fld_Year == tblCutiUmumLdgViewModelCreateHq.fld_Year && //fizam added 17 Jan 2024
+                            x.fld_Deleted == false);
 
                         string hostEstate, catalogEstate, userEstate, passEstate = "";
                         Connection.GetConnection(out hostEstate, out catalogEstate, out userEstate, out passEstate, ladangData.fld_WlyhID, SyarikatID.Value, NegaraID.Value);
