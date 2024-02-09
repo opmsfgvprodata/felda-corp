@@ -172,33 +172,34 @@
             if ($("#LadangList").val() === '') {
                 resetInput("#PkjList");
             } else {
-                var LadangList = {};
-                LadangList.url = "@Url.Action("GetPkj", "Maintenance")";
-                LadangList.type = "POST";
-                LadangList.data =
-                    JSON.stringify({ WilayahList: $("#WilayahList").val(), LadangList: $("#LadangList").val() });
-                LadangList.datatype = "json";
-                LadangList.contentType = "application/json";
-                LadangList.success = function(pkjList) {
-                    $("#PkjList").empty();
-                    $("#PkjList").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
+                if ($("#LadangList").val() != 0) {
+                    var LadangList = {};
+                    LadangList.url = "@Url.Action("GetPkj", "Maintenance")";
+                    LadangList.type = "POST";
+                    LadangList.data =
+                        JSON.stringify({ WilayahList: $("#WilayahList").val(), LadangList: $("#LadangList").val() });
+                    LadangList.datatype = "json";
+                    LadangList.contentType = "application/json";
+                    LadangList.success = function (pkjList) {
+                        $("#PkjList").empty();
+                        $("#PkjList").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
 
-                    for (var i = 0; i < pkjList.length; i++) {
-                        $("#PkjList").append("<option value=" + pkjList[i].Value + ">" + pkjList[i].Text + "</option>");
-                    }
-                    if ($("#LadangList").val() != 0) {
+                        for (var i = 0; i < pkjList.length; i++) {
+                            $("#PkjList").append("<option value=" + pkjList[i].Value + ">" + pkjList[i].Text + "</option>");
+                        }
                         $("#PkjList").prop("disabled", false);
-                    } else {
-                        resetInput("#PkjList");
-                    }
-                };
-                LadangList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
-                $.ajax(LadangList);
+                    };
+
+                    LadangList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                    $.ajax(LadangList);
+                } else if ($("#LadangList").val() == 0) {
+                    resetInput("#PkjList");
+                }
             }
         });
     });
 
-    
+
     $(".js-example-placeholder-single").select2({
         placeholder: "Sila Pilih",
     });
