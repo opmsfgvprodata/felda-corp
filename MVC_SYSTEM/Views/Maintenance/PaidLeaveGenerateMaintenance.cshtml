@@ -21,6 +21,13 @@
     @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
 }
 
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
 <section class="content-wrapper main-content clear-fix">
     <div class="well bottom" style="padding-bottom:16px;">
         @using (Ajax.BeginForm("_PaidLeaveGenerateInfoMaintenance", "Maintenance", null, options, new { @id = "paidLeaveGenerateSearchDetails" }))
