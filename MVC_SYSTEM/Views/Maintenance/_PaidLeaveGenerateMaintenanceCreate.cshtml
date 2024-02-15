@@ -84,13 +84,6 @@
         $(input).prop("disabled", true);
     }
 
-    $("#fld_Year").change(function () {
-        resetInput("#fld_WilayahID");
-        $("#fld_SyarikatID").prop("selectedIndex", 0).val();
-        resetInput("#fld_LadangID");
-        resetInput("#fld_CutiKategoriID");
-    })
-
     $("#fld_SyarikatID").change(function () {
         if ($("#fld_SyarikatID").val() === "") {
             resetInput("#fld_WilayahID");
