@@ -92,7 +92,6 @@
     })
 
     $("#fld_SyarikatID").change(function () {
-        console.log("syarikat", $("#fld_SyarikatID").val());
         if ($("#fld_SyarikatID").val() === "") {
             resetInput("#fld_WilayahID");
             resetInput("#fld_LadangID");
@@ -110,8 +109,6 @@
                 for (var i = 0; i < wilayahList.length; i++) {
                     if (i == 0) {
                         $("#fld_WilayahID").append("<option value=''>" + '@GlobalResCorp.lblChoose' + "</option>");
-                    }
-                    else if (i == 1) {
                         $("#fld_WilayahID").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
                     } else {
                         $("#fld_WilayahID").append("<option value=" + wilayahList[i].Value + ">" + wilayahList[i].Text + "</option>");
@@ -127,7 +124,6 @@
     });
 
     $("#fld_WilayahID").change(function () {
-        console.log("wilayah", $("#fld_WilayahID").val());
         if ($("#fld_WilayahID").val() === "") {
             resetInput("#fld_LadangID");
             resetInput("#fld_CutiKategoriID");

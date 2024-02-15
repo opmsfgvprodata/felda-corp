@@ -114,13 +114,13 @@
                 resetInput("#LadangList");
                 resetInput("#PkjList");
             } else {
-                 var SyarikatList = {};
-                 var disableoption = "";
-                 SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
-                 SyarikatList.type = "POST";
-                 SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
-                 SyarikatList.datatype = "json";
-                 SyarikatList.contentType = "application/json";
+                var SyarikatList = {};
+                var disableoption = "";
+                SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+                SyarikatList.type = "POST";
+                SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+                SyarikatList.datatype = "json";
+                SyarikatList.contentType = "application/json";
                 SyarikatList.success = function (wilayahlist) {
                     $("#WilayahList").empty();
 
@@ -128,8 +128,12 @@
                          if ($("#SyarikatList").val() == 0) {
                              disableoption = "disabled";
                          }
-
-                         $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                         if (i == 0) {
+                             $("#WilayahList").append("<option value=>" + '@GlobalResCorp.lblChoose' + "</option>");
+                         }
+                         else {
+                             $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                         }
                      }
 
                      $("#WilayahList").prop("disabled", false);
