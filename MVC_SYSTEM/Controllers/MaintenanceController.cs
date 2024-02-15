@@ -23776,27 +23776,31 @@ namespace MVC_SYSTEM.Controllers
             if (pWilayahID == null)
             {
                 cutiList = new SelectList(db.tbl_CutiKategori
-                .Where(x => x.fld_NegaraID == NegaraID &&
-                    x.fld_SyarikatID == Syarikat &&
-                    kodCutiArr.Contains(x.fld_KodCuti))
-                .Select(s => new SelectListItem
-                {
-                    Value = s.fld_KodCuti,
-                    Text = s.fld_KeteranganCuti.ToUpper(),
-                }), "value", "text")
-                .ToList();
+                    .Where(x => x.fld_Deleted == false &&
+                        x.fld_Indicator == true &&
+                        x.fld_NegaraID == NegaraID &&
+                        x.fld_SyarikatID == Syarikat &&
+                        kodCutiArr.Contains(x.fld_KodCuti))
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.fld_KodCuti,
+                        Text = s.fld_KeteranganCuti.ToUpper(),
+                    }), "value", "text")
+                    .ToList();
             } else
             {
                 cutiList = new SelectList(db.tbl_CutiKategori
-                .Where(x => x.fld_NegaraID == NegaraID &&
-                    x.fld_SyarikatID == Syarikat &&
-                    x.fld_KodCuti != "C99")
-                .Select(s => new SelectListItem
-                {
-                    Value = s.fld_KodCuti,
-                    Text = s.fld_KeteranganCuti.ToUpper(),
-                }), "value", "text")
-                .ToList();
+                    .Where(x => x.fld_Deleted == false &&
+                        x.fld_Indicator == true &&
+                        x.fld_NegaraID == NegaraID &&
+                        x.fld_SyarikatID == Syarikat &&
+                        x.fld_KodCuti != "C99")
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.fld_KodCuti,
+                        Text = s.fld_KeteranganCuti.ToUpper(),
+                    }), "value", "text")
+                    .ToList();
             }
 
             return Json(cutiList);
