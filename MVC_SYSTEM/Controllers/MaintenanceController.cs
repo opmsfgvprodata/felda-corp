@@ -3693,7 +3693,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult PaidLeaveAllocationTest( string nopkj, ModelsEstate.tbl_PkjmastModelViewEdit pkjmastModelViewEdit)
+        public ActionResult PaidLeaveAllocationTest(string nopkj, ModelsEstate.tbl_PkjmastModelViewEdit pkjmastModelViewEdit)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -3701,7 +3701,7 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value,
                  NegaraID.Value);
-            
+
             MVC_SYSTEM_ModelsEstate dbr = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
 
 
@@ -3724,8 +3724,8 @@ namespace MVC_SYSTEM.Controllers
             app2.fld_ActionBy = User.Identity.Name;
             app2.fld_ActionDate = DateTime.Now;
 
-         //edited
-      //  DateDiff dateDiff = new DateDiff(Convert.ToDateTime(startingDay).AddDays(-1), lastDay);
+            //edited
+            //  DateDiff dateDiff = new DateDiff(Convert.ToDateTime(startingDay).AddDays(-1), lastDay);
             //original
             DateDiff dateDiff = new DateDiff(Convert.ToDateTime(workerData.fld_Trmlkj).AddDays(-1), lastDay);
             var kodCutiUmum = db.tblOptionConfigsWebs
@@ -3748,7 +3748,7 @@ namespace MVC_SYSTEM.Controllers
                 ModelsEstate.tbl_CutiPeruntukan CutiPeruntukanTahunan = new ModelsEstate.tbl_CutiPeruntukan();
 
                 CutiPeruntukanTahunan.fld_NoPkj = workerData.fld_Nopkj;
-             //   CutiPeruntukanTahunan.fld_NoPkj = "Dummy";
+                //   CutiPeruntukanTahunan.fld_NoPkj = "Dummy";
                 CutiPeruntukanTahunan.fld_JumlahCuti = leaveAllocationData;
                 CutiPeruntukanTahunan.fld_KodCuti = leaveCategory.fld_KodCuti;
                 CutiPeruntukanTahunan.fld_JumlahCutiDiambil = 0;
@@ -3762,11 +3762,11 @@ namespace MVC_SYSTEM.Controllers
                 dbr.tbl_CutiPeruntukan.Add(CutiPeruntukanTahunan);
             }
 
-         //calculate public holiday
-         var kodNegeriLadang = db.tbl_Ladang
-             .Where(x => x.fld_ID == LadangID)
-             .Select(s => s.fld_KodNegeri)
-              .Single();
+            //calculate public holiday
+            var kodNegeriLadang = db.tbl_Ladang
+                .Where(x => x.fld_ID == LadangID)
+                .Select(s => s.fld_KodNegeri)
+                 .Single();
 
             //    //use this
             var CutiUmum = db.tbl_CutiUmum
@@ -3782,7 +3782,7 @@ namespace MVC_SYSTEM.Controllers
             ModelsEstate.tbl_CutiPeruntukan CutiPeruntukanUmum = new ModelsEstate.tbl_CutiPeruntukan();
 
             CutiPeruntukanUmum.fld_NoPkj = workerData.fld_Nopkj;
-          //  CutiPeruntukanUmum.fld_NoPkj = "Dummy";
+            //  CutiPeruntukanUmum.fld_NoPkj = "Dummy";
             CutiPeruntukanUmum.fld_JumlahCuti = cutiUmumCount;
             CutiPeruntukanUmum.fld_KodCuti = kodCutiUmum;
             CutiPeruntukanUmum.fld_JumlahCutiDiambil = 0;
@@ -3832,7 +3832,7 @@ namespace MVC_SYSTEM.Controllers
                                       cutiUmum.Count;
 
             ModelsEstate.tbl_Produktiviti Produktiviti = new ModelsEstate.tbl_Produktiviti();
-           // Produktiviti.fld_Nopkj = "Dummy";
+            // Produktiviti.fld_Nopkj = "Dummy";
             Produktiviti.fld_HadirKerja = workingDaysInMonth;
             Produktiviti.fld_Year = year;
             Produktiviti.fld_Month = startingDay.Month;
@@ -23167,8 +23167,9 @@ namespace MVC_SYSTEM.Controllers
                             .fldOptConfValue;
 
                         var selectedPublicHolidayCount = db.tbl_CutiUmumLdg.Count(x =>
-                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && 
                             x.fld_WilayahID == ladangData.fld_WlyhID && x.fld_LadangID == ladangID &&
+                            x.fld_Year == tblCutiUmumLdgViewModelCreateHq.fld_Year && //fizam added 17 Jan 2024
                             x.fld_Deleted == false);
 
                         string hostEstate, catalogEstate, userEstate, passEstate = "";
