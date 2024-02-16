@@ -4653,14 +4653,13 @@ namespace MVC_SYSTEM.Controllers
                                             if (focusLeave == null)
                                             {
                                                 newLeaveRecord.fld_JumlahCuti = amountLdgLeaveC01;
-
+                                                estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                                 estateConnection.SaveChanges();
 
                                             }
                                             else if (focusLeave.fld_JumlahCuti != amountLdgLeaveC01)
                                             {
                                                 focusLeave.fld_JumlahCuti = amountLdgLeaveC01;
-
                                                 estateConnection.SaveChanges();
                                             }
                                         }
@@ -4677,13 +4676,12 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = termsC02;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
                                         }
                                         else if (focusLeave.fld_JumlahCuti != termsC02)
                                         {
                                             focusLeave.fld_JumlahCuti = termsC02;
-
                                             estateConnection.SaveChanges();
                                         }
                                     }
@@ -4699,7 +4697,7 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = termsC03;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
                                         }
                                         else if (focusLeave.fld_JumlahCuti != termsC03)
@@ -4721,13 +4719,12 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = termsC10;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
                                         }
                                         else if (focusLeave.fld_JumlahCuti != termsC10)
                                         {
                                             focusLeave.fld_JumlahCuti = termsC10;
-
                                             estateConnection.SaveChanges();
                                         }
                                     }
@@ -4849,14 +4846,12 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = amountLdgLeaveC01;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
-
                                         }
                                         else if (focusLeave.fld_JumlahCuti != amountLdgLeaveC01)
                                         {
                                             focusLeave.fld_JumlahCuti = amountLdgLeaveC01;
-
                                             estateConnection.SaveChanges();
                                         }
                                     }
@@ -4873,13 +4868,12 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC02;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC02)
                                     {
                                         focusLeave.fld_JumlahCuti = termsC02;
-
                                         estateConnection.SaveChanges();
                                     }
                                 }
@@ -4895,7 +4889,7 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC03;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC03)
@@ -4919,13 +4913,12 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = termsC04;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
                                         }
                                         else if (focusLeave.fld_JumlahCuti != termsC04)
                                         {
                                             focusLeave.fld_JumlahCuti = termsC04;
-
                                             estateConnection.SaveChanges();
                                         }
                                     }
@@ -4942,13 +4935,12 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC08;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC08)
                                     {
                                         focusLeave.fld_JumlahCuti = termsC08;
-
                                         estateConnection.SaveChanges();
                                     }
                                 }
@@ -4964,7 +4956,7 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC10;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC10)
@@ -4986,13 +4978,12 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC11;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC11)
                                     {
                                         focusLeave.fld_JumlahCuti = termsC11;
-
                                         estateConnection.SaveChanges();
                                     }
                                 }
@@ -5010,13 +5001,12 @@ namespace MVC_SYSTEM.Controllers
                                         if (focusLeave == null)
                                         {
                                             newLeaveRecord.fld_JumlahCuti = termsC12;
-
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                             estateConnection.SaveChanges();
                                         }
                                         else if (focusLeave.fld_JumlahCuti != termsC12)
                                         {
                                             focusLeave.fld_JumlahCuti = termsC12;
-
                                             estateConnection.SaveChanges();
                                         }
                                     }
@@ -5033,13 +5023,12 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC13;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC13)
                                     {
                                         focusLeave.fld_JumlahCuti = termsC13;
-
                                         estateConnection.SaveChanges();
                                     }
                                 }
@@ -5055,13 +5044,12 @@ namespace MVC_SYSTEM.Controllers
                                     if (focusLeave == null)
                                     {
                                         newLeaveRecord.fld_JumlahCuti = termsC14;
-
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
                                         estateConnection.SaveChanges();
                                     }
                                     else if (focusLeave.fld_JumlahCuti != termsC14)
                                     {
                                         focusLeave.fld_JumlahCuti = termsC14;
-
                                         estateConnection.SaveChanges();
                                     }
                                 }
