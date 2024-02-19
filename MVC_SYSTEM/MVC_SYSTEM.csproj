@@ -987,6 +987,7 @@
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
+    <Compile Include="ModelsCustom\CustMod_PaidLeaveGenerate.cs" />
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
@@ -3142,6 +3143,7 @@
     <Content Include="Views\Maintenance\OilPriceRangeMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveAllocationMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveCategoryMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\PaidLeaveGenerateMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PassportExpiryListMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PayrateDelete.cshtml" />
     <Content Include="Views\Maintenance\PayrateDetail.cshtml" />
@@ -3651,6 +3653,8 @@
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3737,6 +3741,7 @@
     <EmbeddedResource Include="App_LocalResources\GlobalResCorp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalResCorp.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="App_LocalResources\GlobalResDataEntry.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -37,6 +37,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_KodGL { get; set; }
 
         public bool? fld_Deleted { get; set; }
+
+        public bool? fld_Indicator { get; set; }
     }
 
     public partial class tbl_CutiKategoriViewModelCreate

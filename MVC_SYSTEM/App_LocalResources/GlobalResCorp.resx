@@ -3786,4 +3786,22 @@
   <data name="lblIncInOrp" xml:space="preserve">
     <value>Termasuk Dalam ORP?</value>
   </data>
+  <data name="lblTitlePaidLeaveGenerateMaintenance" xml:space="preserve">
+    <value>Jana Cuti Berbayar Pekerja</value>
+  </data>
+  <data name="lblPaidLeaveGenerateInfo" xml:space="preserve">
+    <value>Maklumat Jana Cuti Pekerja Ladang</value>
+  </data>
+  <data name="lblAtleastChoosePaidLeaveGenerate" xml:space="preserve">
+    <value>Sila pilih syarikat, wilayah, ladang dan tahun, sekurang-kurangnya</value>
+  </data>
+  <data name="lblGenerateLeave" xml:space="preserve">
+    <value>Jana Cuti</value>
+  </data>
+  <data name="msgGenerateLeaveFail" xml:space="preserve">
+    <value>Proses Jana Cuti Gagal</value>
+  </data>
+  <data name="msgGenerateLeaveSuccess" xml:space="preserve">
+    <value>Proses Jana Cuti Berjaya</value>
+  </data>
 </root>
