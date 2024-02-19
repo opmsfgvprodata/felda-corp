@@ -27,12 +27,12 @@
             <table class="table table-hover" style="font-size: 11px;" border="0" cellspacing="10">
                 <thead>
                     <tr>
-                        <th colspan="15">
+                        <th colspan="@(6 + @ViewBag.leaveTitle.Count)">
                             <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.lblRegion : @GetConfig.GetWilayahNameFromID(ladang.wilayahID)</b></p>
                         </th>
                     </tr>
                     <tr>
-                        <th colspan="15" bgcolor="#FFCC80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <th colspan="@(6 + ViewBag.leaveTitle.Count)" bgcolor="#FFCC80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
                             <font color="white">@GetConfig.GetLadangKodFromID(ladang.ladangID) - @GetConfig.GetLadangNameFromID(ladang.ladangID)</font>
                         </th>
                     </tr>
@@ -49,9 +49,12 @@
                         <th width="3%" colspan="1" rowspan="2" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
                             Tarikh Lantikan
                         </th>
-                        <th colspan="@ViewBag.leaveTitle.Count" rowspan="1" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
-                            Jumlah Cuti (Hari)
-                        </th>
+                        @if (@ViewBag.leaveTitle.Count > 0)
+                        {
+                            <th colspan="@ViewBag.leaveTitle.Count" rowspan="1" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                                Jumlah Cuti (Hari)
+                            </th>
+                        }
                     </tr>
                     <tr>
                         @foreach (var title in ViewBag.leaveTitle)
@@ -79,11 +82,14 @@
                             <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                                 @pkj.tarikhMulaKerja.Value.ToString("dd/MM/yyyy")
                             </td>
-                            @foreach (var cuti in pkj.cuti)
+                            @if (@ViewBag.leaveTitle.Count > 0)
                             {
-                                <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @cuti.leaveAmount
-                                </td>
+                                foreach (var cuti in pkj.cuti)
+                                {
+                                    <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @cuti.leaveAmount
+                                    </td>
+                                }
                             }
                         </tr>
                     }

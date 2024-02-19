@@ -5,8 +5,15 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-<section class="content-wrapper main-content clear-fix">
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
 
+<section class="content-wrapper main-content clear-fix">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 class="modal-title">@GlobalResCorp.lblGenerateLeave</h3>
@@ -65,7 +72,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnGenerate>
+            <input class="btn btn-success" type="submit" onclick="return DisplayProgressMessage(this);" value=@GlobalResCorp.btnGenerate>
             <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
         </div>
     }
