@@ -4180,7 +4180,7 @@ namespace MVC_SYSTEM.Controllers
                         try
                         {
 
-                            if (_IOSAPCreate.fld_CompanyCode == "1000")
+                            if (_IOSAPCreate.fld_CompanyCode == "1000" && LadangCode != "0")
                             {
                                 request = new SAPMD_FLP.ZfmOpmsMaster();
 
