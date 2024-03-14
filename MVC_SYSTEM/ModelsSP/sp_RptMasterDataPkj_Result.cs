@@ -35,6 +35,6 @@ namespace MVC_SYSTEM.ModelsSP
         public string fld_Prmtno { get; set; }
         public string fld_Noperkeso { get; set; }
         public string fld_Kdjnt { get; set; }
-        public string fld_CostCentre { get; set; }
+        public string fld_CompCode { get; set; }
     }
 }

@@ -3786,4 +3786,7 @@
   <data name="lblIncInOrp" xml:space="preserve">
     <value>Termasuk Dalam ORP?</value>
   </data>
+  <data name="lblTarikhLantikan" xml:space="preserve">
+    <value>Tarikh Lantikan</value>
+  </data>
 </root>

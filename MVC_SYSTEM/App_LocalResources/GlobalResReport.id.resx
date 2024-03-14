@@ -150,18 +150,6 @@
   <data name="lbIDPengguna" xml:space="preserve">
     <value>ID PENGGUNA</value>
   </data>
-  <data name="lblDiluluskan" xml:space="preserve">
-    <value>DILULUSKAN</value>
-  </data>
-  <data name="lblDiluluskanOleh" xml:space="preserve">
-    <value>DILULUSKAN OLEH</value>
-  </data>
-  <data name="lblLadang" xml:space="preserve">
-    <value>Ladang</value>
-  </data>
-  <data name="lblMonth" xml:space="preserve">
-    <value>Bulan</value>
-  </data>
   <data name="lblNama" xml:space="preserve">
     <value>NAMA</value>
   </data>
@@ -204,12 +192,6 @@
   <data name="lblSbbMasuk" xml:space="preserve">
     <value>SEBAB KEMASUKAN</value>
   </data>
-  <data name="lblSemua" xml:space="preserve">
-    <value>SEMUA</value>
-  </data>
-  <data name="lblStatus" xml:space="preserve">
-    <value>Status</value>
-  </data>
   <data name="lblStatusPerm" xml:space="preserve">
     <value>STATUS PERMOHONAN</value>
   </data>
@@ -234,9 +216,6 @@
   <data name="lblWarganegara" xml:space="preserve">
     <value>WARGANEGARA</value>
   </data>
-  <data name="lblWilayah" xml:space="preserve">
-    <value>Wilayah</value>
-  </data>
   <data name="lblYear" xml:space="preserve">
     <value>Tahun</value>
   </data>
@@ -251,5 +230,8 @@
   </data>
   <data name="WaitMsg" xml:space="preserve">
     <value>Sila tunggu laporan sedang dicapai...</value>
+  </data>
+  <data name="lblTitleRptMasterdata" xml:space="preserve">
+    <value>LAPORAN MASTERDATA PEKERJA</value>
   </data>
 </root>
