@@ -75,7 +75,7 @@
           <sapsession:enableSession>false</sapsession:enableSession>
         </sapsession:Session>
         <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
-          <sapcentraladmin:BusinessApplicationID>E9A3B4A8AA126BF1A2C000505680F789</sapcentraladmin:BusinessApplicationID>
+          <sapcentraladmin:BusinessApplicationID>E5E51C5D8A72585EE1000000AC101817</sapcentraladmin:BusinessApplicationID>
         </sapcentraladmin:CentralAdministration>
       </wsp:All>
     </wsp:ExactlyOne>
@@ -656,7 +656,7 @@
   </wsdl:binding>
   <wsdl:service name="ZWS_OPMS_MASTER">
     <wsdl:port name="ZWS_OPMS_MASTER" binding="tns:ZWS_OPMS_MASTER">
-      <soap:address location="http://sapfld.felhqr.myfelda:8000/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master" />
+      <soap:address location="http://sapflp.felda.felhqr.myfelda:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

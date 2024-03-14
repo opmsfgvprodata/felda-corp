@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="jTGkj4y9uqaAsAhrMDtZxbhcOgb6MGQUgZzqG+klnU4=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="ONm7KtEveqK8BQ/s1Oq9t3DASBUxbNTrUCJCSj2h9pA=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="customBinding" name="ZWS_OPMS_MASTER4">
+    <bindingConfiguration bindingType="customBinding" name="ZWS_OPMS_MASTER3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ZWS_OPMS_MASTER4</serializedValue>
+          <serializedValue>ZWS_OPMS_MASTER3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -323,7 +323,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ZWS_OPMS_MASTER3" contract="SAPMD_FLQ.ZWS_OPMS_MASTER" bindingType="customBinding" address="http://sapflq.felhqr.myfelda:8001/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master" bindingConfiguration="ZWS_OPMS_MASTER4">
+    <endpoint name="ZWS_OPMS_MASTER3" contract="SAPMD_FLQ.ZWS_OPMS_MASTER" bindingType="customBinding" address="http://sapflq.felhqr.myfelda:8001/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master" bindingConfiguration="ZWS_OPMS_MASTER3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://sapflq.felhqr.myfelda:8001/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master</serializedValue>
@@ -335,7 +335,7 @@
           <serializedValue>customBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ZWS_OPMS_MASTER4</serializedValue>
+          <serializedValue>ZWS_OPMS_MASTER3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>SAPMD_FLQ.ZWS_OPMS_MASTER</serializedValue>

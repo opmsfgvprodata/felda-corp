@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="98151b6f-9406-430f-99ee-19431579c98b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="22b2ece6-8099-4faf-a53d-f0e021393244" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://sapflq.felhqr.myfelda:8001/sap/bc/srt/wsdl/flv_10002A111AD1/bndg_url/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master?sap-client=840" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://cifld.felhqr.myfelda:8000/sap/bc/srt/wsdl/bndg_BF0D675B8903635AE1000000AC101815/wsdl11/allinone/ws_policy/document?sap-client=210" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="zws_opms_master.wsdl" MetadataType="Wsdl" ID="9ae9c464-44e6-4134-90d5-531becc04dbd" SourceId="1" SourceUrl="http://sapflq.felhqr.myfelda:8001/sap/bc/srt/wsdl/flv_10002A111AD1/bndg_url/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master?sap-client=840" />
+    <MetadataFile FileName="document.wsdl" MetadataType="Wsdl" ID="b95a8eec-0564-4c3b-af0d-0cee5e102ac4" SourceId="1" SourceUrl="http://cifld.felhqr.myfelda:8000/sap/bc/srt/wsdl/bndg_BF0D675B8903635AE1000000AC101815/wsdl11/allinone/ws_policy/document?sap-client=210" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -1175,6 +1175,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\FPMMD_FTQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SAPMD\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2922,10 +2927,23 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\FPMMD_FTP\zws_opms_masterdata.wsdl" />
+    <Content Include="Service References\FPMMD_FTQ\MVC_SYSTEM.FPMMD_FTQ.ZFM_OPMS_MASTERResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\FPMMD_FTQ\MVC_SYSTEM.FPMMD_FTQ.ZFM_OPMS_MASTERResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\FPMMD_FTQ\zws_opms_masterdata.wsdl" />
     <None Include="Service References\SAPMD\document.wsdl" />
     <None Include="Service References\FPMMD_FTP\configuration91.svcinfo" />
     <None Include="Service References\FPMMD_FTP\configuration.svcinfo" />
     <None Include="Service References\FPMMD_FTP\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\FPMMD_FTQ\configuration91.svcinfo" />
+    <None Include="Service References\FPMMD_FTQ\configuration.svcinfo" />
+    <None Include="Service References\FPMMD_FTQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -2942,7 +2960,6 @@
     <Content Include="Service References\SAPMD_FLP\MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\SAPMD_FLQ\document.wsdl" />
     <None Include="Service References\SAPMD_FLP\configuration91.svcinfo" />
     <None Include="Service References\SAPMD_FLP\configuration.svcinfo" />
     <None Include="Service References\SAPMD_FLP\Reference.svcmap">
@@ -2955,6 +2972,7 @@
     <Content Include="Service References\SAPMD_FLQ\MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\SAPMD_FLQ\zws_opms_master.wsdl" />
     <None Include="Service References\SAPPostIntegration\configuration91.svcinfo" />
     <None Include="Service References\SAPPostIntegration\configuration.svcinfo" />
     <None Include="Service References\SAPMD\configuration91.svcinfo" />
@@ -4139,6 +4157,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\FPMMD_FTP\" />
+    <WCFMetadataStorage Include="Service References\FPMMD_FTQ\" />
     <WCFMetadataStorage Include="Service References\SAPMD\" />
     <WCFMetadataStorage Include="Service References\SAPMD_FLP\" />
     <WCFMetadataStorage Include="Service References\SAPMD_FLQ\" />

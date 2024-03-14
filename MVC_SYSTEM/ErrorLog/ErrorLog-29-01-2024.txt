@@ -1,0 +1,233 @@
+Time: 29/01/2024 02:52:58 PTG
+-----------------------------------------------------------
+Message: Object reference not set to an instance of an object.
+StackTrace:    at MVC_SYSTEM.Controllers.LoginController.Index(tblUser Login, String returnUrl) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\LoginController.cs:line 68
+Source: MVC_SYSTEM
+TargetSite: System.Web.Mvc.ActionResult Index(MVC_SYSTEM.LoginModels.tblUser, System.String)
+-----------------------------------------------------------
+
+Time: 29/01/2024 02:54:47 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 02:57:32 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:00:59 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:01:56 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:04:27 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:04:34 PM
+-----------------------------------------------------------
+Message: A public action method '_wbsRequest' was not found on controller 'MVC_SYSTEM.Controllers.SAPMasterDataController'.
+StackTrace:    at System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
+   at System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Source: System.Web.Mvc
+TargetSite: Void HandleUnknownAction(System.String)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:08:24 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:08:30 PM
+-----------------------------------------------------------
+Message: A public action method '_wbsRequest' was not found on controller 'MVC_SYSTEM.Controllers.SAPMasterDataController'.
+StackTrace:    at System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
+   at System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Source: System.Web.Mvc
+TargetSite: Void HandleUnknownAction(System.String)
+-----------------------------------------------------------
+
+Time: 29/01/2024 03:09:43 PTG
+-----------------------------------------------------------
+Message: There was no endpoint listening at http://10.1.1.152:8002/sap/bc/srt/rfc/sap/zws_opms_master/840/zws_opms_master/zws_opms_master that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details.
+StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request)
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(ZfmOpmsMasterRequest request) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3149
+   at MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTERClient.ZfmOpmsMaster(ZfmOpmsMaster ZfmOpmsMaster1) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Service References\SAPMD_FLP\Reference.cs:line 3155
+   at MVC_SYSTEM.Controllers.SAPMasterDataController._wbsRequest(tbl_SAPLog tbl_SAPLog, tbl_WBSSAP tbl_WBSSAP, tbl_WBSSAPCreate tbl_WBSSAPCreate, vw_SAPIODetailsCreate _IOSAPCreate) in C:\Users\aini.cons\Documents\nana\FELDA\felda-corp\MVC_SYSTEM\Controllers\SAPMasterDataController.cs:line 4098
+Source: mscorlib
+TargetSite: Void HandleReturnMessage(System.Runtime.Remoting.Messaging.IMessage, System.Runtime.Remoting.Messaging.IMessage)
+-----------------------------------------------------------
+

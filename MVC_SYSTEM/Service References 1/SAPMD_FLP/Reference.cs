@@ -7,26 +7,25 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
-using SysXml= System.Xml;
-namespace MVC_SYSTEM.SAPMD_FLQ {
+using SysXML = System.Xml;
+namespace MVC_SYSTEM.SAPMD_FLP {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="urn:sap-com:document:sap:soap:functions:mc-style", ConfigurationName="SAPMD_FLQ.ZWS_OPMS_MASTER")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="urn:sap-com:document:sap:soap:functions:mc-style", ConfigurationName="SAPMD_FLP.ZWS_OPMS_MASTER")]
     public interface ZWS_OPMS_MASTER {
         
         // CODEGEN: Generating message contract since the operation ZfmOpmsMaster is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1 ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest request);
+        MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1 ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1> ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest request);
+        System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1> ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -442,7 +441,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -516,7 +515,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -552,7 +551,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         private string systemField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string Type {
             get {
                 return this.typeField;
@@ -564,7 +563,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string Id {
             get {
                 return this.idField;
@@ -576,7 +575,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string Number {
             get {
                 return this.numberField;
@@ -588,7 +587,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public string Message {
             get {
                 return this.messageField;
@@ -600,7 +599,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string LogNo {
             get {
                 return this.logNoField;
@@ -612,7 +611,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public string LogMsgNo {
             get {
                 return this.logMsgNoField;
@@ -624,7 +623,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public string MessageV1 {
             get {
                 return this.messageV1Field;
@@ -636,7 +635,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public string MessageV2 {
             get {
                 return this.messageV2Field;
@@ -648,7 +647,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public string MessageV3 {
             get {
                 return this.messageV3Field;
@@ -660,7 +659,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=9)]
         public string MessageV4 {
             get {
                 return this.messageV4Field;
@@ -672,7 +671,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=10)]
         public string Parameter {
             get {
                 return this.parameterField;
@@ -684,7 +683,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=11)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=11)]
         public int Row {
             get {
                 return this.rowField;
@@ -696,7 +695,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=12)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=12)]
         public string Field {
             get {
                 return this.fieldField;
@@ -708,7 +707,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXml.Schema.XmlSchemaForm.Unqualified, Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=13)]
         public string System {
             get {
                 return this.systemField;
@@ -730,7 +729,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2190,7 +2189,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2264,7 +2263,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2814,7 +2813,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2888,7 +2887,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2962,7 +2961,7 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3091,12 +3090,12 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     public partial class ZfmOpmsMasterRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:sap-com:document:sap:soap:functions:mc-style", Order=0)]
-        public MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMaster ZfmOpmsMaster;
+        public MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMaster ZfmOpmsMaster;
         
         public ZfmOpmsMasterRequest() {
         }
         
-        public ZfmOpmsMasterRequest(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMaster ZfmOpmsMaster) {
+        public ZfmOpmsMasterRequest(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMaster ZfmOpmsMaster) {
             this.ZfmOpmsMaster = ZfmOpmsMaster;
         }
     }
@@ -3108,23 +3107,23 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
     public partial class ZfmOpmsMasterResponse1 {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:sap-com:document:sap:soap:functions:mc-style", Order=0)]
-        public MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse ZfmOpmsMasterResponse;
+        public MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse ZfmOpmsMasterResponse;
         
         public ZfmOpmsMasterResponse1() {
         }
         
-        public ZfmOpmsMasterResponse1(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse ZfmOpmsMasterResponse) {
+        public ZfmOpmsMasterResponse1(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse ZfmOpmsMasterResponse) {
             this.ZfmOpmsMasterResponse = ZfmOpmsMasterResponse;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ZWS_OPMS_MASTERChannel : MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER, System.ServiceModel.IClientChannel {
+    public interface ZWS_OPMS_MASTERChannel : MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ZWS_OPMS_MASTERClient : System.ServiceModel.ClientBase<MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER>, MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER {
+    public partial class ZWS_OPMS_MASTERClient : System.ServiceModel.ClientBase<MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER>, MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER {
         
         public ZWS_OPMS_MASTERClient() {
         }
@@ -3146,26 +3145,26 @@ namespace MVC_SYSTEM.SAPMD_FLQ {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1 MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER.ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest request) {
+        MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1 MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest request) {
             return base.Channel.ZfmOpmsMaster(request);
         }
         
-        public MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMaster ZfmOpmsMaster1) {
-            MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest inValue = new MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest();
+        public MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse ZfmOpmsMaster(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMaster ZfmOpmsMaster1) {
+            MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest inValue = new MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest();
             inValue.ZfmOpmsMaster = ZfmOpmsMaster1;
-            MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1 retVal = ((MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER)(this)).ZfmOpmsMaster(inValue);
+            MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1 retVal = ((MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER)(this)).ZfmOpmsMaster(inValue);
             return retVal.ZfmOpmsMasterResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1> MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER.ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest request) {
+        System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1> MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER.ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest request) {
             return base.Channel.ZfmOpmsMasterAsync(request);
         }
         
-        public System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterResponse1> ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMaster ZfmOpmsMaster) {
-            MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest inValue = new MVC_SYSTEM.SAPMD_FLQ.ZfmOpmsMasterRequest();
+        public System.Threading.Tasks.Task<MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterResponse1> ZfmOpmsMasterAsync(MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMaster ZfmOpmsMaster) {
+            MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest inValue = new MVC_SYSTEM.SAPMD_FLP.ZfmOpmsMasterRequest();
             inValue.ZfmOpmsMaster = ZfmOpmsMaster;
-            return ((MVC_SYSTEM.SAPMD_FLQ.ZWS_OPMS_MASTER)(this)).ZfmOpmsMasterAsync(inValue);
+            return ((MVC_SYSTEM.SAPMD_FLP.ZWS_OPMS_MASTER)(this)).ZfmOpmsMasterAsync(inValue);
         }
     }
 }
