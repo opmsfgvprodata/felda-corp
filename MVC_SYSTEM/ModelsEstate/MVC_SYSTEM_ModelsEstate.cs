@@ -49,6 +49,9 @@ namespace MVC_SYSTEM.ModelsEstate
         public virtual DbSet<tbl_SubPkt> tbl_SubPkt { get; set; }
         //end
 
+        public virtual DbSet<tbl_Kerja> tbl_Kerja { get; set; }
+        public virtual DbSet<tbl_Kerjahdr> tbl_Kerjahdr { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             
