@@ -974,6 +974,7 @@
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
     <Compile Include="ModelsCustom\AuthUserLogin.cs" />
+    <Compile Include="ModelsCustom\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
@@ -981,8 +982,10 @@
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
+    <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
+    <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
     <Compile Include="ModelsEstate\tbl_CutiPeruntukan.cs" />
     <Compile Include="ModelsEstate\tbl_Insentif.cs" />
     <Compile Include="ModelsEstate\tbl_Kepuasan.cs" />
@@ -997,6 +1000,7 @@
     <Compile Include="ModelsEstate\tbl_TutupUrusNiaga.cs" />
     <Compile Include="ModelsEstate\vw_KumpulanKerja.cs" />
     <Compile Include="ModelsEstate\vw_MaklumatInsentif.cs" />
+    <Compile Include="ModelsEstate\vw_PaySheetPekerja.cs" />
     <Compile Include="ModelsEstate\vw_PermitPassportDetail.cs" />
     <Compile Include="ModelsEstate\vw_RptSctran.cs" />
     <Compile Include="ModelsSAP\SAPCC.cs" />
