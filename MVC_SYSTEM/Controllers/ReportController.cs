@@ -9308,11 +9308,11 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             ViewBag.NamaSyarikat = db.tbl_Syarikat
-                .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_SAPComCode == CompCodeList)
                 .Select(s => s.fld_NamaSyarikat)
                 .FirstOrDefault();
-            ViewBag.NoSyarikat = db.tbl_Syarikat
-                .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+            ViewBag.NomborSyarikat = db.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_SAPComCode == CompCodeList)
                 .Select(s => s.fld_NoSyarikat)
                 .FirstOrDefault();
             ViewBag.NegaraID = NegaraID;

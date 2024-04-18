@@ -29,5 +29,8 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(100)]
         public string fld_SyarikatEmail { get; set; }
+
+        [StringLength(4)]
+        public string fld_SAPComCode {get; set; }
     }
 }
