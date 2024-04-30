@@ -1,0 +1,462 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptMasterJumPkj_Result>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+
+    string uniquefilename = "LaporanKemasukanTenagaKerja_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    decimal? GrandTotalBilPkjJan = 0;
+    decimal? GrandTotalBilPkjFeb = 0;
+    decimal? GrandTotalBilPkjMac = 0;
+    decimal? GrandTotalBilPkjApr = 0;
+    decimal? GrandTotalBilPkjMei = 0;
+    decimal? GrandTotalBilPkjJun = 0;
+    decimal? GrandTotalBilPkjJul = 0;
+    decimal? GrandTotalBilPkjOgos = 0;
+    decimal? GrandTotalBilPkjSept = 0;
+    decimal? GrandTotalBilPkjOkt = 0;
+    decimal? GrandTotalBilPkjNov = 0;
+    decimal? GrandTotalBilPkjDis = 0;
+    decimal? GrandTotalJumlahMasukTahunan = 0;
+    decimal? GrandTotalJumlahSemasa = 0;
+    decimal? GrandTotalBilPkjCom = 0;
+    decimal? GrandTotalBilPkjUnfit = 0;
+    decimal? GrandTotalBilPkjPindah = 0;
+    decimal? GrandTotalBilPkjTngkpUsir = 0;
+    decimal? GrandTotalilPkjMeninggal = 0;
+    decimal? GrandTotalBilPkjLari = 0;
+    decimal? GrandTotalJumPkjKeluarSmsa = 0;
+    decimal? GrandTotalJumTKT = 0;
+    decimal? GrandTotalJumTKA = 0;
+    decimal? GrandTotalJumTKTPrdktvt = 0;
+    decimal? GrandTotalJumTKTArtisan = 0;
+    decimal? GrandTotalBilPkjKontraktor = 0;
+    decimal? GrandTotalPrcntPkjKontraktor = 0;
+    decimal? GrandTotalJumBesar = 0;
+    decimal? GrandTotalPrcntJumBesar = 0;
+    decimal? GrandTotalKekurangSmsa = 0;
+    decimal? GrandTotalPrcntKekurangSmsa = 0;
+    decimal? GrandTotalJumPkjSediaAda = 0;
+}
+
+
+@if (Model != null && Model.Count() != 0)
+{
+    //farahin tukar div id
+<div id="scrollArea" class="modal-body">
+    @*Added by Shazana 1/8/2023*@
+    @foreach (var costcentre in Model.Select(x => x.fld_CompCode).Distinct())
+    {
+        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+        <p align="center" style="font-size: 11px" :><b>@namapenuhsyarikat</b></p>
+        <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @namasyarikat</b></p>
+        <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleReportTenagaKerja.ToUpper()</b></p>
+        <br />
+        <table class="table table-hover" style="font-size: 11px;" border="0">
+            <thead>
+                <tr>
+                    @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                    {
+                        <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">AGENSI</th>
+                    }
+                    else
+                    {
+                        <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KOD LADANG</th>
+                        <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">LADANG</th>
+                    }
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PERLU<br />SEBENAR</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BURUH SEDIA ADA</th>
+                    <th colspan="12" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KEMASUKAN @ViewBag.Tahun<br />(@GlobalResCorp.lblKemasukanBaruPindahMasuk)</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahMasuk<br /> @ViewBag.Tahun</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahSemasa</th>
+                    <th colspan="6" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTidakAktif_Keluar <br /> @ViewBag.Tahun</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblKeluar (@ViewBag.Tahun)</th>
+                    <th rowspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahTKA</th>
+                    <th rowspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTKTSediaAda</th>
+                    <th rowspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahTKTProduktiviti</th>
+                    <th rowspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahTKT</th>
+                    <th colspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblBuruhKontraktor</th>
+                    <th colspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblJumlahBesar</th>
+                    <th colspan="2" width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblKekuranganSemasa</th>
+                </tr>
+                <tr>
+                    <th width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth1</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth2</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth3</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth4</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth5</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth6</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth7</th>
+                    <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth8</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth9</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth10</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth11</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonth12</th>
+
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">COM</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">UNFIT</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PINDAH</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">TANGKAPAN<br />/USIR</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">MENINGGAL</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">LARI</th>
+
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">%</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">%</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL</th>
+                    <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">%</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @*Modified by Shazana 1/8/2023*@
+                @foreach (var RumusanPekerjaBulanan in Model)
+                {
+                    bil += 1;
+                    decimal? JumlahMasukTahunan = RumusanPekerjaBulanan.fld_BilPkjJan + RumusanPekerjaBulanan.fld_BilPkjFeb +
+                        RumusanPekerjaBulanan.fld_BilPkjMac + RumusanPekerjaBulanan.fld_BilPkjApr
+                        + RumusanPekerjaBulanan.fld_BilPkjMei + RumusanPekerjaBulanan.fld_BilPkjJun + RumusanPekerjaBulanan.fld_BilPkjJul + RumusanPekerjaBulanan.fld_BilPkjOgos +
+                        RumusanPekerjaBulanan.fld_BilPkjSept + RumusanPekerjaBulanan.fld_BilPkjOkt + RumusanPekerjaBulanan.fld_BilPkjNov +
+                        RumusanPekerjaBulanan.fld_BilPkjDis;
+                    decimal? JumlahSemasa = @RumusanPekerjaBulanan.fld_JumPkjSediaAda + JumlahMasukTahunan;
+
+                    GrandTotalBilPkjJan = GrandTotalBilPkjJan + @RumusanPekerjaBulanan.fld_BilPkjJan;
+                    GrandTotalBilPkjFeb = GrandTotalBilPkjFeb + @RumusanPekerjaBulanan.fld_BilPkjFeb;
+                    GrandTotalBilPkjMac = GrandTotalBilPkjMac + @RumusanPekerjaBulanan.fld_BilPkjMac;
+                    GrandTotalBilPkjApr = GrandTotalBilPkjApr + @RumusanPekerjaBulanan.fld_BilPkjApr;
+                    GrandTotalBilPkjMei = GrandTotalBilPkjMei + @RumusanPekerjaBulanan.fld_BilPkjMei;
+                    GrandTotalBilPkjJun = GrandTotalBilPkjJun + @RumusanPekerjaBulanan.fld_BilPkjJun;
+                    GrandTotalBilPkjJul = GrandTotalBilPkjJul + @RumusanPekerjaBulanan.fld_BilPkjJul;
+                    GrandTotalBilPkjOgos = GrandTotalBilPkjOgos + @RumusanPekerjaBulanan.fld_BilPkjOgos;
+                    GrandTotalBilPkjSept = GrandTotalBilPkjSept + @RumusanPekerjaBulanan.fld_BilPkjSept;
+                    GrandTotalBilPkjOkt = GrandTotalBilPkjOkt + @RumusanPekerjaBulanan.fld_BilPkjOkt;
+                    GrandTotalBilPkjNov = GrandTotalBilPkjNov + @RumusanPekerjaBulanan.fld_BilPkjNov;
+                    GrandTotalBilPkjDis = GrandTotalBilPkjDis + @RumusanPekerjaBulanan.fld_BilPkjDis;
+                    GrandTotalJumlahMasukTahunan = GrandTotalJumlahMasukTahunan + JumlahMasukTahunan;
+                    GrandTotalJumlahSemasa = GrandTotalJumlahSemasa + @JumlahSemasa;
+                    GrandTotalBilPkjCom = GrandTotalBilPkjCom + @RumusanPekerjaBulanan.fld_BilPkjCom;
+                    GrandTotalBilPkjUnfit = GrandTotalBilPkjUnfit + @RumusanPekerjaBulanan.fld_BilPkjUnfit;
+                    GrandTotalBilPkjPindah = GrandTotalBilPkjPindah + @RumusanPekerjaBulanan.fld_BilPkjPindah;
+                    GrandTotalBilPkjTngkpUsir = GrandTotalBilPkjTngkpUsir + @RumusanPekerjaBulanan.fld_BilPkjTngkpUsir;
+                    GrandTotalilPkjMeninggal = GrandTotalilPkjMeninggal + @RumusanPekerjaBulanan.fld_BilPkjMeninggal;
+                    GrandTotalBilPkjLari = GrandTotalBilPkjLari + @RumusanPekerjaBulanan.fld_BilPkjLari;
+                    GrandTotalJumPkjKeluarSmsa = GrandTotalJumPkjKeluarSmsa + @RumusanPekerjaBulanan.fld_JumPkjKeluarSmsa;
+                    GrandTotalJumTKT = GrandTotalJumTKT + @RumusanPekerjaBulanan.fld_JumTKT;
+                    GrandTotalJumTKA = GrandTotalJumTKA + @RumusanPekerjaBulanan.fld_JumTKA;
+                    GrandTotalJumTKTPrdktvt = GrandTotalJumTKTPrdktvt + @RumusanPekerjaBulanan.fld_JumTKTPrdktvt;
+                    GrandTotalJumTKTArtisan = GrandTotalJumTKTArtisan + @RumusanPekerjaBulanan.fld_JumTKTArtisan;
+                    GrandTotalBilPkjKontraktor = GrandTotalBilPkjKontraktor + @RumusanPekerjaBulanan.fld_BilPkjKontraktor;
+                    GrandTotalPrcntPkjKontraktor = GrandTotalPrcntPkjKontraktor + @RumusanPekerjaBulanan.fld_PrcntPkjKontraktor;
+                    GrandTotalJumBesar = GrandTotalJumBesar + @RumusanPekerjaBulanan.fld_JumBesar;
+                    GrandTotalPrcntJumBesar = GrandTotalPrcntJumBesar + @RumusanPekerjaBulanan.fld_PrcntJumBesar;
+                    GrandTotalKekurangSmsa = GrandTotalKekurangSmsa + @RumusanPekerjaBulanan.fld_KekurangSmsa;
+                    GrandTotalPrcntKekurangSmsa = GrandTotalPrcntKekurangSmsa + @RumusanPekerjaBulanan.fld_PrcntKekurangSmsa;
+                    GrandTotalJumPkjSediaAda = GrandTotalJumPkjSediaAda + @RumusanPekerjaBulanan.fld_JumPkjSediaAda;
+                    <tr>
+                        @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                        {
+
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaBulanan.fld_NamaWilayah
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaBulanan.fld_KodLadang
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaBulanan.fld_NamaLadang
+                            </td>
+                        }
+
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumPkjSediaAda
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjJan
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjFeb
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjMac
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjApr
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjMei
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjJun
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjJul
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjOgos
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjSept
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjOkt
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjNov
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjDis
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @JumlahMasukTahunan
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @JumlahSemasa
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjCom
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjUnfit
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjPindah
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjTngkpUsir
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjMeninggal
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjLari
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumPkjKeluarSmsa
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumTKA
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumTKT
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumTKTPrdktvt
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumTKTArtisan
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_BilPkjKontraktor
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_PrcntPkjKontraktor
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_JumBesar
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_PrcntJumBesar
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_KekurangSmsa
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @RumusanPekerjaBulanan.fld_PrcntKekurangSmsa
+                        </td>
+                    </tr>
+                }
+
+
+                <tr>
+                    @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                    {
+                        <td colspan="2" align="center" style="vertical-align: middle !important;  border: 1px solid black;" border="1">
+                            <b>JUMLAH</b>
+                        </td>
+                    }
+                    else
+                    {
+                        <td colspan="3" align="center" style="vertical-align: middle !important;  border: 1px solid black;" border="1">
+                            <b>JUMLAH</b>
+                        </td>
+                    }
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumPkjSediaAda</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjJan</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjFeb</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjMac</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjApr</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjMei</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjJun</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjJul</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjOgos</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjSept</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjOkt</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjNov</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjDis</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumlahMasukTahunan</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumlahSemasa</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjCom</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjUnfit</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjPindah</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjTngkpUsir</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalilPkjMeninggal</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjLari</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumPkjKeluarSmsa</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumTKA</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumTKT</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumTKTPrdktvt</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumTKTArtisan</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalBilPkjKontraktor</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalPrcntPkjKontraktor</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalJumBesar</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalPrcntJumBesar</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalKekurangSmsa</b>
+                    </td>
+                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <b>@GrandTotalPrcntKekurangSmsa</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
+}
+
+
+<div id="scrollArea2" class="modal-body" style="text-align: center">
+    <p style="color: red">@ViewBag.Message</p>
+
+</div>
+
+
+@*//farahin-21012021*@
+<div style="text-align:right; margin-top:10px">
+    <a class="btn btn-default btn-sm" href="" id="printpage">
+        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+    </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+</div>
+
+@* farahin tambah javascript -21012021 *@
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+
