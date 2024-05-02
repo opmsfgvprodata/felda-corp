@@ -28,40 +28,48 @@
         @using (Ajax.BeginForm("_MasterDataPkjReport", "Report", null, options, new { @id = "masterDataPkjReportSearch" }))
         {
             @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="col-sm-1">
-                    @Html.Label(GlobalResCorp.lblActiveStatus)
-                    @Html.DropDownList("StatusList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                @*sarah added*@
-                <div class="col-sm-1">
-                    @Html.Label(GlobalResCorp.lblCompany)
-                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.lblRegion)
-                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.lblEstate)
-                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.lblWorkCategory)
-                    @Html.DropDownList("KategoriPekerjaList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-1">
-                    @Html.Label(GlobalResCorp.lblCitizen)
-                    @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.btnSearch)
-                    @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-1" style="padding-top: 24px">
-                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
-                </div>
+        <div class="row">
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblActiveStatus)
+                @Html.DropDownList("StatusList", null, htmlAttributes: new { @class = "form-control" })
             </div>
+            @*sarah added*@
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblRegion)
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblEstate)
+                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblWorkCategory)
+                @Html.DropDownList("KategoriPekerjaList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblCitizen)
+                @Html.DropDownList("KerakyatanList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblGender)
+                @Html.DropDownList("jantinaList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-1">
+                @Html.Label(GlobalResCorp.lblSupplier)
+                @Html.DropDownList("pembekalList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.btnSearch)
+                @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-1" style="padding-top: 24px">
+                <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
+            </div>
+        </div>
         }
     </div>
 

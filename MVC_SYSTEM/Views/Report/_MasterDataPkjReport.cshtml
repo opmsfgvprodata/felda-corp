@@ -20,31 +20,32 @@
 
 @if (Model != null && Model.Count() != 0)
 {
-    <div id="scrollArea" class="modal-body">
-        @foreach (var wilayah in Model.Select(s => s.fld_WilayahID).Distinct())
+<div id="scrollArea" class="modal-body">
+    @foreach (var wilayah in Model.Select(s => s.fld_WilayahID).Distinct())
+    {
+
+
+        foreach (var ladang in Model.Where(x => x.fld_WilayahID == wilayah).Select(s => s.fld_LadangID).Distinct())
         {
 
-
-            foreach (var ladang in Model.Where(x => x.fld_WilayahID == wilayah).Select(s => s.fld_LadangID).Distinct())
+            foreach (var costcentre in Model.Select(s => s.fld_CompCode).Distinct())
             {
+                var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
 
-
+                <logo />
                 <table class="table table-hover" style="font-size: 11px;" border="0">
                     <thead>
                         <tr>
-                            <th colspan="12">
-                                <p align="center" style="font-size: 11px" :><b>@ViewBag.NamaSyarikat</b></p>
-                                <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @ViewBag.NoSyarikat</b></p>
-                                <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleWorkerMasterDataReport</b></p>
+                            <th colspan="32" style="text-align:center;vertical-align:middle;">
+
+                                @namapenuhsyarikat
                                 <br />
-
-                                <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.lblRegion : @GetConfig.GetWilayahNameFromID(wilayah)</b></p>
-
-
+                                (@namasyarikat)
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="12" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <th colspan="32" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
 
                                 <font color="white">@GetConfig.GetLadangKodFromID(ladang) - @GetConfig.GetLadangNameFromID(ladang)</font>
                             </th>
@@ -58,10 +59,29 @@
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrCategory</th>
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblSupplier</th>
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblActiveStatus</th>
-                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Tarikh Lantikan</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTarikhCopImigresen</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblNotActiveReason</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPassportEnd</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitEnd</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitNo</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblNoPerkeso</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblGender</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblDOB</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblAge</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMaritalStatus</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblRace</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblReligion</th>
+                            <th width="4%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblAddress</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPoscode</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblDaerah</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblState</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblCountry</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPhone</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblStartWork</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPaymentMode</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblNamaWaris</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblHubWaris</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblNoTelefonWaris</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,12 +146,70 @@
                                         @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPermit)
                                     }
                                 </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Prmtno
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Noperkeso
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdjnt, "jantina", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trlhr)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Umur
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_statuskhwn, "tarafKahwin", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdbangsa, "bangsa", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdagama, "agama", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Alamat1
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Poskod
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Daerah
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negeri, "negeri", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negara, "krytnlist", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_NoTel
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trkmulakhidmat)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Modbayaran, "paymentmode", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Namawaris
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Hubwaris
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @workerMasterData.fld_Notelwaris
+                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             }
         }
+    }
     </div>
     @* farahin commnet button asal *@
     @*<a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>*@

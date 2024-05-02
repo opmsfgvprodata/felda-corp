@@ -3804,4 +3804,40 @@
   <data name="msgGenerateLeaveSuccess" xml:space="preserve">
     <value>Proses Jana Cuti Berjaya</value>
   </data>
+  <data name="lblAge" xml:space="preserve">
+    <value>Umur</value>
+  </data>
+  <data name="lblAlamat1" xml:space="preserve">
+    <value>Alamat 1</value>
+  </data>
+  <data name="lblDaerah" xml:space="preserve">
+    <value>Daerah</value>
+  </data>
+  <data name="lblHubWaris" xml:space="preserve">
+    <value>Hubungan Waris</value>
+  </data>
+  <data name="lblMaritalStatus" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="lblNamaWaris" xml:space="preserve">
+    <value>Nama Waris</value>
+  </data>
+  <data name="lblNoPerkeso" xml:space="preserve">
+    <value>No. Perkeso</value>
+  </data>
+  <data name="lblNoTelefonWaris" xml:space="preserve">
+    <value>No Telefon Waris</value>
+  </data>
+  <data name="lblPaymentMode" xml:space="preserve">
+    <value>Mod Bayaran</value>
+  </data>
+  <data name="lblPoscode" xml:space="preserve">
+    <value>Poskod</value>
+  </data>
+  <data name="lblTarikhCopImigresen" xml:space="preserve">
+    <value>Tarikh Cop Imigresen/Lantikan</value>
+  </data>
+  <data name="lblTarikhLantikan" xml:space="preserve">
+    <value>Tarikh Lantikan</value>
+  </data>
 </root>

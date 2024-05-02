@@ -1021,6 +1021,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\MVC_SYSTEM_SP2_Models1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_DashAllKerakyatan_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -2084,7 +2089,7 @@
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
-      <LastGenOutput>MVC_SYSTEM_SP2_Models.cs</LastGenOutput>
+      <LastGenOutput>MVC_SYSTEM_SP2_Models1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />

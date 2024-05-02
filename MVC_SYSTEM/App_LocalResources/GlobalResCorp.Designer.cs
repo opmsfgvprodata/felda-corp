@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResCorp {
@@ -1114,6 +1114,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Umur.
+        /// </summary>
+        public static string lblAge {
+            get {
+                return ResourceManager.GetString("lblAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insentif AIPS.
         /// </summary>
         public static string lblAips {
@@ -1146,6 +1155,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblAktvtType {
             get {
                 return ResourceManager.GetString("lblAktvtType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alamat 1.
+        /// </summary>
+        public static string lblAlamat1 {
+            get {
+                return ResourceManager.GetString("lblAlamat1", resourceCulture);
             }
         }
         
@@ -2977,6 +2995,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daerah.
+        /// </summary>
+        public static string lblDaerah {
+            get {
+                return ResourceManager.GetString("lblDaerah", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bonus Harian.
         /// </summary>
         public static string lblDailyBonus {
@@ -4561,6 +4588,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hubungan Waris.
+        /// </summary>
+        public static string lblHubWaris {
+            get {
+                return ResourceManager.GetString("lblHubWaris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string lblID {
@@ -5976,6 +6012,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         /// <summary>
         ///   Looks up a localized string similar to Status Perkahwinan.
         /// </summary>
+        public static string lblMaritalStatus {
+            get {
+                return ResourceManager.GetString("lblMaritalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Perkahwinan.
+        /// </summary>
         public static string lblMarriageStatus {
             get {
                 return ResourceManager.GetString("lblMarriageStatus", resourceCulture);
@@ -6262,6 +6307,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nama Waris.
+        /// </summary>
+        public static string lblNamaWaris {
+            get {
+                return ResourceManager.GetString("lblNamaWaris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nama.
         /// </summary>
         public static string lblName {
@@ -6361,6 +6415,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Perkeso.
+        /// </summary>
+        public static string lblNoPerkeso {
+            get {
+                return ResourceManager.GetString("lblNoPerkeso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Luas Kawasan Tiada Tanaman.
         /// </summary>
         public static string lblNoPlantArea {
@@ -6411,6 +6474,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblNotActiveReason {
             get {
                 return ResourceManager.GetString("lblNotActiveReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Telefon Waris.
+        /// </summary>
+        public static string lblNoTelefonWaris {
+            get {
+                return ResourceManager.GetString("lblNoTelefonWaris", resourceCulture);
             }
         }
         
@@ -6910,6 +6982,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mod Bayaran.
+        /// </summary>
+        public static string lblPaymentMode {
+            get {
+                return ResourceManager.GetString("lblPaymentMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jadual Kadar Upah (Menuai).
         /// </summary>
         public static string lblPayrate {
@@ -7194,6 +7275,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblPopulatePublicHolidayMaintenanceTitle1 {
             get {
                 return ResourceManager.GetString("lblPopulatePublicHolidayMaintenanceTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poskod.
+        /// </summary>
+        public static string lblPoscode {
+            get {
+                return ResourceManager.GetString("lblPoscode", resourceCulture);
             }
         }
         
@@ -8301,6 +8391,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblTarget {
             get {
                 return ResourceManager.GetString("lblTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Cop Imigresen/Lantikan.
+        /// </summary>
+        public static string lblTarikhCopImigresen {
+            get {
+                return ResourceManager.GetString("lblTarikhCopImigresen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Lantikan.
+        /// </summary>
+        public static string lblTarikhLantikan {
+            get {
+                return ResourceManager.GetString("lblTarikhLantikan", resourceCulture);
             }
         }
         
