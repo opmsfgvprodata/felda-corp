@@ -23779,27 +23779,13 @@ namespace MVC_SYSTEM.Controllers
 
             string[] kodCutiArr = { "C01", "C02", "C03", "C10" };
 
-            var dataSyarikat = db.tbl_Syarikat
-                .Where(x => x.fld_SAPComCode == pSyarikatID &&
-                    x.fld_Deleted == false)
-                .FirstOrDefault();
-
-            var Syarikat = 0;
-            if (dataSyarikat != null)
-            {
-                Syarikat = dataSyarikat.fld_SyarikatID;
-            } else
-            {
-                Syarikat = (int)SyarikatID;
-            }
-
             if (pWilayahID == null)
             {
                 cutiList = new SelectList(db.tbl_CutiKategori
                     .Where(x => x.fld_Deleted == false &&
                         x.fld_Indicator == true &&
                         x.fld_NegaraID == NegaraID &&
-                        x.fld_SyarikatID == Syarikat &&
+                        x.fld_SyarikatID == SyarikatID &&
                         kodCutiArr.Contains(x.fld_KodCuti))
                     .Select(s => new SelectListItem
                     {
@@ -23813,7 +23799,7 @@ namespace MVC_SYSTEM.Controllers
                     .Where(x => x.fld_Deleted == false &&
                         x.fld_Indicator == true &&
                         x.fld_NegaraID == NegaraID &&
-                        x.fld_SyarikatID == Syarikat &&
+                        x.fld_SyarikatID == SyarikatID &&
                         x.fld_KodCuti != "C99")
                     .Select(s => new SelectListItem
                     {
