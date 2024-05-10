@@ -925,6 +925,7 @@
           <Property Type="String" Name="fld_Hubwaris" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="fld_Notelwaris" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="fld_Generasi" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="fld_Trkhtakaktif" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1556,6 +1557,7 @@
                 <ScalarProperty Name="fld_Hubwaris" ColumnName="fld_Hubwaris" />
                 <ScalarProperty Name="fld_Notelwaris" ColumnName="fld_Notelwaris" />
                 <ScalarProperty Name="fld_Generasi" ColumnName="fld_Generasi" />
+                <ScalarProperty Name="fld_Trkhtakaktif" ColumnName="fld_Trkhtakaktif" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

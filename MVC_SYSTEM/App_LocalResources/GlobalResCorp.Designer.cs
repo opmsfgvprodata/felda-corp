@@ -4615,6 +4615,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarikh Tidak Aktif.
+        /// </summary>
+        public static string lblInactiveDate {
+            get {
+                return ResourceManager.GetString("lblInactiveDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tambah Sebab Tidak Aktif.
         /// </summary>
         public static string lblInactiveReasonAdd {

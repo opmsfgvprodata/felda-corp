@@ -54,5 +54,6 @@ namespace MVC_SYSTEM.ModelsSP
         public string fld_Hubwaris { get; set; }
         public string fld_Notelwaris { get; set; }
         public string fld_Generasi { get; set; }
+        public Nullable<System.DateTime> fld_Trkhtakaktif { get; set; }
     }
 }

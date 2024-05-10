@@ -59,8 +59,9 @@
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrCategory</th>
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblSupplier</th>
                             <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblActiveStatus</th>
-                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTarikhCopImigresen</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblInactiveDate</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblNotActiveReason</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTarikhCopImigresen</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPassportEnd</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitEnd</th>
                             <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPermitNo</th>
@@ -89,121 +90,124 @@
                         {
                             bil += 1;
 
-                            <tr>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @bil
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_NoPkj
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_NoKP
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Nama
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodWarganegara, "krytnlist", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodKategoriPekerja, "designation", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetPembekal(@workerMasterData.fld_KodPembekal, (int)workerMasterData.fld_NegaraID, (int)workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodStatusAktif, "statusaktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhMulaKhidmat)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @*fatin add checking - 18/01/2023*@
-                                    @if (workerMasterData.fld_KodStatusAktif == "2")
-                                    {
-                                        @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodSebabTakAktif, "sbbTakAktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                    }
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @if (workerMasterData.fld_TarikhTamatPassport <= time.gettimezone().Date)
-                                    {
-                                        <font color="red">@String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPassport)</font>
-                                    }
+                        <tr>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_NoPkj
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_NoKP
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Nama
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodWarganegara, "krytnlist", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodKategoriPekerja, "designation", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetPembekal(@workerMasterData.fld_KodPembekal, (int)workerMasterData.fld_NegaraID, (int)workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodStatusAktif, "statusaktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @*fatin add checking - 18/01/2023*@
+                                @if (workerMasterData.fld_KodStatusAktif == "2")
+                                {
+                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_KodSebabTakAktif, "sbbTakAktif", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                                }
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trkhtakaktif)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhMulaKhidmat)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @if (workerMasterData.fld_TarikhTamatPassport <= time.gettimezone().Date)
+                                {
+                                    <font color="red">@String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPassport)</font>
+                                }
 
-                                    else
-                                    {
-                                        @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPassport)
-                                    }
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @if (workerMasterData.fld_TarikhTamatPassport <= time.gettimezone())
-                                    {
-                                        <font color="red">@String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPermit)</font>
-                                    }
+                                else
+                                {
+                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPassport)
+                                }
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @if (workerMasterData.fld_TarikhTamatPassport <= time.gettimezone())
+                                {
+                                    <font color="red">@String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPermit)</font>
+                                }
 
-                                    else
-                                    {
-                                        @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPermit)
-                                    }
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Prmtno
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Noperkeso
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdjnt, "jantina", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trlhr)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Umur
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_statuskhwn, "tarafKahwin", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdbangsa, "bangsa", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdagama, "agama", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Alamat1
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Poskod
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Daerah
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negeri, "negeri", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negara, "krytnlist", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_NoTel
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trkmulakhidmat)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetConfig.GetWebConfigDesc(workerMasterData.fld_Modbayaran, "paymentmode", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Namawaris
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Hubwaris
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @workerMasterData.fld_Notelwaris
-                                </td>
-                            </tr>
+                                else
+                                {
+                                    @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_TarikhTamatPermit)
+                                }
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Prmtno
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Noperkeso
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdjnt, "jantina", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trlhr)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Umur
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_statuskhwn, "tarafKahwin", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdbangsa, "bangsa", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Kdagama, "agama", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Alamat1
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Poskod
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Daerah
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negeri, "negeri", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Negara, "krytnlist", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_NoTel
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @String.Format("{0:dd/MM/yyyy}", @workerMasterData.fld_Trkmulakhidmat)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(workerMasterData.fld_Modbayaran, "paymentmode", workerMasterData.fld_NegaraID, workerMasterData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Namawaris
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Hubwaris
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @workerMasterData.fld_Notelwaris
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

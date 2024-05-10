@@ -3840,4 +3840,7 @@
   <data name="lblTarikhLantikan" xml:space="preserve">
     <value>Tarikh Lantikan</value>
   </data>
+  <data name="lblInactiveDate" xml:space="preserve">
+    <value>Tarikh Tidak Aktif</value>
+  </data>
 </root>
