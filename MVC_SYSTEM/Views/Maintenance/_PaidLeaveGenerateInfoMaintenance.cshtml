@@ -1,0 +1,155 @@
+﻿@using MVC_SYSTEM.Class
+@using System.Collections
+@model IEnumerable<MVC_SYSTEM.ModelsCustom.CustMod_PaidLeaveGenerateListResult>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+    ChangeTimeZone time = new ChangeTimeZone();
+
+    int year = time.gettimezone().Year;
+    int month = time.gettimezone().Month;
+    int day = time.gettimezone().Day;
+    int hour = time.gettimezone().Hour;
+    int minute = time.gettimezone().Minute;
+    int second = time.gettimezone().Second;
+
+    int bil = 0;
+    int bilLdg = 0;
+    string uniquefilename = "GenerateLeaveWorker_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea" class="modal-body">
+        @foreach (var ladang in Model)
+        {
+            bil = 0;
+            <table class="table table-hover" style="font-size: 11px;" border="0" cellspacing="10">
+                <thead>
+                    <tr>
+                        <th colspan="@(6 + @ViewBag.leaveTitle.Count)">
+                            <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.lblRegion : @GetConfig.GetWilayahNameFromID(ladang.wilayahID)</b></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="@(6 + ViewBag.leaveTitle.Count)" bgcolor="#FFCC80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <font color="white">@GetConfig.GetLadangKodFromID(ladang.ladangID) - @GetConfig.GetLadangNameFromID(ladang.ladangID)</font>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th width="1%" colspan="1" rowspan="2" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GlobalResLocalWorkerInfo.hdrNo
+                        </th>
+                        <th width="2%" colspan="1" rowspan="2" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GlobalResCorp.hdrNoPkj
+                        </th>
+                        <th width="3%" colspan="3" rowspan="2" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GlobalResCorp.hdrName
+                        </th>
+                        <th width="3%" colspan="1" rowspan="2" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                            Tarikh Lantikan
+                        </th>
+                        @if (@ViewBag.leaveTitle.Count > 0)
+                        {
+                            <th colspan="@ViewBag.leaveTitle.Count" rowspan="1" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                                Jumlah Cuti (Hari)
+                            </th>
+                        }
+                    </tr>
+                    <tr>
+                        @foreach (var title in ViewBag.leaveTitle)
+                        {
+                            <th width="3%" colspan="1" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @title
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pkj in ladang.pkjList)
+                    {
+                        bil += 1;
+                        <tr>
+                            <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
+                            <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @pkj.noPkj
+                            </td>
+                            <td align="center" colspan="3" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @pkj.namaPkj
+                            </td>
+                            <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @pkj.tarikhMulaKerja.Value.ToString("dd/MM/yyyy")
+                            </td>
+                            @if (@ViewBag.leaveTitle.Count > 0)
+                            {
+                                foreach (var cuti in pkj.cuti)
+                                {
+                                    <td align="center" colspan="1" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @cuti.leaveAmount
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <newpage />
+            bilLdg++;
+        }
+    </div>
+
+    <div style="text-align:right; margin-top:10px">
+        <a class="btn btn-default btn-sm" href="#" id="printpage">
+            <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+        </a>
+        <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+            <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+        </a>
+        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+        </a>
+    </div>
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+    </div>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            window.location.reload();
+        })
+
+        $("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "MasterDataPkj" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
