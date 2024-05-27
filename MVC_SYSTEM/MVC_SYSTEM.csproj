@@ -988,6 +988,7 @@
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
     <Compile Include="ModelsCustom\CustMod_PaidLeaveGenerate.cs" />
+    <Compile Include="ModelsCustom\CustMod_DataEntryReport.cs" />
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
@@ -995,6 +996,8 @@
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerjahdr.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerja.cs" />
     <Compile Include="ModelsEstate\tbl_CutiPeruntukan.cs" />
     <Compile Include="ModelsEstate\tbl_Insentif.cs" />
     <Compile Include="ModelsEstate\tbl_Kepuasan.cs" />
@@ -3651,10 +3654,12 @@
     <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
     <Content Include="Views\Report\_PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
+    <Content Include="Views\Report\DataEntryReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
     <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
     <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
+    <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

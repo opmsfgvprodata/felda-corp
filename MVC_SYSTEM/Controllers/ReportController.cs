@@ -9444,5 +9444,376 @@ namespace MVC_SYSTEM.Controllers
             return View(PaySheetPekerjaList);
         }
 
+
+        [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Resource,Viewer")]
+        public ActionResult DataEntryReport()
+        {
+            ViewBag.Report = "class = active";
+
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            int? NegaraID = 0,SyarikatID = 0,WilayahID = 0, LadangID = 0;
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int month = timezone.gettimezone().Month;
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false), "fldOptConfValue", "fldOptConfDesc", month);
+
+            int prevYear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            int currentYear = timezone.gettimezone().Year;
+            var yearlist = new List<SelectListItem>();
+            for (var i = prevYear; i <= currentYear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem
+                    { Text = i.ToString(), Value = i.ToString(), Selected = true }
+                    );
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem
+                    { Text = i.ToString(), Value = i.ToString() }
+                    );
+                }
+            }
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            if (SyarikatID == 1)
+            {
+                SyarikatList = new SelectList(dbC.tblOptionConfigsWebs
+                    .Where(x =>
+                        x.fldOptConfFlag1 == "kodSAPSyarikat"
+                        && x.fldDeleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem
+                    { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text")
+                    .ToList();
+
+            }
+            if (SyarikatID == 2)
+            {
+                SyarikatList = new SelectList(db.tbl_Syarikat
+                    .Where(x =>
+                        x.fld_Deleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .Select(s => new SelectListItem
+                    { Value = s.fld_SyarikatID.ToString(), Text = s.fld_NamaPndkSyarikat }), "Value", "Text")
+                    .ToList();
+            }
+
+            SyarikatList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.SyarikatList = SyarikatList;
+
+            List<SelectListItem> wilayahList = new List<SelectListItem>();
+            wilayahList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.WilayahList = wilayahList;
+
+            List<SelectListItem> ladangList = new List<SelectListItem>();
+            ladangList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.LadangList = ladangList;
+
+            return View();
+        }
+
+        [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Resource,Viewer")]
+        public ActionResult _DataEntryReportSearch(int? MonthList, int? YearList, string SyarikatList, int? WilayahList, int? LadangList, int page = 1)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var message = "";
+
+            List<CustMod_DataEntryReportResult> result = new List<CustMod_DataEntryReportResult>();
+            List<int> daysList = new List<int>();
+
+            if (!String.IsNullOrEmpty(MonthList.ToString()) && 
+                !String.IsNullOrEmpty(YearList.ToString()) &&
+                !String.IsNullOrEmpty(SyarikatList) &&
+                !String.IsNullOrEmpty(WilayahList.ToString())
+            ){
+                Connection Connection = new Connection();
+                string host, catalog, user, pass;
+                Connection.GetConnection(out host, out catalog, out user, out pass, WilayahList, SyarikatID, NegaraID);
+                MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+                var firstDayOfMonth = new DateTime((int)YearList, (int)MonthList, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddTicks(-1);
+
+                if (lastDayOfMonth >= DateTime.Now)
+                {
+                    lastDayOfMonth = DateTime.Now;
+                }
+
+                for (int i = firstDayOfMonth.Day; i <= lastDayOfMonth.Day; i++)
+                {
+                    daysList.Add(i);
+                }
+
+                if (LadangList == 0) // all ldg
+                {
+                    var ldgIDs = dbC.tbl_Ladang
+                        .Where(x => x.fld_Deleted == false &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            x.fld_WlyhID == WilayahList &&
+                            x.fld_CostCentre == SyarikatList)
+                        .Select(s => s.fld_ID)
+                        .ToList();
+
+                    var dataPkj = estateConnection.tbl_Pkjmast
+                        .Where(x => x.fld_Kdaktf == "1" &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .OrderBy(o => o.fld_Nama)
+                        .ToList();
+
+                    var dataTask = estateConnection.tbl_Kerja
+                        .Where(x => x.fld_Tarikh.Value.Month == MonthList &&
+                            x.fld_Tarikh.Value.Year == YearList &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .ToList();
+
+                    var dataAttendance = estateConnection.tbl_Kerjahdr
+                        .Where(x => x.fld_Tarikh.Value.Month == MonthList &&
+                            x.fld_Tarikh.Value.Year == YearList &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .ToList();
+
+                    foreach (var ldgID in ldgIDs)
+                    {
+                        CustMod_DataEntryReportResult ldgObj = new CustMod_DataEntryReportResult();
+                        ldgObj.ladangID = ldgID;
+
+                        var pkjLdg = dataPkj
+                            .Where(x => x.fld_LadangID == ldgID)
+                            .ToList();
+
+                        List<CustMod_PkjDataEntryResult> PkjResult = new List<CustMod_PkjDataEntryResult>();
+                        foreach (var pkj in pkjLdg)
+                        {
+                            CustMod_PkjDataEntryResult pkjObj = new CustMod_PkjDataEntryResult();
+
+                            var noPkj = pkj.fld_Nopkj;
+                            pkjObj.noPkj = noPkj;
+                            pkjObj.namaPkj = pkj.fld_Nama;
+
+                            var dataAttendancePkj = dataAttendance
+                                .Where(x => x.fld_NoPkj == noPkj)
+                                .OrderBy(o => o.fld_Tarikh.Value.Day)
+                                .ToList();
+
+                            var dataTaskPkj = dataTask
+                                .Where(x => x.fld_NoPkj == noPkj)
+                                .OrderBy(o => o.fld_Tarikh.Value.Day)
+                                .ToList();
+
+                            List<CustMod_ReportPerDayResult> dataEntryResult = new List<CustMod_ReportPerDayResult>();
+                            for (int i = firstDayOfMonth.Day; i <= lastDayOfMonth.Day; i++)
+                            {
+                                CustMod_ReportPerDayResult dayObj = new CustMod_ReportPerDayResult();
+                                dayObj.Day = i;
+
+                                string[] attendanceFree = {
+                                    "C01",
+                                    "C02",
+                                    "C03",
+                                    "C04",
+                                    "C05",
+                                    "C06",
+                                    "C07",
+                                    "C09",
+                                    "C10",
+                                    "C11",
+                                    "C12",
+                                    "C13",
+                                    "C14",
+                                    "P01"
+                                };
+
+                                string[] attendanceTask = {
+                                    "H01",
+                                    "H02",
+                                    "H03"
+                                };
+
+                                var dataAttendanceByDate = dataAttendancePkj
+                                    .Where(x => x.fld_Tarikh.Value.Day == i)
+                                    .FirstOrDefault();
+
+                                if (dataAttendanceByDate == null)
+                                {
+                                    dayObj.Attendance = false;
+                                    dayObj.Task = false;
+                                } else
+                                {
+                                    dayObj.Attendance = true;
+
+                                    if (attendanceFree.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                    {
+                                        dayObj.Task = true;
+                                    }
+                                    else if (attendanceTask.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                    {
+                                        var dataTaskByDate = dataTaskPkj
+                                        .Where(x => x.fld_Tarikh.Value.Day == i)
+                                        .FirstOrDefault();
+
+                                        dayObj.Task = dataTaskByDate == null ? false : true;
+
+                                    }
+                                    else
+                                    {
+                                        dayObj.Task = false;
+                                    }
+                                }
+                                
+                                dataEntryResult.Add(dayObj);
+                            }
+                            pkjObj.dataEntryList = dataEntryResult;
+
+                            PkjResult.Add(pkjObj);
+                        }
+                        ldgObj.pkjList = PkjResult;
+
+                        result.Add(ldgObj);
+                    }
+                } else { // 1 ldg 
+                    List<int> ldgIDs = new List<int>();
+                    ldgIDs.Add((int)LadangList);
+
+                    var dataPkj = estateConnection.tbl_Pkjmast
+                        .Where(x => x.fld_Kdaktf == "1" &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .OrderBy(o => o.fld_Nama)
+                        .ToList();
+
+                    var dataTask = estateConnection.tbl_Kerja
+                        .Where(x => x.fld_Tarikh.Value.Month == MonthList &&
+                            x.fld_Tarikh.Value.Year == YearList &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .ToList();
+
+                    var dataAttendance = estateConnection.tbl_Kerjahdr
+                        .Where(x => x.fld_Tarikh.Value.Month == MonthList &&
+                            x.fld_Tarikh.Value.Year == YearList &&
+                            ldgIDs.Contains((int)x.fld_LadangID))
+                        .ToList();
+
+                    foreach (var ldgID in ldgIDs)
+                    {
+                        CustMod_DataEntryReportResult ldgObj = new CustMod_DataEntryReportResult();
+                        ldgObj.ladangID = ldgID;
+
+                        var pkjLdg = dataPkj
+                            .Where(x => x.fld_LadangID == ldgID)
+                            .ToList();
+
+                        List<CustMod_PkjDataEntryResult> PkjResult = new List<CustMod_PkjDataEntryResult>();
+                        foreach (var pkj in pkjLdg)
+                        {
+                            CustMod_PkjDataEntryResult pkjObj = new CustMod_PkjDataEntryResult();
+
+                            var noPkj = pkj.fld_Nopkj;
+                            pkjObj.noPkj = noPkj;
+                            pkjObj.namaPkj = pkj.fld_Nama;
+
+                            var dataAttendancePkj = dataAttendance
+                                .Where(x => x.fld_NoPkj == noPkj)
+                                .OrderBy(o => o.fld_Tarikh.Value.Day)
+                                .ToList();
+
+                            var dataTaskPkj = dataTask
+                                .Where(x => x.fld_NoPkj == noPkj)
+                                .OrderBy(o => o.fld_Tarikh.Value.Day)
+                                .ToList();
+
+                            List<CustMod_ReportPerDayResult> dataEntryResult = new List<CustMod_ReportPerDayResult>();
+                            for (int i = firstDayOfMonth.Day; i <= lastDayOfMonth.Day; i++)
+                            {
+                                CustMod_ReportPerDayResult dayObj = new CustMod_ReportPerDayResult();
+                                dayObj.Day = i;
+
+                                string[] attendanceFree = {
+                                    "C01",
+                                    "C02",
+                                    "C03",
+                                    "C04",
+                                    "C05",
+                                    "C06",
+                                    "C07",
+                                    "C09",
+                                    "C10",
+                                    "C11",
+                                    "C12",
+                                    "C13",
+                                    "C14",
+                                    "P01"
+                                };
+
+                                string[] attendanceTask = {
+                                    "H01",
+                                    "H02",
+                                    "H03"
+                                };
+
+                                var dataAttendanceByDate = dataAttendancePkj
+                                    .Where(x => x.fld_Tarikh.Value.Day == i)
+                                    .FirstOrDefault();
+
+                                if (dataAttendanceByDate == null)
+                                {
+                                    dayObj.Attendance = false;
+                                    dayObj.Task = false;
+                                }
+                                else
+                                {
+                                    dayObj.Attendance = true;
+
+                                    if (attendanceFree.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                    {
+                                        dayObj.Task = true;
+                                    }
+                                    else if (attendanceTask.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                    {
+                                        var dataTaskByDate = dataTaskPkj
+                                        .Where(x => x.fld_Tarikh.Value.Day == i)
+                                        .FirstOrDefault();
+
+                                        dayObj.Task = dataTaskByDate == null ? false : true;
+
+                                    }
+                                    else
+                                    {
+                                        dayObj.Task = false;
+                                    }
+                                }
+
+                                dataEntryResult.Add(dayObj);
+                            }
+                            pkjObj.dataEntryList = dataEntryResult;
+
+                            PkjResult.Add(pkjObj);
+                        }
+                        ldgObj.pkjList = PkjResult;
+
+                        result.Add(ldgObj);
+                    }
+                }
+
+                if (result.Count == 0)
+                {
+                    message = GlobalResCorp.msgNoRecord;
+                }
+            } else {
+                message = "Sila pilih Bulan, Tahun, Syarikat, Wilayah & Ladang";
+            }
+
+            ViewBag.Days = daysList;
+            ViewBag.Message = message;
+            return View(result);
+        }
     }
 }
