@@ -9650,23 +9650,28 @@ namespace MVC_SYSTEM.Controllers
                                 } else
                                 {
                                     dayObj.Attendance = true;
-
-                                    if (attendanceFree.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
-                                    {
-                                        dayObj.Task = true;
-                                    }
-                                    else if (attendanceTask.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
-                                    {
-                                        var dataTaskByDate = dataTaskPkj
-                                        .Where(x => x.fld_Tarikh.Value.Day == i)
-                                        .FirstOrDefault();
-
-                                        dayObj.Task = dataTaskByDate == null ? false : true;
-
-                                    }
-                                    else
+                                    if (dataAttendanceByDate.fld_Kdhdct == null)
                                     {
                                         dayObj.Task = false;
+                                    } else
+                                    {
+                                        if (attendanceFree.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                        {
+                                            dayObj.Task = true;
+                                        }
+                                        else if (attendanceTask.Contains(dataAttendanceByDate.fld_Kdhdct.ToString()))
+                                        {
+                                            var dataTaskByDate = dataTaskPkj
+                                            .Where(x => x.fld_Tarikh.Value.Day == i)
+                                            .FirstOrDefault();
+
+                                            dayObj.Task = dataTaskByDate == null ? false : true;
+
+                                        }
+                                        else
+                                        {
+                                            dayObj.Task = false;
+                                        }
                                     }
                                 }
                                 
