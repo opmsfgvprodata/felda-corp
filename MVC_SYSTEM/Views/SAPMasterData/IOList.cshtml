@@ -35,31 +35,29 @@
         @using (Ajax.BeginForm("_IOList", "SAPMasterData", null, options, new { @id = "masterDataReportSearch" }))
         {
             @Html.AntiForgeryToken()
-            <div class="row">
-              <div class="col-sm-2">
-                    @Html.Label("Syarikat")
-                    @Html.DropDownList("CompanyCode", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-
-                <div class="col-sm-2">
-                    @Html.Label("Kod IO")
-                    @Html.TextBox("IOCode", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.lblRegion)
-                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.Label(GlobalResCorp.lblEstate)
-                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-
-                <div class="col-sm-4 btn-group" style="padding-top:24px;">
-                    <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
-
-                </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label("Syarikat")
+                @Html.DropDownList("CompanyCode", null, htmlAttributes: new { @class = "form-control" })
             </div>
+
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblRegion)
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblEstate)
+                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label("Kod IO")
+                @Html.TextBox("IOCode", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-4 btn-group" style="padding-top:24px;">
+                <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+
+            </div>
+        </div>
         }
     </div>
 
@@ -98,9 +96,9 @@
         if ($("#WilayahList").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.url = "@Url.Action("GetLadang3", "SAPMasterData")";
             WilayahIDList.type = "POST";
-            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatID: $("#CompanyCode").val() });
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {
@@ -121,9 +119,9 @@
         $("#WilayahList").change(function () {
             var WilayahIDList = {};
             var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.url = "@Url.Action("GetLadang3", "SAPMasterData")";
             WilayahIDList.type = "POST";
-            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val() });
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatID: $("#CompanyCode").val()});
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {
@@ -138,6 +136,32 @@
             };
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);
+        });
+
+        $("#CompanyCode").change(function () {
+            var CompanyCode = {};
+            var disableoption = "";
+
+            CompanyCode.url = "@Url.Action("GetWilayah3", "SAPMasterData")";
+            CompanyCode.type = "POST";
+            CompanyCode.data = JSON.stringify({  SyarikatID: $("#CompanyCode").val()});
+            CompanyCode.datatype = "json";
+            CompanyCode.contentType = "application/json";
+            CompanyCode.success = function (wilayahlist) {
+                debugger
+                $("#WilayahList").empty();
+                $("#WilayahList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#CompanyCode").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+            };
+            CompanyCode.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(CompanyCode);
         });
     });
 </script>

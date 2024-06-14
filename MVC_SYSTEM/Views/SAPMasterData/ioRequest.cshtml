@@ -98,7 +98,7 @@
       if ($("#fld_WilayahID").val() == 0) {
             var WilayahIDList = {};
             var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang", "SAPMasterData")";
+            WilayahIDList.url = "@Url.Action("GetLadang2", "SAPMasterData")";
             WilayahIDList.type = "POST";
           WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
             WilayahIDList.datatype = "json";
@@ -121,7 +121,7 @@
         $("#fld_WilayahID").change(function () {
             var WilayahIDList = {};
             var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang", "SAPMasterData")";
+            WilayahIDList.url = "@Url.Action("GetLadang2", "SAPMasterData")";
             WilayahIDList.type = "POST";
             WilayahIDList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
             WilayahIDList.datatype = "json";

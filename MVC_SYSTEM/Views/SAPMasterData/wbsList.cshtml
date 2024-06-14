@@ -5,6 +5,9 @@
     ViewBag.Title = "WBS Element";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
+    GetIDDataFromDatabase GetIDDataFromDatabase = new GetIDDataFromDatabase();
+    var DataID = new List<long>();
+
     AjaxOptions options = new AjaxOptions
     {
         HttpMethod = "Get",
@@ -13,7 +16,7 @@
         LoadingElementId = "UpdateProgress1"
     };
 
-    int? bil = 0;
+    int? bil = 1;
     GetConfig getconfig = new GetConfig();
     ChangeTimeZone time = new ChangeTimeZone();
     DateTime Todaydate = time.gettimezone();
@@ -26,21 +29,36 @@
 @section scripts{
     @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
 }
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
 
 <section class="content-wrapper main-content clear-fix">
-    <div class="well bottom"  style="padding-bottom: 16px">
+    <div class="well bottom" style="padding-bottom: 16px">
         <div class="row">
             @using (Html.BeginForm("wbsList", "SAPMasterData", new { id = "" }))
             {
                 @Html.AntiForgeryToken()
+                <div class="col-sm-3">
+                    <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
                 <div class="col-sm-2">
-                    @Html.Label("WBS Element")
+                    @Html.Label("WBS Element/Keterangan")
                     @Html.TextBox("wbsCode", null, htmlAttributes: new { @class = "form-control" })
                 </div>
-                <div class="col-sm-2">
-                    @Html.Label("Keterangan")
-                    @Html.TextBox("wbsDesc", null, htmlAttributes: new { @class = "form-control" })
-                </div>
+                @*<div class="col-sm-2">
+                        @Html.Label("Keterangan")
+                        @Html.TextBox("wbsDesc", null, htmlAttributes: new { @class = "form-control" })
+                    </div>*@
                 <div class="col-sm-4 btn-group" style="padding-top:24px;">
                     <input class="btn btn-primary col-sm-3" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
                 </div>
@@ -76,7 +94,7 @@
                                         <tbody>
                                             @foreach (var wbsDetails in Model)
                                             {
-                                                bil = bil + 1;
+
                                                 <tr @if (wbsDetails.fld_createdDate == DateTime.Today || wbsDetails.fld_updatedDate == DateTime.Today) { <text> style="background-color:lightgrey;" </text> }>
                                                     <td align="center" style="color:black; text-align:center; vertical-align:middle;border:1px solid black;" border="1">@bil</td>
 
@@ -105,7 +123,7 @@
                                                         }
                                                     </td>
                                                 </tr>
-
+                                                bil = bil + 1;
                                             }
                                         </tbody>
                                     </table>
@@ -162,13 +180,13 @@
 <script>
     $(document).ready(function () {
 
-        $("#printpage").click(function () {
-            var DivElement = document.getElementById("scrollArea").innerHTML;
-            var oldPage = document.body.innerHTML;
-            document.body.innerHTML = DivElement;
-            window.print();
-            document.body.innerHTML = oldPage;
-        })
+        //$("#printpage").click(function () {
+        //    var DivElement = document.getElementById("scrollArea").innerHTML;
+        //    var oldPage = document.body.innerHTML;
+        //    document.body.innerHTML = DivElement;
+        //    window.print();
+        //    document.body.innerHTML = oldPage;
+        //})
 
         $("#downloadpdf2").click(function () {
             var myHtml = document.getElementById('scrollArea').innerHTML;
@@ -191,5 +209,59 @@
         });
     });
 </script>
+
 <script src="~/Asset/Scripts/FromHTML.js"></script>
 <script src="~/Asset/Scripts/FileSaver.js"></script>
+@*<script src="~/Asset/Scripts/jquery.stickytableheaders2.js" type="text/javascript"></script>
+<script src="~/Asset/Scripts/bootpopup.js" type="text/javascript"></script>*@
+
+<script>
+    $("table").stickyTableHeaders();
+</script>
+<script>
+
+  function getLadangList() {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang_", "SAPMasterData")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    };
+
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang_", "SAPMasterData")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+</script>
