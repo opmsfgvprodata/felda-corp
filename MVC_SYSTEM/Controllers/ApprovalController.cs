@@ -2144,8 +2144,8 @@ namespace MVC_SYSTEM.Controllers
                         }
 
                         //update caruman tambahan
-                        if (app2.fld_Kdrkyt == "MA")
-                        {
+                        //if (app2.fld_Kdrkyt == "MA") //fatin comment - 16/05/2024
+                        //{
                             var CarumanTransfer = dbAsal.tbl_PkjCarumanTambahan.Where(x => x.fld_Nopkj == app1.fldNoPkjAsal && x.fld_NegaraID == app1.fldNegaraAsal && x.fld_SyarikatID == app1.fldSyarikatAsal && x.fld_WilayahID == app1.fldWilayahAsal && x.fld_LadangID == app1.fldLadangAsal && x.fld_Deleted == false).ToList();
                             if (CarumanTransfer.Count() != 0)
                             {
@@ -2164,7 +2164,7 @@ namespace MVC_SYSTEM.Controllers
                                     dbr.SaveChanges();
                                 }
                             }
-                        }
+                        //}
                         status = true;
                         //scope.Complete();
                     }
