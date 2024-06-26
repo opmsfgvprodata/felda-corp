@@ -9,6 +9,7 @@
 
 <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"> @*aini add css datatable*@
 <input type="hidden" id="wilayahname" value="@ViewBag.WilayahName" />
+<input type="hidden" id="costcentre" value="@ViewBag.CostCentre" />
 <section class="content-wrapper main-content clear-fix">
     <div class="well">
         <div class="container" style="max-width: 100%;">
@@ -75,6 +76,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var wilayah = $('#wilayahname').val();
+            var costcentre = $('#costcentre').val();
             console.log(wilayah);
 
             function destroyDataTable() {
@@ -89,7 +91,11 @@
                 dataSeries = [];
                 $.ajax({
                     type: 'POST',
-                    data: "{wilayah:'" + wilayah + "'}",
+                    data: `{
+                        wilayah: "${wilayah}",
+                        costcentre: ${costcentre}
+                    }`,
+                        //"{wilayah:'" + wilayah + "'}",
                     url: '@Url.Action("DashKerakyatan", "Dashboard")',
                     dataType: 'json',
                     contentType: 'application/json',
@@ -142,7 +148,7 @@
                 destroyDataTable();
                 $('.modal-title').html(title);
                 $.ajax({
-                    url: 'DatatableKerakyatan?wilayah=' + wilayah + '&kerakyatan=' + kerakyatan,
+                    url: 'DatatableKerakyatan?wilayah=' + wilayah + '&kerakyatan=' + kerakyatan + '&costcentre=' + costcentre,
                     method: 'post',
                     dataType: 'json',
                     success: function (datatablekerakyatanresult) {
@@ -180,7 +186,11 @@
                 dataSeries2 = [];
                 $.ajax({
                     type: 'POST',
-                    data: "{wilayah:'" + wilayah2 + "'}",
+                    data: `{
+                        wilayah: "${wilayah2}",
+                        costcentre: ${costcentre}
+                    }`,
+                        //"{wilayah:'" + wilayah2 + "'}",
                     url: '@Url.Action("DashJantina", "Dashboard")',
                     dataType: 'json',
                     contentType: 'application/json',
@@ -235,7 +245,7 @@
                 destroyDataTable();
                 $('.modal-title').html(title);
                 $.ajax({
-                    url: 'DatatableJantina?wilayah=' + wilayah + '&jantina=' + jantina,
+                    url: 'DatatableJantina?wilayah=' + wilayah + '&jantina=' + jantina + '&costcentre=' + costcentre,
                     method: 'post',
                     dataType: 'json',
                     success: function (datatablejantinaresult) {
@@ -273,7 +283,11 @@
                 dataSeries3 = [];
                 $.ajax({
                     type: 'POST',
-                    data: "{wilayah:'" + wilayah3 + "'}",
+                    data: `{
+                        wilayah: "${wilayah3}",
+                        costcentre: ${costcentre}
+                    }`,
+                        //"{wilayah:'" + wilayah3 + "'}",
                     url: '@Url.Action("DashLadang", "Dashboard")',
                     dataType: 'json',
                     contentType: 'application/json',
@@ -327,7 +341,7 @@
                 destroyDataTable();
                 $('.modal-title').html(title);
                 $.ajax({
-                    url: 'DatatableLadang?wilayah=' + wilayah + '&ladang=' + ladang,
+                    url: 'DatatableLadang?wilayah=' + wilayah + '&ladang=' + ladang + '&costcentre=' + costcentre,
                     method: 'post',
                     dataType: 'json',
                     success: function (datatableladangresult) {

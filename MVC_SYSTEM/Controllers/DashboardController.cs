@@ -75,7 +75,7 @@ namespace MVC_SYSTEM.Controllers
                 ViewBag.title = "FPM";
             }
 
-            ViewBag.costcentre = costcentre;
+            ViewBag.CostCentre = costcentre;
 
             int currentMonth = DateTime.Now.Month - 1;
             int currentYear = DateTime.Now.Year;
