@@ -1082,6 +1082,9 @@
     <Compile Include="ModelsSP\sp_RptMasterDataPkj_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptMasterJumPkj_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptPermohonanIDPenggunaBaruReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3697,6 +3700,7 @@
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

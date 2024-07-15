@@ -29,6 +29,8 @@ namespace MVC_SYSTEM.ModelsSP
             var objcontxt = (this as IObjectContextAdapter).ObjectContext;
             objcontxt.CommandTimeout = this.Database.Connection.ConnectionTimeout;
         }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
