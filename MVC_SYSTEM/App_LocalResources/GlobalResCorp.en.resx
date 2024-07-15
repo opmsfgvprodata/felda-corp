@@ -2181,4 +2181,79 @@
   <data name="msgKodGL" xml:space="preserve">
     <value>Please key in Kod GL</value>
   </data>
+  <data name="titleReportTenagaKerja" xml:space="preserve">
+    <value>Worker Report</value>
+  </data>
+  <data name="lblBuruhKontraktor" xml:space="preserve">
+    <value>BURUH KONTRAKTOR</value>
+  </data>
+  <data name="lblJumlahBesar" xml:space="preserve">
+    <value>JUMLAH BESAR</value>
+  </data>
+  <data name="lblJumlahMasuk" xml:space="preserve">
+    <value>JUMLAH MASUK</value>
+  </data>
+  <data name="lblJumlahSemasa" xml:space="preserve">
+    <value>JUMLAH SEMASA</value>
+  </data>
+  <data name="lblJumlahTKA" xml:space="preserve">
+    <value>JUMLAH TKA</value>
+  </data>
+  <data name="lblJumlahTKT" xml:space="preserve">
+    <value>JUMLAH TKT(ARTISAN)</value>
+  </data>
+  <data name="lblJumlahTKTProduktiviti" xml:space="preserve">
+    <value>JUMLAH TKT PRODUKTIVITI</value>
+  </data>
+  <data name="lblKekuranganSemasa" xml:space="preserve">
+    <value>KEKURANGAN SEMASA</value>
+  </data>
+  <data name="lblKeluar" xml:space="preserve">
+    <value>KELUAR</value>
+  </data>
+  <data name="lblKemasukanBaruPindahMasuk" xml:space="preserve">
+    <value>BARU/PINDAH MASUK</value>
+  </data>
+  <data name="lblMonth1" xml:space="preserve">
+    <value>JAN</value>
+  </data>
+  <data name="lblMonth10" xml:space="preserve">
+    <value>OKT</value>
+  </data>
+  <data name="lblMonth11" xml:space="preserve">
+    <value>NOV</value>
+  </data>
+  <data name="lblMonth12" xml:space="preserve">
+    <value>DIS</value>
+  </data>
+  <data name="lblMonth2" xml:space="preserve">
+    <value>FEB</value>
+  </data>
+  <data name="lblMonth3" xml:space="preserve">
+    <value>MAC</value>
+  </data>
+  <data name="lblMonth4" xml:space="preserve">
+    <value>APR</value>
+  </data>
+  <data name="lblMonth5" xml:space="preserve">
+    <value>MEI</value>
+  </data>
+  <data name="lblMonth6" xml:space="preserve">
+    <value>JUN</value>
+  </data>
+  <data name="lblMonth7" xml:space="preserve">
+    <value>JUL</value>
+  </data>
+  <data name="lblMonth8" xml:space="preserve">
+    <value>OGOS</value>
+  </data>
+  <data name="lblMonth9" xml:space="preserve">
+    <value>SEPT</value>
+  </data>
+  <data name="lblTidakAktif/Keluar" xml:space="preserve">
+    <value>TIDAK AKTIF/KELUAR</value>
+  </data>
+  <data name="lblTKTSediaAda" xml:space="preserve">
+    <value>TKT SEDIA ADA</value>
+  </data>
 </root>

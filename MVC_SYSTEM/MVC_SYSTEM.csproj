@@ -1099,6 +1099,9 @@
     <Compile Include="ModelsSP\sp_RptMasterDataPkj_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptMasterJumPkj_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptPermohonanIDPenggunaBaruReport_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3660,6 +3663,7 @@
     <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
     <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
     <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
