@@ -156,7 +156,7 @@
                             <th colspan="28" style="color: black; text-align: center; vertical-align: middle !important" align="center" class="center-me">
                                 @ViewBag.namapenuhsyarikat
                                 <br />
-                                @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.nosyarikat
+                                @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NomborSyarikat
                                 <br />
                                 RUMUSAN PERMOHONAN WANG GAJI PEKERJA LADANG(MAPA)
                                 <br />
@@ -216,274 +216,272 @@
 
                         @foreach (var paymentModeData in Model.Where(x => x.sp_RptMAPA.fld_WilayahID == wilayah).OrderBy(o => o.sp_RptMAPA.fld_LdgName))
                         {
-                            bil += 1;
+                        bil += 1;
 
-                            if (paymentModeData.sp_RptMAPA.fld_M2U == null)
-                            { paymentModeData.sp_RptMAPA.fld_M2U = 0; }
-                            else if (paymentModeData.sp_RptMAPA.fld_Cash == null)
-                            { paymentModeData.sp_RptMAPA.fld_Cash = 0; }
-                            else if (paymentModeData.sp_RptMAPA.fld_Cdmas == null)
-                            { paymentModeData.sp_RptMAPA.fld_Cdmas = 0; }
-                            else if (paymentModeData.sp_RptMAPA.fld_Ewallet == null)
-                            { paymentModeData.sp_RptMAPA.fld_Ewallet = 0; }
-                            else if (paymentModeData.sp_RptMAPA.fld_Ewallet == null)
-                            { paymentModeData.sp_RptMAPA.fld_Ewallet = 0; }
-                            else if (paymentModeData.sp_RptMAPA.fld_M2E == null)
-                            {
-                                paymentModeData.sp_RptMAPA.fld_M2E = 0;
-                                M2E = 0;
-                            }
-                            totaleachladang = paymentModeData.sp_RptMAPA.fld_Cash + paymentModeData.sp_RptMAPA.fld_Cheque + paymentModeData.sp_RptMAPA.fld_Cdmas + paymentModeData.sp_RptMAPA.fld_Ewallet + paymentModeData.sp_RptMAPA.fld_M2U + paymentModeData.sp_RptMAPA.fld_M2E;
-                            totallastladang = totaleachladang + paymentModeData.sp_RptMAPA.fld_Kwsp + paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        if (paymentModeData.sp_RptMAPA.fld_M2U == null)
+                        { paymentModeData.sp_RptMAPA.fld_M2U = 0; }
+                        else if (paymentModeData.sp_RptMAPA.fld_Cash == null)
+                        { paymentModeData.sp_RptMAPA.fld_Cash = 0; }
+                        else if (paymentModeData.sp_RptMAPA.fld_Cdmas == null)
+                        { paymentModeData.sp_RptMAPA.fld_Cdmas = 0; }
+                        else if (paymentModeData.sp_RptMAPA.fld_Ewallet == null)
+                        { paymentModeData.sp_RptMAPA.fld_Ewallet = 0; }
+                        else if (paymentModeData.sp_RptMAPA.fld_Ewallet == null)
+                        { paymentModeData.sp_RptMAPA.fld_Ewallet = 0; }
+                        else if (paymentModeData.sp_RptMAPA.fld_M2E == null)
+                        {
+                        paymentModeData.sp_RptMAPA.fld_M2E = 0;
+                        M2E = 0;
+                        }
+                        totaleachladang = paymentModeData.sp_RptMAPA.fld_Cash + paymentModeData.sp_RptMAPA.fld_Cheque + paymentModeData.sp_RptMAPA.fld_Cdmas + paymentModeData.sp_RptMAPA.fld_Ewallet + paymentModeData.sp_RptMAPA.fld_M2U + paymentModeData.sp_RptMAPA.fld_M2E;
+                        totallastladang = totaleachladang + paymentModeData.sp_RptMAPA.fld_Kwsp + paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip + paymentModeData.sp_RptMAPA.fld_LainPotongan;
 
-                            grandtotaleachladang = paymentModeData.sp_RptMAPA.fld_Cash + paymentModeData.sp_RptMAPA.fld_Cheque + paymentModeData.sp_RptMAPA.fld_Cdmas + paymentModeData.sp_RptMAPA.fld_Ewallet + paymentModeData.sp_RptMAPA.fld_M2U + paymentModeData.sp_RptMAPA.fld_M2E;
-                            grandtotallastladang = grandtotaleachladang + paymentModeData.sp_RptMAPA.fld_Kwsp + paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        grandtotaleachladang = paymentModeData.sp_RptMAPA.fld_Cash + paymentModeData.sp_RptMAPA.fld_Cheque + paymentModeData.sp_RptMAPA.fld_Cdmas + paymentModeData.sp_RptMAPA.fld_Ewallet + paymentModeData.sp_RptMAPA.fld_M2U + paymentModeData.sp_RptMAPA.fld_M2E;
+                        grandtotallastladang = grandtotaleachladang + paymentModeData.sp_RptMAPA.fld_Kwsp + paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip + paymentModeData.sp_RptMAPA.fld_LainPotongan;
 
-                            string NoDocSAP = "";
-                            string DisediakanOleh = "-";
-                            string DisahkanOleh = "-";
-                            string DisokongOleh = "-";
-                            string DiluluskanOleh = "-";
-                            if (paymentModeData.sp_RptMAPA.fld_NoDocSAP != null)
-                            {
-                                NoDocSAP = paymentModeData.sp_RptMAPA.fld_NoDocSAP.Replace("\\r\\n", "\r\n");
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_Verify_Name != null && @paymentModeData.sp_RptMAPA.fld_Verify_Name != "")
-                            {
-                                DisediakanOleh = @paymentModeData.sp_RptMAPA.fld_Verify_Name;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_SemakWil_Name != null && @paymentModeData.sp_RptMAPA.fld_SemakWil_Name != "")
-                            {
-                                DisahkanOleh = @paymentModeData.sp_RptMAPA.fld_SemakWil_Name;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name != null && @paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name != "")
-                            {
-                                DisokongOleh = @paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name != null && @paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name != "")
-                            {
-                                DiluluskanOleh = @paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name;
-                            }
-                            int? fld_CashPax = 0;
-                            int? fld_ChequePax = 0;
-                            int? fld_CdmasPax = 0;
-                            int? fld_EwalletPax = 0;
-                            int? fld_M2UPax = 0;
-                            int? fld_M2EPax = 0;
-                            DateTime? fld_PostingDate;
-                            if (@paymentModeData.sp_RptMAPA.fld_CashPax != null)
-                            {
-                                fld_CashPax = @paymentModeData.sp_RptMAPA.fld_CashPax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_ChequePax != null)
-                            {
-                                fld_ChequePax = @paymentModeData.sp_RptMAPA.fld_ChequePax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_CdmasPax != null)
-                            {
-                                fld_CdmasPax = @paymentModeData.sp_RptMAPA.fld_CdmasPax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_EwalletPax != null)
-                            {
-                                fld_EwalletPax = @paymentModeData.sp_RptMAPA.fld_EwalletPax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_M2UPax != null)
-                            {
-                                fld_M2UPax = @paymentModeData.sp_RptMAPA.fld_M2UPax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_M2EPax != null)
-                            {
-                                fld_M2EPax = @paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            }
-                            if (@paymentModeData.sp_RptMAPA.fld_PostingDate != null)
-                            {
-                                fld_PostingDate = @paymentModeData.sp_RptMAPA.fld_PostingDate;
-                            }
+                        string NoDocSAP = "";
+                        string DisediakanOleh = "-";
+                        string DisahkanOleh = "-";
+                        string DisokongOleh = "-";
+                        string DiluluskanOleh = "-";
+                        if (paymentModeData.sp_RptMAPA.fld_NoDocSAP != null)
+                        {
+                        NoDocSAP = paymentModeData.sp_RptMAPA.fld_NoDocSAP.Replace("\\r\\n", "\r\n");
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_Verify_Name != null && @paymentModeData.sp_RptMAPA.fld_Verify_Name != "")
+                        {
+                        DisediakanOleh = @paymentModeData.sp_RptMAPA.fld_Verify_Name;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_SemakWil_Name != null && @paymentModeData.sp_RptMAPA.fld_SemakWil_Name != "")
+                        {
+                        DisahkanOleh = @paymentModeData.sp_RptMAPA.fld_SemakWil_Name;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name != null && @paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name != "")
+                        {
+                        DisokongOleh = @paymentModeData.sp_RptMAPA.fld_SokongWilGM_Name;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name != null && @paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name != "")
+                        {
+                        DiluluskanOleh = @paymentModeData.sp_RptMAPA.fld_TerimaHQ_Name;
+                        }
+                        int? fld_CashPax = 0;
+                        int? fld_ChequePax = 0;
+                        int? fld_CdmasPax = 0;
+                        int? fld_EwalletPax = 0;
+                        int? fld_M2UPax = 0;
+                        int? fld_M2EPax = 0;
+                        DateTime? fld_PostingDate;
+                        if (@paymentModeData.sp_RptMAPA.fld_CashPax != null)
+                        {
+                        fld_CashPax = @paymentModeData.sp_RptMAPA.fld_CashPax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_ChequePax != null)
+                        {
+                        fld_ChequePax = @paymentModeData.sp_RptMAPA.fld_ChequePax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_CdmasPax != null)
+                        {
+                        fld_CdmasPax = @paymentModeData.sp_RptMAPA.fld_CdmasPax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_EwalletPax != null)
+                        {
+                        fld_EwalletPax = @paymentModeData.sp_RptMAPA.fld_EwalletPax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_M2UPax != null)
+                        {
+                        fld_M2UPax = @paymentModeData.sp_RptMAPA.fld_M2UPax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_M2EPax != null)
+                        {
+                        fld_M2EPax = @paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        }
+                        if (@paymentModeData.sp_RptMAPA.fld_PostingDate != null)
+                        {
+                        fld_PostingDate = @paymentModeData.sp_RptMAPA.fld_PostingDate;
+                        }
 
-                            potonganlain = paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip;
-                            gajikasar = paymentModeData.sp_RptMAPA.fld_Cash;
-                            paymentModeData.sp_RptMAPA.fld_CashPax = paymentModeData.sp_RptMAPA.fld_CashPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CashPax;
-                            paymentModeData.sp_RptMAPA.fld_ChequePax = paymentModeData.sp_RptMAPA.fld_ChequePax == null ? 0 : paymentModeData.sp_RptMAPA.fld_ChequePax;
-                            paymentModeData.sp_RptMAPA.fld_CdmasPax = paymentModeData.sp_RptMAPA.fld_CdmasPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CdmasPax;
-                            paymentModeData.sp_RptMAPA.fld_EwalletPax = paymentModeData.sp_RptMAPA.fld_EwalletPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_EwalletPax;
-                            paymentModeData.sp_RptMAPA.fld_M2UPax = paymentModeData.sp_RptMAPA.fld_M2UPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2UPax;
-                            paymentModeData.sp_RptMAPA.fld_M2EPax = paymentModeData.sp_RptMAPA.fld_M2EPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            pax = paymentModeData.sp_RptMAPA.fld_CashPax + paymentModeData.sp_RptMAPA.fld_ChequePax + paymentModeData.sp_RptMAPA.fld_CdmasPax + paymentModeData.sp_RptMAPA.fld_EwalletPax + paymentModeData.sp_RptMAPA.fld_M2UPax + paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        potonganlain = paymentModeData.sp_RptMAPA.fld_Socso + paymentModeData.sp_RptMAPA.fld_Sbkp + paymentModeData.sp_RptMAPA.fld_Sip;
+                        gajikasar = paymentModeData.sp_RptMAPA.fld_Cash;
+                        paymentModeData.sp_RptMAPA.fld_CashPax = paymentModeData.sp_RptMAPA.fld_CashPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CashPax;
+                        paymentModeData.sp_RptMAPA.fld_ChequePax = paymentModeData.sp_RptMAPA.fld_ChequePax == null ? 0 : paymentModeData.sp_RptMAPA.fld_ChequePax;
+                        paymentModeData.sp_RptMAPA.fld_CdmasPax = paymentModeData.sp_RptMAPA.fld_CdmasPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CdmasPax;
+                        paymentModeData.sp_RptMAPA.fld_EwalletPax = paymentModeData.sp_RptMAPA.fld_EwalletPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_EwalletPax;
+                        paymentModeData.sp_RptMAPA.fld_M2UPax = paymentModeData.sp_RptMAPA.fld_M2UPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2UPax;
+                        paymentModeData.sp_RptMAPA.fld_M2EPax = paymentModeData.sp_RptMAPA.fld_M2EPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        pax = paymentModeData.sp_RptMAPA.fld_CashPax + paymentModeData.sp_RptMAPA.fld_ChequePax + paymentModeData.sp_RptMAPA.fld_CdmasPax + paymentModeData.sp_RptMAPA.fld_EwalletPax + paymentModeData.sp_RptMAPA.fld_M2UPax + paymentModeData.sp_RptMAPA.fld_M2EPax;
 
-                            var carumanInfo = @paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).FirstOrDefault();
-                            jumlahwangdipohon = M2E + (paymentModeData.sp_RptMAPA.fld_Cash) + carumanInfo.fld_CarumanMajikanKwsp + carumanInfo.fld_CarumanMajikan;
+                        var carumanInfo = @paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).FirstOrDefault();
+                        jumlahwangdipohon = (paymentModeData.sp_RptMAPA.fld_M2E) +(paymentModeData.sp_RptMAPA.fld_Ewallet) + (paymentModeData.sp_RptMAPA.fld_Cash) + (paymentModeData.sp_RptMAPA.fld_Kwsp) + potonganlain;
+                        <tr>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
 
-                            <tr>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @bil
-                                </td>
+                            <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_LdgCode - @paymentModeData.sp_RptMAPA.fld_LdgName
+                            </td>
 
-                                <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_LdgCode - @paymentModeData.sp_RptMAPA.fld_LdgName
-                                </td>
+                            <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_BranchName
+                            </td>
 
-                                <td align="right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_BranchName
-                                </td>
-
-                                <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_NoAcc
-                                </td>
-                                @*//Added by Shazana 15/8/2023*@
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @carumanInfo.fld_NoGL
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                  
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @carumanInfo.fld_zonCIT
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @pax
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollRML)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollManual)
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @potonganlain
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_LainPotongan)
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(totaleachladang)
-                                </td>
+                            <td align="left" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_NoAcc
+                            </td>
+                            @*//Added by Shazana 15/8/2023*@
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @carumanInfo.fld_NoGL
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @carumanInfo.fld_zonCIT
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @pax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollRML)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollManual)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @potonganlain
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_LainPotongan)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(totaleachladang)
+                            </td>
 
 
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @fld_M2EPax
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_M2E)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @fld_EwalletPax
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Ewallet)
-                                </td>
-                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @fld_CashPax
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Cash)
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
-                                </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_M2EPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_M2E)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_EwalletPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Ewallet)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @fld_CashPax
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Cash)
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_Kwsp)
+                            </td>
 
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @potonganlain
-                                </td>
-
-
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @jumlahwangdipohon
-                                </td>
-
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_PostingDate
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @NoDocSAP
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_NoDocSAPEwallet
-                                </td>
-                                <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                    @paymentModeData.sp_RptMAPA.fld_BranchName
-                                </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @potonganlain
+                            </td>
 
 
-                            </tr>
-                            totalcash = totalcash + paymentModeData.sp_RptMAPA.fld_Cash;
-                            totalcheque = totalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
-                            totalcdmas = totalcdmas + paymentModeData.sp_RptMAPA.fld_Cdmas;
-                            totalewallet = totalewallet + paymentModeData.sp_RptMAPA.fld_Ewallet;
-                            totalM2U = totalM2U + paymentModeData.sp_RptMAPA.fld_M2U;
-                            totalM2E = totalM2E + paymentModeData.sp_RptMAPA.fld_M2E;
-                            totalkwsp = totalkwsp + paymentModeData.sp_RptMAPA.fld_Kwsp;
-                            totalsocso = totalsocso + paymentModeData.sp_RptMAPA.fld_Socso;
-                            totalsbkp = totalsbkp + paymentModeData.sp_RptMAPA.fld_Sbkp;
-                            totalsip = totalsip + paymentModeData.sp_RptMAPA.fld_Sip;
-                            totallainpotongan = totallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
-                            totalgajikasar = totalgajikasar + gajikasar;
-                            totalpotonglain = totalpotonglain + potonganlain;
-                            totallainpotongan = totallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
-                            totalcarumanmajikankwsp = totalcarumanmajikankwsp + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikanKwsp).FirstOrDefault();
-                            totalcarumanmajikan = totalcarumanmajikan + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikan).FirstOrDefault();
-                            totalfld_CheckRollManualPax = 0;
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @jumlahwangdipohon
+                            </td>
 
-                            paymentModeData.sp_RptMAPA.fld_CashPax = paymentModeData.sp_RptMAPA.fld_CashPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CashPax;
-                            paymentModeData.sp_RptMAPA.fld_ChequePax = paymentModeData.sp_RptMAPA.fld_ChequePax == null ? 0 : paymentModeData.sp_RptMAPA.fld_ChequePax;
-                            paymentModeData.sp_RptMAPA.fld_CdmasPax = paymentModeData.sp_RptMAPA.fld_CdmasPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CdmasPax;
-                            paymentModeData.sp_RptMAPA.fld_EwalletPax = paymentModeData.sp_RptMAPA.fld_EwalletPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_EwalletPax;
-                            paymentModeData.sp_RptMAPA.fld_M2UPax = paymentModeData.sp_RptMAPA.fld_M2UPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2UPax;
-                            paymentModeData.sp_RptMAPA.fld_M2EPax = paymentModeData.sp_RptMAPA.fld_M2EPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            totalcashpax = totalcashpax + paymentModeData.sp_RptMAPA.fld_CashPax;
-                            totalchequepax = totalchequepax + paymentModeData.sp_RptMAPA.fld_ChequePax;
-                            totalcdmaspax = totalcdmaspax + paymentModeData.sp_RptMAPA.fld_CdmasPax;
-                            totalewalletpax = totalewalletpax + paymentModeData.sp_RptMAPA.fld_EwalletPax;
-                            totalM2Upax = totalM2Upax + paymentModeData.sp_RptMAPA.fld_M2UPax;
-                            totalM2Epax = totalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            totalpax = totalcashpax + totalchequepax + totalcdmaspax + totalewalletpax + totalM2Upax + totalM2Epax;
-                            totaljumlahwangdipohon = totaljumlahwangdipohon + jumlahwangdipohon;
-                            totalfld_CheckRollRML = totalfld_CheckRollRML + paymentModeData.sp_RptMAPA.fld_CheckRollRML;
-                            totalfld_CheckRollManual = totalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_PostingDate
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @NoDocSAP
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_NoDocSAPEwallet
+                            </td>
+                            <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @paymentModeData.sp_RptMAPA.fld_BranchName
+                            </td>
 
 
-                            grandtotalcash = grandtotalcash + paymentModeData.sp_RptMAPA.fld_Cash;
-                            grandtotalcheque = grandtotalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
-                            grandtotalcdmas = grandtotalcdmas + paymentModeData.sp_RptMAPA.fld_Cdmas;
-                            grandtotalewallet = grandtotalewallet + paymentModeData.sp_RptMAPA.fld_Ewallet;
-                            grandtotalM2U = grandtotalM2U + paymentModeData.sp_RptMAPA.fld_M2U;
-                            var fldm2e = (paymentModeData.sp_RptMAPA.fld_M2E == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2E);
-                            grandtotalM2E = grandtotalM2E + fldm2e;
-                            grandtotalkwsp = grandtotalkwsp + paymentModeData.sp_RptMAPA.fld_Kwsp;
-                            grandtotalfld_CheckRollManualPax = 0;
-                            grandtotalfld_CheckRollRML = grandtotalfld_CheckRollRML + (paymentModeData.sp_RptMAPA.fld_CheckRollRML == null? 0: paymentModeData.sp_RptMAPA.fld_CheckRollRML);
-                            grandtotalfld_CheckRollManual = grandtotalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
-                            grandtotalsocso = grandtotalsocso + paymentModeData.sp_RptMAPA.fld_Socso;
-                            grandtotalsbkp = grandtotalsbkp + paymentModeData.sp_RptMAPA.fld_Sbkp;
-                            grandtotalsip = grandtotalsip + paymentModeData.sp_RptMAPA.fld_Sip;
-                            grandtotallainpotongan = grandtotallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
-                            grandtotalcashpax = grandtotalcashpax + paymentModeData.sp_RptMAPA.fld_CashPax;
-                            grandtotalchequepax = grandtotalchequepax + paymentModeData.sp_RptMAPA.fld_ChequePax;
-                            grandtotalcdmaspax = grandtotalcdmaspax + paymentModeData.sp_RptMAPA.fld_CdmasPax;
-                            grandtotalewalletpax = grandtotalewalletpax + paymentModeData.sp_RptMAPA.fld_EwalletPax;
-                            grandtotalM2Upax = grandtotalM2Upax + paymentModeData.sp_RptMAPA.fld_M2UPax;
-                            grandtotalM2Epax = grandtotalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            grandtotalpax = grandtotalpax + paymentModeData.sp_RptMAPA.fld_CashPax + paymentModeData.sp_RptMAPA.fld_ChequePax + paymentModeData.sp_RptMAPA.fld_CdmasPax + paymentModeData.sp_RptMAPA.fld_EwalletPax + paymentModeData.sp_RptMAPA.fld_M2UPax + paymentModeData.sp_RptMAPA.fld_M2EPax;
-                            grandtotalpotonglain = grandtotalpotonglain + potonganlain;
-                            grandtotalgajikasar = grandtotalgajikasar + gajikasar;
-                            grandtotallainpotongan = grandtotallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
-                            grandtotalcarumanmajikankwsp = grandtotalcarumanmajikankwsp + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikanKwsp).FirstOrDefault();
-                            grandtotalcarumanmajikan = grandtotalcarumanmajikan + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikan).FirstOrDefault();
-                            grandtotaljumlahwangdipohon = grandtotaljumlahwangdipohon + jumlahwangdipohon;
+                        </tr>
+                        totalcash = totalcash + paymentModeData.sp_RptMAPA.fld_Cash;
+                        totalcheque = totalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
+                        totalcdmas = totalcdmas + paymentModeData.sp_RptMAPA.fld_Cdmas;
+                        totalewallet = totalewallet + paymentModeData.sp_RptMAPA.fld_Ewallet;
+                        totalM2U = totalM2U + paymentModeData.sp_RptMAPA.fld_M2U;
+                        totalM2E = totalM2E + paymentModeData.sp_RptMAPA.fld_M2E;
+                        totalkwsp = totalkwsp + paymentModeData.sp_RptMAPA.fld_Kwsp;
+                        totalsocso = totalsocso + paymentModeData.sp_RptMAPA.fld_Socso;
+                        totalsbkp = totalsbkp + paymentModeData.sp_RptMAPA.fld_Sbkp;
+                        totalsip = totalsip + paymentModeData.sp_RptMAPA.fld_Sip;
+                        totallainpotongan = totallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        totalgajikasar = totalgajikasar + gajikasar;
+                        totalpotonglain = totalpotonglain + potonganlain;
+                        totallainpotongan = totallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        totalcarumanmajikankwsp = totalcarumanmajikankwsp + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikanKwsp).FirstOrDefault();
+                        totalcarumanmajikan = totalcarumanmajikan + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikan).FirstOrDefault();
+                        totalfld_CheckRollManualPax = 0;
+
+                        paymentModeData.sp_RptMAPA.fld_CashPax = paymentModeData.sp_RptMAPA.fld_CashPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CashPax;
+                        paymentModeData.sp_RptMAPA.fld_ChequePax = paymentModeData.sp_RptMAPA.fld_ChequePax == null ? 0 : paymentModeData.sp_RptMAPA.fld_ChequePax;
+                        paymentModeData.sp_RptMAPA.fld_CdmasPax = paymentModeData.sp_RptMAPA.fld_CdmasPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_CdmasPax;
+                        paymentModeData.sp_RptMAPA.fld_EwalletPax = paymentModeData.sp_RptMAPA.fld_EwalletPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_EwalletPax;
+                        paymentModeData.sp_RptMAPA.fld_M2UPax = paymentModeData.sp_RptMAPA.fld_M2UPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2UPax;
+                        paymentModeData.sp_RptMAPA.fld_M2EPax = paymentModeData.sp_RptMAPA.fld_M2EPax == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        totalcashpax = totalcashpax + paymentModeData.sp_RptMAPA.fld_CashPax;
+                        totalchequepax = totalchequepax + paymentModeData.sp_RptMAPA.fld_ChequePax;
+                        totalcdmaspax = totalcdmaspax + paymentModeData.sp_RptMAPA.fld_CdmasPax;
+                        totalewalletpax = totalewalletpax + paymentModeData.sp_RptMAPA.fld_EwalletPax;
+                        totalM2Upax = totalM2Upax + paymentModeData.sp_RptMAPA.fld_M2UPax;
+                        totalM2Epax = totalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        totalpax = totalcashpax + totalchequepax + totalcdmaspax + totalewalletpax + totalM2Upax + totalM2Epax;
+                        totaljumlahwangdipohon = totaljumlahwangdipohon + jumlahwangdipohon;
+                        totalfld_CheckRollRML = totalfld_CheckRollRML + paymentModeData.sp_RptMAPA.fld_CheckRollRML;
+                        totalfld_CheckRollManual = totalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
+
+
+                        grandtotalcash = grandtotalcash + paymentModeData.sp_RptMAPA.fld_Cash;
+                        grandtotalcheque = grandtotalcheque + paymentModeData.sp_RptMAPA.fld_Cheque;
+                        grandtotalcdmas = grandtotalcdmas + paymentModeData.sp_RptMAPA.fld_Cdmas;
+                        grandtotalewallet = grandtotalewallet + paymentModeData.sp_RptMAPA.fld_Ewallet;
+                        grandtotalM2U = grandtotalM2U + paymentModeData.sp_RptMAPA.fld_M2U;
+                        var fldm2e = (paymentModeData.sp_RptMAPA.fld_M2E == null ? 0 : paymentModeData.sp_RptMAPA.fld_M2E);
+                        grandtotalM2E = grandtotalM2E + fldm2e;
+                        grandtotalkwsp = grandtotalkwsp + paymentModeData.sp_RptMAPA.fld_Kwsp;
+                        grandtotalfld_CheckRollManualPax = 0;
+                        grandtotalfld_CheckRollRML = grandtotalfld_CheckRollRML + (paymentModeData.sp_RptMAPA.fld_CheckRollRML == null? 0: paymentModeData.sp_RptMAPA.fld_CheckRollRML);
+                        grandtotalfld_CheckRollManual = grandtotalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
+                        grandtotalsocso = grandtotalsocso + paymentModeData.sp_RptMAPA.fld_Socso;
+                        grandtotalsbkp = grandtotalsbkp + paymentModeData.sp_RptMAPA.fld_Sbkp;
+                        grandtotalsip = grandtotalsip + paymentModeData.sp_RptMAPA.fld_Sip;
+                        grandtotallainpotongan = grandtotallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        grandtotalcashpax = grandtotalcashpax + paymentModeData.sp_RptMAPA.fld_CashPax;
+                        grandtotalchequepax = grandtotalchequepax + paymentModeData.sp_RptMAPA.fld_ChequePax;
+                        grandtotalcdmaspax = grandtotalcdmaspax + paymentModeData.sp_RptMAPA.fld_CdmasPax;
+                        grandtotalewalletpax = grandtotalewalletpax + paymentModeData.sp_RptMAPA.fld_EwalletPax;
+                        grandtotalM2Upax = grandtotalM2Upax + paymentModeData.sp_RptMAPA.fld_M2UPax;
+                        grandtotalM2Epax = grandtotalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        grandtotalpax = grandtotalpax + paymentModeData.sp_RptMAPA.fld_CashPax + paymentModeData.sp_RptMAPA.fld_ChequePax + paymentModeData.sp_RptMAPA.fld_CdmasPax + paymentModeData.sp_RptMAPA.fld_EwalletPax + paymentModeData.sp_RptMAPA.fld_M2UPax + paymentModeData.sp_RptMAPA.fld_M2EPax;
+                        grandtotalpotonglain = grandtotalpotonglain + potonganlain;
+                        grandtotalgajikasar = grandtotalgajikasar + gajikasar;
+                        grandtotallainpotongan = grandtotallainpotongan + paymentModeData.sp_RptMAPA.fld_LainPotongan;
+                        grandtotalcarumanmajikankwsp = grandtotalcarumanmajikankwsp + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikanKwsp).FirstOrDefault();
+                        grandtotalcarumanmajikan = grandtotalcarumanmajikan + paymentModeData.CarumanTambahan.Where(x => x.ladangid == paymentModeData.sp_RptMAPA.fld_LadangID).Select(x => x.fld_CarumanMajikan).FirstOrDefault();
+                        grandtotaljumlahwangdipohon = grandtotaljumlahwangdipohon + jumlahwangdipohon;
 
 
                         }
                         @{
-                            totalgajibersih = totalcash + totalcheque + totalcdmas + totalewallet + totalM2U + totalM2E;
-                            grandtotal = totalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan;
-                            if (totalgajibersih == null)
-                            { totalgajibersih = 0; }
-                            grandtotalgajibersih = grandtotalgajibersih + totalgajibersih;
-                            grandgrandtotal = grandtotalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan;
+                        totalgajibersih = totalcash + totalcheque + totalcdmas + totalewallet + totalM2U + totalM2E;
+                        grandtotal = totalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan;
+                        if (totalgajibersih == null)
+                        { totalgajibersih = 0; }
+                        grandtotalgajibersih = grandtotalgajibersih + totalgajibersih;
+                        grandgrandtotal = grandtotalgajibersih + totalkwsp + totalsocso + totalsbkp + totalsip + totallainpotongan;
                         }
 
                     </tbody>
