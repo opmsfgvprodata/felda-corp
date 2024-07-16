@@ -30,13 +30,12 @@ namespace MVC_SYSTEM.ModelsSP
             objcontxt.CommandTimeout = this.Database.Connection.ConnectionTimeout;
         }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-    
+
+   
         public virtual IEnumerable<sp_DashAllKerakyatan_Result> sp_DashAllKerakyatan(Nullable<int> syarikatID, Nullable<int> type)
         {
             var syarikatIDParameter = syarikatID.HasValue ?

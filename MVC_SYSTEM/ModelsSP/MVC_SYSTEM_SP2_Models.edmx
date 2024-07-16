@@ -922,44 +922,8 @@
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="fld_Kdrkytbank" Nullable="true" MaxLength="2" />
         </ComplexType>
-        <ComplexType Name="sp_RptPermohonanIDPenggunaBaruReport_Result">
-          <Property Type="Int32" Name="fld_ID" Nullable="false" />
-          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="70" />
-          <Property Type="String" Name="fldUserName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="fldNama" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="fldRoleName" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="fldTarikh" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="fldDateTimeApprove" Nullable="true" Precision="23" />
-          <Property Type="String" Name="fldStatus" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="fldFileName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="fldActionBy" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
-          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
-          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-        </ComplexType>
-        <ComplexType Name="sp_RptPermohonanPekerjaBru_Result">
-          <Property Type="Int32" Name="fld_ID" Nullable="false" />
-          <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="fld_Ktgpkj" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="fld_Trmlkj" Nullable="true" />
-          <Property Type="DateTime" Name="fld_DateApply" Nullable="true" Precision="23" />
-          <Property Type="String" Name="fld_PurposeRequest" Nullable="true" MaxLength="15" />
-          <Property Type="DateTime" Name="fld_ActionDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="fld_StatusApproved" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="fld_Batch" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="fld_ActionBy" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
-          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
-          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-          <Property Type="String" Name="fld_LadangName" Nullable="true" MaxLength="70" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-        </ComplexType>
+       
+       
         <ComplexType Name="sp_RptMasterJumPkj_Result">
           <Property Type="Guid" Name="fld_ID" Nullable="false" />
           <Property Type="String" Name="fld_NamaSyarikat" Nullable="true" MaxLength="50" />
