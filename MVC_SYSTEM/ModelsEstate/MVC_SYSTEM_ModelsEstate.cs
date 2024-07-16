@@ -50,6 +50,10 @@ namespace MVC_SYSTEM.ModelsEstate
         //end
         public virtual DbSet<tbl_ByrCarumanTambahan> tbl_ByrCarumanTambahan { get; set; }//Added by Shazana 15/8/2023
         public virtual DbSet<vw_PaySheetPekerja> vw_PaySheetPekerja { get; set; } //Added by Shazana 15/8/2023
+
+        public virtual DbSet<tbl_Kerja> tbl_Kerja { get; set; }
+        public virtual DbSet<tbl_Kerjahdr> tbl_Kerjahdr { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             
