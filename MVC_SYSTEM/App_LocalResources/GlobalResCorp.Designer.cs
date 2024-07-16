@@ -1294,6 +1294,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sila pilih syarikat, wilayah, ladang dan tahun, sekurang-kurangnya.
+        /// </summary>
+        public static string lblAtleastChoosePaidLeaveGenerate {
+            get {
+                return ResourceManager.GetString("lblAtleastChoosePaidLeaveGenerate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hadir.
         /// </summary>
         public static string lblAttend {
@@ -3981,6 +3990,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblGenerateFile {
             get {
                 return ResourceManager.GetString("lblGenerateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jana Cuti.
+        /// </summary>
+        public static string lblGenerateLeave {
+            get {
+                return ResourceManager.GetString("lblGenerateLeave", resourceCulture);
             }
         }
         
@@ -6892,6 +6910,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maklumat Jana Cuti Pekerja Ladang.
+        /// </summary>
+        public static string lblPaidLeaveGenerateInfo {
+            get {
+                return ResourceManager.GetString("lblPaidLeaveGenerateInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maklumat Harga Sawit Semasa.
         /// </summary>
         public static string lblPalmPrice {
@@ -9007,6 +9034,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jana Cuti Berbayar Pekerja.
+        /// </summary>
+        public static string lblTitlePaidLeaveGenerateMaintenance {
+            get {
+                return ResourceManager.GetString("lblTitlePaidLeaveGenerateMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selenggara Maklumat Harga Minyak Semasa.
         /// </summary>
         public static string lblTitlePalmPrice {
@@ -10506,6 +10542,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string msgGenerateFailed {
             get {
                 return ResourceManager.GetString("msgGenerateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proses Jana Cuti Gagal.
+        /// </summary>
+        public static string msgGenerateLeaveFail {
+            get {
+                return ResourceManager.GetString("msgGenerateLeaveFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proses Jana Cuti Berjaya.
+        /// </summary>
+        public static string msgGenerateLeaveSuccess {
+            get {
+                return ResourceManager.GetString("msgGenerateLeaveSuccess", resourceCulture);
             }
         }
         

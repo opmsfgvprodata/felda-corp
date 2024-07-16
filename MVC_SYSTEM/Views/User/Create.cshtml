@@ -88,6 +88,15 @@
                                 @Html.ValidationMessageFor(model => model.fldRoleID, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        @*yana tambah 080723*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldSyarikatID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldSyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldSyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*end here*@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fldWilayahID, "Region", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -177,9 +186,14 @@
     $("#fldWilayahID").change(function () {
             var WilayahIDList = {};
             var disableoption = "";
-            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            /*yana update 070823 - change GetLadang to GetLadang2*/
+            WilayahIDList.url = "@Url.Action("GetLadang2", "Report")";
             WilayahIDList.type = "POST";
-        WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val() });
+        /*yana comment 070823*/
+        /*WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val() });*/
+        /*yana add 070823*/
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), SyarikatList: $("#fldSyarikatList").val() });
+ /*end here 070823*/
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {

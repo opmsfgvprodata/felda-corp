@@ -19,6 +19,13 @@ namespace MVC_SYSTEM.AuthModels
 
         public int? fld_WlyhID { get; set; }
 
+        // yana add 051023
+        public int? fld_NegaraID { get; set; }
+
+        public int? fld_SyarikatID { get; set; }
+
+        // end here 051023
+
         [StringLength(100)]
         public string fld_LdgEmail { get; set; }
 
