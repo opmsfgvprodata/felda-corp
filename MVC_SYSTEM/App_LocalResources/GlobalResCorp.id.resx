@@ -2146,6 +2146,9 @@
   <data name="lblKiraanUpdate" xml:space="preserve">
     <value>KEMASKINI MAKLUMAT SELENGARA KIRAAN OT</value>
   </data>
+  <data name="titleReportTenagaKerja" xml:space="preserve">
+    <value>Laporan Kemasukan Tenaga Kerja</value>
+  </data>
   <data name="lblCategory" xml:space="preserve">
     <value>Kategori</value>
   </data>

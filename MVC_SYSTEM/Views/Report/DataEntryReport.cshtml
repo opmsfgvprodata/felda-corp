@@ -1,0 +1,162 @@
+﻿@using MVC_SYSTEM.Class;
+
+@{
+    ViewBag.Title = "Data Entry Report";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "DataEntryReportSearchDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<div id="loading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom: 16px">
+        @using (Ajax.BeginForm("_DataEntryReportSearch", "Report", null, options, new { id = "DataEntryReportSearch" }))
+        {
+            @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblWilayah)
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-3">
+                @Html.Label(GlobalResWorkerSalary.lblLadang)
+                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblYear)
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblMonth)
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-1" style="padding-top:25px;">
+                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerSalary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+            </div>
+        </div>
+        }
+    </div>
+
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Laporan Kemasukan Data</div>
+                <div class="panel-body">
+                    <div id="DataEntryReportSearchDetails">
+                        @Html.Action("_DataEntryReportSearch")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a href=@Url.Action("Index", "Report") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    function DisplayProgressMessage(ctl) {
+        $("#loading").css("display", "");
+        return true;
+    }
+
+    function resetInput(input) {
+        $(input).empty();
+        $(input).append("<option value=''>" + '@GlobalResCorp.lblChoose' + "</option>");
+        $(input).prop("disabled", true);
+    }
+
+    $(document).ready(function () {
+        $("#SyarikatList").change(function () {
+            console.log($("#SyarikatList").val());
+            if ($("#SyarikatList").val() === "") {
+                resetInput("#WilayahList");
+                resetInput("#LadangList");
+                resetInput("#PkjList");
+            } else {
+                var SyarikatList = {};
+                var disableoption = "";
+                SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+                SyarikatList.type = "POST";
+                SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+                SyarikatList.datatype = "json";
+                SyarikatList.contentType = "application/json";
+                SyarikatList.success = function (wilayahlist) {
+                    $("#WilayahList").empty();
+
+                     for (var i = 0; i < wilayahlist.length; i++) {
+                         if ($("#SyarikatList").val() == 0) {
+                             disableoption = "disabled";
+                         }
+                         if (i == 0) {
+                             $("#WilayahList").append("<option value=>" + '@GlobalResCorp.lblChoose' + "</option>");
+                         }
+                         else {
+                             $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                         }
+                     }
+
+                     $("#WilayahList").prop("disabled", false);
+                     resetInput("#LadangList");
+                     resetInput("#PkjList");
+                };
+                SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(SyarikatList);
+            }
+        });
+
+        $("#WilayahList").change(function () {
+            console.log($("#WilayahList").val());
+            if ($("#WilayahList").val() === "") {
+                resetInput("#LadangList");
+                resetInput("#PkjList");
+            } else {
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#LadangList").empty();
+                    $("#LadangList").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
+
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#LadangList").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+
+                    $("#LadangList").prop("disabled", false);
+                    resetInput("#PkjList");
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+    });
+</script>
