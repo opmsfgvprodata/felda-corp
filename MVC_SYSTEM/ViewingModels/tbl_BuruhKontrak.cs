@@ -1,4 +1,4 @@
-namespace MVC_SYSTEM.ModelsCorporate
+namespace MVC_SYSTEM.ViewingModels
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@ namespace MVC_SYSTEM.ModelsCorporate
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class tbl_QuotaPerluLadang
+    public partial class tbl_BuruhKontrak
     {
         [Key]
         public int fld_ID { get; set; }
@@ -25,11 +25,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         public int? fld_NegaraID { get; set; }
 
-        //fatin added - 16/04/2024
-        public int? fld_PerluTKT { get; set; }
-        public int? fld_PerluTKA { get; set; }
-        public int? fld_Perlu { get; set; }
+        [StringLength(50)]
+        public string fld_Designation { get; set; }
 
+        public int? fld_JumlahBuruh { get; set; }
         public int? fld_Tahun { get; set; }
 
         public int? fld_CreatedBy { get; set; }

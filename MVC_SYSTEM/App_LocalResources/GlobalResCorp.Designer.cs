@@ -1789,6 +1789,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kategori.
+        /// </summary>
+        public static string lblCategory {
+            get {
+                return ResourceManager.GetString("lblCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maklumat Kategori Kerja Kumpulan.
         /// </summary>
         public static string lblCateKerja {
@@ -10776,6 +10785,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Pekerja Kontraktor.
+        /// </summary>
+        public static string titleContractLabor {
+            get {
+                return ResourceManager.GetString("titleContractLabor", resourceCulture);
             }
         }
         

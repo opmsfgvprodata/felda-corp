@@ -2181,4 +2181,10 @@
   <data name="msgKodGL" xml:space="preserve">
     <value>Please key in Kod GL</value>
   </data>
+  <data name="lblCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="titleContractLabor" xml:space="preserve">
+    <value>Contract Worker Information</value>
+  </data>
 </root>

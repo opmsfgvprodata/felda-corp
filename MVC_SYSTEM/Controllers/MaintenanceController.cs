@@ -5261,6 +5261,21 @@ namespace MVC_SYSTEM.Controllers
                 .Select(s => s.fldOptConfValue)
                 .FirstOrDefault();
 
+            //fatin added - 15/04/2024
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+              db.tblOptionConfigsWebs
+                  .Where(x => x.fldOptConfFlag1 == "designgroup" && x.fld_NegaraID == NegaraID &&
+                              x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                  .OrderBy(o => o.fldOptConfDesc)
+                  .Select(
+                      s => new SelectListItem { Value = s.fldOptConfDesc, Text = s.fldOptConfDesc }),
+              "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
             //string designationCode = "";
 
             //if (getDesignationRunningNo == null)
@@ -5316,13 +5331,15 @@ namespace MVC_SYSTEM.Controllers
                         optionConfigsWeb.fldOptConfValue = optionConfigsWeb.fldOptConfValue.ToUpper();
                         optionConfigsWeb.fldOptConfDesc = GetConfig.UppercaseFirst(optionConfigsWeb.fldOptConfDesc);
                         optionConfigsWeb.fldOptConfFlag1 = "designation";
+                        //optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin added - 15/04/2024
                         optionConfigsWeb.fldDeleted = false;
                         optionConfigsWeb.fld_NegaraID = NegaraID;
                         optionConfigsWeb.fld_SyarikatID = SyarikatID;
 
                         if (optionConfigsWeb.fldOptConfFlag2 != null)
                         {
-                            optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                            //optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                            optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin modified - 15/04/2024
                         }
 
                         if (optionConfigsWeb.fldOptConfFlag3 != null)
@@ -5399,6 +5416,22 @@ namespace MVC_SYSTEM.Controllers
                 x => x.fldOptConfID == id && x.fldOptConfFlag1 == "designation" && x.fld_NegaraID == NegaraID &&
                      x.fld_SyarikatID == SyarikatID);
 
+
+            //fatin added - 15/04/2024
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "designgroup" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfDesc, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(designationData);
         }
 
@@ -5425,7 +5458,8 @@ namespace MVC_SYSTEM.Controllers
 
                     if (optionConfigsWeb.fldOptConfFlag2 != null)
                     {
-                        designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                        //designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                        designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin modified - 15/04/2024
                     }
 
                     else
@@ -8770,6 +8804,36 @@ namespace MVC_SYSTEM.Controllers
 
             optionConfigsWeb.fldOptConfValue = inactiveReasonCode;
 
+            List<SelectListItem> AktifList = new List<SelectListItem>();
+
+            AktifList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusaktif2" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            AktifList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.AktifList = AktifList;
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .GroupBy(g => g.fldOptConfFlag3)
+                    .Select(s => s.FirstOrDefault())
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfFlag3, Text = s.fldOptConfFlag3 }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(optionConfigsWeb);
         }
 
@@ -8821,7 +8885,8 @@ namespace MVC_SYSTEM.Controllers
 
                         if (optionConfigsWeb.fldOptConfFlag3 != null)
                         {
-                            optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                            //optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                            optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3; //fatin modified - 15/04/2024
                         }
 
                         db.tblOptionConfigsWebs.Add(optionConfigsWeb);
@@ -8893,6 +8958,36 @@ namespace MVC_SYSTEM.Controllers
                 x => x.fldOptConfID == id && x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
                      x.fld_SyarikatID == SyarikatID);
 
+            List<SelectListItem> AktifList = new List<SelectListItem>();
+
+            AktifList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusaktif2" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            AktifList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.AktifList = AktifList;
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .GroupBy(g => g.fldOptConfFlag3)
+                    .Select(s => s.FirstOrDefault())
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfFlag3, Text = s.fldOptConfFlag3 }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(inactiveReasonData);
         }
 
@@ -8924,7 +9019,8 @@ namespace MVC_SYSTEM.Controllers
 
                     if (optionConfigsWeb.fldOptConfFlag3 != null)
                     {
-                        inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                        //inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                        inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3; //fatin modified - 15/04/2023
                     }
 
                     db.SaveChanges();

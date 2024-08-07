@@ -981,6 +981,7 @@
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
+    <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_CutiPeruntukan.cs" />
     <Compile Include="ModelsEstate\tbl_Insentif.cs" />
@@ -3697,6 +3698,11 @@
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\DataEntry\BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorEdit.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

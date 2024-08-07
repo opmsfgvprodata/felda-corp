@@ -19,7 +19,6 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">@GlobalResCorp.lblEstateWorkerLeaveAllocationInfo</div>
                     <div class="panel-body">
-                        @*fatin added - 07/08/2023*@
                         <div class="form-group">
                             <label class="control-label col-sm-3">Syarikat:</label>
                             <div class="col-sm-8">
@@ -27,7 +26,6 @@
                                 @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        @*end*@
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
                             <div class="col-sm-8">
@@ -138,7 +136,7 @@
                 $("#fld_LadangID").prop("disabled", false);
                 var WilayahList = {};
                  @*WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";*@ //fatin comment - 07/08/2023
-                WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin added - 07/08/2023
+                WilayahList.url = "@Url.Action("GetLadang2", "DataEntry")"; //fatin added - 07/08/2023
                 WilayahList.type = "POST";
                 /*WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });*/ //fatin comment - 07/08/2023
                 WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), SyarikatList: $("#fld_SyarikatID").val() }); //fatin added - 07/08/2023
