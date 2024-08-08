@@ -25,6 +25,11 @@ using MVC_SYSTEM.ViewingModels;
 using MVC_SYSTEM.ModelsCustom;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
+using System.Data.SqlClient;
+using Dapper;
+using System.Configuration;
+using System.Data;
+
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -9370,22 +9375,20 @@ namespace MVC_SYSTEM.Controllers
             if (WilayahID == 0 && LadangID == 0)
             {
                 CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                        .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                        .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fldOptConfValue=="8800")
                         .OrderBy(o => o.fldOptConfDesc)
                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                     "Value", "Text").ToList();
 
                 wlyhid = getwilyah.GetWilayahID(SyarikatID);
-                wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
+                wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID) && x.fld_ID != 11), "fld_ID", "fld_WlyhName").ToList();
                 wilayahList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-
-                //ladangList = new SelectList(db2.tbl_Ladang.Where(x => wlyhid.Contains((int)x.fld_WlyhID) && x.fld_Deleted == false).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
                 ladangList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
             }
             else if (WilayahID != 0 && LadangID == 0)
             {
                 CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fldOptConfValue=="8800")
                 .OrderBy(o => o.fldOptConfDesc)
                 .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                 "Value", "Text").ToList();
@@ -9400,7 +9403,7 @@ namespace MVC_SYSTEM.Controllers
             else if (WilayahID != 0 && LadangID != 0)
             {
                 CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
+                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fldOptConfValue=="8800")
                 .OrderBy(o => o.fldOptConfDesc)
                 .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                 "Value", "Text").ToList();
@@ -9482,8 +9485,8 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.namasyarikat = namasyarikat.ToUpper();
             ViewBag.nosyarikat = nosyarikat.ToUpper();
 
-            List<sp_MapaReport_Result> MapaData = new List<sp_MapaReport_Result>();
-            List<vw_MapaCustomModel> PaySheetPekerjaList = new List<vw_MapaCustomModel>();
+            List<ModelsDapper.sp_MapaReport_Result> MapaData = new List<ModelsDapper.sp_MapaReport_Result>();
+            List<ModelsDapper.vw_MapaCustomModelcs> PaySheetPekerjaList = new List<ModelsDapper.vw_MapaCustomModelcs>();
 
             String namabulan = db.tblOptionConfigsWeb.Where(x => x.fldOptConfValue == MonthList.ToString()).Select(x => x.fldOptConfFlag2).FirstOrDefault();
             if (namabulan != null)
@@ -9506,29 +9509,71 @@ namespace MVC_SYSTEM.Controllers
 
                         if (LadangList == 0)
                         {
-                            dbSP.SetCommandTimeout(3600);
-                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
-                            .Where(x => x.fld_Month == MonthList && x.fld_Year == YearList).OrderBy(o => o.fld_WilayahID).ToList();
+
+                            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                            var con = new SqlConnection(constr);
+
+                            DynamicParameters parameters = new DynamicParameters();
+                            parameters.Add("NegaraID", NegaraID);
+                            parameters.Add("SyarikatID", SyarikatID);
+                            parameters.Add("WilayahID", 0);
+                            parameters.Add("LadangID", 0);
+                            parameters.Add("Year", YearList);
+                            parameters.Add("Month", MonthList);
+                            parameters.Add("UserID", getuserid);
+                            parameters.Add("CompCode", CompCodeList);
+
+                            con.Open();
+                            Dapper.SqlMapper.Settings.CommandTimeout = 3600;
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            con.Close();
+
                         }
                     }
                     else
                     {
                         if (LadangList == 0)
                         {
-                            dbSP.SetCommandTimeout(3600);
-                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
-                            .Where(x => x.fld_Month == MonthList &&
-                                    x.fld_Year == YearList && x.fld_WilayahID == WilayahList).OrderBy(o => o.fld_WilayahID).ToList();
+                            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                            var con = new SqlConnection(constr);
+
+                            DynamicParameters parameters = new DynamicParameters();
+                            parameters.Add("NegaraID", NegaraID);
+                            parameters.Add("SyarikatID", SyarikatID);
+                            parameters.Add("WilayahID", WilayahList);
+                            parameters.Add("LadangID", 0);
+                            parameters.Add("Year", YearList);
+                            parameters.Add("Month", MonthList);
+                            parameters.Add("UserID", getuserid);
+                            parameters.Add("CompCode", CompCodeList);
+
+                            con.Open();
+                            Dapper.SqlMapper.Settings.CommandTimeout = 3600;
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            con.Close();
+
                             ViewBag.Tajuk = db.tbl_Wilayah
                             .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == WilayahList)
                                .Select(s => "Wilayah " + s.fld_WlyhName.Substring(0, 1).ToUpper() + s.fld_WlyhName.Substring(1).ToLower()).FirstOrDefault();
                         }
                         else
                         {
-                            dbSP.SetCommandTimeout(3600);
-                            MapaData = dbSP.sp_MapaReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
-                            .Where(x => x.fld_Month == MonthList &&
-                                    x.fld_Year == YearList && x.fld_WilayahID == WilayahList && x.fld_LadangID == LadangList).OrderBy(o => o.fld_WilayahID).ToList();
+                            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                            var con = new SqlConnection(constr);
+
+                            DynamicParameters parameters = new DynamicParameters();
+                            parameters.Add("NegaraID", NegaraID);
+                            parameters.Add("SyarikatID", SyarikatID);
+                            parameters.Add("WilayahID", WilayahList);
+                            parameters.Add("LadangID", LadangList);
+                            parameters.Add("Year", YearList);
+                            parameters.Add("Month", MonthList);
+                            parameters.Add("UserID", getuserid);
+                            parameters.Add("CompCode", CompCodeList);
+
+                            con.Open();
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            con.Close();
 
                             ViewBag.Tajuk = db.tbl_Ladang
                   .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == LadangList)
@@ -9536,6 +9581,7 @@ namespace MVC_SYSTEM.Controllers
                   .FirstOrDefault();
                         }
                     }
+
                     if (MapaData.Count() != 0)
                     {
                         foreach (var salary in MapaData)
@@ -9558,9 +9604,9 @@ namespace MVC_SYSTEM.Controllers
 
                             var ladangInfo = db.tbl_Ladang.Where(x => x.fld_ID == salary.fld_LadangID && x.fld_WlyhID == salary.fld_WilayahID && x.fld_NegaraID == salary.fld_NegaraID && x.fld_SyarikatID == salary.fld_SyarikatID).FirstOrDefault();
 
-                            List<ModelsCustom.CarumanTambahanCustomModel> carumanTambahanCustomModelList = new List<ModelsCustom.CarumanTambahanCustomModel>();
+                            List<ModelsDapper.CarumanTambahanCustomModel> carumanTambahanCustomModelList = new List<ModelsDapper.CarumanTambahanCustomModel>();
 
-                            ModelsCustom.CarumanTambahanCustomModel carumanTambahanCustomModel = new ModelsCustom.CarumanTambahanCustomModel();
+                            ModelsDapper.CarumanTambahanCustomModel carumanTambahanCustomModel = new ModelsDapper.CarumanTambahanCustomModel();
                             carumanTambahanCustomModel.fld_KodCarumanTambahan = "SBKPSIP";
                             carumanTambahanCustomModel.fld_CarumanMajikan = summajikan + sumsocsomajikan;
                             carumanTambahanCustomModel.fld_CarumanMajikanKwsp = sumKwspMajikan;
@@ -9570,7 +9616,7 @@ namespace MVC_SYSTEM.Controllers
                             carumanTambahanCustomModel.ladangid = salary.fld_LadangID;
                             carumanTambahanCustomModelList.Add(carumanTambahanCustomModel);
 
-                            PaySheetPekerjaList.Add(new ModelsCustom.vw_MapaCustomModel()
+                            PaySheetPekerjaList.Add(new ModelsDapper.vw_MapaCustomModelcs()
                             {
                                 sp_RptMAPA = salary,
                                 CarumanTambahan = carumanTambahanCustomModelList
