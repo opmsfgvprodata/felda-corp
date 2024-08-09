@@ -2149,4 +2149,7 @@
   <data name="titleReportTenagaKerja" xml:space="preserve">
     <value>Laporan Kemasukan Tenaga Kerja</value>
   </data>
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Rumusan Kedudukan Pekerja Kontraktor</value>
+  </data>
 </root>

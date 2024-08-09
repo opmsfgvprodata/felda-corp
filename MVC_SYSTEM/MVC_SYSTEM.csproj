@@ -55,6 +55,9 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -984,6 +987,7 @@
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
     <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
+    <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
@@ -3714,6 +3718,9 @@
     <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
     <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
     <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaKontraktor.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaKontraktor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

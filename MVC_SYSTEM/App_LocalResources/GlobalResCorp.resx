@@ -3879,4 +3879,25 @@
   <data name="lblTKTSediaAda" xml:space="preserve">
     <value>TKT SEDIA ADA</value>
   </data>
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Rumusan Kedudukan Pekerja Kontraktor</value>
+  </data>
+  <data name="lblMandorAm" xml:space="preserve">
+    <value>MANDOR AM</value>
+  </data>
+  <data name="lblPekerjaAm" xml:space="preserve">
+    <value>PEKERJA AM</value>
+  </data>
+  <data name="lblPemandu" xml:space="preserve">
+    <value>PEMANDU</value>
+  </data>
+  <data name="lblPenoreh" xml:space="preserve">
+    <value>PENOREH</value>
+  </data>
+  <data name="lblPenuai" xml:space="preserve">
+    <value>PENUAI</value>
+  </data>
+  <data name="lblTapakSemaian" xml:space="preserve">
+    <value>TAPAK SEMAIAN</value>
+  </data>
 </root>

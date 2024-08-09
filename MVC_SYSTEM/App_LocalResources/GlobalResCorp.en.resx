@@ -2256,4 +2256,7 @@
   <data name="lblTKTSediaAda" xml:space="preserve">
     <value>TKT SEDIA ADA</value>
   </data>
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Contractor Worker Report</value>
+  </data>
 </root>
