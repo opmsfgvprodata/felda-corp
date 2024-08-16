@@ -759,5 +759,38 @@ namespace MVC_SYSTEM.ModelsSP
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptMasterJumPkj_Result>("sp_RptMasterJumPkj", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, userIDParameter, compCodeParameter);
         }
+    
+        public virtual IEnumerable<sp_RptKedPkjMenWlyh_Result> sp_RptKedPkjMenWlyh(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> userID, Nullable<System.DateTime> selectionDate, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var ladangIDParameter = ladangID.HasValue ?
+                new ObjectParameter("LadangID", ladangID) :
+                new ObjectParameter("LadangID", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var selectionDateParameter = selectionDate.HasValue ?
+                new ObjectParameter("SelectionDate", selectionDate) :
+                new ObjectParameter("SelectionDate", typeof(System.DateTime));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptKedPkjMenWlyh_Result>("sp_RptKedPkjMenWlyh", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, userIDParameter, selectionDateParameter, compCodeParameter);
+        }
     }
 }

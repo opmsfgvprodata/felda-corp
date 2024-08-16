@@ -140,6 +140,15 @@
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="CostCentre" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_RptKedPkjMenWlyh" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="SelectionDate" Type="date" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_RptMakPekTem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
           <Parameter Name="SyarikatID" Type="int" Mode="In" />
@@ -411,6 +420,15 @@
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptKedPkjMenWlyh" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptKedPkjMenWlyh_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="SelectionDate" Mode="In" Type="DateTime" />
             <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -961,6 +979,30 @@
           <Property Type="Int32" Name="fld_PrcntJumBesar" Nullable="true" />
           <Property Type="Int32" Name="fld_KekurangSmsa" Nullable="true" />
           <Property Type="Int32" Name="fld_PrcntKekurangSmsa" Nullable="true" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
+          <Property Type="String" Name="fld_CompCode" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="sp_RptKedPkjMenWlyh_Result">
+          <Property Type="Guid" Name="fld_ID" Nullable="false" />
+          <Property Type="String" Name="fld_NamaSyarikat" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_NamaWilayah" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_KodLadang" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_NamaLadang" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="fld_Produktiviti" Nullable="true" />
+          <Property Type="Int32" Name="fld_Artisan" Nullable="true" />
+          <Property Type="Int32" Name="fld_JumTKT" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKI" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKB" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKN" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKIN" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKP" Nullable="true" />
+          <Property Type="Int32" Name="fld_TKPH" Nullable="true" />
+          <Property Type="Int32" Name="fld_JumTKA" Nullable="true" />
+          <Property Type="Int32" Name="fld_JumBesar" Nullable="true" />
           <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
           <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
           <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
@@ -1624,6 +1666,34 @@
                 <ScalarProperty Name="fld_PrcntJumBesar" ColumnName="fld_PrcntJumBesar" />
                 <ScalarProperty Name="fld_KekurangSmsa" ColumnName="fld_KekurangSmsa" />
                 <ScalarProperty Name="fld_PrcntKekurangSmsa" ColumnName="fld_PrcntKekurangSmsa" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
+                <ScalarProperty Name="fld_CompCode" ColumnName="fld_CompCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptKedPkjMenWlyh" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptKedPkjMenWlyh">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptKedPkjMenWlyh_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_NamaSyarikat" ColumnName="fld_NamaSyarikat" />
+                <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
+                <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
+                <ScalarProperty Name="fld_NamaLadang" ColumnName="fld_NamaLadang" />
+                <ScalarProperty Name="fld_Produktiviti" ColumnName="fld_Produktiviti" />
+                <ScalarProperty Name="fld_Artisan" ColumnName="fld_Artisan" />
+                <ScalarProperty Name="fld_JumTKT" ColumnName="fld_JumTKT" />
+                <ScalarProperty Name="fld_TKI" ColumnName="fld_TKI" />
+                <ScalarProperty Name="fld_TKB" ColumnName="fld_TKB" />
+                <ScalarProperty Name="fld_TKN" ColumnName="fld_TKN" />
+                <ScalarProperty Name="fld_TKIN" ColumnName="fld_TKIN" />
+                <ScalarProperty Name="fld_TKP" ColumnName="fld_TKP" />
+                <ScalarProperty Name="fld_TKPH" ColumnName="fld_TKPH" />
+                <ScalarProperty Name="fld_JumTKA" ColumnName="fld_JumTKA" />
+                <ScalarProperty Name="fld_JumBesar" ColumnName="fld_JumBesar" />
                 <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
                 <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
                 <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
