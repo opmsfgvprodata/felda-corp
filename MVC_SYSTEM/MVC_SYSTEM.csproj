@@ -995,6 +995,7 @@
     <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
+    <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
     <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
     <Compile Include="ModelsEstate\tbl_Kerjahdr.cs" />
     <Compile Include="ModelsEstate\tbl_Kerja.cs" />
@@ -3671,6 +3672,11 @@
     <Content Include="Views\Report\_MapaReport.cshtml" />
     <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
     <Content Include="Views\Report\RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorDelete.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorEdit.cshtml" />
+    <Content Include="Views\DataEntry\BuruhKontraktor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
