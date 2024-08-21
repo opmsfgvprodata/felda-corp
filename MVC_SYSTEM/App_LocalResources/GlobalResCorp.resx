@@ -3786,6 +3786,12 @@
   <data name="lblIncInOrp" xml:space="preserve">
     <value>Termasuk Dalam ORP?</value>
   </data>
+  <data name="lblCategory" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="titleContractLabor" xml:space="preserve">
+    <value>Maklumat Pekerja Kontraktor</value>
+  </data>
   <data name="lblTitlePaidLeaveGenerateMaintenance" xml:space="preserve">
     <value>Jana Cuti Berbayar Pekerja</value>
   </data>

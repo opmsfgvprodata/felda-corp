@@ -1,0 +1,110 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsEstate.tbl_BuruhKontrakModelViewEdit
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    GetConfig getConfig = new GetConfig();
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Kemaskini Buruh Kontraktor</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Maklumat Buruh Kontraktor</div>
+                    <div class="panel-body">
+                        @*<div class="form-group">
+                            <label class="control-label col-sm-3">Syarikay:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_SyarikatID, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetWilayahNameFromID(Model.fld_WilayahID) })
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_Tahun, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_WilayahID, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetWilayahNameFromID(Model.fld_WilayahID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_LadangID, new { @class = "form-control", @disabled = "true", @Value = getConfig.GetLadangNameFromID(Model.fld_LadangID) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Jawatan:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_Designation, new SelectList(ViewBag.JawatanList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Designation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Jumlah Pekerja:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_JumlahBuruh, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_JumlahBuruh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                        @Html.HiddenFor(model => model.fld_Tahun)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function() {
+        $("#fld_WilayahID").change(function () {
+            if ($("#fld_WilayahID").val() === '') {
+                $("#fld_LadangID").prop("disabled", true); 
+            } else {
+                $("#fld_LadangID").prop("disabled", false);
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#fld_LadangID").empty();
+                    $("#fld_LadangID").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID")
+                            .append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+
+    });
+</script>
