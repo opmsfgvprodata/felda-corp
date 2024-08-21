@@ -10126,7 +10126,10 @@ namespace MVC_SYSTEM.Controllers
                         .ToList();
 
                     var dataPkj = estateConnection.tbl_Pkjmast
-                        .Where(x => x.fld_Kdaktf == "1" &&
+                        .Where(x => x.fld_Kdaktf == "1" && 
+                        x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            x.fld_WilayahID == WilayahList &&
                             ldgIDs.Contains((int)x.fld_LadangID))
                         .OrderBy(o => o.fld_Nama)
                         .ToList();
@@ -10251,7 +10254,10 @@ namespace MVC_SYSTEM.Controllers
                     ldgIDs.Add((int)LadangList);
 
                     var dataPkj = estateConnection.tbl_Pkjmast
-                        .Where(x => x.fld_Kdaktf == "1" &&
+                        .Where(x => x.fld_Kdaktf == "1" && 
+                        x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            x.fld_WilayahID == WilayahList &&
                             ldgIDs.Contains((int)x.fld_LadangID))
                         .OrderBy(o => o.fld_Nama)
                         .ToList();
