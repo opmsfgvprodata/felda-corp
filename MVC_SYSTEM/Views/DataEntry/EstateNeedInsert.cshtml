@@ -71,6 +71,7 @@
                 $.validator.unobtrusive.parse("form");
 </script>
 <script>
+
     $("#fld_Tahun,#fld_LadangID").change(function () {
         var CheckQuotaAvailable = {};
         CheckQuotaAvailable.url = "@Url.Action("GetQoutaAvailable", "DataEntry")";
