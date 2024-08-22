@@ -3810,6 +3810,27 @@
   <data name="msgGenerateLeaveSuccess" xml:space="preserve">
     <value>Proses Jana Cuti Berjaya</value>
   </data>
+  <data name="hdrReportTitleLapKatPekTem" xml:space="preserve">
+    <value>Laporan Kategori Pekerja Tempatan</value>
+  </data>
+  <data name="lblBelia" xml:space="preserve">
+    <value>BELIA</value>
+  </data>
+  <data name="lblBeliawanis" xml:space="preserve">
+    <value>BELIAWANIS</value>
+  </data>
+  <data name="lblGenerasiKedua" xml:space="preserve">
+    <value>GENERASI KEDUA</value>
+  </data>
+  <data name="lblPeneroka1" xml:space="preserve">
+    <value>PENEROKA</value>
+  </data>
+  <data name="lblPenerokawati" xml:space="preserve">
+    <value>PENEROKAWATI</value>
+  </data>
+  <data name="lblTempatan" xml:space="preserve">
+    <value>TEMPATAN</value>
+  </data>
   <data name="titleReportTenagaKerja" xml:space="preserve">
     <value>Laporan Kemasukan Tenaga Kerja</value>
   </data>

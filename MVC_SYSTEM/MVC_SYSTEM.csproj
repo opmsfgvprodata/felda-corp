@@ -1088,6 +1088,9 @@
     <Compile Include="ModelsSP\sp_RptKedPkjMenWlyh_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptKatPekTem_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3726,6 +3729,7 @@
     <Content Include="Views\Report\KedudukanPkjMengikutWlyhReport.cshtml" />
     <Content Include="Views\Report\MapaReport.cshtml" />
     <Content Include="Views\Report\_MapaReport.cshtml" />
+    <Content Include="Views\Report\LocalWorkerCategoryReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
