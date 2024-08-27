@@ -26,11 +26,33 @@
                                       * grid.RowsPerPage * grid.PageIndex, style: "count"),
                 grid.Column(columnName: "fldOptConfvalue", header: GlobalResCorp.lblInactiveReasonCode, style: "kod"),
                 grid.Column(columnName: "fldOptConfDesc", header: GlobalResCorp.lblDescription, style: "keterangan"),
-                grid.Column(columnName: "fldOptConfFlag2", header: GlobalResCorp.lblCodeTkAkt, style: "tetapan1"),
+                //grid.Column(columnName: "fldOptConfFlag2", header: GlobalResCorp.lblCodeTkAkt, style: "tetapan1"),
+                //fatin added - 15/04/2024
+                grid.Column(GlobalResCorp.lblCodeTkAkt, format: (item) =>
+                {
+                    string flag2String = item.fldOptConfFlag2;
+
+                    int flag2Value;
+                    if (int.TryParse(flag2String, out flag2Value) && flag2Value == 0)
+                    {
+                        var status = "Aktif";
+                        return @Html.Raw(status);
+                    }
+                    else
+                    {
+                        var status = "Tidak Aktif";
+                        return @Html.Raw(status);
+                    }
+
+
+
+                }, canSort: false, style: "tetapan1"),
+
+                grid.Column(columnName: "fldOptConfFlag3", header: GlobalResCorp.lblCategory, style: "tetapan2"), //fatin added - 03/04/2024
                 //grid.Column(columnName: "fldOptConfFlag3", header: GlobalResCorp.lblCodeValue3, style: "tetapan2"),
                 grid.Column(GlobalResCorp.hdrAction, format: (item) =>
                 {
-                    
+
                     if (item.fldDeleted == false)
                     {
                         var tindakan = "<a data-modal1='' href='" + @Url.Action("_InactiveReasonMaintenanceEdit", "Maintenance") + "/?id=" + item.fldOptConfID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
