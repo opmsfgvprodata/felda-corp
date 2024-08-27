@@ -1641,7 +1641,6 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Year = getdate.Year;
             ViewBag.GetView = 0;
             ViewBag.SyarikatCc = SyarikatIDList; //Added by Shazana 1/8/2023
-
             return View();
         }
 
@@ -1661,6 +1660,8 @@ namespace MVC_SYSTEM.Controllers
             //Added by Shazana 30/3/2023
             ViewBag.Month = Month;
             ViewBag.Year = Year;
+            ViewBag.TitleSokongan1 = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitleSokongan" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
+
             return View(getdata);
         }
 
@@ -1733,6 +1734,8 @@ namespace MVC_SYSTEM.Controllers
                 LulusNama = " (Pegawai Wilayah FELDA) "; //Added by Shazana 6/6/2023
             }
 
+            string TitleSokongan = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitleSokongan" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
+            string TitleKelulusan = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitleKelulusan" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
 
             switch (UpdateFlag)
             {
@@ -1766,7 +1769,7 @@ namespace MVC_SYSTEM.Controllers
                     msg += "<p>Tuan/Puan,</p>";
                     //Modify by Shazana 15/2/2023
                     //msg += "<p>Mohon sokongan kelulusan permohonan gaji (Gaji Pekerja Buruh) dari pihak Tuan/Puan (Unit Kewangan). Keterangan seperti dibawah:-</p>";
-                    msg += "<p>Mohon kelulusan permohonan gaji (Gaji Pekerja Buruh) dari pihak Tuan/Puan (Wilayah(Perladangan)). Keterangan seperti dibawah:-</p>";
+                    msg += "<p>Mohon kelulusan permohonan gaji (Gaji Pekerja Buruh) dari pihak Tuan/Puan " + TitleKelulusan + ". Keterangan seperti dibawah:-</p>";
 
                     msg += "<table border=\"1\">";
                     msg += "<thead>";
@@ -1889,7 +1892,7 @@ namespace MVC_SYSTEM.Controllers
                     //Modify by Shazana 15/2/2023
                     //msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh HR JTK. Mohon pihak ladang buat semakkan kembali. Keterangan seperti dibawah :-</p>";
                     //Modified by Shazana 28/4/2023
-                    msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh Wilayah(Kewangan/RC). Mohon pihak ladang buat semakan kembali. Keterangan seperti dibawah :-</p>";
+                    msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh " + TitleSokongan + ". Mohon pihak ladang buat semakan kembali. Keterangan seperti dibawah :-</p>";
 
                     msg += "<table border=\"1\">";
                     msg += "<thead>";
@@ -2183,6 +2186,7 @@ namespace MVC_SYSTEM.Controllers
 
             //Added by Shazana 3/4/2023
             ViewBag.WilayahID = WilayahID;
+            ViewBag.TitleKelulusan1 = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitleKelulusan" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
             return View(getdata);
         }
 
@@ -2254,6 +2258,9 @@ namespace MVC_SYSTEM.Controllers
                 LulusNama = " (Pegawai Wilayah FELDA) ";//Added by Shazana 6/6/2023
             }
 
+            string TitleKelulusan = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitleKelulusan" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
+            string TitlePosting = db.tblOptionConfigsWebs.Where(x => x.fldOptConfValue == "TitlePosting" && x.fldOptConfFlag1 == "TitleApproval").Select(x => x.fldOptConfDesc).FirstOrDefault();
+
             switch (UpdateFlag)
             {
                 case "SokongGMWil":
@@ -2285,7 +2292,7 @@ namespace MVC_SYSTEM.Controllers
                     ////Modify by Shazana 15/2/2023
                     ////msg += "<p>Mohon kelulusan permohonan gaji (Gaji Pekerja Buruh) dari pihak Tuan/Puan (Unit Kewangan). Keterangan seperti dibawah:-</p>";
                     //msg += "<p>Sukacita dimaklumkan, permohonan gaji(Gaji Pekerja Buruh) telah diluluskan oleh Pengurus Kewangan.Keterangan seperti dibawah:</p>";
-                    msg += "<p>Sukacita dimaklumkan, permohonan gaji(Gaji Pekerja Buruh) telah diluluskan oleh Wilayah.Keterangan seperti dibawah:</p>";
+                    msg += "<p>Sukacita dimaklumkan, permohonan gaji(Gaji Pekerja Buruh) telah diluluskan oleh " + TitleKelulusan + ".Keterangan seperti dibawah:</p>";
 
 
                     msg += "<table border=\"1\">";
@@ -2388,7 +2395,7 @@ namespace MVC_SYSTEM.Controllers
                     //Modify by Shazana 15/2/2023
                     //msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh HR JTK. Mohon pihak ladang buat semakkan kembali. Keterangan seperti dibawah :-</p>";
                     //Modified by Shazana 28/4/2023
-                    msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh Wilayah(Perladangan). Mohon pihak ladang buat semakan kembali. Keterangan seperti dibawah :-</p>";
+                    msg += "<p>Dukacita dimaklumkan, permohonan gaji (Gaji Pekerja Buruh) telah ditolak oleh " + TitleKelulusan + ". Mohon pihak ladang buat semakan kembali. Keterangan seperti dibawah :-</p>";
 
                     msg += "<table border=\"1\">";
                     msg += "<thead>";
