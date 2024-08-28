@@ -25,6 +25,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         public int? fld_NegaraID { get; set; }
 
+        public int? fld_PerluTKT { get; set; }
+        public int? fld_PerluTKA { get; set; }
         public int? fld_Perlu { get; set; }
 
         public int? fld_Tahun { get; set; }
