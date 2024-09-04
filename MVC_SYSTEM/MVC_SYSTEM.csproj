@@ -992,6 +992,7 @@
     <Compile Include="ModelsDapper\sp_MapaReport_Result.cs" />
     <Compile Include="ModelsDapper\vw_MapaCustomModelcs.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
+    <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
     <Compile Include="ModelsEstate\tbl_Kerjahdr.cs" />
@@ -1089,6 +1090,9 @@
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptGajiMinima_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_RptKedPkjMenWlyh_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
@@ -3717,10 +3721,18 @@
     <Content Include="Views\Report\DataEntryReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\DataEntry\BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorEdit.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorDelete.cshtml" />
     <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
     <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
     <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
     <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\KedudukanPkjMengikutWlyhReport.cshtml" />
+    <Content Include="Views\Report\MapaReport.cshtml" />
+    <Content Include="Views\Report\_MapaReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

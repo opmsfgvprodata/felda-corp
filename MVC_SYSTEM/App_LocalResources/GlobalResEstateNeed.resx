@@ -180,4 +180,10 @@
   <data name="lblSearch" xml:space="preserve">
     <value>Cari</value>
   </data>
+  <data name="lblPerluTKA" xml:space="preserve">
+    <value>Keperluan Buruh TKA</value>
+  </data>
+  <data name="lblPerluTKT" xml:space="preserve">
+    <value>Keperluan Buruh TKT</value>
+  </data>
 </root>

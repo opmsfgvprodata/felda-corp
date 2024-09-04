@@ -1,0 +1,718 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptKedPkjMenWlyh_Result>
+@using MVC_SYSTEM.Class;
+@{
+
+
+    GetConfig GetConfig = new GetConfig();
+    ViewBag.Title = "Kedudukan Pekerja Mengikut Wilayah";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    string dateformat = GetConfig.GetData("dateformat");
+    ViewBag.DateScriptAdv = 1;
+    int? prdktvt = 0;
+    int? artisan = 0;
+    int? jumTkt = 0;
+    int? tki = 0;
+    int? tkb = 0;
+    int? tkn = 0;
+    int? tkin = 0;
+    int? tkp = 0;
+    int? tkph = 0;
+    int? jumTka = 0;
+    int? jumBesar = 0;
+    int RowNo = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "KedudukanPekerjaMengikutWilayah_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string status = "";
+    string selectionheader = "";
+    if (ViewBag.Status1 == 2)
+    {
+        status = GlobalResActiveWorker.hdrStatus2;
+    }
+    else if (ViewBag.Status1 == 1)
+    {
+        status = GlobalResActiveWorker.hdrStatus1;
+    }
+    else
+    {
+        status = GlobalResActiveWorker.hdrStatus0;
+    }
+    if (ViewBag.IncLdg2 == 1)
+    {
+        selectionheader = "";
+    }
+    else if (ViewBag.IncLdg2 == 2)
+    {
+        selectionheader = ViewBag.WilayahName;
+    }
+    else
+    {
+        selectionheader = ViewBag.WilayahName + " - (" + ViewBag.LadangCode + " - " + ViewBag.LadangName + ")";
+    }
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+@using (Html.BeginForm("KedudukanPkjMengikutWlyhReport", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResActiveWorker.WaitMsg</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label>Tarikh</label>
+                    <div class='input-group date' id='datetimepicker1'>
+                        @Html.TextBox("SelectionDate", null, "{0:dd/MM/yyyy}", htmlAttributes: new { @class = "form-control", onkeydown = "return false"})
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                @*<div class="col-sm-1">
+                        @Html.Label(GlobalResActiveWorker.lblYear)
+                        @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>*@
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResActiveWorker.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResActiveWorker.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*<div class="col-sm-2">
+                        @Html.Label(GlobalResActiveWorker.lblStatus)
+                        @Html.DropDownList("Status", null, htmlAttributes: new { @class = "form-control" })
+                    </div>*@
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top: 7px">
+            <p style="text-align:center;"><label>KEDUDUKAN PEKERJA MENGIKUT WILAYAH</label></p>
+            @if (Model.Count() != 0)
+            {
+                <div id="scrollArea" class="modal-body">
+                    @foreach (var costcentre in Model.Select(s => s.fld_CompCode).Distinct())
+                    {
+                        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    @*sarah modified *@
+                                    @*<th colspan="28" style="text-align:center;vertical-align:middle;">*@
+                                    <th colspan="29" style="text-align:center;vertical-align:middle;">
+
+
+                                        @namapenuhsyarikat
+                                        <br />
+                                        (@namasyarikat)
+                                        <br />
+                                        KEDUDUKAN/PECAHAN PEKERJA MENGIKUT WILAYAH (Aktif)
+                                        <br />
+                                        @ViewBag.Year
+                                    </th>
+                                </tr>
+                                @if (ViewBag.IncLdg2 != 1)
+                                {
+                                    <tr>
+                                        @*sarah modified*@
+                                        @*<th colspan="28" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">*@
+                                        <th colspan="29" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @selectionheader
+                                        </th>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
+                                    @if (ViewBag.Incldg == 0)
+                                    {
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                    }
+                                    else
+                                    {
+                                        <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrCodeLadang</th>
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
+                                    }
+                                    <th colspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">TEMPATAN</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                    <th colspan="6" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrAsing</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                    <th rowspan="3" width="5%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">JUMLAH BESAR</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEKERJA AM (ADA PRODUKTIVITI)</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">ARTISAN</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKI</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKB</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKN</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKIN</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKP</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKPH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @RowNo
+                                        </td>
+
+                                        @if (ViewBag.Incldg == 0)
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_KodLadang</td>
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                        }
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_Produktiviti)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_Artisan)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumTKT)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKI)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKP)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_TKPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumTKA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_JumBesar)
+                                        </td>
+                                    </tr>
+                                    {
+                                        prdktvt = prdktvt + item.fld_Produktiviti;
+                                        artisan = artisan + item.fld_Artisan;
+                                        jumTkt = jumTkt + item.fld_JumTKT;
+                                        tki = tki + item.fld_TKI;
+                                        tkb = tkb + item.fld_TKB;
+                                        tkn = tkn + item.fld_TKN;
+                                        tkin = tkin + item.fld_TKIN;
+                                        tkp = tkp + item.fld_TKP;
+                                        tkph = tkph + item.fld_TKPH;
+                                        jumTka = jumTka + item.fld_JumTKA;
+                                        jumBesar = jumBesar + item.fld_JumBesar;
+
+                                    }
+                                    RowNo++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    @if (ViewBag.Incldg == 0)
+                                    {
+                                        <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    else
+                                    {
+                                        <td colspan="3" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@prdktvt</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@artisan</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumTkt</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tki</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkb</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkn</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkin</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkp</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@tkph </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumTka</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@jumBesar</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+                </div>
+                <!--<a href="#" id="downloadpdf">Download PDF</a>-->
+                //farahin comment button asal
+                @*<a href="#" id="downloadpdf2">Download PDF</a>
+                    <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>*@
+
+                <br />
+
+                //farahin-20012021
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
+            }
+            else
+            {
+                <p style="color:red">Sila Pilih Syarikat dan Wilayah</p>
+            }
+        </div>
+
+        @*sarah added 10/05/2023*@
+        <div id='myModal1' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
+
+        @*sarah comment 23/10/2023*@
+        <!-- Modal -->
+        @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Lain-lain</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                <thead>
+
+                                    <tr>
+
+                                        @if (ViewBag.Incldg == 0)
+                                        {
+                                            <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                        }
+                                        else
+                                        {
+
+                                            <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
+                                        }
+
+                                    </tr>
+
+                                    <tr>
+                                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKPH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            @if (ViewBag.Incldg == 0)
+                                            {
+                                                <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+
+                                            }
+                                            else
+                                            {
+
+                                                <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                            }
+
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @GetTriager.GetDashForInt(item.fld_other)
+                                            </td>
+
+                                        </tr>
+                                        {
+
+                                            //tkother = tkother + item.fld_other;
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @section scripts{
+            @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+        }
+        @*sarah added sampai sini*@
+    </section>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+
+  
+         @*$('#datetimepicker1').datetimepicker({
+        format: '@dateformat',
+        useCurrent: false
+    });*@
+
+    $(document).ready(function () {
+
+        $(function () {
+            $('#SelectionDate').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y'
+            });
+        });
+
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf2").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        @*$("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });*@
+
+        $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+        var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                debugger
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+        });
+
+        /*sarah comment*/
+        @*if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });*@
+    });
+</script>
+<!--<script>
+    $(document).ready(function () {
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf2").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });-->
+@*$("#downloadpdf2").click(function () {
+        var myHtml = document.getElementById('scrollArea').innerHTML;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ConvertPDF2", "Report")',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+            success: function (result) {
+                if (result.success) {
+                    var win = window.open(result.link, '_blank');
+                    win.focus();
+                } else {
+                    $.simplyToast(result.msg, result.status);
+                }
+            },
+            error: function (error) {
+                $.simplyToast('Sorry to many data', 'danger');
+            }
+        });
+        return false;
+    });*@
+
+<!--$("#SyarikatList").change(function () {
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+    SyarikatList.type = "POST";
+    SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#WilayahIDList").empty();
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#SyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+        }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+});
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) ;
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+        for (var i = 0; i < ladanglist.length; i++) {
+            if ($("#WilayahIDList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+        }
+    };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(WilayahIDList);
+    });
+
+    /*sarah comment*/-->
+@*if ($("#WilayahIDList").val() == 0) {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0)
+                {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    }
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });*@
+<!--</script>-->
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+
