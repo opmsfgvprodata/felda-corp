@@ -503,5 +503,15 @@ namespace MVC_SYSTEM.Class
 
             return SyarikatNo;
         }
+
+        public List<tblOptionConfigsWeb> GetWebConfigList(string[] flag1, int? NegaraID, int? SyarikatID)
+        {
+            var getConfigList = db.tblOptionConfigsWebs
+                .Where(x => flag1.Contains(x.fldOptConfFlag1) && x.fldDeleted == false &&
+                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID)
+                .ToList();
+
+            return getConfigList;
+        }
     }
 }
