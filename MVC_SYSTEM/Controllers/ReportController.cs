@@ -1071,6 +1071,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.KerakyatanList = KerakyatanList;
             ViewBag.UserID = getuserid;
             ViewBag.GetFlag = 1;
+            ViewBag.costcenter = "0";
 
             return View(resultreport);
         }
@@ -1290,6 +1291,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.IncLdg = incldg;
             ViewBag.UserID = getuserid;
             ViewBag.GetFlag = 2;
+            ViewBag.costcenter = SyarikatList;
 
             ViewBag.Month = MonthList;
             ViewBag.Year = YearList;
