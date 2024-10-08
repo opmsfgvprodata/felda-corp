@@ -54,7 +54,10 @@ namespace MVC_SYSTEM.ModelsEstate
 
         public virtual DbSet<tbl_Kerja> tbl_Kerja { get; set; }
         public virtual DbSet<tbl_Kerjahdr> tbl_Kerjahdr { get; set; }
-
+        public virtual DbSet<vw_SAPPostData> vw_SAPPostData { get; set; }
+        public virtual DbSet<tbl_SAPPostRef> tbl_SAPPostRef { get; set; }
+        public virtual DbSet<tbl_SAPPostDataDetails> tbl_SAPPostDataDetails { get; set; }
+        public virtual DbSet<tbl_SAPHistory> tbl_SAPHistory { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             
