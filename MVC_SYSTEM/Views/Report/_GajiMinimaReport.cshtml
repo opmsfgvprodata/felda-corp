@@ -1,6 +1,6 @@
 ﻿@using MVC_SYSTEM.Class
 @using MVC_SYSTEM.Models
-@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptGajiMinima_Result>
+@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_RptGajiMinima_Result>
 
 @{
     GetConfig GetConfig = new GetConfig();
@@ -26,11 +26,11 @@
         @*Added by Shazana 1/8/2023*@
         @foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
         {
-            var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+            var nosyarikat = GetConfig.GetSyarikatNo(costcentre);
             var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
 
             <p align="center" style="font-size: 11px" :><b>@namapenuhsyarikat</b></p>
-            <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @namasyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @nosyarikat</b></p>
             <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleMinimumWageReport</b></p>
             <br />
             //Modified by Shazana 1/8/2023

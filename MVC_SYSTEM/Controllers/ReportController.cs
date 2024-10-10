@@ -25,6 +25,10 @@ using MVC_SYSTEM.ViewingModels;
 using MVC_SYSTEM.ModelsCustom;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -2125,8 +2129,10 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = getidentity.ID(User.Identity.Name);
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
-            List<sp_RptGajiMinima_Result> rptGajiMinimaResults = new List<sp_RptGajiMinima_Result>();
+            //List<sp_RptGajiMinima_Result> rptGajiMinimaResults = new List<sp_RptGajiMinima_Result>();
 
+            List<ModelsDapper.sp_RptGajiMinima_Result> rptGajiMinimaResults = new List<ModelsDapper.sp_RptGajiMinima_Result>();
+            
             ViewBag.NamaSyarikat = db.tbl_Syarikat
                 .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
                 .Select(s => s.fld_NamaSyarikat)
@@ -2153,8 +2159,28 @@ namespace MVC_SYSTEM.Controllers
 
                 else
                 {
-                    rptGajiMinimaResults = dbSP.sp_RptGajiMinima(NegaraID, SyarikatID, WilayahList, LadangList, MonthList, YearList, getuserid, SyarikatList)
-                        .ToList();
+
+                    //Modified by Shazana 9/10/2024
+                    //rptGajiMinimaResults = dbSP.sp_RptGajiMinima(NegaraID, SyarikatID, WilayahList, LadangList, MonthList, YearList, getuserid, SyarikatList)
+                    //    .ToList();
+
+                    string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                    var con = new SqlConnection(constr);
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("WilayahID", WilayahList);
+                    parameters.Add("LadangID", LadangList);
+                    parameters.Add("Month", MonthList);
+                    parameters.Add("Year", YearList);
+                    parameters.Add("UserID", getuserid);
+                    parameters.Add("CostCentre", SyarikatList);
+
+                    con.Open();
+                    Dapper.SqlMapper.Settings.CommandTimeout = 3600;
+                    rptGajiMinimaResults = SqlMapper.Query<ModelsDapper.sp_RptGajiMinima_Result>(con, "sp_RptGajiMinima", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    con.Close();
 
                     if (rptGajiMinimaResults.Count == 0)
                     {
