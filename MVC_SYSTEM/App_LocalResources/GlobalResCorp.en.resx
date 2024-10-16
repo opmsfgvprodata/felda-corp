@@ -2262,4 +2262,7 @@
   <data name="titleContractLabor" xml:space="preserve">
     <value>Contract Worker Information</value>
   </data>
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Contractor Worker Report</value>
+  </data>
 </root>
