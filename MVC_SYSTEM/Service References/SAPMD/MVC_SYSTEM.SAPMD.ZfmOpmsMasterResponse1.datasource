@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="ZfmOpmsMasterResponse1" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>MVC_SYSTEM.SAPMD.ZfmOpmsMasterResponse1, MVC_SYSTEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>MVC_SYSTEM.SAPMD.ZfmOpmsMasterResponse1</TypeInfo>
 </GenericObjectDataSource>

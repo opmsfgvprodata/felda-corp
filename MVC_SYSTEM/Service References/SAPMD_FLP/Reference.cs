@@ -623,7 +623,7 @@ namespace MVC_SYSTEM.SAPMD_FLP {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form= SysXML.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=SysXML.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public string MessageV1 {
             get {
                 return this.messageV1Field;
