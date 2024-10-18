@@ -1,19 +1,41 @@
 ﻿@model MVC_SYSTEM.ModelsCorporate.tbl_Socso
 @using MVC_SYSTEM.Class;
-
 @{
     ViewBag.Title = "SocsoMaintenanceUpdate";
-    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
     GetConfig GetConfig = new GetConfig();
     string jnscaruman = GetConfig.GetKwspSocso(Model.fld_KodCaruman, Model.fld_SyarikatID.Value, Model.fld_NegaraID.Value);
     string carumandesc = Model.fld_KodCaruman + " - " + jnscaruman;
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').submit(function (e) {
+            e.preventDefault();
+
+            var form = $(this);
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert(response.msg);
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while processing your request.');
+                }
+            });
+        });
+    });
+</script>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="modal-header">
-        @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
         <h3 class="modal-title">@GlobalResCorp.titleUpdate</h3>
     </div>
     <div class="modal-body">
@@ -26,12 +48,8 @@
                 <label class="control-label col-md-2">@GlobalResCorp.lblSocsoType</label>
                 <div class="col-md-9">
                     @Html.TextBox("fld_KodCaruman", carumandesc, new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.EditorFor(model => model.fld_KodCaruman, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
-                    @*@Html.DropDownList("fld_KodAktvt", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
-                    @*@Html.ValidationMessageFor(model => model.fld_KodCaruman, "", new { @class = "text-danger" })*@
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-md-2">@GlobalResCorp.hdrMinVal</label>
                 <div class="col-md-9">
@@ -39,7 +57,6 @@
                     @Html.ValidationMessageFor(model => model.fld_KdrLower, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-md-2">@GlobalResCorp.hdrMaxVal</label>
                 <div class="col-md-9">
@@ -47,7 +64,6 @@
                     @Html.ValidationMessageFor(model => model.fld_KdrUpper, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-md-2">@GlobalResCorp.lblEmloyerShare (RM)</label>
                 <div class="col-md-9">
@@ -55,7 +71,6 @@
                     @Html.ValidationMessageFor(model => model.fld_SocsoMjkn, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-md-2">@GlobalResCorp.lblEmployeeShare (RM)</label>
                 <div class="col-md-9">
@@ -70,3 +85,4 @@
         <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
     </div>
 }
+

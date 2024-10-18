@@ -2886,18 +2886,28 @@ namespace MVC_SYSTEM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SocsoMaintenanceUpdate(ModelsCorporate.tbl_Socso tbl_Socso)
         {
+            if (tbl_Socso == null || tbl_Socso.fld_ID == 0)
+            {
+                return Json(new { success = false, msg = "Invalid data provided", status = "error" });
+            }
+
             var getdata = db.tbl_Socso.Where(w => w.fld_ID == tbl_Socso.fld_ID).FirstOrDefault();
+            if (getdata == null)
+            {
+                return Json(new { success = false, msg = "Data not found", status = "error" });
+            }
 
             getdata.fld_KdrLower = tbl_Socso.fld_KdrLower;
             getdata.fld_KdrUpper = tbl_Socso.fld_KdrUpper;
             getdata.fld_SocsoMjkn = tbl_Socso.fld_SocsoMjkn;
-            getdata.fld_SocsoPkj = tbl_Socso.fld_SocsoMjkn;
-
+            getdata.fld_SocsoPkj = tbl_Socso.fld_SocsoPkj;
             db.Entry(getdata).State = EntityState.Modified;
             db.SaveChanges();
             db.Dispose();
+
             return Json(new { success = true, msg = GlobalResCorp.msgUpdate, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
         }
+
 
         public ActionResult SocsoMaintenanceDelete(int? id)
         {
