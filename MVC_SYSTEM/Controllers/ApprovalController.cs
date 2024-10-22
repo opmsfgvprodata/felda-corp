@@ -2273,14 +2273,17 @@ namespace MVC_SYSTEM.Controllers
                             dbr.SaveChanges();
                         }
 
+                        DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
+                        var jnsSocso = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanSocso" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
+                        var kodSocso = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsSocso && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
+
                         //kwsp & socso
                         if (app2.fld_Kdrkyt != "MA")
                         {
-                            DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
-
                             if (app2 != null)
                             {
-                                app2.fld_StatusKwspSocso = "2";
+                                app2.fld_KodSocso = kodSocso;
+                                app2.fld_StatusKwspSocso = "1";
                                 dbr.SaveChanges();
                             }
 
@@ -2314,9 +2317,6 @@ namespace MVC_SYSTEM.Controllers
                         }
                         else if (app2.fld_Kdrkyt == "MA")
                         {
-                            DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
-                            var jnsSocso = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanSocso" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
-                            var kodSocso = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsSocso && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
                             var jnsKwsp = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanKwsp" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
                             var kodKwsp = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsKwsp && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
 
