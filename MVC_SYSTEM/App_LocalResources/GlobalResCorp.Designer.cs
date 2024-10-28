@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResCorp {
@@ -5191,7 +5191,7 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JUMLAH TK PRODUKTIVITI.
+        ///   Looks up a localized string similar to JUMLAH TKT (PRODUKTIVITI).
         /// </summary>
         public static string lblJumlahTKTProduktiviti {
             get {
@@ -11235,6 +11235,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string titleRegisterGroupProductvt {
             get {
                 return ResourceManager.GetString("titleRegisterGroupProductvt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Laporan Kekuatan Pekerja Ladang.
+        /// </summary>
+        public static string titleReportKekuatanPekerjaLadang {
+            get {
+                return ResourceManager.GetString("titleReportKekuatanPekerjaLadang", resourceCulture);
             }
         }
         

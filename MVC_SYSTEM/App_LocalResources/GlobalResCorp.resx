@@ -3885,4 +3885,7 @@
   <data name="lblTKTSediaAda" xml:space="preserve">
     <value>TKT SEDIA ADA</value>
   </data>
+  <data name="titleReportKekuatanPekerjaLadang" xml:space="preserve">
+    <value>Laporan Kekuatan Pekerja Ladang</value>
+  </data>
 </root>
