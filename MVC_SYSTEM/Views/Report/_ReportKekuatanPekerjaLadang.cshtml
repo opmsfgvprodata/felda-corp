@@ -1,0 +1,168 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@using MVC_SYSTEM.ModelsDapper
+@model IEnumerable<sp_RptKekuatanPkjLdg_Result>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+
+    string uniquefilename = "LaporanKekuatanPekerjaLadang_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    decimal? GrandTotalKeperluanSebenar = 0;
+    decimal? GrandTotalPkjTempatan = 0;
+    decimal? GrandTotalPkjAsing = 0;
+    decimal? GrandTotalPkjKontraktor = 0;
+    decimal? GrandTotalJumPkjSediaAda = 0;
+    decimal? GrandTotalBakiKeperluan = 0;
+    decimal? GrandTotalLuasKeseluruhan = 0;
+    int? NisbahKeperluanSebenar = 0;
+    int? NisbahPkjSediaAda = 0;
+
+}
+
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea" class="modal-body">
+        @foreach (var costcentre in Model.Select(x => x.fld_CompCode).Distinct())
+        {
+            var nosyarikat = GetConfig.GetSyarikatNo(costcentre);
+            var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+            <p align="center" style="font-size: 11px" :><b>@namapenuhsyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @nosyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleReportKekuatanPekerjaLadang.ToUpper()</b></p>
+            <br />
+            <table class="table table-hover" style="font-size: 11px;" border="0">
+                <thead>
+                    <tr>
+                        <th rowspan="3" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KEPERLUAN SEBENAR</th>
+                        <th colspan="3" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PEKERJA SEDIA ADA (ORANG)</th>
+                        <th rowspan="4" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BAKI KEPERLUAN</th>
+                    </tr>
+                    <tr>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PEKERJA TEMPATAN (OPERASI)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PEKERJA ASING (SYARIKAT)</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PEKERJA KONTRAKTOR</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var KekuatanPkjLdg in Model)
+                    {
+
+                        GrandTotalKeperluanSebenar = GrandTotalKeperluanSebenar + KekuatanPkjLdg.fld_KeperluanSebenar;
+                        GrandTotalPkjTempatan = GrandTotalPkjTempatan + KekuatanPkjLdg.fld_PekerjaTempatan;
+                        GrandTotalPkjAsing = GrandTotalPkjAsing + KekuatanPkjLdg.fld_PekerjaAsing;
+                        GrandTotalPkjKontraktor = GrandTotalPkjKontraktor + KekuatanPkjLdg.fld_PekerjaKontraktor;
+                        GrandTotalJumPkjSediaAda = GrandTotalPkjTempatan + GrandTotalPkjAsing + GrandTotalPkjKontraktor;
+                        GrandTotalBakiKeperluan = GrandTotalKeperluanSebenar - GrandTotalJumPkjSediaAda;
+                        GrandTotalLuasKeseluruhan = GrandTotalLuasKeseluruhan + KekuatanPkjLdg.fld_LuasKeseluruhan;
+                        NisbahKeperluanSebenar = Convert.ToInt32(GrandTotalLuasKeseluruhan / GrandTotalKeperluanSebenar);
+                        NisbahPkjSediaAda = Convert.ToInt32(GrandTotalLuasKeseluruhan / GrandTotalJumPkjSediaAda);
+
+                    }
+
+                    <tr>
+                        <td rowspan="2" align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalKeperluanSebenar
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalPkjTempatan
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalPkjAsing
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalPkjKontraktor
+                        </td>
+                        <td rowspan="3" align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalBakiKeperluan
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            @GrandTotalJumPkjSediaAda
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            1:@NisbahKeperluanSebenar
+                        </td>
+                        <td colspan="3" align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            1:@NisbahPkjSediaAda
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+}
+
+
+<div id="scrollArea2" class="modal-body" style="text-align: center">
+    <p style="color: red">@ViewBag.Message</p>
+
+</div>
+
+
+<div style="text-align:right; margin-top:10px">
+    <a class="btn btn-default btn-sm" href="" id="printpage">
+        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+    </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+</div>
+
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+
+
+
