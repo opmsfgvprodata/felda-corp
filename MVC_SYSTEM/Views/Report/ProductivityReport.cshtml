@@ -1,4 +1,4 @@
-﻿@using MVC_SYSTEM.Class;
+﻿﻿@using MVC_SYSTEM.Class;
 @{
     ViewBag.Title = "Productivity Report";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
@@ -27,33 +27,33 @@
         @using (Ajax.BeginForm("_ProductivityRptSearch", "Report", null, options, new { @id = "productivityRptSearch" }))
         {
             @Html.AntiForgeryToken()
-        <div class="row">
-            <div class="col-sm-2">
-                <label for="NamaSyarikat">@GlobalResApproval.lblSyarikatName</label>
-                @Html.DropDownList("SyarikatIDList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                <label for="NamaSyarikat">@GlobalResApproval.lblWilayahName</label>
-                @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
-                <label for="NamaSyarikat">@GlobalResApproval.lblLadangName</label>
-                @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-1">
-                @Html.Label("Bulan")
-                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-1">
-                @Html.Label("Tahun")
-                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="NamaSyarikat">@GlobalResApproval.lblSyarikatName</label>
+                    @Html.DropDownList("SyarikatIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label for="NamaSyarikat">@GlobalResApproval.lblWilayahName</label>
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label for="NamaSyarikat">@GlobalResApproval.lblLadangName</label>
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1">
+                    @Html.Label("Bulan")
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1">
+                    @Html.Label("Tahun")
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
 
-            <div class="col-sm-2" style="padding-top: 24px">
-                <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
-            </div>
+                <div class="col-sm-2" style="padding-top: 24px">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
+                </div>
 
-        </div>
+            </div>
         }
     </div>
 
@@ -192,8 +192,5 @@
         WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
         $.ajax(WilayahIDList);
     });
-  
+
 </script>
-
-
-

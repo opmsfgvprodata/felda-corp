@@ -11,13 +11,13 @@
     int? year = ViewBag.YearList;
     string worker = ViewBag.WorkerList;
     int bil = 0;
-    string uniquefilename = "ProductivityReport";
+    string uniquefilename = "LaporanProduktiviti";
 }
 
 @if (Model != null && Model.Count() != 0)
 {
     var namasyarikat = GetConfig.GetSyarikatName(ViewBag.comcos);
-    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.comcos); 
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.comcos);
     var NoSyarikat = GetConfig.GetSyarikatNo(ViewBag.comcos);
 
     <div id="scrollArea" class="modal-body">
@@ -94,17 +94,17 @@
     </div>
     if (ViewBag.Print == null)
     {
-<div style="text-align:right; margin-top:10px">
-    <a class="btn btn-default btn-sm" href="#" id="printpage">
-        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
-    </a>
-    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
-        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
-    </a>
-    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
-        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-    </a>
-</div>
+        <div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>
     }
 }
 

@@ -7,6 +7,7 @@ namespace MVC_SYSTEM.ModelsDapper
 {
     public class sp_RptProduktiviti_Corp_Result
     {
+
         public int fldID { get; set; }
         public string fld_Nopkj { get; set; }
         public string fld_Nama { get; set; }

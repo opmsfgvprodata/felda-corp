@@ -29,7 +29,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using Dapper;
 using System.Data;
-
 namespace MVC_SYSTEM.Controllers
 {
 
@@ -56,7 +55,6 @@ namespace MVC_SYSTEM.Controllers
         private MVC_SYSTEM_ModelsCorporate dbC = new MVC_SYSTEM_ModelsCorporate();
         private MVC_SYSTEM_SP2_Models dbSP = new MVC_SYSTEM_SP2_Models();
         private MVC_SYSTEM_ModelsEstate dbE = new MVC_SYSTEM_ModelsEstate();
-
         // GET: Report
         //role id authorization ( adding super power user)  - modified by farahin - 17/06/2022
         [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Resource,Viewer")]
@@ -10392,7 +10390,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Message = message;
             return View(result);
         }
-
+        
         public ActionResult ProductivityReport()
         {
             int[] wlyhid = new int[] { };
@@ -10401,14 +10399,11 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = getidentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
             int drpyear = 0;
             int drprangeyear = 0;
             int month = timezone.gettimezone().Month;
-
             drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
             drprangeyear = timezone.gettimezone().Year;
-
             var yearlist = new List<SelectListItem>();
             for (var i = drpyear; i <= drprangeyear; i++)
             {
@@ -10423,12 +10418,10 @@ namespace MVC_SYSTEM.Controllers
             }
 
             ViewBag.YearList = yearlist;
-
             ViewBag.MonthList = new SelectList(
                 db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fld_NegaraID == NegaraID &&
                                                    x.fld_SyarikatID == SyarikatID && x.fldDeleted == false),
                 "fldOptConfValue", "fldOptConfDesc", month);
-
             var statusList = new List<SelectListItem>();
             statusList = new SelectList(
                 db.tblOptionConfigsWeb
@@ -10438,10 +10431,7 @@ namespace MVC_SYSTEM.Controllers
                     .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                 "Value", "Text").ToList();
             statusList.Insert(0, (new SelectListItem { Text = "Semua", Value = "" }));
-
-
             ViewBag.StatusList = statusList;
-
             var unitList = new List<SelectListItem>();
             unitList = new SelectList(
                 db.tblOptionConfigsWeb
@@ -10451,18 +10441,13 @@ namespace MVC_SYSTEM.Controllers
                     .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                 "Value", "Text").ToList();
             unitList.Insert(0, (new SelectListItem { Text = "Semua", Value = "" }));
-
             var allPeringkatList = new List<SelectListItem>();
-
             int year = timezone.gettimezone().Year;
-
             ViewBag.ApplicationSupport = "class = active";
-
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             List<SelectListItem> WilayahIDList = new List<SelectListItem>();
             List<SelectListItem> LadangIDList = new List<SelectListItem>();
             List<SelectListItem> SyarikatIDList = new List<SelectListItem>();
-
 
             if (WilayahID == 0 && LadangID == 0)
             {
@@ -10474,39 +10459,33 @@ namespace MVC_SYSTEM.Controllers
                 WilayahIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
                 LadangIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
                 SyarikatIDList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
-
             }
             else if (WilayahID != 0 && LadangID == 0)
             {
                 var syarikatInfo = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(x => x.fldOptConfDesc).FirstOrDefault();
                 int SyarikatCode = Convert.ToInt16(syarikatInfo.fld_SyarikatID);
                 SyarikatIDList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
-
                 wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
                 WilayahIDList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)).OrderBy(x => x.fld_WlyhName), "fld_ID", "fld_WlyhName").ToList();
-
                 LadangIDList = new SelectList(db2.tbl_Ladang.Where(x => x.fld_Deleted == false && x.fld_WlyhID == WilayahID && x.fld_CostCentre == syarikatInfo.fldOptConfValue).OrderBy(o => o.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
                 LadangIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-
             }
             else if (WilayahID != 0 && LadangID != 0)
             {
                 var ladangInfo = db.tbl_Ladang.Where(x => x.fld_ID == LadangID && x.fld_NegaraID == NegaraID).FirstOrDefault();
                 var listladang = new SelectList(db.tbl_Ladang.Where(x => x.fld_ID == LadangID).OrderBy(x => x.fld_LdgName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text", LadangID).ToList();
-
                 var listwilayah = db.tbl_Wilayah.Where(x => x.fld_Deleted == false && x.fld_ID == ladangInfo.fld_ID).FirstOrDefault();
                 WilayahIDList = new SelectList(db.tbl_Wilayah.Where(x => x.fld_Deleted == false && x.fld_ID == ladangInfo.fld_ID).OrderBy(x => x.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text", WilayahID).ToList();
                 var syarikatInfo = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fldOptConfValue == ladangInfo.fld_CostCentre).OrderBy(x => x.fldOptConfDesc).FirstOrDefault();
                 int SyarikatCode = Convert.ToInt16(syarikatInfo.fld_SyarikatID);
                 SyarikatIDList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fldOptConfValue == ladangInfo.fld_CostCentre).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text", ladangInfo.fld_CostCentre).ToList();
             }
-
             ViewBag.SyarikatIDList = SyarikatIDList;
             ViewBag.WilayahIDList = WilayahIDList;
             ViewBag.LadangIDList = LadangIDList;
-
             return View();
         }
+
 
         public ViewResult _ProductivityRptSearch(int? MonthList, int? YearList, string print, string SyarikatIDList, string WilayahIDList, string LadangIDList)
         {
@@ -10517,15 +10496,9 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             DateTime getdate = timezone.gettimezone().AddMonths(-1);
-            //DateTime getdate = timezone.gettimezone(); //temporary to display currenth month
-
             ViewBag.ApplicationSupport = "class = active";
-
-
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
             ViewBag.ApplicationSupport = "class = active";
-
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             List<SelectListItem> SyarikatIDList2 = new List<SelectListItem>(); //Added by Shazana 1/8/2023
             List<SelectListItem> WilayahIDList2 = new List<SelectListItem>();
@@ -10533,8 +10506,8 @@ namespace MVC_SYSTEM.Controllers
             var SyarikatIDCode = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).FirstOrDefault();
 
             if (SyarikatIDList != null)
-            { 
-            SyarikatIDCode = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fldOptConfValue == SyarikatIDList.ToString()).FirstOrDefault();
+            {
+                SyarikatIDCode = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fldOptConfValue == SyarikatIDList.ToString()).FirstOrDefault();
             }
             var listsyarikat = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(x => x.fldOptConfDesc).ToList();
 
@@ -10572,9 +10545,9 @@ namespace MVC_SYSTEM.Controllers
                 SyarikatIDList2 = new SelectList(listsyarikat.OrderBy(x => x.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue.ToString(), Text = s.fldOptConfDesc }), "Value", "Text", SyarikatIDList).ToList();
             }
 
-            ViewBag.comcos = SyarikatIDList; 
-            ViewBag.SyarikatCc = SyarikatIDList; 
-            ViewBag.SyarikatIDList = SyarikatIDList2; 
+            ViewBag.comcos = SyarikatIDList;
+            ViewBag.SyarikatCc = SyarikatIDList;
+            ViewBag.SyarikatIDList = SyarikatIDList2;
             ViewBag.WilayahIDList = WilayahIDList2;
             ViewBag.LadangIDList = LadangIDList2;
             ViewBag.NegaraID = NegaraID;
@@ -10588,7 +10561,7 @@ namespace MVC_SYSTEM.Controllers
 
             string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
             var con = new SqlConnection(constr);
-            int? getSyarikatId = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID & x.fldOptConfValue== SyarikatIDList).Select(x=>x.fld_SyarikatID).FirstOrDefault();
+            int? getSyarikatId = db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID & x.fldOptConfValue == SyarikatIDList).Select(x => x.fld_SyarikatID).FirstOrDefault();
             if (MonthList == null && YearList == null)
             {
                 ViewBag.Message = "Sila Pilih Bulan, Tahun Dan Pekerja";
@@ -10610,17 +10583,14 @@ namespace MVC_SYSTEM.Controllers
                 Dapper.SqlMapper.Settings.CommandTimeout = 3600;
                 RptProduktiviti_Corp_Result = SqlMapper.Query<ModelsDapper.sp_RptProduktiviti_Corp_Result>(con, "sp_RptProduktiviti_Corp", parameters, commandType: CommandType.StoredProcedure).ToList();
                 con.Close();
-
                 if (RptProduktiviti_Corp_Result.Count == 0)
                 {
                     ViewBag.Message = "Tiada Rekod";
                 }
-
                 return View(RptProduktiviti_Corp_Result);
             }
             return View(RptProduktiviti_Corp_Result);
         }
-
         public ActionResult _ProductivityRptAdvanceSearch()
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -10635,18 +10605,11 @@ namespace MVC_SYSTEM.Controllers
                     .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                 "Value", "Text").ToList();
             statusList.Insert(0, (new SelectListItem { Text = "Semua", Value = "" }));
-
             ViewBag.StatusList = statusList;
-
-
             int[] wlyhid = new int[] { };
-          
             int year = timezone.gettimezone().Year;
-
             ViewBag.ApplicationSupport = "class = active";
-
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
             return View();
         }
         public JsonResult GetLadang1(int WilayahID, string SyarikatID)
@@ -10696,12 +10659,10 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (WilayahID == 0)
                 {
-                    //dapatkan ladang filter by costcenter
                     var listladang2 = db.tbl_Ladang.Where(x => x.fld_CostCentre == SyarikatID && x.fld_SyarikatID == SyarikatCode && x.fld_Deleted == false).Select(x => x.fld_WlyhID).ToList();
                     var listwilayah1 = db.tbl_Wilayah.Where(x => x.fld_Deleted == false && listladang2.Contains(x.fld_ID)).ToList();
                     wilayahlist = new SelectList(listwilayah1.OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
                     wilayahlist.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-                    //  ladanglist = new SelectList(listwilayah1.OrderBy(o => o.fld_WlyhName).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_WlyhName }), "Value", "Text").ToList();
                     ladanglist.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
 
                 }
@@ -10714,6 +10675,5 @@ namespace MVC_SYSTEM.Controllers
 
             return Json(wilayahlist);
         }
-
     }
 }
