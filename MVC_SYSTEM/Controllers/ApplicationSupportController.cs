@@ -1972,32 +1972,7 @@ namespace MVC_SYSTEM.Controllers
 
             List<SelectListItem> WilayahIDList = new List<SelectListItem>();
             List<SelectListItem> LadangIDList = new List<SelectListItem>();
-            List<SelectListItem> SyarikatIDList = new List<SelectListItem>(); //Added by Shazana 1/8/2023
-
-            //Commented by Shazana 1/8/2023
-            //if (WilayahID == 0 && LadangID == 0)
-            //{
-            //    wlyhid = getwilyah.GetWilayahID(SyarikatID);
-            //    WilayahIDList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
-            //    WilayahIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-            //    LadangIDList = new SelectList(db2.tbl_Ladang.Where(x => x.fld_Deleted == false).OrderBy(o => o.fld_LdgCode).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
-            //    LadangIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-            //}
-            //else if (WilayahID != 0 && LadangID == 0)
-            //{
-            //    wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
-            //    WilayahIDList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
-            //    //Modified by Shazana 30/3/2023
-            //    LadangIDList = new SelectList(db2.tbl_Ladang.Where(x => x.fld_WlyhID == WilayahID && x.fld_Deleted == false).OrderBy(o => o.fld_LdgCode).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
-            //    LadangIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
-
-            //}
-            //else if (WilayahID != 0 && LadangID != 0)
-            //{
-            //    wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
-            //    WilayahIDList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
-            //    LadangIDList = new SelectList(db2.tbl_Ladang.Where(x => x.fld_ID == LadangID && x.fld_Deleted == false).OrderBy(o => o.fld_LdgCode).Select(s => new SelectListItem { Value = s.fld_ID.ToString(), Text = s.fld_LdgCode + " - " + s.fld_LdgName }), "Value", "Text").ToList();
-            //}
+            List<SelectListItem> SyarikatIDList = new List<SelectListItem>();
 
             //Added by Shazana 1/8/2023
             //Modified by Shazana 15/8/2023
@@ -2038,8 +2013,8 @@ namespace MVC_SYSTEM.Controllers
                 SyarikatIDList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fldOptConfValue == ladangInfo.fld_CostCentre).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text", ladangInfo.fld_CostCentre).ToList();
             }
 
-
-            ViewBag.SyarikatIDList = SyarikatIDList; //Added by Shazana 1/8/2023
+            SyarikatIDList.Insert(0, (new SelectListItem { Text = GlobalResReport.sltAll, Value = "0" }));
+            ViewBag.SyarikatIDList = SyarikatIDList;
 
             ViewBag.WilayahIDList = WilayahIDList;
             ViewBag.LadangIDList = LadangIDList;

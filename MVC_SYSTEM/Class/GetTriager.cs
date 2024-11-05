@@ -219,5 +219,16 @@ namespace MVC_SYSTEM.Class
 
             return result;
         }
+        public static string GetProductofTwoNumber(decimal? no1, decimal? no2)
+        {
+            decimal? result = 0;
+
+            if (no1 != null || no2 != null)
+            {
+                result = no1 * no2;
+            }
+
+            return result.ToString();
+        }
     }
 }
