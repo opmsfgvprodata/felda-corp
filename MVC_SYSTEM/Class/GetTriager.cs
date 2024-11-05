@@ -227,7 +227,6 @@ namespace MVC_SYSTEM.Class
             {
                 result = no1 * no2;
             }
-
             return result.ToString();
         }
     }
