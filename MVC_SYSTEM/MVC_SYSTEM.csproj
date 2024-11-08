@@ -989,7 +989,7 @@
     <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
     <Compile Include="ModelsDapper\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
-    <Compile Include="ModelsDapper\sp_MapaReport_Result.cs" />
+    <Compile Include="ModelsDapper\sp_MapaReport_FPM_Result.cs" />
     <Compile Include="ModelsDapper\vw_MapaCustomModelcs.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />

@@ -9898,7 +9898,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.namasyarikat = namasyarikat.ToUpper();
             ViewBag.nosyarikat = nosyarikat.ToUpper();
 
-            List<ModelsDapper.sp_MapaReport_Result> MapaData = new List<ModelsDapper.sp_MapaReport_Result>();
+            List<ModelsDapper.sp_MapaReport_FPM_Result> MapaData = new List<ModelsDapper.sp_MapaReport_FPM_Result>();
             List<ModelsDapper.vw_MapaCustomModelcs> PaySheetPekerjaList = new List<ModelsDapper.vw_MapaCustomModelcs>();
 
             String namabulan = db.tblOptionConfigsWeb.Where(x => x.fldOptConfValue == MonthList.ToString()).Select(x => x.fldOptConfFlag2).FirstOrDefault();
@@ -9938,7 +9938,7 @@ namespace MVC_SYSTEM.Controllers
 
                             con.Open();
                             Dapper.SqlMapper.Settings.CommandTimeout = 3600;
-                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_FPM_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
                             con.Close();
 
                         }
@@ -9962,7 +9962,7 @@ namespace MVC_SYSTEM.Controllers
 
                             con.Open();
                             Dapper.SqlMapper.Settings.CommandTimeout = 3600;
-                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_FPM_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
                             con.Close();
 
                             ViewBag.Tajuk = db.tbl_Wilayah
@@ -9985,7 +9985,7 @@ namespace MVC_SYSTEM.Controllers
                             parameters.Add("CompCode", CompCodeList);
 
                             con.Open();
-                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+                            MapaData = SqlMapper.Query<ModelsDapper.sp_MapaReport_FPM_Result>(con, "sp_MapaReport", parameters, commandType: CommandType.StoredProcedure).ToList();
                             con.Close();
 
                             ViewBag.Tajuk = db.tbl_Ladang

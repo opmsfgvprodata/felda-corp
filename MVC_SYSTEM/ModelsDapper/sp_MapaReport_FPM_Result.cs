@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MVC_SYSTEM.ModelsDapper
 {
-    public class sp_MapaReport_Result
+    public class sp_MapaReport_FPM_Result
     {
         public System.Guid fld_Id { get; set; }
         public string fld_LdgCode { get; set; }
