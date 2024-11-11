@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
     GetTriager GetTriager = new GetTriager();
+    GetConfig GetConfig = new GetConfig();
     int year = ChangeTimeZone.gettimezone().Year;
     int month = ChangeTimeZone.gettimezone().Month;
     int day = ChangeTimeZone.gettimezone().Day;
@@ -43,6 +44,9 @@
     int footercolspan3 = 0;
     int bill = 1;
     string selectionheader = "";
+
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 
     if (ViewBag.Status1 == 2)
     {
@@ -135,9 +139,9 @@
                         <thead>
                             <tr>
                                 <th colspan="@headercolspan1" style="text-align:center;vertical-align:middle;">
-                                    @ViewBag.NamaSyarikat
+                                    @namapenuhsyarikat
                                     <br />
-                                    (@GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                                    (@GlobalResLocalWorkerInfo.hdrCmpnyNo : @namasyarikat)
                                     <br />
                                     @GlobalResLocalWorkerInfo.hdrReportTitle (@status)
                                     <br />

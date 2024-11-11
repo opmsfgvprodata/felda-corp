@@ -16,6 +16,8 @@
     int bil = 0;
     int bilLdg = 0;
     string uniquefilename = "DataEntryReport_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -26,6 +28,12 @@
             bil = 0;
             <table class="table table-hover table-sm" style="font-size: 11px;" border="0" cellspacing="10">
                 <thead>
+                    <th colspan="28" style="text-align:center;vertical-align:middle;">
+                         @namapenuhsyarikat
+                         <br />
+                         @GlobalResLocalWorkerInfo.hdrCmpnyNo : @namasyarikat
+                         <br />
+                    </th>
                     <tr>
                         <th colspan="@(6 + @ViewBag.Days.Count)" rowspan="1" style="border-bottom: 1px solid black;" border="1">
                         </th>

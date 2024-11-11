@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Payment Mode Report";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
-
     AjaxOptions options = new AjaxOptions
     {
         HttpMethod = "Get",
@@ -38,7 +37,7 @@
                 </div>
                 <div class="col-sm-2">
                     @Html.Label("Syarikat")
-                    @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-sm-2">
                     @Html.Label(GlobalResCorp.lblRegion)
