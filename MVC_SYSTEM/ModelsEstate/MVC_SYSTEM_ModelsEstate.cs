@@ -55,6 +55,14 @@ namespace MVC_SYSTEM.ModelsEstate
         public virtual DbSet<tbl_Kerja> tbl_Kerja { get; set; }
         public virtual DbSet<tbl_Kerjahdr> tbl_Kerjahdr { get; set; }
 
+        public virtual DbSet<tbl_PktHargaKesukaran> tbl_PktHargaKesukaran { get; set; }
+        public virtual DbSet<tbl_KumpulanKerja> tbl_KumpulanKerja { get; set; }
+        public virtual DbSet<tbl_GajiBulanan> tbl_GajiBulanan { get; set; }
+        public virtual DbSet<tbl_KerjaBonus> tbl_KerjaBonus { get; set; }
+        public virtual DbSet<tbl_KerjahdrCuti> tbl_KerjahdrCuti { get; set; }
+        public virtual DbSet<tbl_KerjaKesukaran> tbl_KerjaKesukaran { get; set; }
+        public virtual DbSet<tbl_KerjaOT> tbl_KerjaOT { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             

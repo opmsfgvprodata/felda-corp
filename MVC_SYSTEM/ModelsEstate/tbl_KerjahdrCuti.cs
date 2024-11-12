@@ -1,5 +1,3 @@
-using MVC_SYSTEM.App_LocalResources;
-
 namespace MVC_SYSTEM.ModelsEstate
 {
     using System;
@@ -8,12 +6,10 @@ namespace MVC_SYSTEM.ModelsEstate
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("tbl_Kerjahdr")]
-    public partial class tbl_Kerjahdr
+    public partial class tbl_KerjahdrCuti
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid fld_UniqueID { get; set; }
+        public Guid fld_ID { get; set; }
 
         [StringLength(20)]
         public string fld_Nopkj { get; set; }
@@ -24,13 +20,13 @@ namespace MVC_SYSTEM.ModelsEstate
         [Column(TypeName = "date")]
         public DateTime? fld_Tarikh { get; set; }
 
-        public int? fld_Hujan { get; set; }
+        [Column(TypeName = "numeric")]
+        public decimal? fld_Kadar { get; set; }
 
-        [StringLength(3)]
-        public string fld_Kdhdct { get; set; }
+        [Column(TypeName = "numeric")]
+        public decimal? fld_Jumlah { get; set; }
 
-        [StringLength(1)]
-        public string fld_DataSource { get; set; }
+        public Guid? fld_KerjahdrID { get; set; }
 
         public int? fld_NegaraID { get; set; }
 
@@ -43,11 +39,5 @@ namespace MVC_SYSTEM.ModelsEstate
         public int? fld_CreatedBy { get; set; }
 
         public DateTime? fld_CreatedDT { get; set; }
-
-        [StringLength(20)]
-        public string fld_SAPChargeCode { get; set; }
-
-        [StringLength(10)]
-        public string fld_SAPGLCode { get; set; }
     }
 }
