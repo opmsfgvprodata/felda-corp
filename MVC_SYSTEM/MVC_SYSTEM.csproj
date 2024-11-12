@@ -17,7 +17,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVC_SYSTEM</RootNamespace>
     <AssemblyName>MVC_SYSTEM</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -29,6 +29,7 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +55,9 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.35\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -125,6 +129,7 @@
     <Reference Include="System" />
     <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO" />
@@ -151,8 +156,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -193,9 +197,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -213,6 +215,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -974,14 +977,23 @@
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
     <Compile Include="ModelsCustom\AuthUserLogin.cs" />
+    <Compile Include="ModelsCustom\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
+    <Compile Include="ModelsCustom\CustMod_PaidLeaveGenerate.cs" />
+    <Compile Include="ModelsCustom\CustMod_DataEntryReport.cs" />
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
+    <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
+    <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
+    <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
+    <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerjahdr.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerja.cs" />
     <Compile Include="ModelsEstate\tbl_CutiPeruntukan.cs" />
     <Compile Include="ModelsEstate\tbl_Insentif.cs" />
     <Compile Include="ModelsEstate\tbl_Kepuasan.cs" />
@@ -996,6 +1008,7 @@
     <Compile Include="ModelsEstate\tbl_TutupUrusNiaga.cs" />
     <Compile Include="ModelsEstate\vw_KumpulanKerja.cs" />
     <Compile Include="ModelsEstate\vw_MaklumatInsentif.cs" />
+    <Compile Include="ModelsEstate\vw_PaySheetPekerja.cs" />
     <Compile Include="ModelsEstate\vw_PermitPassportDetail.cs" />
     <Compile Include="ModelsEstate\vw_RptSctran.cs" />
     <Compile Include="ModelsSAP\SAPCC.cs" />
@@ -1076,10 +1089,16 @@
     <Compile Include="ModelsSP\sp_RptGajiMinima_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptKedPkjMenWlyh_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptMasterDataPkj_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_RptMasterJumPkj_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptPermohonanIDPenggunaBaruReport_Result.cs">
@@ -3211,6 +3230,7 @@
     <Content Include="Views\Maintenance\OilPriceRangeMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveAllocationMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveCategoryMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\PaidLeaveGenerateMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PassportExpiryListMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PayrateDelete.cshtml" />
     <Content Include="Views\Maintenance\PayrateDetail.cshtml" />
@@ -3713,8 +3733,24 @@
     <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
     <Content Include="Views\Report\_PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
+    <Content Include="Views\Report\DataEntryReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\DataEntry\BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorEdit.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorDelete.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
+    <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\KedudukanPkjMengikutWlyhReport.cshtml" />
+    <Content Include="Views\Report\MapaReport.cshtml" />
+    <Content Include="Views\Report\_MapaReport.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaKontraktor.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaKontraktor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3801,6 +3837,7 @@
     <EmbeddedResource Include="App_LocalResources\GlobalResCorp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalResCorp.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="App_LocalResources\GlobalResDataEntry.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

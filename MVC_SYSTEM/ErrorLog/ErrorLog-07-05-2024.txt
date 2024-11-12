@@ -1,0 +1,8 @@
+Time: 07/05/2024 11:20:13 PG
+-----------------------------------------------------------
+Message: Object reference not set to an instance of an object.
+StackTrace:    at MVC_SYSTEM.Controllers.LoginController.Index(tblUser Login, String returnUrl) in D:\OPMS SYSTEM\GITHUB\OPMS FELDA-FPM\felda-corp\MVC_SYSTEM\Controllers\LoginController.cs:line 68
+Source: MVC_SYSTEM
+TargetSite: System.Web.Mvc.ActionResult Index(MVC_SYSTEM.LoginModels.tblUser, System.String)
+-----------------------------------------------------------
+

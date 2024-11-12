@@ -1,0 +1,211 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCustom.PaidLeaveGenerate_ModalCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblGenerateLeave</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblPaidLeaveGenerateInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblYear:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_Year, new SelectList(ViewBag.YearList, "Value", "Text", Model.fld_Year), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Syarikat:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.SyarikatList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-9">
+                                @Html.ListBoxFor(model => model.fld_LadangID, new MultiSelectList(ViewBag.LadangList, "Value", "Text"), new { @class = "form-control col-sm-2", multiple = "multiple", size = 10, disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_LadangID, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">@GlobalResCorp.lblEstatePublicHolidayMsg1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblLeave:</label>
+                            <div class="col-sm-9">
+                                @Html.ListBoxFor(model => model.fld_CutiKategoriID, new MultiSelectList(ViewBag.CutiList, "Value", "Text"), new { @class = "form-control col-sm-2", multiple = "multiple", size = 10, @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_CutiKategoriID, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">@GlobalResCorp.lblEstatePublicHolidayMsg1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" onclick="return DisplayProgressMessage(this);" value=@GlobalResCorp.btnGenerate>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    function resetInput(input) {
+        $(input).empty();
+        if (input != "#fld_LadangID" && input != "#fld_CutiKategoriID") {
+            $(input).append("<option value=''>" + '@GlobalResCorp.lblChoose' + "</option>");
+        }
+        $(input).prop("disabled", true);
+    }
+
+    $("#fld_SyarikatID").change(function () {
+        if ($("#fld_SyarikatID").val() === "") {
+            resetInput("#fld_WilayahID");
+            resetInput("#fld_LadangID");
+            resetInput("#fld_CutiKategoriID");
+        } else {
+            var SyarikatList = {};
+            SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+            SyarikatList.type = "POST";
+            SyarikatList.data = JSON.stringify({ SyarikatID: $("#fld_SyarikatID").val() });
+            SyarikatList.datatype = "json";
+            SyarikatList.contentType = "application/json";
+            SyarikatList.success = function (wilayahList) {
+                $("#fld_WilayahID").empty();
+
+                for (var i = 0; i < wilayahList.length; i++) {
+                    if (i == 0) {
+                        $("#fld_WilayahID").append("<option value=''>" + '@GlobalResCorp.lblChoose' + "</option>");
+                        $("#fld_WilayahID").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
+                    } else {
+                        $("#fld_WilayahID").append("<option value=" + wilayahList[i].Value + ">" + wilayahList[i].Text + "</option>");
+                    }
+                }
+                $("#fld_WilayahID").prop("disabled", false);
+                resetInput("#fld_LadangID");
+                resetInput("#fld_CutiKategoriID");
+            };
+            SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(SyarikatList);
+        }
+    });
+
+    $("#fld_WilayahID").change(function () {
+        if ($("#fld_WilayahID").val() === "") {
+            resetInput("#fld_LadangID");
+            resetInput("#fld_CutiKategoriID");
+        } else {
+            if ($("#fld_WilayahID").val() == 0) {
+                resetInput("#fld_LadangID");
+                resetInput("#fld_CutiKategoriID");
+
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetCutiKategori", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({
+                    pSyarikatID: $("#fld_SyarikatID").val(),
+                    pWilayahID: null,
+                    pLadangID: null,
+                });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function (cutiList) {
+                    $("#fld_CutiKategoriID").empty();
+
+                    for (var i = 0; i < cutiList.length; i++) {
+                        $("#fld_CutiKategoriID").append("<option value=" + cutiList[i].Value + ">" + cutiList[i].Text + "</option>");
+                    }
+                    $("#fld_CutiKategoriID").prop("disabled", false);
+                };
+
+                WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            } else {
+                resetInput("#fld_LadangID");
+                resetInput("#fld_CutiKategoriID");
+
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({
+                    SyarikatList: $("#fld_SyarikatID").val(),
+                    WilayahID: $("#fld_WilayahID").val()
+                });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function (ladangList) {
+                    $("#fld_LadangID").empty();
+
+                    for (var i = 0; i < ladangList.length; i++) {
+                        $("#fld_LadangID").append("<option value=" + ladangList[i].Value + ">" + ladangList[i].Text + "</option>");
+                    }
+                    $("#fld_LadangID").prop("disabled", false);
+                };
+
+                WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        }
+    });
+
+    $("#fld_LadangID").change(function () {
+        if ($("#fld_LadangID").val().length == 0) {
+            resetInput("#fld_CutiKategoriID");
+        } else {
+            var LadangList = {};
+            LadangList.url = "@Url.Action("GetCutiKategori", "Maintenance")";
+            LadangList.type = "POST";
+            LadangList.data = JSON.stringify({
+                pSyarikatID: $("#fld_SyarikatID").val(),
+                pWilayahID: $("#fld_WilayahID").val(),
+                pLadangID: null,
+            });
+            LadangList.datatype = "json";
+            LadangList.contentType = "application/json";
+            LadangList.success = function (cutiList) {
+                $("#fld_CutiKategoriID").empty();
+
+                for (var i = 0; i < cutiList.length; i++) {
+                    $("#fld_CutiKategoriID").append("<option value=" + cutiList[i].Value + ">" + cutiList[i].Text + "</option>");
+                }
+                $("#fld_CutiKategoriID").prop("disabled", false);
+            };
+
+            LadangList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(LadangList);
+        }
+    });
+</script>

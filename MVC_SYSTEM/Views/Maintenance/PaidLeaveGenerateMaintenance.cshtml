@@ -1,0 +1,216 @@
+﻿@*@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsEstate.tbl_CutiPeruntukan>*@
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = GlobalResCorp.lblTitlePaidLeaveGenerateMaintenance;
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "paidLeaveGenerateMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Asset/select2/css/select2.min.css" rel="stylesheet" />
+<script src="~/Asset/select2/js/select2.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_PaidLeaveGenerateInfoMaintenance", "Maintenance", null, options, new { @id = "paidLeaveGenerateSearchDetails" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Syarikat</label>
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblRegion</label>
+                    @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                </div>
+                <div class="col-sm-3">
+                    <label>@GlobalResCorp.lblEstate</label>
+                    @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                </div>
+                <div class="col-sm-3">
+                    <label>@GlobalResCorp.hdrName</label>
+                    <div class="col-12">
+                        <select style="width: 100%; height: 34px;" class="js-example-placeholder-single js-states form-control w-auto" id="PkjList" name="PkjList">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label>@GlobalResCorp.lblYear</label>
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top: 24px;">
+                    <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value=@GlobalResCorp.btnView />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top:7px;">
+        <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblPaidLeaveGenerateInfo</div>
+                <div class="panel-body">
+                    <div id="paidLeaveGenerateMaintenanceDetails">
+                        @Html.Action("_PaidLeaveGenerateInfoMaintenance")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer col-md-12">
+            <a data-modal1='' href=@Url.Action("_PaidLeaveGenerateMaintenanceCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnGenerate</a>
+            <a href=@Url.Action("Index", "Maintenance") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+        </div>
+    </div>
+</section>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        function resetInput(input) {
+            $(input).empty();
+            $(input).append("<option value=''>" + '@GlobalResCorp.lblChoose' + "</option>");
+            $(input).prop("disabled", true);
+        }
+
+        $("#SyarikatList").change(function () {
+            if ($("#SyarikatList").val() === "") {
+                resetInput("#WilayahList");
+                resetInput("#LadangList");
+                resetInput("#PkjList");
+            } else {
+                var SyarikatList = {};
+                var disableoption = "";
+                SyarikatList.url = "@Url.Action("GetWilayah", "Maintenance")";
+                SyarikatList.type = "POST";
+                SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+                SyarikatList.datatype = "json";
+                SyarikatList.contentType = "application/json";
+                SyarikatList.success = function (wilayahlist) {
+                    $("#WilayahList").empty();
+
+                     for (var i = 0; i < wilayahlist.length; i++) {
+                         if ($("#SyarikatList").val() == 0) {
+                             disableoption = "disabled";
+                         }
+                         if (i == 0) {
+                             $("#WilayahList").append("<option value=>" + '@GlobalResCorp.lblChoose' + "</option>");
+                         }
+                         else {
+                             $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                         }
+                     }
+
+                     $("#WilayahList").prop("disabled", false);
+                     resetInput("#LadangList");
+                     resetInput("#PkjList");
+                };
+                SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(SyarikatList);
+            }
+        });
+
+        $("#WilayahList").change(function () {
+            if ($("#WilayahList").val() === "") {
+                resetInput("#LadangList");
+                resetInput("#PkjList");
+            } else {
+                var WilayahList = {};
+                WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")";
+                WilayahList.type = "POST";
+                WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatList: $("#SyarikatList").val() });
+                WilayahList.datatype = "json";
+                WilayahList.contentType = "application/json";
+                WilayahList.success = function(ladanglist) {
+                    $("#LadangList").empty();
+                    $("#LadangList").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
+
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#LadangList").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+
+                    $("#LadangList").prop("disabled", false);
+                    resetInput("#PkjList");
+                };
+                WilayahList.error = function() { $.simplyToast('Sistem masalah', 'danger'); };
+                $.ajax(WilayahList);
+            }
+        });
+
+        $("#LadangList").change(function () {
+            if ($("#LadangList").val() === '') {
+                resetInput("#PkjList");
+            } else {
+                if ($("#LadangList").val() != 0) {
+                    var LadangList = {};
+                    LadangList.url = "@Url.Action("GetPkj", "Maintenance")";
+                    LadangList.type = "POST";
+                    LadangList.data =
+                        JSON.stringify({ WilayahList: $("#WilayahList").val(), LadangList: $("#LadangList").val() });
+                    LadangList.datatype = "json";
+                    LadangList.contentType = "application/json";
+                    LadangList.success = function (pkjList) {
+                        $("#PkjList").empty();
+                        $("#PkjList").append("<option value=0>" + '@GlobalResWorkerTransac.sltAll' + "</option>");
+
+                        for (var i = 0; i < pkjList.length; i++) {
+                            $("#PkjList").append("<option value=" + pkjList[i].Value + ">" + pkjList[i].Text + "</option>");
+                        }
+                        $("#PkjList").prop("disabled", false);
+                    };
+
+                    LadangList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                    $.ajax(LadangList);
+                } else if ($("#LadangList").val() == 0) {
+                    resetInput("#PkjList");
+                }
+            }
+        });
+    });
+
+
+    $(".js-example-placeholder-single").select2({
+        placeholder: "Sila Pilih",
+    });
+    $("#PkjList").prop("disabled", true);
+    $(".select2-container--default .select2-selection--single").css("height", "34px");
+    $(".select2-container--default .select2-selection--single .select2-selection__rendered").css("line-height", "34px");
+    $(".select2-container--default .select2-selection--single .select2-selection__arrow").css("height", "34px");
+</script>
+
+

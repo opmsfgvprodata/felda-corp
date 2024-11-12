@@ -1,0 +1,247 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@using MVC_SYSTEM.ModelsDapper
+@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_RptRumKedPkjKontraktor_Result>
+
+@*@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptRumKedPkjKontraktor_Result>*@
+
+@{
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int years = ChangeTimeZone.gettimezone().Year;
+    int months = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+
+    string uniquefilename = "RumusanKedudukanPekerjaKontraktor_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    decimal? GrandTotalPemandu = 0;
+    decimal? GrandTotalPenuai = 0;
+    decimal? GrandTotalPenoreh = 0;
+    decimal? GrandTotalPekerjaAm = 0;
+    decimal? GrandTotalMandorAm = 0;
+    decimal? GrandTotalTapakSemaian = 0;
+    decimal? GrandTotalJumlah = 0;
+    decimal? GrandTotalJumLadang = 0;
+
+}
+
+
+@if (Model != null && Model.Count() != 0)
+{
+
+    <div id="scrollArea" class="modal-body">
+
+        @foreach (var costcentre in Model.Select(x => x.fld_CompCode).Distinct())
+        {
+            var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+            var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+            <p align="center" style="font-size: 11px" :><b>@namapenuhsyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @namasyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleReportPekerjaKontraktor.ToUpper()</b></p>
+            <br />
+            <table class="table table-hover" style="font-size: 11px;" border="0">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL.</th>
+                        @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                        {
+                            <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">WILAYAH</th>
+                            <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH LADANG</th>
+                        }
+                        else
+                        {
+                            @*<th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">KOD LADANG</th>*@
+                            <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">LADANG</th>
+                        }
+
+
+                        <th colspan="7" width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">BIL. PEKERJA SEMASA</th>
+                    </tr>
+                    <tr>
+                        <th width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPemandu</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPenoreh</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPenuai</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblPekerjaAm</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMandorAm</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTapakSemaian</th>
+                        <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblTotal.ToUpper()</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Modified by Shazana 1/8/2023*@
+                    @foreach (var RumusanPekerjaKontrak in Model)
+                    {
+                        bil += 1;
+                        decimal? JumlahKontraktor = RumusanPekerjaKontrak.fld_Pemandu + RumusanPekerjaKontrak.fld_Penoreh + RumusanPekerjaKontrak.fld_Penuai + RumusanPekerjaKontrak.fld_PekerjaAm +
+                                                    RumusanPekerjaKontrak.fld_MandorAm + RumusanPekerjaKontrak.fld_TapakSemaian;
+
+                        GrandTotalPemandu = GrandTotalPemandu + RumusanPekerjaKontrak.fld_Pemandu;
+                        GrandTotalPenuai = GrandTotalPenuai + RumusanPekerjaKontrak.fld_Penuai;
+                        GrandTotalPenoreh = GrandTotalPenoreh + RumusanPekerjaKontrak.fld_Penoreh;
+                        GrandTotalPekerjaAm = GrandTotalPekerjaAm + RumusanPekerjaKontrak.fld_PekerjaAm;
+                        GrandTotalMandorAm = GrandTotalMandorAm + RumusanPekerjaKontrak.fld_MandorAm;
+                        GrandTotalTapakSemaian = GrandTotalTapakSemaian + RumusanPekerjaKontrak.fld_TapakSemaian;
+                        GrandTotalJumlah = GrandTotalJumlah + JumlahKontraktor;
+                        GrandTotalJumLadang = GrandTotalJumLadang + RumusanPekerjaKontrak.fld_JumLdg;
+
+                        <tr>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
+                            @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                            {
+
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @RumusanPekerjaKontrak.fld_NamaWilayah
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @RumusanPekerjaKontrak.fld_JumLdg
+                                </td>
+                            }
+                            else
+                            {
+                                @*<td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                        @RumusanPekerjaKontrak.fld_KodLadang
+                                    </td>*@
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @RumusanPekerjaKontrak.fld_NamaLadang
+                                </td>
+                            }
+
+
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_Pemandu
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_Penoreh
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_Penuai
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_PekerjaAm
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_MandorAm
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @RumusanPekerjaKontrak.fld_TapakSemaian
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @JumlahKontraktor
+                            </td>
+                        </tr>
+                    }
+
+
+                    <tr>
+                        @if (ViewBag.WilayahList == 0 && ViewBag.LadangList == 0)
+                        {
+                            <td colspan="2" align="center" style="vertical-align: middle !important;  border: 1px solid black;" border="1">
+                                <b>JUMLAH</b>
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                <b>@GrandTotalJumLadang</b>
+                            </td>
+                        }
+                        else
+                        {
+                            <td colspan="2" align="center" style="vertical-align: middle !important;  border: 1px solid black;" border="1">
+                                <b>JUMLAH</b>
+                            </td>
+                        }
+
+
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalPemandu</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalPenoreh</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalPenuai</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalPekerjaAm</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalMandorAm</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalTapakSemaian</b>
+                        </td>
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                            <b>@GrandTotalJumlah</b>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+}
+
+
+<div id="scrollArea2" class="modal-body" style="text-align: center">
+    <p style="color: red">@ViewBag.Message</p>
+
+</div>
+
+
+@*//farahin-21012021*@
+<div style="text-align:right; margin-top:10px">
+    <a class="btn btn-default btn-sm" href="" id="printpage">
+        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+    </a>
+    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+    </a>
+    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+    </a>
+</div>
+
+@* farahin tambah javascript -21012021 *@
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+
+

@@ -2144,8 +2144,8 @@ namespace MVC_SYSTEM.Controllers
                         }
 
                         //update caruman tambahan
-                        if (app2.fld_Kdrkyt == "MA")
-                        {
+                        //if (app2.fld_Kdrkyt == "MA") //fatin comment - 16/05/2024
+                        //{
                             var CarumanTransfer = dbAsal.tbl_PkjCarumanTambahan.Where(x => x.fld_Nopkj == app1.fldNoPkjAsal && x.fld_NegaraID == app1.fldNegaraAsal && x.fld_SyarikatID == app1.fldSyarikatAsal && x.fld_WilayahID == app1.fldWilayahAsal && x.fld_LadangID == app1.fldLadangAsal && x.fld_Deleted == false).ToList();
                             if (CarumanTransfer.Count() != 0)
                             {
@@ -2164,7 +2164,7 @@ namespace MVC_SYSTEM.Controllers
                                     dbr.SaveChanges();
                                 }
                             }
-                        }
+                        //}
                         status = true;
                         //scope.Complete();
                     }
@@ -2273,14 +2273,17 @@ namespace MVC_SYSTEM.Controllers
                             dbr.SaveChanges();
                         }
 
+                        DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
+                        var jnsSocso = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanSocso" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
+                        var kodSocso = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsSocso && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
+
                         //kwsp & socso
                         if (app2.fld_Kdrkyt != "MA")
                         {
-                            DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
-
                             if (app2 != null)
                             {
-                                app2.fld_StatusKwspSocso = "2";
+                                app2.fld_KodSocso = kodSocso;
+                                app2.fld_StatusKwspSocso = "1";
                                 dbr.SaveChanges();
                             }
 
@@ -2314,9 +2317,6 @@ namespace MVC_SYSTEM.Controllers
                         }
                         else if (app2.fld_Kdrkyt == "MA")
                         {
-                            DateDiff umurPekerja = new DateDiff(Convert.ToDateTime(app2.fld_Trlhr).AddDays(-1), lastDay);
-                            var jnsSocso = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanSocso" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
-                            var kodSocso = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsSocso && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
                             var jnsKwsp = dbhq.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "kodCarumanKwsp" && x.fld_NegaraID == ngraID && x.fld_SyarikatID == syrktID && x.fldDeleted == false).Select(s => s.fldOptConfValue).FirstOrDefault();
                             var kodKwsp = dbhq.tbl_JenisCaruman.Where(x => x.fld_UmurLower <= umurPekerja.Years && x.fld_UmurUpper >= umurPekerja.Years && x.fld_JenisCaruman == jnsKwsp && x.fld_Default == true).Select(s => s.fld_KodCaruman).FirstOrDefault();
 
