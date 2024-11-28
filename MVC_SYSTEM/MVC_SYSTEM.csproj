@@ -1000,6 +1000,10 @@
     <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
     <Compile Include="ModelsDapper\Worker.cs" />
+    <Compile Include="ModelsDapper\CarumanTambahanCustomModel.cs" />
+    <Compile Include="ModelsDapper\DataSetFunction.cs" />
+    <Compile Include="ModelsDapper\sp_MapaReport_FPM_Result.cs" />
+    <Compile Include="ModelsDapper\vw_MapaCustomModelcs.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
