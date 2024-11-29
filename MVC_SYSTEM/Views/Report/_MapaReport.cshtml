@@ -543,7 +543,7 @@
                         totalM2Epax = totalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
                         totalpax = totalcashpax + totalchequepax + totalcdmaspax + totalewalletpax + totalM2Upax + totalM2Epax;
                         totaljumlahwangdipohon = totaljumlahwangdipohon + jumlahwangdipohon;
-                        totalfld_CheckRollRML = totalfld_CheckRollRML + paymentModeData.sp_RptMAPA.fld_CheckRollRML;
+                        totalfld_CheckRollRML = totalfld_CheckRollRML + (paymentModeData.sp_RptMAPA.fld_CheckRollRML == null? 0: paymentModeData.sp_RptMAPA.fld_CheckRollRML) ;
                         totalfld_CheckRollManual = totalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
 
 
@@ -615,7 +615,7 @@
                         <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
                     </tr>
 
-                    @if (totalwilayah == wholewilayah)
+                    @if (totalwilayah == wholewilayah  && wholewilayah !=1)
                     {
                         <tr>
                             <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Keseluruhan(RM)</th>
