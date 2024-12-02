@@ -11,10 +11,11 @@ namespace MVC_SYSTEM.ModelsEstate
     public partial class tbl_Kerja
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid fld_ID { get; set; }
 
         [StringLength(20)]
-        public string fld_NoPkj { get; set; }
+        public string fld_Nopkj { get; set; }
 
         [StringLength(50)]
         public string fld_Kum { get; set; }
@@ -61,11 +62,13 @@ namespace MVC_SYSTEM.ModelsEstate
 
         public byte? fld_Bonus { get; set; }
 
-        public Int16? fld_Quality { get; set; }
+        public short? fld_Quality { get; set; }
 
-        public char? fld_KdhMenuai { get; set; }
+        [StringLength(1)]
+        public string fld_KdhMenuai { get; set; }
 
-        public char? fld_DataSource { get; set; }
+        [StringLength(1)]
+        public string fld_DataSource { get; set; }
 
         public int? fld_NegaraID { get; set; }
 
@@ -79,7 +82,6 @@ namespace MVC_SYSTEM.ModelsEstate
 
         public DateTime? fld_CreatedDT { get; set; }
 
-
         [Column(TypeName = "numeric")]
         public decimal? fld_HrgaKwsnSkar { get; set; }
 
@@ -90,11 +92,9 @@ namespace MVC_SYSTEM.ModelsEstate
 
         public DateTime? fld_ApprovalKwsnSkarDT { get; set; }
 
-
         [Column(TypeName = "numeric")]
         public decimal? fld_OverallAmount { get; set; }
 
         public bool? fld_PinjamStatus { get; set; }
-
     }
 }

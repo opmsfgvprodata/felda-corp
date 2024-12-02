@@ -1,0 +1,517 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsCustom.CustMod_ReverseSAP>
+
+@using System.Linq.Dynamic
+@using Microsoft.Ajax.Utilities
+@using MVC_SYSTEM.Class
+
+@{
+    GetConfig GetConfig = new GetConfig();
+    GlobalFunction GlobalFunction = new GlobalFunction();
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "unitMaintenanceDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+    int itemno = 1;
+    string datano = "";
+    short loopdatahdr = 0;
+    bool? closing = ViewBag.ClosingStatus;
+    string ClosingStatus = "False";
+    string statusproceedVend = "false";
+    int flagvendor = 0;
+    if (closing != null)
+    {
+        if (closing == true)
+        {
+            ClosingStatus = "True";
+        }
+        else
+        {
+            ClosingStatus = "False";
+        }
+    }
+    else
+    {
+        ClosingStatus = "False";
+    }
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">SAP File Posting Information (Reverse)</div>
+    <div class="panel-body">
+        @if (Model == null)
+        {
+            <hr />
+            <div class="text-center">
+                @Html.Label((string)@ViewBag.Message)
+            </div>
+
+            <hr />
+        }
+        else if (Model.Any())
+        {
+            var dataCount = 0;
+            var EstateDetail = Model.Take(1).FirstOrDefault();
+
+            foreach (var postItem in Model.DistinctBy(s => s.fld_Year).DistinctBy(s => s.fld_Month))
+            {
+                <div class="modal-body">
+                    <div class="panel with-nav-tabs panel-info">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active" id="li1" onclick="getheading(this.id)"><a href="#tab1primary" data-toggle="tab">Reverse GL To GL</a></li>
+                                <li class="" id="li2" onclick="getheading(this.id)"><a href="#tab2primary" data-toggle="tab">Reverse GL To Vendor</a></li>
+                                <li class="" id="li4" onclick="getheading(this.id)"><a href="#tab4primary" data-toggle="tab">Reverse GL To Customer</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1primary">
+                                    <div class="form-horizontal">
+                                        @if (Model.Any(x => x.fld_DocType == "A2"))
+                                        {
+                                            dataCount++;
+                                            foreach (var GLtoGL in Model.DistinctBy(s => s.fld_SAPPostRefID).Where(x => x.fld_DocType == "A2"))
+                                            {
+                                                var postRefGuid = Model.Where(x => x.fld_DocType == "A2").Select(s => s.fld_SAPPostRefID).Distinct().FirstOrDefault();
+                                                var statusproceedGL = Model.Where(x => x.fld_DocType == "A2").Select(s => s.fld_StatusProceed).Distinct().FirstOrDefault();
+                                                @Html.HiddenFor(model => GLtoGL.fld_SAPPostRefID, htmlAttributes: new { @class = "idSA" })
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            @*<th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Item No</th>*@
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Ref ID</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Checkrol Ref No</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Sap Document No</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Header Text</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Document Type</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Date Generated</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Date</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Year</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Month</th>
+                                                            <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@postRefGuid</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_RefNo</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_NoDocSAP</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_HeaderText</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_DocType</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_DocDate</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_PostingDate</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_Year</td>
+                                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoGL.fld_Month</td>
+                                                            @if (statusproceedGL == true)
+                                                            {
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                                    <button type="button" class="btn btn-primary btn-lg" style="font-size:10px;" id="btnreverse" onclick="UpdateStatus(this,'@postRefGuid','@GLtoGL.fld_RefNo','@GLtoGL.fld_Year','@GLtoGL.fld_Month' );">Reverse</button>
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">Has not post</td>
+                                                            }
+                                                        </tr>
+                                                        @*}*@
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            <hr />
+                                            <div class="text-center">
+                                                No Data
+                                            </div>
+                                            <hr />}
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab2primary">
+                                    <div class="form-horizontal">
+
+                                        @if (Model.Any(x => x.fld_DocType == "KR"))
+                                        {
+                                            dataCount++;
+                                            foreach (var GLToVendor in Model.DistinctBy(s => s.fld_SAPPostRefID).Where(x => x.fld_DocType == "KR"))
+                                            {
+                                                var postRefGuid = Model.Where(x => x.fld_DocType == "KR").Select(s => s.fld_SAPPostRefID).Distinct().FirstOrDefault();
+                                                @Html.HiddenFor(model => GLToVendor.fld_SAPPostRefID, htmlAttributes: new { @class = "idKR" })
+                                                var statusproceedVendor = Model.Where(x => x.fld_DocType == "KR").Distinct().FirstOrDefault();
+                                                if (statusproceedVendor != null)
+                                                {
+                                                    statusproceedVend = statusproceedVendor.fld_StatusProceed.ToString();
+                                                }
+                                                else
+                                                {
+                                                    statusproceedVend = "false";
+                                                }
+                                            }
+                                            <table class="table table-hover" id="tablegltovendor">
+                                                <thead>
+                                                    <tr>
+                                                      
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Ref Id</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Checkrol Ref No</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Header Text</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Document Type</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Date</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Year</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Posting Month</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">SAP Doc No</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @*@foreach (var GLtoVendorDetails in Model.Where(x => x.fld_DocType == "KR" && x.fld_DocNoSAP != null).OrderBy(o => o.fld_ItemNo))*@
+                                                        @foreach (var GLtoVendorDetails in Model.Where(x => x.fld_DocType == "KR").OrderBy(o => o.fld_ItemNo))
+                                                        {
+                                                            if (flagvendor != GLtoVendorDetails.fld_flag )
+                                                            {
+
+                                                                GLtoVendorDetails.nombor = @itemno;
+                                                                var postRefGuidKR = Model.Where(x => x.fld_DocType == "KR").Select(s => s.fld_SAPPostRefID).Distinct().FirstOrDefault();
+
+                                                            <tr>
+                                                                <td hidden="hidden" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1" id="itemnombor">@GLtoVendorDetails.nombor<input type="hidden" id="nombor" name="nombor" value="@GLtoVendorDetails.nombor" /></td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@postRefGuidKR<input type="hidden" id="flag_@itemno" name="flag_@itemno" value="@GLtoVendorDetails.fld_flag" /></td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_RefNo<input type="hidden" id="sappostrefid_@itemno" name="sappostrefid_@itemno" value="@GLtoVendorDetails.fld_SAPPostRefID" /></td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_HeaderText</td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_DocType</td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_PostingDate</td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_Year<input type="hidden" id="year_@itemno" name="year_@itemno" value="@GLtoVendorDetails.fld_Year" /></td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GLtoVendorDetails.fld_Month<input type="hidden" id="month_@itemno" name="month_@itemno" value="@GLtoVendorDetails.fld_Month" /></td>
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                                    @GLtoVendorDetails.fld_DocNoSAP<input type="hidden" id="syarikat_@itemno" name="syarikat_@itemno" value="@GLtoVendorDetails.fld_SyarikatID" /><input type="hidden" id="negara_@itemno" name="negara_@itemno" value="@GLtoVendorDetails.fld_NegaraID" />
+                                                                    <input type="hidden" id="namechkbox_@itemno" name="namechkbox_@itemno" />
+                                                                </td>
+
+                                                                <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                                    <input type="checkbox" name="chkbox_@itemno" id="chkbox_@itemno" value="1" />
+                                                                </td>
+                                                            </tr>
+
+
+                                                            }
+                                                            flagvendor = GLtoVendorDetails.fld_flag;
+                                                            @*@itemno;*@
+                                                            datano += itemno.ToString() + ",";
+                                                            loopdatahdr += 1;
+                                                            itemno++;
+                                                        }
+
+                                                </tbody>
+                                            </table>
+
+                                            if (statusproceedVend.ToUpper() == "TRUE")
+                                            {
+                                                <button class="btn btn-success" style="float:right;margin-right:-15px;" name="SaveWrk" id="SaveWrk" type="button">Reverse GL to Vendor</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-success" style="float:right;margin-right:-15px;">Has not post</button>
+                                            }
+
+                                        }
+
+                                        else
+                                        {
+                                            <hr />
+                                            <div class="text-center">
+                                                No Data
+                                            </div>
+                                            <hr />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab4primary">
+                                    <div class="form-horizontal">
+
+                                        @if (Model.Any(x => x.fld_DocType == "DR"))
+                                        {
+                                            dataCount++;
+                                            foreach (var GLToCustomer in Model.DistinctBy(s => s.fld_SAPPostRefID).Where(x => x.fld_DocType == "DR"))
+                                            {
+                                                var postRefGuid = Model.Where(x => x.fld_DocType == "DR").Select(s => s.fld_SAPPostRefID).Distinct().FirstOrDefault();
+
+                                                @Html.HiddenFor(model => GLToCustomer.fld_SAPPostRefID, htmlAttributes: new { @class = "idDR" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Checkroll Ref No:</label>
+                                                    <div class="col-sm-2">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_RefNo, htmlAttributes: new { @class = "form-control col-sm-2 refNoDR", @disabled = "True" })
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-success  generateCustomerRefNo">Generate</button>
+                                                    </div>
+                                                    <label class="control-label col-sm-2">SAP Document No:</label>
+                                                    <div class="col-sm-2">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_NoDocSAP, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "True" })
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sapReturnModal3">Status</button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Date Generated:</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_DocDate, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "True" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Header Text:</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_HeaderText, htmlAttributes: new { @class = "form-control col-sm-2 hdrTxtDR", @disabled = "True" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label class="control-label col-sm-2">Document Type:</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_DocType, htmlAttributes: new { @class = "form-control col-sm-2 docTypeDR", @disabled = "True" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Posting Month:</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_Month, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "True" })
+                                                    </div>
+                                                    <label class="control-label col-sm-3">Posting Year:</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_Year, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "True" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Posting Date:</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBoxFor(model => GLToCustomer.fld_PostingDate, htmlAttributes: new { @class = "form-control col-sm-2", @disabled = "True" })
+                                                    </div>
+                                                </div>
+                                                <div id="sapReturnModal3" class="modal fade sapReturnModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            @Html.Action("_SAPReturnMsg", "ClosingTransaction", new { postRefID = postRefGuid })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Item No</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">GL</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Customer Code</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Description</th>
+                                                        <th bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var GLtoCustomerDetails in Model.Where(x => x.fld_DocType == "DR").OrderBy(o => o.fld_ItemNo))
+                                                    {
+                                                        var postRefGuid = Model.Where(x => x.fld_DocType == "A2").Select(s => s.fld_SAPPostRefID).Distinct().FirstOrDefault();
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@GLtoCustomerDetails.fld_ItemNo</td>
+                                                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@GLtoCustomerDetails.fld_GL</td>
+                                                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@GLtoCustomerDetails.fld_ItemNo</td>
+                                                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">@GLtoCustomerDetails.fld_Desc</td>
+                                                            <td align="center" style="vertical-align: middle !important; text-align: right !important; border: 1px solid black;" border="1">@GLtoCustomerDetails.fld_Amount</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        }
+
+                                        else
+                                        {
+                                            <hr />
+                                            <div class="text-center">
+                                                No Data
+                                            </div>
+                                            <hr />}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <input type="hidden" id="datano" name="datano" value="@datano" />
+                            <input type="hidden" id="loopdatahdr" name="loopdatahdr" value="@loopdatahdr" />
+                            @Html.Hidden("dataCount", null, htmlAttributes: new { @class = "dataCountClass", @Value = @dataCount })
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        else
+        {
+            <hr />
+            <div class="text-center">
+                @Html.Label((string)@ViewBag.Message)
+            </div>
+
+            <hr />
+        }
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        var actualData = $(".dataCountClass").val();
+        console.log("actualCount" + " " + actualData);
+        var refNoCount = 0;
+
+        $(":checkbox").on('click', function (index) {
+
+            $(":checkbox").each(function () {
+             
+                if (this.checked) {
+                    var elem = $(this);
+                    var nombor = elem.attr('id');
+                  
+                    $("#name" + nombor).val("true");
+                    $("#SAPPostRefID").val();
+                }
+               else {
+                    var elem = $(this);
+                    var nombor = elem.attr('id');
+                    debugger
+                    $("name" + nombor).val("false");
+                    $("#SAPPostRefID").val();
+                }
+       
+            });
+        });
+
+    });
+
+</script>
+<script>
+
+    $("#SaveWrk").click(function () {
+        var datano = $("#datano").val();
+        var loopdatahdr = $("#loopdatahdr").val();
+
+      
+        if (!jQuery.isEmptyObject(loopdatahdr)) {
+            var splitdata = datano.split(',');
+            var ladangid = $("#LadangList").val();
+            var wilayahid = $("#WilayahList").val();
+
+            var datapost = {
+                "ladangid": ladangid,
+                "wilayahid": wilayahid,
+                "HadirData": []
+            };
+
+            for (var i = 0; i < loopdatahdr; i++) {
+                var loopdataitems = {};
+                sappostrefid = $("#sappostrefid_" + splitdata[i]).val();
+                flag = $("#flag_" + splitdata[i]).val();
+                namechkbox = $("#namechkbox_" + splitdata[i]).val();
+                month = $("#month_" + splitdata[i]).val();
+                year = $("#year_" + splitdata[i]).val();
+                negara = $("#negara_" + splitdata[i]).val();
+                syarikat = $("#syarikat_" + splitdata[i]).val();
+
+                loopdataitems["fld_SAPPostRefID"] = sappostrefid;
+                loopdataitems["fld_flag"] = flag;
+                loopdataitems["status_chkbx"] = namechkbox;
+                loopdataitems["fld_Year"] = year;
+                loopdataitems["fld_Month"] = month;
+                loopdataitems["fld_LadangID"] = ladangid;
+                loopdataitems["fld_WilayahID"] = wilayahid;
+                loopdataitems["fld_NegaraID"] = negara;
+                loopdataitems["fld_SyarikatID"] = syarikat;
+                datapost.HadirData.push(loopdataitems);
+            }
+
+
+
+            if (!jQuery.isEmptyObject(datapost)) {
+                var splitdata = datano.split(',');
+                $("#UpdateProgress1").css("display", "");
+                var ajxfn = {};
+                ajxfn.url = "@Url.Action("Working", "EstateDataManagement")";
+                ajxfn.type = "POST";
+                ajxfn.data = JSON.stringify(datapost);
+                ajxfn.datatype = "json";
+                ajxfn.contentType = "application/json";
+                ajxfn.success = function (result) {
+
+                    if (result.statusmsg == 'warning' || result.statusmsg == 'danger') {
+                        alertmsg('Perhatian', result.msg)
+                    }
+           /*         $("#UpdateProgress1").css("display", "none");*/
+                    location.replace(location.href);
+                };
+                ajxfn.error = function () {
+                    $.simplyToast('Error', 'danger');
+                    $("#UpdateProgress1").css("display", "none");
+                };
+                $.ajax(ajxfn);
+            }
+
+        }
+        return false;
+    });
+
+</script>
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>

@@ -1,0 +1,188 @@
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tblOptionConfigsWeb>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Reverse SAP";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "closeTransactionDetails",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "UpdateProgress1"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_ReverseSAP", "EstateDataManagement", null, options, new { @id = "closeTransactionSearchDetails" }))
+        {
+            @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Label(GlobalResCorp.lblCompany)
+                @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                @Html.Label(GlobalResWorkerSalary.lblWilayah)
+                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-3">
+                @Html.Label(GlobalResWorkerSalary.lblLadang)
+                @Html.DropDownList("LadangList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <label for="BulanProses">Bulan</label>
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <label for="TahunProses">Tahun</label>
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="btn-group" style="padding-top:24px;">
+                <input class="btn btn-primary" type="submit" id="btnCari" name="Lihat" value="View" />
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="well" style="margin-top: 7px;">
+        <div id="closeTransactionDetails">
+            @Html.Action("_ReverseSAP")
+        </div>
+    </div>
+</section>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-lg" style="width: 70%">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+        function resetSearch1() {
+            document.getElementById("txtfilter").value = "";
+            document.getElementById('btnCari').click();
+        }
+    </script>*@
+
+<script src="~/Asset/Scripts/jquery.stickytableheaders2.js" type="text/javascript"></script>
+<script src="~/Asset/Scripts/bootpopup.js" type="text/javascript"></script>
+@*<script>
+        $("table").stickyTableHeaders();
+    </script>*@
+<script>
+
+    function resetSearch1() {
+        document.getElementById("txtfilter").value = "";
+        document.getElementById('btnCari').click();
+    }
+
+    function UpdateStatus(gethis, refid, cekrollrefno, Year, Month) {
+        var value = gethis.parentNode.parentNode.children[0].innerHTML;
+
+                bootpopup({
+                    title: "Reverse SAP Posting ",
+                    content: [
+                        { p: { text: "Are you sure to reverse GL to GL SAP Posting : " + cekrollrefno } },
+						],
+                    cancel: function (data, array, event) { },
+                    ok: function (data, array, event) {
+                            $(gethis).attr("disabled", "disabled");
+                            //$('#btntlk' + id).removeAttr('disabled', false);
+                    
+                            var ReversePosting = {};
+                            ReversePosting.url = "@Url.Action("UpdateData", "EstateDataManagement")";
+                            ReversePosting.type = "POST";
+                            ReversePosting.data = JSON.stringify({ DataID: refid, CekrolRefNo: cekrollrefno, NegaraId: 1, SyarikatId: $("#SyarikatList").val(), WilayahId: $("#WilayahList").val(), LadangId: $("#LadangList").val() , Month: Month, Year: Year });
+                            ReversePosting.datatype = "json";
+                            ReversePosting.contentType = "application/json";
+                            ReversePosting.success = function (returndata) { };
+                            ReversePosting.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+                            $.ajax(ReversePosting);
+                            //alert('Telah disemak');
+
+                            bootpopup({
+                                title: "Action",
+                                content: [
+                                    { p: { text: "Reverse SAP Posting completed " } },
+                                    location.reload(),
+
+                                ],
+                             });
+                    },
+                    complete: function () { },
+                });
+        //}
+        //return false;
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+
+            $("#WilayahList").change(function () {
+            var WilayahList = {};
+            var disableoption = "";
+            WilayahList.url = "@Url.Action("GetLadang2", "EstateDataManagement")";
+            WilayahList.type = "POST";
+            WilayahList.data = JSON.stringify({ WilayahID: $("#WilayahList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahList.datatype = "json";
+            WilayahList.contentType = "application/json";
+            WilayahList.success = function (ladanglist) {
+                $("#LadangList").empty();
+                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahList);
+            });
+
+    $("#SyarikatList").change(function () {
+        var SyarikatList = {};
+            var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah2", "EstateDataManagement")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#LadangList").empty();
+            $("#WilayahList").empty();
+            $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            $("#WilayahList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                    for (var i = 0; i < wilayahlist.length; i++) {
+                    if ($("#SyarikatList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+                }
+            };
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+            });
+</script>
