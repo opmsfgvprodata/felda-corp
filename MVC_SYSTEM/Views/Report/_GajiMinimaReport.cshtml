@@ -1,7 +1,6 @@
 ﻿@using MVC_SYSTEM.Class
 @using MVC_SYSTEM.Models
-@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_RptGajiMinima_Result>
-
+@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_RptGajiMinima_New_Result>
 @{
     GetConfig GetConfig = new GetConfig();
 
@@ -16,7 +15,7 @@
     int minute = ChangeTimeZone.gettimezone().Minute;
     int second = ChangeTimeZone.gettimezone().Second;
 
-    string uniquefilename = "TransactionListing_" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string uniquefilename = "GajiMinima" + ViewBag.UserID + "_" + years.ToString() + months.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
 }
 
 @if (Model != null && Model.Count() != 0)

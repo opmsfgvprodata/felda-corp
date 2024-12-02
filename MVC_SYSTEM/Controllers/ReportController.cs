@@ -33,7 +33,9 @@ using Itenso.TimePeriod;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Reflection.Emit;
-
+using System.Data;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -2134,7 +2136,8 @@ namespace MVC_SYSTEM.Controllers
             int? getuserid = getidentity.ID(User.Identity.Name);
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
-            List<sp_RptGajiMinima_Result> rptGajiMinimaResults = new List<sp_RptGajiMinima_Result>();
+            //List<sp_RptGajiMinima_Result> rptGajiMinimaResults = new List<sp_RptGajiMinima_Result>();
+            List<ModelsDapper.sp_RptGajiMinima_New_Result> rptGajiMinimaNewResults = new List<ModelsDapper.sp_RptGajiMinima_New_Result>();
 
             ViewBag.NamaSyarikat = db.tbl_Syarikat
                 .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
@@ -2162,13 +2165,37 @@ namespace MVC_SYSTEM.Controllers
 
                 else
                 {
-                    rptGajiMinimaResults = dbSP.sp_RptGajiMinima(NegaraID, SyarikatID, WilayahList, LadangList, MonthList, YearList, getuserid, SyarikatList)
-                        .ToList();
+                    //Modified by Shazana 9/10/2024
+                    //rptGajiMinimaResults = dbSP.sp_RptGajiMinima(NegaraID, SyarikatID, WilayahList, LadangList, MonthList, YearList, getuserid, SyarikatList)
+                    //    .ToList();
 
-                    if (rptGajiMinimaResults.Count == 0)
+                    //if (rptGajiMinimaResults.Count == 0)
+                    //{
+                    //    ViewBag.Message = @GlobalResCorp.msgNoRecord;
+                    //}
+                    string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                    var con = new SqlConnection(constr);
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("WilayahID", WilayahList);
+                    parameters.Add("LadangID", LadangList);
+                    parameters.Add("Month", MonthList);
+                    parameters.Add("Year", YearList);
+                    parameters.Add("UserID", getuserid);
+                    parameters.Add("CostCentre", SyarikatList);
+
+                    con.Open();
+                    Dapper.SqlMapper.Settings.CommandTimeout = 3600;
+                    rptGajiMinimaNewResults = SqlMapper.Query<ModelsDapper.sp_RptGajiMinima_New_Result>(con, "sp_RptGajiMinima", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    con.Close();
+
+                    if (rptGajiMinimaNewResults.Count == 0)
                     {
                         ViewBag.Message = @GlobalResCorp.msgNoRecord;
                     }
+
                 }
             }
             catch (Exception ex)
@@ -2176,8 +2203,7 @@ namespace MVC_SYSTEM.Controllers
                 geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
                 ViewBag.Message = @GlobalResCorp.msgDataNotFound;
             }
-
-            return View(rptGajiMinimaResults);
+            return View(rptGajiMinimaNewResults);
         }
 
         //[AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3,Viewer")]
