@@ -250,7 +250,7 @@ else
                                             <tr>
                                                 <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Desc - Bonus</td>
                                                 <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@item.fld_KodPkt</td>
-                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">JAM</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">RM</td>
                                                 @foreach (var item2 in datelist)
                                                 {
                                                     var totalDailyOutcome = kerjaPkj.Join(kerjaBonus, a => a.fld_ID, b => b.fld_KerjaID, (a, b) => new { a, b })
