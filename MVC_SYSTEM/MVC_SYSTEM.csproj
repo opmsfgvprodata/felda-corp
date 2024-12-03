@@ -1005,6 +1005,7 @@
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
     <Compile Include="ModelsDapper\sp_MapaReport_FPM_Result.cs" />
     <Compile Include="ModelsDapper\vw_MapaCustomModelcs.cs" />
+    <Compile Include="ModelsDapper\sp_RptProduktiviti_Corp_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
     <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
@@ -3706,6 +3707,9 @@
     <Content Include="Views\Report\_PocketCheckrollRptSearch.cshtml" />
     <Content Include="Views\EstateDataManagement\ReverseSAP.cshtml" />
     <Content Include="Views\EstateDataManagement\_ReverseSAP.cshtml" />
+    <Content Include="Views\Report\_ProductivityRptAdvanceSearch.cshtml" />
+    <Content Include="Views\Report\_ProductivityRptSearch.cshtml" />
+    <Content Include="Views\Report\ProductivityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
