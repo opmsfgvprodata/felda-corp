@@ -1000,6 +1000,7 @@
     <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
     <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
+    <Compile Include="ModelsDapper\sp_RptGajiMinima_New_Result.cs" />
     <Compile Include="ModelsDapper\Worker.cs" />
     <Compile Include="ModelsDapper\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
