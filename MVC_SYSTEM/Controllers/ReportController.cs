@@ -1082,6 +1082,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.KerakyatanList = KerakyatanList;
             ViewBag.UserID = getuserid;
             ViewBag.GetFlag = 1;
+            ViewBag.costcenter = "0";
 
             return View(resultreport);
         }
@@ -1103,7 +1104,6 @@ namespace MVC_SYSTEM.Controllers
             int? wilayahselection = 0;
             int? ladangselection = 0;
             int incldg = 0;
-
             ViewBag.Report = "class = active";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
@@ -1301,6 +1301,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.IncLdg = incldg;
             ViewBag.UserID = getuserid;
             ViewBag.GetFlag = 2;
+            ViewBag.costcenter = SyarikatList;
 
             ViewBag.Month = MonthList;
             ViewBag.Year = YearList;
@@ -1767,6 +1768,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Print = print;
+            ViewBag.costcenter = SyarikatList;
 
             if (String.IsNullOrEmpty(WilayahList.ToString()) || String.IsNullOrEmpty(LadangList.ToString()))
             {
@@ -2613,7 +2615,7 @@ namespace MVC_SYSTEM.Controllers
             int incldg = 0;
             string appname = Request.ApplicationPath;
             string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-
+            ViewBag.costcenter = SyarikatList;
             if (appname != "/")
             {
                 domain = domain + appname;
@@ -3070,6 +3072,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Print = print;
+            ViewBag.costcenter = SyarikatList;
 
             if (String.IsNullOrEmpty(WilayahList.ToString()) || String.IsNullOrEmpty(LadangList.ToString()))
             {
@@ -8120,17 +8123,13 @@ namespace MVC_SYSTEM.Controllers
             int? ladangselection = 0;
             int incldg = 0;
 
-            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
             List<SelectListItem> wilayahList = new List<SelectListItem>();
             List<SelectListItem> ladangList = new List<SelectListItem>();
 
             if (WilayahID == 0 && LadangID == 0)
             {
-                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                        .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                        .OrderBy(o => o.fldOptConfDesc)
-                        .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
-                    "Value", "Text").ToList();
+                SyarikatList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
                 //CompCodeList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
 
                 wlyhid = getwilyah.GetWilayahID(SyarikatID);
@@ -8142,11 +8141,7 @@ namespace MVC_SYSTEM.Controllers
             }
             else if (WilayahID != 0 && LadangID == 0)
             {
-                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                .OrderBy(o => o.fldOptConfDesc)
-                .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
-                "Value", "Text").ToList();
+                SyarikatList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
                 //CompCodeList.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
 
                 wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
@@ -8158,11 +8153,7 @@ namespace MVC_SYSTEM.Controllers
             }
             else if (WilayahID != 0 && LadangID != 0)
             {
-                CompCodeList = new SelectList(db2.tblOptionConfigsWeb
-                .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                .OrderBy(o => o.fldOptConfDesc)
-                .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
-                "Value", "Text").ToList();
+                SyarikatList = new SelectList(db.tblOptionConfigsWeb.Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" && x.fldDeleted == false && x.fld_NegaraID == NegaraID).OrderBy(o => o.fldOptConfDesc).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
 
                 wlyhid = getwilyah.GetWilayahID2(SyarikatID, WilayahID);
                 wilayahList = new SelectList(db2.tbl_Wilayah.Where(x => wlyhid.Contains(x.fld_ID)), "fld_ID", "fld_WlyhName").ToList();
@@ -8173,7 +8164,7 @@ namespace MVC_SYSTEM.Controllers
                 incldg = 1;
             }
 
-            ViewBag.CompCodeList = CompCodeList;
+            ViewBag.SyarikatList = SyarikatList;
             ViewBag.WilayahList = wilayahList;
             ViewBag.LadangList = ladangList;
 
@@ -8266,7 +8257,7 @@ namespace MVC_SYSTEM.Controllers
         //added by faeza 24.11.2021
         //role id authorization ( adding super power user)  - modified by farahin - 17/06/2022
         [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3, Super Power User, Viewer")]
-        public ViewResult _PaymentModeReport(int? WilayahList, int? LadangList, int? MonthList, int? YearList, string CompCodeList, string print)
+        public ViewResult _PaymentModeReport(int? WilayahList, int? LadangList, int? MonthList, int? YearList, string SyarikatList, string print)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -8290,6 +8281,9 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Print = print;
             ViewBag.YearList = YearList;
             ViewBag.MonthList = MonthList;
+
+            ViewBag.costcenter = SyarikatList;
+
             // Added by Shazana 3/4/2023
             String namabulan = db.tblOptionConfigsWeb.Where(x => x.fldOptConfValue == MonthList.ToString()).Select(x => x.fldOptConfFlag2).FirstOrDefault();
             if (namabulan != null)
@@ -8298,7 +8292,7 @@ namespace MVC_SYSTEM.Controllers
             { ViewBag.namabulan = ""; }
             ViewBag.WilayahList = WilayahList;
             ViewBag.LadangList = LadangList;
-            ViewBag.CompCodeList = CompCodeList;
+            ViewBag.SyarikatList = SyarikatList;
             try
             {
 
@@ -8313,14 +8307,14 @@ namespace MVC_SYSTEM.Controllers
                         if (LadangList == 0)
                         {
                             dbSP.SetCommandTimeout(600);
-                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, SyarikatList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList).OrderBy(o => o.fld_WilayahID).ToList();
                         }
                         else
                         {
                             dbSP.SetCommandTimeout(600);
-                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, SyarikatList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList && x.fld_LadangID == LadangList).OrderBy(o => o.fld_WilayahID).ToList();
                         }
@@ -8330,7 +8324,7 @@ namespace MVC_SYSTEM.Controllers
                         if (LadangList == 0)
                         {
                             dbSP.SetCommandTimeout(600);
-                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, SyarikatList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList && x.fld_WilayahID == WilayahList).OrderBy(o => o.fld_WilayahID).ToList();
                             //added by kamalia 24/12/21
@@ -8341,7 +8335,7 @@ namespace MVC_SYSTEM.Controllers
                         else
                         {
                             dbSP.SetCommandTimeout(600);
-                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, CompCodeList)
+                            rptPaymentMode = dbSP.sp_PaymentModeReport(NegaraID, SyarikatID, WilayahList, LadangList, YearList, MonthList, getuserid, SyarikatList)
                             .Where(x => x.fld_Month == MonthList &&
                                     x.fld_Year == YearList && x.fld_WilayahID == WilayahList && x.fld_LadangID == LadangList).OrderBy(o => o.fld_WilayahID).ToList();
                             //added by kamalia 24/12/21
@@ -10411,7 +10405,7 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID;
             int? getuserid = getidentity.ID(User.Identity.Name);
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-
+            ViewBag.costcenter = SyarikatList;
             var message = "";
 
             List<CustMod_DataEntryReportResult> result = new List<CustMod_DataEntryReportResult>();

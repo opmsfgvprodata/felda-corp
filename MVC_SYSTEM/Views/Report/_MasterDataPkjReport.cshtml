@@ -16,6 +16,9 @@
 
     int bil = 0;
     string uniquefilename = "MasterDataPkj_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -33,8 +36,8 @@
                     <thead>
                         <tr>
                             <th colspan="12">
-                                <p align="center" style="font-size: 11px" :><b>@ViewBag.NamaSyarikat</b></p>
-                                <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @ViewBag.NoSyarikat</b></p>
+                                <p align="center" style="font-size: 11px" :><b>@namapenuhsyarikat</b></p>
+                                <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @namasyarikat</b></p>
                                 <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleWorkerMasterDataReport</b></p>
                                 <br />
 
