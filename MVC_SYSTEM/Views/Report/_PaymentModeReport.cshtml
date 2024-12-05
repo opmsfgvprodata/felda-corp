@@ -60,6 +60,8 @@
     int? grandtotalM2Epax = 0;
     decimal? grandgrandtotal = 0;
 
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -126,9 +128,9 @@
                 <thead>
                     <tr>
                         <th colspan="28" style="text-align:center;vertical-align:middle;">
-                            @ViewBag.NamaSyarikat
+                            @namapenuhsyarikat
                             <br />
-                            @GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NoSyarikat
+                            @GlobalResLocalWorkerInfo.hdrCmpnyNo : @namasyarikat
                             <br />
                             @*modified by Shazana 3/4/2023*@
                             @*Laporan Bayaran Gaji Pekerja @ViewBag.Tajuk Bulan @ViewBag.MonthList/ @ViewBag.YearList*@

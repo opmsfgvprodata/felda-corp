@@ -16,76 +16,84 @@
     int bil = 0;
     int bilLdg = 0;
     string uniquefilename = "DataEntryReport_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 }
 
 @if (Model != null && Model.Count() != 0)
 {
-    <div id="scrollArea" class="modal-body">
-        @foreach (var data in Model)
-        {
-            bil = 0;
-            <table class="table table-hover table-sm" style="font-size: 11px;" border="0" cellspacing="10">
-                <thead>
+<div id="scrollArea" class="modal-body">
+    @foreach (var data in Model)
+    {
+        bil = 0;
+        <th colspan="28" style="text-align:center;vertical-align:middle;">
+            @namapenuhsyarikat
+            <br />
+            @GlobalResLocalWorkerInfo.hdrCmpnyNo : @namasyarikat
+            <br /><br />
+        </th>
+        <table class="table table-hover table-sm" style="font-size: 11px;" border="0" cellspacing="10">
+            <thead>
+                <tr>
+                    <th colspan="@(6 + @ViewBag.Days.Count)" rowspan="1" style="border-bottom: 1px solid black;" border="1">
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="@(6 + @ViewBag.Days.Count)" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 11px; padding: 2px;" border="1">
+                        Ladang: @GetConfig.GetLadangKodFromID(data.ladangID) - @GetConfig.GetLadangNameFromID(data.ladangID)
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="1" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                        @GlobalResLocalWorkerInfo.hdrNo
+                    </th>
+                    <th colspan="2" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                        @GlobalResCorp.hdrNoPkj
+                    </th>
+                    <th colspan="3" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                        @GlobalResCorp.hdrName
+                    </th>
+                    @foreach (var titleDay in ViewBag.Days)
+                    {
+                        <th colspan="1" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; text-align: center; border: 1px solid black; min-width: 30px; font-size: 8px; padding: 4px;" border="1">
+                            @titleDay
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pkj in data.pkjList)
+                {
+                    bil++;
                     <tr>
-                        <th colspan="@(6 + @ViewBag.Days.Count)" rowspan="1" style="border-bottom: 1px solid black;" border="1">
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="@(6 + @ViewBag.Days.Count)" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 11px; padding: 2px;" border="1">
-                            Ladang: @GetConfig.GetLadangKodFromID(data.ladangID) - @GetConfig.GetLadangNameFromID(data.ladangID)
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="1" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                            @GlobalResLocalWorkerInfo.hdrNo
-                        </th>
-                        <th colspan="2" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                            @GlobalResCorp.hdrNoPkj
-                        </th>
-                        <th colspan="3" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                            @GlobalResCorp.hdrName
-                        </th>
-                        @foreach (var titleDay in ViewBag.Days)
+                        <td colspan="1" rowspan="1" style="vertical-align: middle !important; text-align: center; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                            @bil
+                        </td>
+                        <td colspan="2" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                            @pkj.noPkj
+                        </td>
+                        <td colspan="3" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
+                            @pkj.namaPkj
+                        </td>
+                        @foreach (var pkjDay in pkj.dataEntryList)
                         {
-                            <th colspan="1" rowspan="1" bgcolor="#FFCC80" style="color: black; vertical-align: middle !important; text-align: center; border: 1px solid black; min-width: 30px; font-size: 8px; padding: 4px;" border="1">
-                                @titleDay
-                            </th>
+                            if (pkjDay.Attendance == true && pkjDay.Task == true)
+                            {
+                                <td colspan="1" rowspan="1" bgcolor="#82E0AA" style="border: 1px solid black;" border="1">
+                                </td>
+                            }
+                            else
+                            {
+                                <td colspan="1" rowspan="1" bgcolor="#EC7063" style="border: 1px solid black;" border="1">
+                                </td>
+                            }
                         }
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var pkj in data.pkjList)
-                    {
-                        bil++;
-                        <tr>
-                            <td colspan="1" rowspan="1" style="vertical-align: middle !important; text-align: center; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                                @bil
-                            </td>
-                            <td colspan="2" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                                @pkj.noPkj
-                            </td>
-                            <td colspan="3" rowspan="1" style="vertical-align: middle !important; border: 1px solid black; font-size: 8px; padding: 4px;" border="1">
-                                @pkj.namaPkj
-                            </td>
-                            @foreach (var pkjDay in pkj.dataEntryList)
-                            {
-                                if (pkjDay.Attendance == true && pkjDay.Task == true)
-                                {
-                                    <td colspan="1" rowspan="1" bgcolor="#82E0AA" style="border: 1px solid black;" border="1">
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td colspan="1" rowspan="1" bgcolor="#EC7063" style="border: 1px solid black;" border="1">
-                                    </td>
-                                }
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
     <div style="text-align:right; margin-top:10px">
         <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
