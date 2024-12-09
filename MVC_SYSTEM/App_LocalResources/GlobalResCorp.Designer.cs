@@ -862,6 +862,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LAPORAN PECAHAN BANGSA.
+        /// </summary>
+        public static string hdrReportTitleLaporanPecahanBangsa {
+            get {
+                return ResourceManager.GetString("hdrReportTitleLaporanPecahanBangsa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID Pemohon.
         /// </summary>
         public static string hdrRequestID {
@@ -1375,6 +1384,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BANGLADESH.
+        /// </summary>
+        public static string lblBangladesh {
+            get {
+                return ResourceManager.GetString("lblBangladesh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hapus Bangsa.
         /// </summary>
         public static string lblBangsaDel {
@@ -1542,6 +1560,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblBatch {
             get {
                 return ResourceManager.GetString("lblBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BIL. PEKERJA SEMASA.
+        /// </summary>
+        public static string lblBilPekerjaSemasa {
+            get {
+                return ResourceManager.GetString("lblBilPekerjaSemasa", resourceCulture);
             }
         }
         
@@ -3967,6 +3994,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FILIPINA.
+        /// </summary>
+        public static string lblFilipina {
+            get {
+                return ResourceManager.GetString("lblFilipina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hak Cipta.
         /// </summary>
         public static string lblFooter1 {
@@ -4966,11 +5002,29 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INDIA.
+        /// </summary>
+        public static string lblIndia {
+            get {
+                return ResourceManager.GetString("lblIndia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pilihan Individu.
         /// </summary>
         public static string lblIndividuSelection {
             get {
                 return ResourceManager.GetString("lblIndividuSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INDONESIA.
+        /// </summary>
+        public static string lblIndonesia {
+            get {
+                return ResourceManager.GetString("lblIndonesia", resourceCulture);
             }
         }
         
@@ -5191,7 +5245,7 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JUMLAH TK PRODUKTIVITI.
+        ///   Looks up a localized string similar to JUMLAH TKT (PRODUKTIVITI).
         /// </summary>
         public static string lblJumlahTKTProduktiviti {
             get {
@@ -5268,6 +5322,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblKemasukanBaruPindahMasuk {
             get {
                 return ResourceManager.GetString("lblKemasukanBaruPindahMasuk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KEMBOJA.
+        /// </summary>
+        public static string lblKemboja {
+            get {
+                return ResourceManager.GetString("lblKemboja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KERANI RESIT.
+        /// </summary>
+        public static string lblKeraniResit {
+            get {
+                return ResourceManager.GetString("lblKeraniResit", resourceCulture);
             }
         }
         
@@ -6019,6 +6091,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MALAYSIA.
+        /// </summary>
+        public static string lblMalaysia {
+            get {
+                return ResourceManager.GetString("lblMalaysia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pengurus.
         /// </summary>
         public static string lblManager {
@@ -6042,6 +6123,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblManagerNameBefore {
             get {
                 return ResourceManager.GetString("lblManagerNameBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MANDOR.
+        /// </summary>
+        public static string lblMandor {
+            get {
+                return ResourceManager.GetString("lblMandor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MANDOR AM.
+        /// </summary>
+        public static string lblMandorAm {
+            get {
+                return ResourceManager.GetString("lblMandorAm", resourceCulture);
             }
         }
         
@@ -6474,6 +6573,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblName {
             get {
                 return ResourceManager.GetString("lblName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NEPAL.
+        /// </summary>
+        public static string lblNepal {
+            get {
+                return ResourceManager.GetString("lblNepal", resourceCulture);
             }
         }
         
@@ -6928,6 +7036,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PAKISTAN.
+        /// </summary>
+        public static string lblPakistan {
+            get {
+                return ResourceManager.GetString("lblPakistan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maklumat Harga Sawit Semasa.
         /// </summary>
         public static string lblPalmPrice {
@@ -7225,11 +7342,47 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PEKERJA AM.
+        /// </summary>
+        public static string lblPekerjaAm {
+            get {
+                return ResourceManager.GetString("lblPekerjaAm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PEMANDU.
+        /// </summary>
+        public static string lblPemandu {
+            get {
+                return ResourceManager.GetString("lblPemandu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keluarga Peneroka.
         /// </summary>
         public static string lblPeneroka {
             get {
                 return ResourceManager.GetString("lblPeneroka", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PENOREH.
+        /// </summary>
+        public static string lblPenoreh {
+            get {
+                return ResourceManager.GetString("lblPenoreh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PENUAI.
+        /// </summary>
+        public static string lblPenuai {
+            get {
+                return ResourceManager.GetString("lblPenuai", resourceCulture);
             }
         }
         
@@ -7999,6 +8152,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEMAIAN.
+        /// </summary>
+        public static string lblSemaian {
+            get {
+                return ResourceManager.GetString("lblSemaian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kod Pendek.
         /// </summary>
         public static string lblShrtCode {
@@ -8503,6 +8665,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TAPAK SEMAIAN.
+        /// </summary>
+        public static string lblTapakSemaian {
+            get {
+                return ResourceManager.GetString("lblTapakSemaian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target.
         /// </summary>
         public static string lblTarget {
@@ -8571,6 +8742,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblTel {
             get {
                 return ResourceManager.GetString("lblTel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to THAILAND.
+        /// </summary>
+        public static string lblThailand {
+            get {
+                return ResourceManager.GetString("lblThailand", resourceCulture);
             }
         }
         
@@ -9552,6 +9732,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblVendorCount {
             get {
                 return ResourceManager.GetString("lblVendorCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIETNAM.
+        /// </summary>
+        public static string lblVietnam {
+            get {
+                return ResourceManager.GetString("lblVietnam", resourceCulture);
             }
         }
         
@@ -11235,6 +11424,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string titleRegisterGroupProductvt {
             get {
                 return ResourceManager.GetString("titleRegisterGroupProductvt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rumusan Kedudukan Pekerja Kontraktor.
+        /// </summary>
+        public static string titleReportPekerjaKontraktor {
+            get {
+                return ResourceManager.GetString("titleReportPekerjaKontraktor", resourceCulture);
             }
         }
         

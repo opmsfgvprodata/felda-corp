@@ -3906,4 +3906,49 @@
   <data name="lblTapakSemaian" xml:space="preserve">
     <value>TAPAK SEMAIAN</value>
   </data>
+  <data name="hdrReportTitleLaporanPecahanBangsa" xml:space="preserve">
+    <value>LAPORAN PECAHAN BANGSA</value>
+  </data>
+  <data name="lblBangladesh" xml:space="preserve">
+    <value>BANGLADESH</value>
+  </data>
+  <data name="lblBilPekerjaSemasa" xml:space="preserve">
+    <value>BIL. PEKERJA SEMASA</value>
+  </data>
+  <data name="lblFilipina" xml:space="preserve">
+    <value>FILIPINA</value>
+  </data>
+  <data name="lblIndia" xml:space="preserve">
+    <value>INDIA</value>
+  </data>
+  <data name="lblIndonesia" xml:space="preserve">
+    <value>INDONESIA</value>
+  </data>
+  <data name="lblKemboja" xml:space="preserve">
+    <value>KEMBOJA</value>
+  </data>
+  <data name="lblKeraniResit" xml:space="preserve">
+    <value>KERANI RESIT</value>
+  </data>
+  <data name="lblMalaysia" xml:space="preserve">
+    <value>MALAYSIA</value>
+  </data>
+  <data name="lblMandor" xml:space="preserve">
+    <value>MANDOR</value>
+  </data>
+  <data name="lblNepal" xml:space="preserve">
+    <value>NEPAL</value>
+  </data>
+  <data name="lblPakistan" xml:space="preserve">
+    <value>PAKISTAN</value>
+  </data>
+  <data name="lblSemaian" xml:space="preserve">
+    <value>SEMAIAN</value>
+  </data>
+  <data name="lblThailand" xml:space="preserve">
+    <value>THAILAND</value>
+  </data>
+  <data name="lblVietnam" xml:space="preserve">
+    <value>VIETNAM</value>
+  </data>
 </root>

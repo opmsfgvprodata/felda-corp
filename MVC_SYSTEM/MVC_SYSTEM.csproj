@@ -990,6 +990,7 @@
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
     <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
+    <Compile Include="ModelsDapper\sp_RptPecahanBangsa_Result.cs" />
     <Compile Include="ModelsDapper\sp_RptGajiMinima_New_Result.cs" />
     <Compile Include="ModelsDapper\Worker.cs" />
     <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
@@ -3761,6 +3762,7 @@
     <Content Include="Views\Report\_ProductivityRptAdvanceSearch.cshtml" />
     <Content Include="Views\Report\_ProductivityRptSearch.cshtml" />
     <Content Include="Views\Report\ProductivityReport.cshtml" />
+    <Content Include="Views\Report\PecahanBangsa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

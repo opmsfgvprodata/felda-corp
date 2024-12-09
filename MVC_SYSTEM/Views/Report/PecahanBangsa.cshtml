@@ -1,0 +1,832 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@using MVC_SYSTEM.ModelsDapper
+@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_PecahanBangsa_Result>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+    ViewBag.Title = "Pecahan Bangsa";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+
+    int? fldPenuaiMA = 0;
+    int? fldPenuaiIN = 0;
+    int? fldPenuaiBA = 0;
+    int? fldPenuaiNE = 0;
+    int? fldPenuaiID = 0;
+    int? fldPenuaiPH = 0;
+    int? fldPenuaiPK = 0;
+    int? fldPenuaiCB = 0;
+    int? fldPenuaiV = 0;
+    int? fldPenuaiTH = 0;
+
+    int? fldPekerjaAmMA = 0;
+    int? fldPekerjaAmIN = 0;
+    int? fldPekerjaAmBA = 0;
+    int? fldPekerjaAmNE = 0;
+    int? fldPekerjaAmID = 0;
+    int? fldPekerjaAmPH = 0;
+    int? fldPekerjaAmPK = 0;
+    int? fldPekerjaAmCB = 0;
+    int? fldPekerjaAmV = 0;
+    int? fldPekerjaAmTH = 0;
+
+    int? fldPenorehMA = 0;
+    int? fldPenorehIN = 0;
+    int? fldPenorehBA = 0;
+    int? fldPenorehNE = 0;
+    int? fldPenorehID = 0;
+    int? fldPenorehPH = 0;
+    int? fldPenorehPK = 0;
+    int? fldPenorehCB = 0;
+    int? fldPenorehV = 0;
+    int? fldPenorehTH = 0;
+
+    int? fldSemaianMA = 0;
+    int? fldSemaianIN = 0;
+    int? fldSemaianBA = 0;
+    int? fldSemaianNE = 0;
+    int? fldSemaianID = 0;
+    int? fldSemaianPH = 0;
+    int? fldSemaianPK = 0;
+    int? fldSemaianCB = 0;
+    int? fldSemaianV = 0;
+    int? fldSemaianTH = 0;
+
+    int? fldMandorMA = 0;
+    int? fldMandorIN = 0;
+    int? fldMandorBA = 0;
+    int? fldMandorNE = 0;
+    int? fldMandorID = 0;
+    int? fldMandorPH = 0;
+    int? fldMandorPK = 0;
+    int? fldMandorCB = 0;
+    int? fldMandorV = 0;
+    int? fldMandorTH = 0;
+
+    int? fldKeraniResitMA = 0;
+    int? fldKeraniResitIN = 0;
+    int? fldKeraniResitBA = 0;
+    int? fldKeraniResitNE = 0;
+    int? fldKeraniResitID = 0;
+    int? fldKeraniResitPH = 0;
+    int? fldKeraniResitPK = 0;
+    int? fldKeraniResitCB = 0;
+    int? fldKeraniResitV = 0;
+    int? fldKeraniResitTH = 0;
+
+    int? fldJumlah = 0;
+    int RowNo = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "PecahanBangsa_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string status = "";
+    string selectionheader = "";
+    if (ViewBag.Status1 == 2)
+    {
+        status = GlobalResActiveWorker.hdrStatus2;
+    }
+    else if (ViewBag.Status1 == 1)
+    {
+        status = GlobalResActiveWorker.hdrStatus1;
+    }
+    else
+    {
+        status = GlobalResActiveWorker.hdrStatus0;
+    }
+    if (ViewBag.IncLdg2 == 1)
+    {
+        selectionheader = "";
+    }
+    else if (ViewBag.IncLdg2 == 2)
+    {
+        selectionheader = ViewBag.WilayahName;
+    }
+    else
+    {
+        selectionheader = ViewBag.WilayahName + " - (" + ViewBag.LadangCode + " - " + ViewBag.LadangName + ")";
+    }
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+@using (Html.BeginForm("PecahanBangsa", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResActiveWorker.WaitMsg</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResActiveWorker.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResActiveWorker.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top: 7px">
+            <p style="text-align:center;"><label>@GlobalResCorp.hdrReportTitleLaporanPecahanBangsa</label></p>
+            @if (Model.Count() != 0)
+            {
+                <div id="scrollArea" class="modal-body">
+                    @foreach (var costcentre in Model.Select(s => s.fldCompCode.ToString()).Distinct())
+                    {
+                        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+                        <logo/>
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="63" style="text-align:center;vertical-align:middle;">
+
+                                        @namapenuhsyarikat
+                                        <br/>
+                                        (@namasyarikat)
+                                        <br/>
+                                        LAPORAN PECAHAN BANGSA
+                                        <br/>
+                                        @ViewBag.Year
+                                    </th>
+                                </tr>
+                                @if (ViewBag.IncLdg2 != 1)
+                                {
+                                    <tr>
+                                        <th colspan="63" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @selectionheader
+                                        </th>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
+                                    @if (ViewBag.WilayahIDList2 == 0 && ViewBag.LadangIDList2 == 0)
+                                    {
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+
+                                    }
+                                    else
+                                    {
+                                        <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
+                                    }
+                                        <th colspan="61" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBilPekerjaSemasa</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPenuai</th>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPekerjaAm</th>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPenoreh</th>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblSemaian</th>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMandor</th>
+                                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKeraniResit</th>
+                                    <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</th>
+                                </tr>
+                                <tr>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblMalaysia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndonesia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblBangladesh</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblNepal</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblIndia</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblFilipina</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblPakistan</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblKemboja</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblVietnam</th>
+                                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResCorp.lblThailand</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @RowNo
+                                        </td>
+
+                                        @if (ViewBag.WilayahIDList2 == 0 && ViewBag.LadangIDList2 == 0)
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNamaWilayah</td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fldNamaLadang</td>
+                                        }
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenuaiTH)
+                                        </td>
+
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPekerjaAmTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldPenorehTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldSemaianTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldMandorTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitMA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitIN)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitBA)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitNE)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitID)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitPH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitPK)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitCB)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitV)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldKeraniResitTH)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fldJumlah)
+                                        </td>
+
+                                    </tr>
+                                    {
+                                        fldPenuaiMA = fldPenuaiMA + item.fldPenuaiMA;
+                                        fldPenuaiIN = fldPenuaiIN + item.fldPenuaiIN;
+                                        fldPenuaiBA = fldPenuaiBA + item.fldPenuaiBA;
+                                        fldPenuaiNE = fldPenuaiNE + item.fldPenuaiNE;
+                                        fldPenuaiID = fldPenuaiID + item.fldPenuaiID;
+                                        fldPenuaiPH = fldPenuaiPH + item.fldPenuaiPH;
+                                        fldPenuaiPK = fldPenuaiPK + item.fldPenuaiPK;
+                                        fldPenuaiCB = fldPenuaiCB + item.fldPenuaiCB;
+                                        fldPenuaiV = fldPenuaiV + item.fldPenuaiV;
+                                        fldPenuaiV = fldPenuaiV + item.fldPenuaiV;
+                                        fldPenuaiTH = fldPenuaiTH + item.fldPenuaiTH;
+
+                                        fldPekerjaAmMA = fldPekerjaAmMA + item.fldPekerjaAmMA;
+                                        fldPekerjaAmIN = fldPekerjaAmIN + item.fldPekerjaAmIN;
+                                        fldPekerjaAmBA = fldPekerjaAmBA + item.fldPekerjaAmBA;
+                                        fldPekerjaAmNE = fldPekerjaAmNE + item.fldPekerjaAmNE;
+                                        fldPekerjaAmID = fldPekerjaAmID + item.fldPekerjaAmID;
+                                        fldPekerjaAmPH = fldPekerjaAmPH + item.fldPekerjaAmPH;
+                                        fldPekerjaAmPK = fldPekerjaAmPK + item.fldPekerjaAmPK;
+                                        fldPekerjaAmCB = fldPekerjaAmCB + item.fldPekerjaAmCB;
+                                        fldPekerjaAmV = fldPekerjaAmV + item.fldPekerjaAmV;
+                                        fldPekerjaAmTH = fldPekerjaAmTH + item.fldPekerjaAmTH;
+
+                                        fldPenorehMA = fldPenorehMA + item.fldPenorehMA;
+                                        fldPenorehIN = fldPenorehIN + item.fldPenorehIN;
+                                        fldPenorehBA = fldPenorehBA + item.fldPenorehBA;
+                                        fldPenorehNE = fldPenorehNE + item.fldPenorehNE;
+                                        fldPenorehID = fldPenorehID + item.fldPenorehID;
+                                        fldPenorehPH = fldPenorehPH + item.fldPenorehPH;
+                                        fldPenorehPK = fldPenorehPK + item.fldPenorehPK;
+                                        fldPenorehCB = fldPenorehCB + item.fldPenorehCB;
+                                        fldPenorehV = fldPenorehV + item.fldPenorehV;
+                                        fldPenorehTH = fldPenorehTH + item.fldPenorehTH;
+
+                                        fldSemaianMA = fldSemaianMA + item.fldSemaianMA;
+                                        fldSemaianIN = fldSemaianIN + item.fldSemaianIN;
+                                        fldSemaianBA = fldSemaianBA + item.fldSemaianBA;
+                                        fldSemaianNE = fldSemaianNE + item.fldSemaianNE;
+                                        fldSemaianID = fldSemaianID + item.fldSemaianID;
+                                        fldSemaianPH = fldSemaianPH + item.fldSemaianPH;
+                                        fldSemaianPK = fldSemaianPK + item.fldSemaianPK;
+                                        fldSemaianCB = fldSemaianCB + item.fldSemaianCB;
+                                        fldSemaianV = fldSemaianV + item.fldSemaianV;
+                                        fldSemaianTH = fldSemaianTH + item.fldSemaianTH;
+
+                                        fldMandorMA = fldMandorMA + item.fldMandorMA;
+                                        fldMandorIN = fldMandorIN + item.fldMandorIN;
+                                        fldMandorBA = fldMandorBA + item.fldMandorBA;
+                                        fldMandorNE = fldMandorNE + item.fldMandorNE;
+                                        fldMandorID = fldMandorID + item.fldMandorID;
+                                        fldMandorPH = fldMandorPH + item.fldMandorPH;
+                                        fldMandorPK = fldMandorPK + item.fldMandorPK;
+                                        fldMandorCB = fldMandorCB + item.fldMandorCB;
+                                        fldMandorV = fldMandorV + item.fldMandorV;
+                                        fldMandorTH = fldMandorTH + item.fldMandorTH;
+
+
+                                        fldKeraniResitMA = fldKeraniResitMA + item.fldKeraniResitMA;
+                                        fldKeraniResitIN = fldKeraniResitIN + item.fldKeraniResitIN;
+                                        fldKeraniResitBA = fldKeraniResitBA + item.fldKeraniResitBA;
+                                        fldKeraniResitNE = fldKeraniResitNE + item.fldKeraniResitNE;
+                                        fldKeraniResitID = fldKeraniResitID + item.fldKeraniResitID;
+                                        fldKeraniResitPH = fldKeraniResitPH + item.fldKeraniResitPH;
+                                        fldKeraniResitPK = fldKeraniResitPK + item.fldKeraniResitPK;
+                                        fldKeraniResitCB = fldKeraniResitCB + item.fldKeraniResitCB;
+                                        fldKeraniResitV = fldKeraniResitV + item.fldKeraniResitV;
+                                        fldKeraniResitTH = fldKeraniResitTH + item.fldKeraniResitTH;
+
+                                        fldJumlah = fldJumlah + item.fldJumlah;
+
+                                    }
+                                    RowNo++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    @if (ViewBag.WilayahIDList2 == 0 && ViewBag.LadangIDList2 == 0)
+                                    {
+                                        <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    else
+                                    {
+                                        <td colspan="3" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiMA </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiIN </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiBA </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiNE </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiID </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiPH </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiPK </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiCB </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiV </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiTH </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmMA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmIN  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmBA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmNE  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmID  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmPH  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmPK  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmCB  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmV  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPekerjaAmTH  </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehMA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehIN  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehBA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehNE  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehID  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehPH  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehPK  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehCB  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehV  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenorehTH  </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianMA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianIN  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianBA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianNE  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianID  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianPH  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianPK  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianCB  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianV  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldSemaianTH  </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorMA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorIN  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorBA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorNE  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorID  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldPenuaiPH </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorPK   </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorCB  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorV  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldMandorTH  </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitMA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitIN  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitBA  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitNE  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitID  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitPH  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitPK  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitCB  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitV  </td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldKeraniResitTH  </td>
+
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@fldJumlah</td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+                </div>
+                <!--<a href="#" id="downloadpdf">Download PDF</a>-->
+                //farahin comment button asal
+                @*<a href="#" id="downloadpdf2">Download PDF</a>
+                    <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>*@
+
+                <br/>
+
+                //farahin-20012021
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
+            }
+            else
+            {
+                <p style="color:red">@GlobalResActiveWorker.lblSelectionNote</p>
+            }
+        </div>
+
+        @*sarah added 10/05/2023*@
+        <div id='myModal1' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
+
+        @section scripts{
+            @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+        }
+        @*sarah added sampai sini*@
+    </section>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+         //farahin-20012021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        @*$("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });*@
+        $("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "PecahanBangsa" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+            });
+            return false;
+        });
+          $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+        var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang4", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                debugger
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+        @*if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'error'); };
+            $.ajax(WilayahIDList);
+        });*@
+    });
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
