@@ -27,7 +27,7 @@ namespace MVC_SYSTEM.ViewingModelsOPMS
         [StringLength(2)]
         public string fld_JnisAktvt { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [StringLength(10)]

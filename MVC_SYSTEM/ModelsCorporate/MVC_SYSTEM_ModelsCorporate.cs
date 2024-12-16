@@ -167,7 +167,7 @@ namespace MVC_SYSTEM.ModelsCorporate
             //added by kamalia 7/10/2021
             modelBuilder.Entity<tbl_UpahAktiviti>()
               .Property(e => e.fld_Harga)
-              .HasPrecision(18, 3);
+              .HasPrecision(18, 4);
 
             modelBuilder.Entity<tbl_UpahAktiviti>()
                 .Property(e => e.fld_MaxProduktiviti)
