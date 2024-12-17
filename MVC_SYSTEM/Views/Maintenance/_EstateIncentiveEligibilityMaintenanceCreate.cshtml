@@ -27,12 +27,12 @@
                             </div>
                         </div>
                         @*<div class="form-group">
-                            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
-                            <div class="col-sm-8">
-                                @Html.DropDownListFor(model => model.fld_KodInsentif, new SelectList(ViewBag.IncentiveList, "Value", "Text"), new { @class = "form-control incentiveList", @disabled = "true" })
-                                @Html.ValidationMessageFor(model => model.fld_KodInsentif, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
+            <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(model => model.fld_KodInsentif, new SelectList(ViewBag.IncentiveList, "Value", "Text"), new { @class = "form-control incentiveList", @disabled = "true" })
+                @Html.ValidationMessageFor(model => model.fld_KodInsentif, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblDescription:</label>
                             <div class="col-sm-8">
@@ -41,6 +41,20 @@
                                 <div class="has-error">
                                     <span class="help-block">Sila tekan butang "Ctrl" atau "Shift" pada papan kekunci semasa memilih</span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Syarikat:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.SyarikatList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.fld_WilayahID, new SelectList(ViewBag.WilayahList, "Value", "Text"), htmlAttributes: new { @class = "form-control col-sm-2" })
+                                @Html.ValidationMessageFor(model => model.fld_WilayahID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -109,4 +123,73 @@
                 }
             });
         });
+     $("#fld_SyarikatID").change(function () {
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah2", "Maintenance")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#fld_SyarikatID").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#fld_WilayahID").empty();
+            $("#fld_LadangID").empty();
+            $("#fld_WilayahID").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            $("#fld_LadangID").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#fld_SyarikatID").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#fld_WilayahID").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+            };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+     });
+
+    $("#fld_WilayahID").change(function () {
+        if ($("#fld_WilayahID").val() === "") {
+            $("#fld_LadangID").empty();
+            $("#fld_LadangID").append("<option value=" + "" + ">" + '@GlobalResCorp.lblChoose' + "</option>");
+            $("#fld_LadangID").prop("disabled", true);
+            //$("#fld_Year").prop("disabled", true);
+        }
+
+        else {
+
+            var WilayahList = {};
+            WilayahList.url = "@Url.Action("GetLadang2", "Maintenance")"; //fatin modified GetLadang to GetLadang2 - 07/08/2023
+            WilayahList.type = "POST";
+            WilayahList.data = JSON.stringify({ WilayahID: $("#fld_WilayahID").val(), SyarikatList: $("#fld_SyarikatID").val() }); //fatin modified add SyarikatList - 07/08/2023
+            WilayahList.datatype = "json";
+            WilayahList.contentType = "application/json";
+            WilayahList.success = function (ladanglist) {
+
+                console.log(ladanglist);
+
+                $("#fld_LadangID").empty();
+
+                if (ladanglist.length === 0) {
+                    $("#fld_LadangID").append("<option value=" +
+                        "" +
+                        ">" +
+                        '@GlobalResCorp.lblNoEstate' +
+                        "</option>");
+                }
+
+                else {
+                    $("#fld_LadangID").prop("disabled", false);
+                    for (var i = 0; i < ladanglist.length; i++) {
+                        $("#fld_LadangID").append("<option value=" + ladanglist[i].Value + ">" + ladanglist[i].Text + "</option>");
+                    }
+                    //$("#fld_Year").val("");
+                }
+
+            };
+            WilayahList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahList);
+        }
+    });
 </script>

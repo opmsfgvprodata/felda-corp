@@ -37,6 +37,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
     public partial class tbl_KelayakanInsentifLdgViewModelCreate
     {
+        public int? fld_SyarikatID { get; set; }
+
+        public int? fld_WilayahID { get; set; }
+
         [Key]
         public Guid fld_KelayakanInsentifLdgID { get; set; }
 
