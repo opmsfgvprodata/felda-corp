@@ -106,7 +106,7 @@
                     ok: function (data, array, event) {
                             $(gethis).attr("disabled", "disabled");
                             //$('#btntlk' + id).removeAttr('disabled', false);
-                    
+
                             var ReversePosting = {};
                             ReversePosting.url = "@Url.Action("UpdateData", "EstateDataManagement")";
                             ReversePosting.type = "POST";
@@ -150,7 +150,7 @@
             WilayahList.contentType = "application/json";
             WilayahList.success = function (ladanglist) {
                 $("#LadangList").empty();
-                $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                $("#LadangList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
                 for (var i = 0; i < ladanglist.length; i++) {
                     if ($("#WilayahList").val() == 0) {
                         disableoption = "disabled";
@@ -173,8 +173,8 @@
         SyarikatList.success = function (wilayahlist) {
             $("#LadangList").empty();
             $("#WilayahList").empty();
-            $("#LadangList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
-            $("#WilayahList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            $("#LadangList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            $("#WilayahList").append("<option value=0>@GlobalResCorp.lblChoose</option>");
                     for (var i = 0; i < wilayahlist.length; i++) {
                     if ($("#SyarikatList").val() == 0) {
                         disableoption = "disabled";
