@@ -3695,7 +3695,6 @@
     <Content Include="Views\Report\KedudukanPkjMengikutWlyhReport.cshtml" />
     <Content Include="Views\Report\MapaReport.cshtml" />
     <Content Include="Views\Report\_MapaReport.cshtml" />
-    <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
     <Content Include="Views\Report\RumusanPekerjaBulanKeseluruhan.cshtml" />
     <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
     <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />

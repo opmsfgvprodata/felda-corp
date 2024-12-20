@@ -347,7 +347,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _PayrateFullMaintenance(string AktvtList = "", int page = 1, string sort = "fld_KodAktvt", string sortdir = "ASC")
+        public ActionResult _PayrateFullMaintenance(string AktvtList = "", int page = 1, string sort = "fld_ID", string sortdir = "ASC", string sort1 = "fld_KodAktvt")
         {
             //ViewBag.Maintenance = "class = active";
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -379,7 +379,8 @@ namespace MVC_SYSTEM.Controllers
             else
             {
                 records.Content = db.tbl_UpahAktiviti.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                       .OrderBy(sort + " " + sortdir)
+                       .OrderBy(sort1 + " " + sortdir)
+                       //.OrderBy(x => x.fld_ID + " " + sortdir)
                        .Skip((page - 1) * pageSize)
                        .Take(pageSize)
                        .ToList();
@@ -630,13 +631,9 @@ namespace MVC_SYSTEM.Controllers
 
                     unitData.fld_Desc = tbl_UpahAktiviti.fld_Desc;
                     unitData.fld_Harga = tbl_UpahAktiviti.fld_Harga;
-                    //added by kamalia 15/8/2021
                     unitData.fld_MaxProduktiviti = tbl_UpahAktiviti.fld_MaxProduktiviti;
                     unitData.fld_Unit = tbl_UpahAktiviti.fld_Unit;
                     unitData.fld_DisabledFlag = tbl_UpahAktiviti.fld_DisabledFlag;
-                    //getdata.fld_Produktvt = tbl_UpahAktiviti.fld_Produktvt;
-
-                    //db.Entry(unitData).State = EntityState.Modified;
                     db.SaveChanges();
 
                     string appname = Request.ApplicationPath;
@@ -719,9 +716,9 @@ namespace MVC_SYSTEM.Controllers
             try
             {
                 var unitData = db.tbl_UpahAktiviti.SingleOrDefault(
-                        x => x.fld_ID == tbl_UpahAktiviti.fld_ID &&
-                             x.fld_NegaraID == NegaraID &&
-                             x.fld_SyarikatID == SyarikatID);
+                    x => x.fld_ID == tbl_UpahAktiviti.fld_ID &&
+                         x.fld_NegaraID == NegaraID &&
+                         x.fld_SyarikatID == SyarikatID);
 
                 bool status = true;
 
@@ -739,7 +736,6 @@ namespace MVC_SYSTEM.Controllers
                 }
 
                 unitData.fld_Deleted = status;
-
                 db.SaveChanges();
 
                 string appname = Request.ApplicationPath;
@@ -754,7 +750,7 @@ namespace MVC_SYSTEM.Controllers
                 return Json(new
                 {
                     success = true,
-                    msg = GlobalResCorp.msgAdd,
+                    msg = message,
                     status = "success",
                     checkingdata = "0",
                     method = "1",
@@ -782,7 +778,7 @@ namespace MVC_SYSTEM.Controllers
                 db.Dispose();
             }
         }
-
+          
         public ActionResult KwspContributionMaintenance(int page = 1, string sort = "fld_KodCaruman", string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -3109,18 +3105,26 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
-            string lastcode = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_KodJenisAktvt == jnsAktvt && x.fld_Deleted == false).OrderByDescending(o => o.fld_KodAktvt.Trim()).Select(s => s.fld_KodAktvt).FirstOrDefault();
+            string lastcode = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_KodJenisAktvt == jnsAktvt).OrderByDescending(o => o.fld_ID).Select(s => s.fld_KodAktvt).FirstOrDefault();
             //modified to create activity code untuk pertama kali - kamalia 22/4/22
             if (lastcode == null)
             {
-                int generated = int.Parse(jnsAktvt + 0 + 1);
-                string newcode = generated.ToString("0000");
+                int generated = int.Parse(jnsAktvt + 0 + 0 + 1);
+                string newcode = generated.ToString("00000");
                 return Json(newcode);
             }
             else
             {
-                int generated = int.Parse(lastcode) + 1;
-                string newcode = generated.ToString("0000");
+                //Modified by Shazana 11/12/2024
+                //int generated = int.Parse(lastcode) + 1;
+                //string newcode = generated.ToString("00000");
+
+                string generated1 = lastcode.Substring(0,2);
+
+                var genlen = lastcode.Length;
+                string gen2 = lastcode.Substring(2,(genlen -2));
+                int generated2 = int.Parse(gen2) + 1;
+                string newcode = generated1 + generated2.ToString("000");
                 return Json(newcode);
             }
 

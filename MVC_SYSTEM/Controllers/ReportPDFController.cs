@@ -187,15 +187,15 @@ namespace MVC_SYSTEM.Controllers
 
                 foreach (var pkj in pkjNoList)
                 {
-                    var checkrollPkj = pkjmast.Where(x => x.fld_Nopkj == pkj).FirstOrDefault();
-                    var kerjaHdrPkj = kerjahdr.Where(x => x.fld_Nopkj == pkj).ToList();
-                    var kerjaPkj = kerja.Where(x => x.fld_Nopkj == pkj).ToList();
-                    var kerjaOTPkj = kerjaOT.Where(x => x.fld_Nopkj == pkj).ToList();
-                    var kerjahdrCutiPkj = kerjahdrCuti.Where(x => x.fld_Nopkj == pkj).ToList();
-                    var incentivePkj = insentif.Where(x => x.fld_Nopkj == pkj).ToList();
                     var gajiPkj = gajiBulanan.Where(x => x.fld_Nopkj == pkj).FirstOrDefault();
                     if (gajiPkj != null)
                     {
+                        var checkrollPkj = pkjmast.Where(x => x.fld_Nopkj == pkj).FirstOrDefault();
+                        var kerjaHdrPkj = kerjahdr.Where(x => x.fld_Nopkj == pkj).ToList();
+                        var kerjaPkj = kerja.Where(x => x.fld_Nopkj == pkj).ToList();
+                        var kerjaOTPkj = kerjaOT.Where(x => x.fld_Nopkj == pkj).ToList();
+                        var kerjahdrCutiPkj = kerjahdrCuti.Where(x => x.fld_Nopkj == pkj).ToList();
+                        var incentivePkj = insentif.Where(x => x.fld_Nopkj == pkj).ToList();
                         var carumanTambahanPkj = new List<tbl_ByrCarumanTambahan>();
                         if (gajiPkj != null)
                         {

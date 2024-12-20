@@ -14,7 +14,7 @@
         [Key]
         public int fld_ID { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [StringLength(100)]
