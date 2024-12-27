@@ -30,7 +30,7 @@
     decimal? totalfld_CheckRollManualPax = 0;
     ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
     DateTime Todaydate = ChangeTimeZone.gettimezone();
-    string uniquefilename = "Rmsn Prmhnn Wang Gaji Pkrja Ldg(MAPA)" + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+    string uniquefilename = "MAPA_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString();
 
     int? totalcashpax = 0;
     int? totalchequepax = 0;
@@ -347,6 +347,7 @@
                                 @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollRML)
                             </td>
                             <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                0
                             </td>
                             <td align="Right" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                                 @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollManual)
@@ -433,6 +434,7 @@
                                 @carumanInfo.fld_NoGL
                             </td>
                             <td align="Right" style="vertical-align: middle !important; border: 1px solid black;background-color:red" border="1">
+                              
                             </td>
                             <td align="center" style="vertical-align: middle !important; border: 1px solid black;background-color:red" border="1">
                                 @carumanInfo.fld_zonCIT
@@ -444,6 +446,7 @@
                                 @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollRML)
                             </td>
                             <td align="center" style="vertical-align: middle !important; border: 1px solid black;background-color:red" border="1">
+                                0
                             </td>
                             <td align="Right" style="vertical-align: middle !important; border: 1px solid black;background-color:red" border="1">
                                 @GetTriager.GetTotalForMoney(paymentModeData.sp_RptMAPA.fld_CheckRollManual)
@@ -540,7 +543,7 @@
                         totalM2Epax = totalM2Epax + paymentModeData.sp_RptMAPA.fld_M2EPax;
                         totalpax = totalcashpax + totalchequepax + totalcdmaspax + totalewalletpax + totalM2Upax + totalM2Epax;
                         totaljumlahwangdipohon = totaljumlahwangdipohon + jumlahwangdipohon;
-                        totalfld_CheckRollRML = totalfld_CheckRollRML + paymentModeData.sp_RptMAPA.fld_CheckRollRML;
+                        totalfld_CheckRollRML = totalfld_CheckRollRML + (paymentModeData.sp_RptMAPA.fld_CheckRollRML == null? 0: paymentModeData.sp_RptMAPA.fld_CheckRollRML) ;
                         totalfld_CheckRollManual = totalfld_CheckRollManual + paymentModeData.sp_RptMAPA.fld_CheckRollManual;
 
 
@@ -593,7 +596,7 @@
                         <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah (RM)</th>
                         <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalpax</th>
                         <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalfld_CheckRollRML)</th>
-                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">0</th>
                         <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(totalfld_CheckRollManual)</th>
                         <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalkwsp </th>
                         <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @totalpotonglain </th>
@@ -612,13 +615,13 @@
                         <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"></th>
                     </tr>
 
-                    @if (totalwilayah == wholewilayah)
+                    @if (totalwilayah == wholewilayah  && wholewilayah !=1)
                     {
                         <tr>
                             <th colspan="7" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah Keseluruhan(RM)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotalpax</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalfld_CheckRollRML)</th>
-                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"></th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">0</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(grandtotalfld_CheckRollManual)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalkwsp)</th>
                             <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1"> @GetTriager.GetTotalForMoney(grandtotalpotonglain)</th>
