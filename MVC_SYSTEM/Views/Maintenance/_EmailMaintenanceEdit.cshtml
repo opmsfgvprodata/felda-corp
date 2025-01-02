@@ -1,5 +1,5 @@
 ﻿@using MVC_SYSTEM.Class
-@model MVC_SYSTEM.Models.tblEmailList
+@model MVC_SYSTEM.ModelsCustom.CustMod_Email
 
 @{
     @Scripts.Render("~/bundles/jqueryval")
@@ -20,16 +20,37 @@
                     <div class="panel-heading">@GlobalResCorp.lblEmailInfo</div>
                     <div class="panel-body">
                         <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblCompany:</label>
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(model => model.fldCostCenter, new SelectList(ViewBag.SyarikatIDList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldCostCenter, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(model => model.fldWilayahID, new SelectList(ViewBag.WilayahIDList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldWilayahID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblEstate:</label>
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(model => model.fldLadangID, new SelectList(ViewBag.LadangIDList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldLadangID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblName:</label>
                             <div class="col-sm-5">
-                                @Html.TextBoxFor(model => model.fldName, htmlAttributes: new { @class = "form-control"})
+                                @Html.TextBoxFor(model => model.fldName, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.fldName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-3">@GlobalResCorp.lblEmail:</label>
                             <div class="col-sm-5">
-                                @Html.TextBoxFor(model => model.fldEmail, htmlAttributes: new { @class = "form-control"})
+                                @Html.TextBoxFor(model => model.fldEmail, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.fldEmail, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -47,27 +68,7 @@
                                 @Html.ValidationMessageFor(model => model.fldDepartment, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">@GlobalResCorp.lblRegion:</label>
-                            <div class="col-sm-5">
-                                @Html.DropDownListFor(model => model.fldWilayahID, new SelectList(ViewBag.Wilayah, "Value", "Text"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.fldWilayahID, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        @*<div class="form-group">
-            <label class="control-label col-sm-3">@GlobalResCorp.lblTblBlokDataMax:</label>
-            <div class="col-sm-8">
-                @Html.TextBoxFor(model => model.fldOptConfFlag2, htmlAttributes: new { @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.fldOptConfFlag2, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-                        @*<div class="form-group">
-            <label class="control-label col-sm-3">@GlobalResCorp.lblCodeValue3:</label>
-            <div class="col-sm-8">
-                @Html.TextBoxFor(model => model.fldOptConfFlag3, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.fldOptConfFlag3, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+
                         @Html.HiddenFor(model => model.fldID)
                     </div>
                 </div>
@@ -88,4 +89,83 @@
 </script>
 
 
+<script>
+    $("#fldCostCenter").change(function () {
+        debugger
+        var fldCostCenter = {};
+        var disableoption = "";
+        fldCostCenter.url = "@Url.Action("GetWilayah", "Maintenance")";
+        fldCostCenter.type = "POST";
+        fldCostCenter.data = JSON.stringify({ SyarikatID: $("#fldCostCenter").val() });
+        fldCostCenter.datatype = "json";
+        fldCostCenter.contentType = "application/json";
+        fldCostCenter.success = function (wilayahlist) {
+            $("#fldWilayahID").empty();
+            $("#fldLadangID").empty();
+            $("#fldLadangID").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#fldCostCenter").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#fldWilayahID").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+        };
+
+        fldCostCenter.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(fldCostCenter);
+    });
+
+
+    $("#fldWilayahID").change(function () {
+        var disableoption = "";
+        fldWilayahID.url = "@Url.Action("GetLadang2", "Maintenance")";
+        fldWilayahID.type = "POST";
+        fldWilayahID.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), SyarikatList: $("#fldCostCenter").val() });
+        fldWilayahID.datatype = "json";
+        fldWilayahID.contentType = "application/json";
+        fldWilayahID.success = function (ladanglist) {
+            $("#fldLadangID").empty();
+            $("#fldLadangID").append("<option value=0>@GlobalResCorp.lblChoose</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#fldWilayahID").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#fldLadangID").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        fldWilayahID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(fldWilayahID);
+    });
+
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+
+<script>
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
 

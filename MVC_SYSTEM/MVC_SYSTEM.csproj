@@ -980,6 +980,7 @@
     <Compile Include="ModelsCustom\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsCustom\CustMod_DateList.cs" />
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
+    <Compile Include="ModelsCustom\CustMod_Email.cs" />
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
     <Compile Include="ModelsCustom\CustMod_PaidLeaveGenerate.cs" />

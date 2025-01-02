@@ -1,28 +1,20 @@
-namespace MVC_SYSTEM.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-    [Table("tblEmailList")]
-    public partial class tblEmailList
+namespace MVC_SYSTEM.ModelsCustom
+{
+    public class CustMod_Email
     {
-        [Key]
         public int fldID { get; set; }
 
-        [StringLength(50)]
         public string fldEmail { get; set; }
 
-        [StringLength(100)]
         public string fldName { get; set; }
 
-        [Required]
         public string fldCategory { get; set; }
 
-        [Required]
-        [StringLength(30)]
         public string fldDepartment { get; set; }
 
         public bool? fldDeleted { get; set; }
@@ -32,16 +24,15 @@ namespace MVC_SYSTEM.Models
         public int? fldSyarikatID { get; set; }
 
         public int? fldWilayahID { get; set; }
-
+        //added by kamali 24/11/21
         public int? fldLadangID { get; set; }
 
-        [StringLength(50)]
-        public string fld_CreatedBy { get; set; }
+        public string fldCostCenter { get; set; }
 
-        [StringLength(50)]
+        public string fld_CreatedBy { get; set; }
         public string fld_ModifiedBy { get; set; }
         public DateTime? fld_DTCreated { get; set; }
         public DateTime? fld_DTModified { get; set; }
-    }
 
+    }
 }

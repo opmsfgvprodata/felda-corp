@@ -34,9 +34,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         //added by kamali 24/11/21
         public int? fldLadangID { get; set; }
 
-        //Added by Shazana 20/4/2023
-        [StringLength(100)]
-        public string fld_Role { get; set; }
+        ////Added by Shazana 20/4/2023
+        //[StringLength(100)]
+        //public string fld_Role { get; set; }
 
     }
 }

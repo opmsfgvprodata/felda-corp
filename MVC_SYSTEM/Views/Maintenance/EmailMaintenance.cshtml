@@ -1,4 +1,4 @@
-﻿@using MVC_SYSTEM.Class;
+﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ModelsCustom.CustMod_Email>
 @{
     ViewBag.Title = GlobalResCorp.lblEmail;
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
@@ -23,23 +23,32 @@
         @using (Ajax.BeginForm("_EmailMaintenance", "Maintenance", null, options, new { @id = "AgamaSearchDetails" }))
         {
             @Html.AntiForgeryToken()
-        <div class="row">
-            <div class="col-sm-2">
-                @Html.Label(GlobalResCorp.hdrCategory)
-                @Html.DropDownList("CateList", null, htmlAttributes: new { @class = "form-control" })
+            <div class="row">
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResCorp.lblRegion)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResCorp.lblEstate)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.hdrCategory)
+                    @Html.DropDownList("CateList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResCorp.lblDepart)
+                    @Html.DropDownList("DepartList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResLocalWorkerInfo.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
             </div>
-            <div class="col-sm-3">
-                @Html.Label(GlobalResCorp.lblDepart)
-                @Html.DropDownList("DepartList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-3">
-                @Html.Label(GlobalResCorp.lblRegion)
-                @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2" style="padding-top:25px;">
-                <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResLocalWorkerInfo.btnViewName" onclick="return DisplayProgressMessage(this);" />
-            </div>
-        </div>
         }
     </div>
 
@@ -84,6 +93,136 @@
     }
 </script>
 
+<script>
+    $("#SyarikatIDList").change(function () {
+        var SyarikatIDList = {};
+        var disableoption = "";
+        SyarikatIDList.url = "@Url.Action("GetWilayah", "Maintenance")";
+        SyarikatIDList.type = "POST";
+        SyarikatIDList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatIDList.datatype = "json";
+        SyarikatIDList.contentType = "application/json";
+        SyarikatIDList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+            getLadangList();
+        };
+
+        SyarikatIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatIDList);
+    });
+
+
+    $("#WilayahIDList").change(function () {
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang2", "Maintenance")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+
+<script>
+    $("#SyarikatIDList").change(function () {
+        var SyarikatIDList = {};
+        var disableoption = "";
+        SyarikatIDList.url = "@Url.Action("GetWilayah", "Maintenance")";
+        SyarikatIDList.type = "POST";
+        SyarikatIDList.data = JSON.stringify({ SyarikatID: $("#SyarikatIDList").val() });
+        SyarikatIDList.datatype = "json";
+        SyarikatIDList.contentType = "application/json";
+        SyarikatIDList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+            getLadangList();
+        };
+
+        SyarikatIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatIDList);
+    });
+
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        debugger
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang2", "Maintenance")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatList: $("#SyarikatIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
 
 
 
