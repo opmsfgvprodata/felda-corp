@@ -83,6 +83,20 @@
 
     </div>
     //dania tambah back button 13/4/2023
+
+    @*<div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage5">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf5">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel2('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>*@
+
+}
 <div class="col-sm-12" style="text-align:right;">
     <a class="btn btn-default btn-sm" href="" id="printpage">
         <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
@@ -97,20 +111,6 @@
     <a href="@Url.Action("Index", "SAPMasterData")" onclick="return DisplayProgressMessage2(this);" class="btn btn-warning">@GlobalResCorp.btnBack</a>
 
 </div>
-    @*<div style="text-align:right; margin-top:10px">
-            <a class="btn btn-default btn-sm" href="#" id="printpage5">
-                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
-            </a>
-            <a class="btn btn-default btn-sm" href="#" id="downloadpdf5">
-                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
-            </a>
-            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel2('@uniquefilename')">
-                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
-            </a>
-        </div>*@
-
-}
-
 <div id='myModal1' class='modal fade in'>
     <div class="modal-dialog modal-lg" style="width: 70%">
         <div class="modal-content">
