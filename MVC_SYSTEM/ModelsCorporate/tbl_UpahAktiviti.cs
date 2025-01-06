@@ -13,7 +13,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Key]
         public int fld_ID { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
@@ -26,8 +26,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         //added by kamalia 6/10/2021
-        [Range(0, 9999999.999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
-        [RegularExpression("^\\d+(?:\\.\\d{1,3})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
+        [Range(0, 9999999.9999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
+        [RegularExpression("^\\d+(?:\\.\\d{1,4})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
         public decimal? fld_Harga { get; set; }
 
         [StringLength(2)]
@@ -71,7 +71,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Key]
         public int fld_ID { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
@@ -83,8 +83,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_Unit { get; set; }
 
         //added by kamalia 6/10/2021
-        [Range(0, 9999999.999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
-        [RegularExpression("^\\d+(?:\\.\\d{1,3})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
+        [Range(0, 9999999.9999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
+        [RegularExpression("^\\d+(?:\\.\\d{1,4})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
         public decimal? fld_Harga { get; set; }
 
         [StringLength(2)]
@@ -126,7 +126,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Key]
         public int fld_ID { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
@@ -139,8 +139,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         //added by kamalia 6/10/2021
-        [Range(0, 9999999.999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
-        [RegularExpression("^\\d+(?:\\.\\d{1,3})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
+        [Range(0, 9999999.9999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
+        [RegularExpression("^\\d+(?:\\.\\d{1,4})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
         public decimal? fld_Harga { get; set; }
 
         [StringLength(2)]
@@ -182,7 +182,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Key]
         public int fld_ID { get; set; }
 
-        [StringLength(4)]
+        [StringLength(5)]
         public string fld_KodAktvt { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
@@ -194,8 +194,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_Unit { get; set; }
 
         //added by kamalia 6/10/2021
-        [Range(0, 9999999.999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
-        [RegularExpression("^\\d+(?:\\.\\d{1,3})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
+        [Range(0, 9999999.9999, ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgMaxCurrencyModelValidation")]
+        [RegularExpression("^\\d+(?:\\.\\d{1,4})?$", ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgNumberModelValidation")]
         public decimal? fld_Harga { get; set; }
 
         [StringLength(2)]

@@ -16,6 +16,9 @@ namespace MVC_SYSTEM.AuthModels
 
         public int? fld_SyarikatID { get; set; }
 
+        // yana add 051023
+        public int? fld_NegaraID { get; set; }
+
         [StringLength(100)]
         public string fld_WlyhEmail { get; set; }
 

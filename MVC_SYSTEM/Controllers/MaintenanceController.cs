@@ -27,6 +27,8 @@ using vw_CutiUmumLdg = MVC_SYSTEM.ModelsCorporate.vw_CutiUmumLdg;
 using System.Data.Entity.Validation;
 using System.Globalization;
 using MVC_SYSTEM.Attributes;
+using System.Diagnostics;
+using static iTextSharp.text.pdf.AcroFields;
 
 //using OfficeOpenXml;
 
@@ -345,7 +347,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _PayrateFullMaintenance(string AktvtList = "", int page = 1, string sort = "fld_KodAktvt", string sortdir = "ASC")
+        public ActionResult _PayrateFullMaintenance(string AktvtList = "", int page = 1, string sort = "fld_ID", string sortdir = "ASC", string sort1 = "fld_KodAktvt")
         {
             //ViewBag.Maintenance = "class = active";
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -377,7 +379,8 @@ namespace MVC_SYSTEM.Controllers
             else
             {
                 records.Content = db.tbl_UpahAktiviti.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID)
-                       .OrderBy(sort + " " + sortdir)
+                       .OrderBy(sort1 + " " + sortdir)
+                       //.OrderBy(x => x.fld_ID + " " + sortdir)
                        .Skip((page - 1) * pageSize)
                        .Take(pageSize)
                        .ToList();
@@ -628,13 +631,9 @@ namespace MVC_SYSTEM.Controllers
 
                     unitData.fld_Desc = tbl_UpahAktiviti.fld_Desc;
                     unitData.fld_Harga = tbl_UpahAktiviti.fld_Harga;
-                    //added by kamalia 15/8/2021
                     unitData.fld_MaxProduktiviti = tbl_UpahAktiviti.fld_MaxProduktiviti;
                     unitData.fld_Unit = tbl_UpahAktiviti.fld_Unit;
                     unitData.fld_DisabledFlag = tbl_UpahAktiviti.fld_DisabledFlag;
-                    //getdata.fld_Produktvt = tbl_UpahAktiviti.fld_Produktvt;
-
-                    //db.Entry(unitData).State = EntityState.Modified;
                     db.SaveChanges();
 
                     string appname = Request.ApplicationPath;
@@ -717,9 +716,9 @@ namespace MVC_SYSTEM.Controllers
             try
             {
                 var unitData = db.tbl_UpahAktiviti.SingleOrDefault(
-                        x => x.fld_ID == tbl_UpahAktiviti.fld_ID &&
-                             x.fld_NegaraID == NegaraID &&
-                             x.fld_SyarikatID == SyarikatID);
+                    x => x.fld_ID == tbl_UpahAktiviti.fld_ID &&
+                         x.fld_NegaraID == NegaraID &&
+                         x.fld_SyarikatID == SyarikatID);
 
                 bool status = true;
 
@@ -737,7 +736,6 @@ namespace MVC_SYSTEM.Controllers
                 }
 
                 unitData.fld_Deleted = status;
-
                 db.SaveChanges();
 
                 string appname = Request.ApplicationPath;
@@ -752,7 +750,7 @@ namespace MVC_SYSTEM.Controllers
                 return Json(new
                 {
                     success = true,
-                    msg = GlobalResCorp.msgAdd,
+                    msg = message,
                     status = "success",
                     checkingdata = "0",
                     method = "1",
@@ -780,7 +778,7 @@ namespace MVC_SYSTEM.Controllers
                 db.Dispose();
             }
         }
-
+          
         public ActionResult KwspContributionMaintenance(int page = 1, string sort = "fld_KodCaruman", string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -3107,18 +3105,26 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
-            string lastcode = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_KodJenisAktvt == jnsAktvt && x.fld_Deleted == false).OrderByDescending(o => o.fld_KodAktvt.Trim()).Select(s => s.fld_KodAktvt).FirstOrDefault();
+            string lastcode = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_KodJenisAktvt == jnsAktvt).OrderByDescending(o => o.fld_ID).Select(s => s.fld_KodAktvt).FirstOrDefault();
             //modified to create activity code untuk pertama kali - kamalia 22/4/22
             if (lastcode == null)
             {
-                int generated = int.Parse(jnsAktvt + 0 + 1);
-                string newcode = generated.ToString("0000");
+                int generated = int.Parse(jnsAktvt + 0 + 0 + 1);
+                string newcode = generated.ToString("00000");
                 return Json(newcode);
             }
             else
             {
-                int generated = int.Parse(lastcode) + 1;
-                string newcode = generated.ToString("0000");
+                //Modified by Shazana 11/12/2024
+                //int generated = int.Parse(lastcode) + 1;
+                //string newcode = generated.ToString("00000");
+
+                string generated1 = lastcode.Substring(0,2);
+
+                var genlen = lastcode.Length;
+                string gen2 = lastcode.Substring(2,(genlen -2));
+                int generated2 = int.Parse(gen2) + 1;
+                string newcode = generated1 + generated2.ToString("000");
                 return Json(newcode);
             }
 
@@ -3693,7 +3699,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult PaidLeaveAllocationTest( string nopkj, ModelsEstate.tbl_PkjmastModelViewEdit pkjmastModelViewEdit)
+        public ActionResult PaidLeaveAllocationTest(string nopkj, ModelsEstate.tbl_PkjmastModelViewEdit pkjmastModelViewEdit)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -3701,7 +3707,7 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value,
                  NegaraID.Value);
-            
+
             MVC_SYSTEM_ModelsEstate dbr = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
 
 
@@ -3724,8 +3730,8 @@ namespace MVC_SYSTEM.Controllers
             app2.fld_ActionBy = User.Identity.Name;
             app2.fld_ActionDate = DateTime.Now;
 
-         //edited
-      //  DateDiff dateDiff = new DateDiff(Convert.ToDateTime(startingDay).AddDays(-1), lastDay);
+            //edited
+            //  DateDiff dateDiff = new DateDiff(Convert.ToDateTime(startingDay).AddDays(-1), lastDay);
             //original
             DateDiff dateDiff = new DateDiff(Convert.ToDateTime(workerData.fld_Trmlkj).AddDays(-1), lastDay);
             var kodCutiUmum = db.tblOptionConfigsWebs
@@ -3748,7 +3754,7 @@ namespace MVC_SYSTEM.Controllers
                 ModelsEstate.tbl_CutiPeruntukan CutiPeruntukanTahunan = new ModelsEstate.tbl_CutiPeruntukan();
 
                 CutiPeruntukanTahunan.fld_NoPkj = workerData.fld_Nopkj;
-             //   CutiPeruntukanTahunan.fld_NoPkj = "Dummy";
+                //   CutiPeruntukanTahunan.fld_NoPkj = "Dummy";
                 CutiPeruntukanTahunan.fld_JumlahCuti = leaveAllocationData;
                 CutiPeruntukanTahunan.fld_KodCuti = leaveCategory.fld_KodCuti;
                 CutiPeruntukanTahunan.fld_JumlahCutiDiambil = 0;
@@ -3762,11 +3768,11 @@ namespace MVC_SYSTEM.Controllers
                 dbr.tbl_CutiPeruntukan.Add(CutiPeruntukanTahunan);
             }
 
-         //calculate public holiday
-         var kodNegeriLadang = db.tbl_Ladang
-             .Where(x => x.fld_ID == LadangID)
-             .Select(s => s.fld_KodNegeri)
-              .Single();
+            //calculate public holiday
+            var kodNegeriLadang = db.tbl_Ladang
+                .Where(x => x.fld_ID == LadangID)
+                .Select(s => s.fld_KodNegeri)
+                 .Single();
 
             //    //use this
             var CutiUmum = db.tbl_CutiUmum
@@ -3782,7 +3788,7 @@ namespace MVC_SYSTEM.Controllers
             ModelsEstate.tbl_CutiPeruntukan CutiPeruntukanUmum = new ModelsEstate.tbl_CutiPeruntukan();
 
             CutiPeruntukanUmum.fld_NoPkj = workerData.fld_Nopkj;
-          //  CutiPeruntukanUmum.fld_NoPkj = "Dummy";
+            //  CutiPeruntukanUmum.fld_NoPkj = "Dummy";
             CutiPeruntukanUmum.fld_JumlahCuti = cutiUmumCount;
             CutiPeruntukanUmum.fld_KodCuti = kodCutiUmum;
             CutiPeruntukanUmum.fld_JumlahCutiDiambil = 0;
@@ -3832,7 +3838,7 @@ namespace MVC_SYSTEM.Controllers
                                       cutiUmum.Count;
 
             ModelsEstate.tbl_Produktiviti Produktiviti = new ModelsEstate.tbl_Produktiviti();
-           // Produktiviti.fld_Nopkj = "Dummy";
+            // Produktiviti.fld_Nopkj = "Dummy";
             Produktiviti.fld_HadirKerja = workingDaysInMonth;
             Produktiviti.fld_Year = year;
             Produktiviti.fld_Month = startingDay.Month;
@@ -4195,6 +4201,900 @@ namespace MVC_SYSTEM.Controllers
             finally
             {
                 db.Dispose();
+            }
+        }
+
+        public ActionResult PaidLeaveGenerateMaintenance()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.Maintenance = "class = active";
+
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            if (SyarikatID == 1)
+            {
+                SyarikatList = new SelectList(db.tblOptionConfigsWebs
+                    .Where(x =>
+                        x.fldOptConfFlag1 == "kodSAPSyarikat"
+                        && x.fldDeleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem
+                        { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text")
+                    .ToList();
+
+            }
+            if (SyarikatID == 2)
+            {
+                SyarikatList = new SelectList(db.tbl_Syarikat
+                    .Where(x =>
+                        x.fld_Deleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .Select(s => new SelectListItem
+                        { Value = s.fld_SyarikatID.ToString(), Text = s.fld_NamaPndkSyarikat }), "Value", "Text")
+                    .ToList();
+            }
+
+            SyarikatList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.SyarikatList = SyarikatList;
+
+
+            List<SelectListItem> wilayahList = new List<SelectListItem>();
+            wilayahList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.WilayahList = wilayahList;
+
+            List<SelectListItem> ladangList = new List<SelectListItem>();
+            ladangList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.LadangList = ladangList;
+
+            List<SelectListItem> pkjList = new List<SelectListItem>();
+            pkjList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.PkjList = pkjList;
+
+            int prevYear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            int currentYear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = prevYear; i <= currentYear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem 
+                        { Text = i.ToString(), Value = i.ToString(), Selected = true }
+                    );
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem 
+                        { Text = i.ToString(), Value = i.ToString() }
+                    );
+                }
+            }
+            ViewBag.YearList = yearlist;
+
+            return View();
+        }
+
+        public ActionResult _PaidLeaveGenerateInfoMaintenance(int? SyarikatList, int? WilayahList, int? LadangList, string PkjList, int? YearList, int page = 1, string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            int role = GetIdentity.RoleID(getuserid).Value;
+            var message = "";
+
+            List<CustMod_PaidLeaveGenerateListResult> resultPaidLeaveGenerateList = new List<CustMod_PaidLeaveGenerateListResult>();
+            List<int> dataLadangList = new List<int>();
+
+            if (!String.IsNullOrEmpty(SyarikatList.ToString()) && 
+                !String.IsNullOrEmpty(WilayahList.ToString()) && 
+                !String.IsNullOrEmpty(YearList.ToString()) && 
+                !String.IsNullOrEmpty(LadangList.ToString()))
+            {
+                Connection.GetConnection(out host, out catalog, out user, out pass, WilayahList, SyarikatID.Value, NegaraID.Value);
+                MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+                if (LadangList == 0)
+                {
+                    dataLadangList = db.tbl_Ladang
+                        .Where(x =>
+                            x.fld_Deleted == false &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            x.fld_WlyhID == WilayahList &&
+                            x.fld_CostCentre == SyarikatList.ToString())
+                        .OrderBy(o => o.fld_LdgName)
+                        .Select(s => s.fld_ID)
+                        .ToList();
+                } else
+                {
+                    dataLadangList.Add((int)LadangList);
+                }
+
+                if (dataLadangList.Count() > 0)
+                {
+                    foreach (var ldg in dataLadangList)
+                    {
+                        CustMod_PaidLeaveGenerateListResult resultLdgObj = new CustMod_PaidLeaveGenerateListResult();
+                        resultLdgObj.ladangID = ldg;
+                        resultLdgObj.wilayahID = (int)WilayahList;
+
+                        List<ModelsEstate.tbl_Pkjmast> dataPkjList = new List<ModelsEstate.tbl_Pkjmast>();
+                        if (LadangList != 0 && PkjList != "0")
+                        {
+                           dataPkjList = estateConnection.tbl_Pkjmast
+                                .Where(x =>
+                                    x.fld_NegaraID == NegaraID &&
+                                    x.fld_SyarikatID == SyarikatID &&
+                                    x.fld_WilayahID == WilayahList &&
+                                    x.fld_Kdaktf == "1" &&
+                                    x.fld_LadangID == ldg &&
+                                    x.fld_Nopkj == PkjList)
+                                .OrderBy(o =>
+                                    o.fld_Nama)
+                                .ToList();
+                        } else
+                        {
+                            dataPkjList = estateConnection.tbl_Pkjmast
+                                .Where(x =>
+                                    x.fld_NegaraID == NegaraID &&
+                                    x.fld_SyarikatID == SyarikatID &&
+                                    x.fld_WilayahID == WilayahList &&
+                                    x.fld_Kdaktf == "1" &&
+                                    x.fld_LadangID == ldg)
+                                .OrderBy(o =>
+                                    o.fld_Nama)
+                                .ToList();
+                        }
+
+                        List<CustMod_PaidLeaveGenerateWorkerList> resultPkjList = new List<CustMod_PaidLeaveGenerateWorkerList>();
+                        foreach (var pkj in dataPkjList)
+                        {
+                            var dataLeavePkjList = estateConnection.tbl_CutiPeruntukan
+                                .Where(x =>
+                                    x.fld_Tahun == YearList &&
+                                    x.fld_NegaraID == NegaraID &&
+                                    x.fld_SyarikatID == SyarikatID &&
+                                    x.fld_WilayahID == WilayahList &&
+                                    x.fld_LadangID == ldg &&
+                                    x.fld_Deleted == false &&
+                                    x.fld_NoPkj == pkj.fld_Nopkj)
+                                .Select(s => new
+                                {
+                                    kod_Cuti = s.fld_KodCuti,
+                                    jumlah_Cuti = s.fld_JumlahCuti,
+                                })
+                                .ToList();
+
+                            var leaveTypeList = db.tbl_CutiKategori
+                                .Where(x => x.fld_Deleted == false &&
+                                    x.fld_Indicator == true &&
+                                    x.fld_NegaraID == NegaraID &&
+                                    x.fld_SyarikatID == SyarikatID)
+                                .ToList();
+
+                            ViewBag.leaveTitle = leaveTypeList
+                                .Select(s => s.fld_KeteranganCuti)
+                                .ToList();
+
+                            var allLeave = new List<CustMod_CutiList>();
+                            foreach (var leave in leaveTypeList)
+                            {
+                                var tempLeave = new CustMod_CutiList();
+                                var currentLeave = dataLeavePkjList
+                                    .Where(x => x.kod_Cuti == leave.fld_KodCuti)
+                                    .FirstOrDefault();
+                                
+                                if (currentLeave == null)
+                                {
+                                    tempLeave.leaveName = leave.fld_KeteranganCuti;
+                                    tempLeave.leaveAmount = 0;
+                                } else
+                                {
+                                    tempLeave.leaveName = leave.fld_KeteranganCuti;
+                                    tempLeave.leaveAmount = (int)currentLeave.jumlah_Cuti;
+                                }
+
+                                allLeave.Add(tempLeave);
+                            }
+
+                            CustMod_PaidLeaveGenerateWorkerList pkjObj = new CustMod_PaidLeaveGenerateWorkerList();
+                            pkjObj.noPkj = pkj.fld_Nopkj;
+                            pkjObj.namaPkj = pkj.fld_Nama;
+                            pkjObj.tarikhMulaKerja = pkj.fld_Trmlkj;
+                            pkjObj.cuti = allLeave;
+
+                            resultPkjList.Add(pkjObj);
+                        }
+                        resultLdgObj.pkjList = resultPkjList;
+                        resultPaidLeaveGenerateList.Add(resultLdgObj);
+                    }
+                }
+
+                if (resultPaidLeaveGenerateList.Count == 0)
+                {
+                    message = GlobalResCorp.msgNoRecord;
+                }
+            }
+            else
+            {
+                message = GlobalResCorp.lblAtleastChoosePaidLeaveGenerate;
+            }
+
+            ViewBag.UserID = getuserid;
+            ViewBag.Message = message;
+
+            return View(resultPaidLeaveGenerateList);
+        }
+
+        public ActionResult _PaidLeaveGenerateMaintenanceCreate()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ModelsCustom.PaidLeaveGenerate_ModalCreate PaidLeaveGenerateModalCreate = new PaidLeaveGenerate_ModalCreate();
+
+            List<SelectListItem> SyarikatList = new List<SelectListItem>();
+            if (SyarikatID == 1)
+            {
+                SyarikatList = new SelectList(db.tblOptionConfigsWebs
+                    .Where(x =>
+                        x.fldOptConfFlag1 == "kodSAPSyarikat"
+                        && x.fldDeleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(s => new SelectListItem
+                    { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text")
+                    .ToList();
+
+            }
+            if (SyarikatID == 2)
+            {
+                SyarikatList = new SelectList(db.tbl_Syarikat
+                    .Where(x =>
+                        x.fld_Deleted == false
+                        && x.fld_SyarikatID == SyarikatID
+                        && x.fld_NegaraID == NegaraID)
+                    .Select(s => new SelectListItem
+                    { Value = s.fld_SyarikatID.ToString(), Text = s.fld_NamaPndkSyarikat }), "Value", "Text")
+                    .ToList();
+            }
+
+            SyarikatList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.SyarikatList = SyarikatList;
+
+            List<SelectListItem> wilayahList = new List<SelectListItem>();
+            wilayahList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+            ViewBag.WilayahList = wilayahList;
+
+            List<SelectListItem> ladangList = new List<SelectListItem>();
+            ViewBag.LadangList = ladangList;
+
+            List<SelectListItem> cutiList = new List<SelectListItem>();
+            ViewBag.CutiList = cutiList;
+
+            int prevYear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            int currentYear = timezone.gettimezone().Year;
+            int nextYear = timezone.gettimezone().Year + 1;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = prevYear; i <= nextYear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem
+                    { Text = i.ToString(), Value = i.ToString(), Selected = true }
+                    );
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem
+                    { Text = i.ToString(), Value = i.ToString() }
+                    );
+                }
+            }
+            yearlist.Insert(0, new SelectListItem { Text = "Sila Pilih", Value = "" });
+            ViewBag.YearList = yearlist;
+
+            return View(PaidLeaveGenerateModalCreate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _PaidLeaveGenerateMaintenanceCreate(ModelsCustom.PaidLeaveGenerate_ModalCreate PaidLeaveGenerateModalCreate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            try
+            {
+                var inputSyarikatCode = PaidLeaveGenerateModalCreate.fld_SyarikatID.ToString();
+
+                var configSyarikatID = db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "kodSAPSyarikat" &&
+                        x.fldOptConfValue == inputSyarikatCode)
+                    .FirstOrDefault();
+
+                // all region
+                if (PaidLeaveGenerateModalCreate.fld_WilayahID == 0)
+                {
+                    // get regionIDs
+                    var dataWilayahList = db.tbl_Ladang
+                        .Where(x => x.fld_Deleted == false &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == configSyarikatID.fld_SyarikatID &&
+                            x.fld_CostCentre == inputSyarikatCode)
+                        .GroupBy(g => g.fld_WlyhID)
+                        .Select(s => s.Key)
+                        .ToList();
+
+                    foreach (var currentWilayah in dataWilayahList)
+                    {
+                        // establish connection to regionDB
+                        Connection.GetConnection(out host, out catalog, out user, out pass, currentWilayah, SyarikatID, NegaraID);
+                        MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+                        // get ldgIds
+                        var dataLadangList = db.tbl_Ladang
+                            .Where(x => x.fld_Deleted == false &&
+                                x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == configSyarikatID.fld_SyarikatID &&
+                                x.fld_CostCentre == inputSyarikatCode &&
+                                x.fld_WlyhID == currentWilayah)
+                            .GroupBy(g => g.fld_ID)
+                            .Select(s => s.Key)
+                            .ToList();
+
+                        // get pkjIds
+                        var dataPkjList = estateConnection.tbl_Pkjmast
+                            .Where(x => x.fld_Kdaktf == "1" &&
+                                x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID &&
+                                x.fld_WilayahID == currentWilayah &&
+                                dataLadangList.Contains((int)x.fld_LadangID))
+                            .ToList();
+
+                        // take noPkj to get their leave
+                        var noPkjList = dataPkjList
+                            .Select(s => s.fld_Nopkj)
+                            .ToList();
+
+                        // get all pkj leave
+                        var dataLeavePkjList = estateConnection.tbl_CutiPeruntukan
+                            .Where(x => x.fld_Tahun == PaidLeaveGenerateModalCreate.fld_Year &&
+                                x.fld_Deleted == false &&
+                                noPkjList.Contains(x.fld_NoPkj))
+                            .ToList();
+
+
+                        // get all leave terms except C01
+                        var dataLeaveTermsList = db.tbl_CutiMaintenance
+                            .Where(x => x.fld_Deleted == false &&
+                                x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID &&
+                                PaidLeaveGenerateModalCreate.fld_CutiKategoriID.Contains(x.fld_JenisCuti))
+                            .ToList();
+
+                        // get leave based on farmID for C01 / public holiday
+                        var dataLadangC01List = db.tbl_CutiUmumLdg
+                            .Join(db.tbl_Ladang,
+                                cul => cul.fld_LadangID,
+                                l => l.fld_ID,
+                                (cul, l) => new { Cul = cul, Ladang = l })
+                            .Where(x => x.Cul.fld_Deleted == false &&
+                                x.Cul.fld_NegaraID == NegaraID &&
+                                x.Cul.fld_SyarikatID == configSyarikatID.fld_SyarikatID &&
+                                x.Cul.fld_WilayahID == currentWilayah &&
+                                x.Cul.fld_Year == PaidLeaveGenerateModalCreate.fld_Year &&
+                                x.Ladang.fld_CostCentre == inputSyarikatCode)
+                            .GroupBy(g => g.Cul.fld_LadangID)
+                            .Select(gp => new
+                            {
+                                ldgId = gp.Key,
+                                amountLeave = gp.Count()
+                            })
+                            .ToList();
+
+                        foreach (var currentLdg in dataLadangList)
+                        {
+                            var amountLdgLeaveC01 = dataLadangC01List
+                                .Where(x => x.ldgId == currentLdg)
+                                .Select(s => s.amountLeave)
+                                .FirstOrDefault();
+
+                            var filterPkjList = dataPkjList
+                                .Where(x => x.fld_LadangID == currentLdg)
+                                .ToList();
+
+                            foreach (var pkj in filterPkjList)
+                            {
+                                var currentPkjLeave = dataLeavePkjList
+                                    .Where(x => x.fld_NoPkj == pkj.fld_Nopkj)
+                                    .ToList();
+
+                                foreach (var cutiKategoriID in PaidLeaveGenerateModalCreate.fld_CutiKategoriID)
+                                {
+                                    var focusLeave = currentPkjLeave
+                                        .Where(x => x.fld_KodCuti == cutiKategoriID)
+                                        .FirstOrDefault();
+
+                                    var newLeaveRecord = new ModelsEstate.tbl_CutiPeruntukan();
+                                    newLeaveRecord.fld_KodCuti = cutiKategoriID;
+                                    newLeaveRecord.fld_NoPkj = pkj.fld_Nopkj;
+                                    newLeaveRecord.fld_Tahun = (short)PaidLeaveGenerateModalCreate.fld_Year;
+                                    newLeaveRecord.fld_JumlahCutiDiambil = 0;
+                                    newLeaveRecord.fld_NegaraID = NegaraID;
+                                    newLeaveRecord.fld_SyarikatID = SyarikatID;
+                                    newLeaveRecord.fld_WilayahID = currentWilayah;
+                                    newLeaveRecord.fld_LadangID = currentLdg;
+                                    newLeaveRecord.fld_Deleted = false;
+
+                                    DateTime startWork = (DateTime)pkj.fld_Trmlkj;
+                                    DateTime currentDate = DateTime.Now;
+
+                                    double daysOfWork = (int)(currentDate - startWork).TotalDays;
+
+                                    // 5 hari = 0 month
+                                    // 30 hari = 0 month
+                                    // 31 hari = 1 month
+                                    double monthsOfWork = Math.Floor(daysOfWork / 30.44);
+
+                                    if (cutiKategoriID == "C01")
+                                    {
+                                        if (amountLdgLeaveC01 >= 11)
+                                        {
+                                            if (focusLeave == null)
+                                            {
+                                                newLeaveRecord.fld_JumlahCuti = amountLdgLeaveC01;
+                                                estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                                estateConnection.SaveChanges();
+
+                                            }
+                                            else if (focusLeave.fld_JumlahCuti != amountLdgLeaveC01)
+                                            {
+                                                focusLeave.fld_JumlahCuti = amountLdgLeaveC01;
+                                                estateConnection.SaveChanges();
+                                            }
+                                        }
+                                    }
+                                    else if (cutiKategoriID == "C02") //cuti tahunan
+                                    {
+                                        var termsC02 = dataLeaveTermsList
+                                            .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                                x.fld_LowerLimit <= monthsOfWork)
+                                            .OrderByDescending(o => o.fld_LowerLimit)
+                                            .Select(s => s.fld_PeruntukkanCuti)
+                                            .FirstOrDefault();
+
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = termsC02;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != termsC02)
+                                        {
+                                            focusLeave.fld_JumlahCuti = termsC02;
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                    else if (cutiKategoriID == "C03") //cuti sakit
+                                    {
+                                        var termsC03 = dataLeaveTermsList
+                                            .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                                x.fld_LowerLimit <= monthsOfWork)
+                                            .OrderByDescending(o => o.fld_LowerLimit)
+                                            .Select(s => s.fld_PeruntukkanCuti)
+                                            .FirstOrDefault();
+
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = termsC03;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != termsC03)
+                                        {
+                                            focusLeave.fld_JumlahCuti = termsC03;
+
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                    else if (cutiKategoriID == "C10") //cuti sakit wad
+                                    {
+                                        var termsC10 = dataLeaveTermsList
+                                            .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                                x.fld_LowerLimit <= monthsOfWork)
+                                            .OrderByDescending(o => o.fld_LowerLimit)
+                                            .Select(s => s.fld_PeruntukkanCuti)
+                                            .FirstOrDefault();
+
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = termsC10;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != termsC10)
+                                        {
+                                            focusLeave.fld_JumlahCuti = termsC10;
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        estateConnection.Dispose();
+                    }
+                }
+                else
+                {
+                    var currentWilayah = PaidLeaveGenerateModalCreate.fld_WilayahID;
+
+                    Connection.GetConnection(out host, out catalog, out user, out pass, currentWilayah, SyarikatID, NegaraID);
+                    MVC_SYSTEM_ModelsEstate estateConnection = MVC_SYSTEM_ModelsEstate.ConnectToSqlServer(host, catalog, user, pass);
+
+                    var dataLadangList = PaidLeaveGenerateModalCreate.fld_LadangID.ToList();
+
+                    // get pkjIds
+                    // add condition where the worker is active
+                    var dataPkjList = estateConnection.tbl_Pkjmast
+                        .Where(x => x.fld_Kdaktf == "1" &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            x.fld_WilayahID == currentWilayah &&
+                            dataLadangList.Contains((int)x.fld_LadangID))
+                        .ToList();
+
+                    // take noPkj to get their leave
+                    var noPkjList = dataPkjList
+                        .Select(s => s.fld_Nopkj)
+                        .ToList();
+
+                    // get all pkj leave
+                    var dataLeavePkjList = estateConnection.tbl_CutiPeruntukan
+                        .Where(x => x.fld_Tahun == PaidLeaveGenerateModalCreate.fld_Year &&
+                            x.fld_Deleted == false &&
+                            noPkjList.Contains(x.fld_NoPkj))
+                        .ToList();
+
+
+                    // get all leave terms except C01
+                    var dataLeaveTermsList = db.tbl_CutiMaintenance
+                        .Where(x => x.fld_Deleted == false &&
+                            x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID &&
+                            PaidLeaveGenerateModalCreate.fld_CutiKategoriID.Contains(x.fld_JenisCuti))
+                        .ToList();
+
+                    // get leave based on farmID for C01 / public holiday
+                    var dataLadangC01List = db.tbl_CutiUmumLdg
+                        .Join(db.tbl_Ladang,
+                            cul => cul.fld_LadangID,
+                            l => l.fld_ID,
+                            (cul, l) => new { Cul = cul, Ladang = l })
+                        .Where(x => x.Cul.fld_Deleted == false &&
+                            x.Cul.fld_NegaraID == NegaraID &&
+                            x.Cul.fld_SyarikatID == configSyarikatID.fld_SyarikatID &&
+                            x.Cul.fld_WilayahID == currentWilayah &&
+                            x.Cul.fld_Year == PaidLeaveGenerateModalCreate.fld_Year &&
+                            x.Ladang.fld_CostCentre == inputSyarikatCode &&
+                            dataLadangList.Contains((int)x.Cul.fld_LadangID))
+                        .GroupBy(g => g.Cul.fld_LadangID)
+                        .Select(gp => new
+                        {
+                            ldgId = gp.Key,
+                            amountLeave = gp.Count()
+                        })
+                        .ToList();
+
+                    foreach (var currentLdg in dataLadangList)
+                    {
+                        var amountLdgLeaveC01 = dataLadangC01List
+                            .Where(x => x.ldgId == currentLdg)
+                            .Select(s => s.amountLeave)
+                            .FirstOrDefault();
+
+                        var filterPkjList = dataPkjList
+                            .Where(x => x.fld_LadangID == currentLdg)
+                            .ToList();
+
+                        foreach (var pkj in filterPkjList)
+                        {
+                            var currentPkjLeave = dataLeavePkjList
+                                .Where(x => x.fld_NoPkj == pkj.fld_Nopkj)
+                                .ToList();
+
+                            foreach (var cutiKategoriID in PaidLeaveGenerateModalCreate.fld_CutiKategoriID)
+                            {
+                                var focusLeave = currentPkjLeave
+                                    .Where(x => x.fld_KodCuti == cutiKategoriID)
+                                    .FirstOrDefault();
+
+                                var newLeaveRecord = new ModelsEstate.tbl_CutiPeruntukan();
+                                newLeaveRecord.fld_KodCuti = cutiKategoriID;
+                                newLeaveRecord.fld_NoPkj = pkj.fld_Nopkj;
+                                newLeaveRecord.fld_Tahun = (short)PaidLeaveGenerateModalCreate.fld_Year;
+                                newLeaveRecord.fld_JumlahCutiDiambil = 0;
+                                newLeaveRecord.fld_NegaraID = NegaraID;
+                                newLeaveRecord.fld_SyarikatID = SyarikatID;
+                                newLeaveRecord.fld_WilayahID = currentWilayah;
+                                newLeaveRecord.fld_LadangID = currentLdg;
+                                newLeaveRecord.fld_Deleted = false;
+
+                                DateTime startWork = (DateTime)pkj.fld_Trmlkj;
+                                DateTime currentDate = DateTime.Now;
+
+                                double daysOfWork = (int)(currentDate - startWork).TotalDays;
+
+                                // 5 hari = 0 month
+                                // 30 hari = 0 month
+                                // 31 hari = 1 month
+                                double monthsOfWork = Math.Floor(daysOfWork / 30.44);
+
+                                if (cutiKategoriID == "C01")
+                                {
+                                    if (amountLdgLeaveC01 >= 11)
+                                    {
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = amountLdgLeaveC01;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != amountLdgLeaveC01)
+                                        {
+                                            focusLeave.fld_JumlahCuti = amountLdgLeaveC01;
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                }
+                                else if (cutiKategoriID == "C02") //cuti tahunan
+                                {
+                                    var termsC02 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC02;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC02)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC02;
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C03") //cuti sakit
+                                {
+                                    var termsC03 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC03;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC03)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC03;
+
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C04") //cuti bersalin
+                                {
+                                    if (pkj.fld_Kdjnt == "P")
+                                    {
+                                        var termsC04 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = termsC04;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != termsC04)
+                                        {
+                                            focusLeave.fld_JumlahCuti = termsC04;
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                }
+                                else if (cutiKategoriID == "C08") //cuti kahwin
+                                {
+                                    var termsC08 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC08;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC08)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC08;
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C10") //cuti sakit wad
+                                {
+                                    var termsC10 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC10;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC10)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC10;
+
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C11") //cuti bencana
+                                {
+                                    var termsC11 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC11;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC11)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC11;
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C12") //cuti paterniti
+                                {
+                                    if (pkj.fld_Kdjnt == "L")
+                                    {
+                                        var termsC12 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                        if (focusLeave == null)
+                                        {
+                                            newLeaveRecord.fld_JumlahCuti = termsC12;
+                                            estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                            estateConnection.SaveChanges();
+                                        }
+                                        else if (focusLeave.fld_JumlahCuti != termsC12)
+                                        {
+                                            focusLeave.fld_JumlahCuti = termsC12;
+                                            estateConnection.SaveChanges();
+                                        }
+                                    }
+                                }
+                                else if (cutiKategoriID == "C13") //cuti ehsan
+                                {
+                                    var termsC13 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC13;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC13)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC13;
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                                else if (cutiKategoriID == "C14") //cuti kuarantin
+                                {
+                                    var termsC14 = dataLeaveTermsList
+                                        .Where(x => x.fld_JenisCuti == cutiKategoriID &&
+                                            x.fld_LowerLimit <= monthsOfWork)
+                                        .OrderByDescending(o => o.fld_LowerLimit)
+                                        .Select(s => s.fld_PeruntukkanCuti)
+                                        .FirstOrDefault();
+
+                                    if (focusLeave == null)
+                                    {
+                                        newLeaveRecord.fld_JumlahCuti = termsC14;
+                                        estateConnection.tbl_CutiPeruntukan.Add(newLeaveRecord);
+                                        estateConnection.SaveChanges();
+                                    }
+                                    else if (focusLeave.fld_JumlahCuti != termsC14)
+                                    {
+                                        focusLeave.fld_JumlahCuti = termsC14;
+                                        estateConnection.SaveChanges();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    estateConnection.Dispose();
+                }
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = GlobalResCorp.msgGenerateLeaveSuccess,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "1",
+                    div = "paidLeaveGenerateMaintenanceDetails",
+                    rootUrl = domain,
+                    action = "_PaidLeaveGenerateInfoMaintenance",
+                    controller = "Maintenance"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgGenerateLeaveFail,
+                    status = "danger",
+                    checkingdata = "0"
+                });
             }
         }
 
@@ -5261,6 +6161,21 @@ namespace MVC_SYSTEM.Controllers
                 .Select(s => s.fldOptConfValue)
                 .FirstOrDefault();
 
+            //fatin added - 15/04/2024
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+              db.tblOptionConfigsWebs
+                  .Where(x => x.fldOptConfFlag1 == "designgroup" && x.fld_NegaraID == NegaraID &&
+                              x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                  .OrderBy(o => o.fldOptConfDesc)
+                  .Select(
+                      s => new SelectListItem { Value = s.fldOptConfDesc, Text = s.fldOptConfDesc }),
+              "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
             //string designationCode = "";
 
             //if (getDesignationRunningNo == null)
@@ -5316,13 +6231,15 @@ namespace MVC_SYSTEM.Controllers
                         optionConfigsWeb.fldOptConfValue = optionConfigsWeb.fldOptConfValue.ToUpper();
                         optionConfigsWeb.fldOptConfDesc = GetConfig.UppercaseFirst(optionConfigsWeb.fldOptConfDesc);
                         optionConfigsWeb.fldOptConfFlag1 = "designation";
+                        //optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin added - 15/04/2024
                         optionConfigsWeb.fldDeleted = false;
                         optionConfigsWeb.fld_NegaraID = NegaraID;
                         optionConfigsWeb.fld_SyarikatID = SyarikatID;
 
                         if (optionConfigsWeb.fldOptConfFlag2 != null)
                         {
-                            optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                            //optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                            optionConfigsWeb.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin modified - 15/04/2024
                         }
 
                         if (optionConfigsWeb.fldOptConfFlag3 != null)
@@ -5399,6 +6316,22 @@ namespace MVC_SYSTEM.Controllers
                 x => x.fldOptConfID == id && x.fldOptConfFlag1 == "designation" && x.fld_NegaraID == NegaraID &&
                      x.fld_SyarikatID == SyarikatID);
 
+
+            //fatin added - 15/04/2024
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "designgroup" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfDesc, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(designationData);
         }
 
@@ -5425,7 +6358,8 @@ namespace MVC_SYSTEM.Controllers
 
                     if (optionConfigsWeb.fldOptConfFlag2 != null)
                     {
-                        designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                        //designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2.ToUpper();
+                        designationData.fldOptConfFlag2 = optionConfigsWeb.fldOptConfFlag2; //fatin modified - 15/04/2024
                     }
 
                     else
@@ -8770,6 +9704,36 @@ namespace MVC_SYSTEM.Controllers
 
             optionConfigsWeb.fldOptConfValue = inactiveReasonCode;
 
+            List<SelectListItem> AktifList = new List<SelectListItem>();
+
+            AktifList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusaktif2" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            AktifList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.AktifList = AktifList;
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .GroupBy(g => g.fldOptConfFlag3)
+                    .Select(s => s.FirstOrDefault())
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfFlag3, Text = s.fldOptConfFlag3 }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(optionConfigsWeb);
         }
 
@@ -8821,7 +9785,8 @@ namespace MVC_SYSTEM.Controllers
 
                         if (optionConfigsWeb.fldOptConfFlag3 != null)
                         {
-                            optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                            //optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                            optionConfigsWeb.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3; //fatin modified - 15/04/2024
                         }
 
                         db.tblOptionConfigsWebs.Add(optionConfigsWeb);
@@ -8893,6 +9858,36 @@ namespace MVC_SYSTEM.Controllers
                 x => x.fldOptConfID == id && x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
                      x.fld_SyarikatID == SyarikatID);
 
+            List<SelectListItem> AktifList = new List<SelectListItem>();
+
+            AktifList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusaktif2" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            AktifList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.AktifList = AktifList;
+
+            List<SelectListItem> kategoriList = new List<SelectListItem>();
+
+            kategoriList = new SelectList(
+                db.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "sbbTakAktif" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .GroupBy(g => g.fldOptConfFlag3)
+                    .Select(s => s.FirstOrDefault())
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfFlag3, Text = s.fldOptConfFlag3 }),
+                "Value", "Text").ToList();
+            kategoriList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.kategoriList = kategoriList;
+
             return PartialView(inactiveReasonData);
         }
 
@@ -8924,7 +9919,8 @@ namespace MVC_SYSTEM.Controllers
 
                     if (optionConfigsWeb.fldOptConfFlag3 != null)
                     {
-                        inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                        //inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3.ToUpper();
+                        inactiveReasonData.fldOptConfFlag3 = optionConfigsWeb.fldOptConfFlag3; //fatin modified - 15/04/2023
                     }
 
                     db.SaveChanges();
@@ -22872,6 +23868,50 @@ namespace MVC_SYSTEM.Controllers
         }
         //end
 
+        public JsonResult GetCutiKategori(string pSyarikatID, string pWilayahID, string pLadangID)
+        {
+            List<SelectListItem> cutiList = new List<SelectListItem>();
+
+            int? NegaraID, SyarikatID, WilayahID, LadangID;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            string[] kodCutiArr = { "C01", "C02", "C03", "C10" };
+
+            if (pWilayahID == null)
+            {
+                cutiList = new SelectList(db.tbl_CutiKategori
+                    .Where(x => x.fld_Deleted == false &&
+                        x.fld_Indicator == true &&
+                        x.fld_NegaraID == NegaraID &&
+                        x.fld_SyarikatID == SyarikatID &&
+                        kodCutiArr.Contains(x.fld_KodCuti))
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.fld_KodCuti,
+                        Text = s.fld_KeteranganCuti.ToUpper(),
+                    }), "value", "text")
+                    .ToList();
+            } else
+            {
+                cutiList = new SelectList(db.tbl_CutiKategori
+                    .Where(x => x.fld_Deleted == false &&
+                        x.fld_Indicator == true &&
+                        x.fld_NegaraID == NegaraID &&
+                        x.fld_SyarikatID == SyarikatID &&
+                        x.fld_KodCuti != "C99")
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.fld_KodCuti,
+                        Text = s.fld_KeteranganCuti.ToUpper(),
+                    }), "value", "text")
+                    .ToList();
+            }
+
+            return Json(cutiList);
+        }
+
         public ActionResult _EstatePublicHolidayMaintenanceInfo(int? id, int? year, int page = 1, string sort = "fld_TarikhCuti", string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -23184,8 +24224,9 @@ namespace MVC_SYSTEM.Controllers
                             .fldOptConfValue;
 
                         var selectedPublicHolidayCount = db.tbl_CutiUmumLdg.Count(x =>
-                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                            x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && 
                             x.fld_WilayahID == ladangData.fld_WlyhID && x.fld_LadangID == ladangID &&
+                            x.fld_Year == tblCutiUmumLdgViewModelCreateHq.fld_Year && //fizam added 17 Jan 2024
                             x.fld_Deleted == false);
 
                         string hostEstate, catalogEstate, userEstate, passEstate = "";

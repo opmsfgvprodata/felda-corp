@@ -15,8 +15,9 @@
     int second = time.gettimezone().Second;
     string status = "";
     string selectionheader = "";
+    var namasyarikat = GetConfig.GetSyarikatName(ViewBag.costcenter);
+    var namapenuhsyarikat = GetConfig.GetSyarikatFullName(ViewBag.costcenter);
 
-    
 
     if (ViewBag.IncLdg2 == 1)
     {
@@ -47,8 +48,6 @@
 
             foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
             {
-                var namasyarikat = GetConfig.GetSyarikatName(costcentre);
-                var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
 
                 <logo />
 
@@ -56,15 +55,9 @@
                     <thead>
                         <tr>
                             <th colspan="13" style="text-align:center;vertical-align:middle;">
-
-
                                 @namapenuhsyarikat
                                 <br />
                                 (@namasyarikat)
-                                <br />
-                                @GlobalResReport.lblPermPekBarReport
-                                <br />
-                                @ViewBag.Year
                             </th>
                         </tr>
                         <tr>

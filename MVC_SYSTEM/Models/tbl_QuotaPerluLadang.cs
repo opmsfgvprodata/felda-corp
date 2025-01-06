@@ -25,6 +25,9 @@ namespace MVC_SYSTEM.Models
 
         public int? fld_NegaraID { get; set; }
 
+        //fatin added - 16/04/2024
+        public int? fld_PerluTKT { get; set; }
+        public int? fld_PerluTKA { get; set; }
         public int? fld_Perlu { get; set; }
 
         public int? fld_Tahun { get; set; }

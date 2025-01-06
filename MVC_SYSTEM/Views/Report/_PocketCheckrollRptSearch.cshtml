@@ -1,0 +1,515 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsEstate.tbl_Pkjmast>
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.ModelsEstate;
+@using MVC_SYSTEM.ModelsDapper;
+@using MVC_SYSTEM.ModelsCustom;
+@{
+    ViewBag.Title = "Pocket Checkroll";
+
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+
+    int year1 = ChangeTimeZone.gettimezone().Year;
+    int month1 = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "PocketCheckrollRpt_" + ViewBag.UserID + "_" + year1.ToString() + month1.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    var webConfigList = ViewBag.webConfigList as List<MVC_SYSTEM.ModelsCorporate.tblOptionConfigsWeb>;
+    var NamaSyarikat = ViewBag.NamaSyarikat;
+    var NoSyarikat = ViewBag.NoSyarikat;
+    var NamaLadang = ViewBag.NamaLadang;
+    var Kump = ViewBag.Kump as List<tbl_KumpulanKerja>;
+    var pkjmast = ViewBag.pkjmast as List<tbl_Pkjmast>;
+    var kerjahdr = ViewBag.kerjahdr as List<tbl_Kerjahdr>;
+    var kerja = ViewBag.kerja as List<tbl_Kerja>;
+    var kerjaKesukaran = ViewBag.kerjaKesukaran as List<tbl_KerjaKesukaran>;
+    var kerjahdrCuti = ViewBag.kerjahdrCuti as List<tbl_KerjahdrCuti>;
+    var kerjaOT = ViewBag.kerjaOT as List<tbl_KerjaOT>;
+    var insentif = ViewBag.insentif as List<tbl_Insentif>;
+    var gajiBulanan = ViewBag.gajiBulanan as List<tbl_GajiBulanan>;
+    var carumanTambahan = ViewBag.carumanTambahan as List<tbl_ByrCarumanTambahan>;
+    var datelist = ViewBag.datelist as List<CustMod_DateList>;
+    var activiti = ViewBag.activiti as List<MVC_SYSTEM.ModelsCorporate.tbl_UpahAktiviti>;
+    var incentive = ViewBag.incentive as List<MVC_SYSTEM.ModelsCorporate.tbl_JenisInsentif>;
+    var incomeIncentiveCode = incentive.Where(x => x.fld_JenisInsentif == "P").Select(s => s.fld_KodInsentif).Distinct().ToList();
+    var deductionIncentiveCode = incentive.Where(x => x.fld_JenisInsentif == "T").Select(s => s.fld_KodInsentif).Distinct().ToList();
+    var kerjaBonus = ViewBag.kerjaBonus as List<tbl_KerjaBonus>;
+    var jenisCarumanTambahan = ViewBag.jenisCarumanTambahan as List<MVC_SYSTEM.ModelsCorporate.tbl_CarumanTambahan>;
+}
+
+@if (Model.Count() <= 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+else
+{
+    <div id="scrollArea2" class="modal-body">
+        @if (pkjmast != null)
+        {
+            foreach (var pkj in Model.Select(s => s.fld_Nopkj).Distinct())
+            {
+                var gajiPkj = gajiBulanan.Where(x => x.fld_Nopkj == pkj).FirstOrDefault();
+                if (gajiPkj != null)
+                {
+                    var checkrollPkj = pkjmast.Where(x => x.fld_Nopkj == pkj).FirstOrDefault();
+                    var kerjaHdrPkj = kerjahdr.Where(x => x.fld_Nopkj == pkj).ToList();
+                    var kerjaPkj = kerja.Where(x => x.fld_Nopkj == pkj).ToList();
+                    var kerjaOTPkj = kerjaOT.Where(x => x.fld_Nopkj == pkj).ToList();
+                    var kerjahdrCutiPkj = kerjahdrCuti.Where(x => x.fld_Nopkj == pkj).ToList();
+                    var incentivePkj = insentif.Where(x => x.fld_Nopkj == pkj).ToList();
+                    var carumanTambahanPkj = new List<tbl_ByrCarumanTambahan>();
+                    if (gajiPkj != null)
+                    {
+                        carumanTambahanPkj = carumanTambahan.Where(x => x.fld_GajiID == gajiPkj.fld_ID).ToList();
+                    }
+                    decimal? totalIncomePkj = 0m;
+                    decimal? totalDeductionPkj = 0m;
+                    decimal? totalNetIncomePkj = 0m;
+                    if (checkrollPkj.fld_KumpulanID != null && kerjaHdrPkj.Count() > 0)
+                    {
+                        var kumpulan = Kump.Where(x => x.fld_KumpulanID == checkrollPkj.fld_KumpulanID).FirstOrDefault();
+                        var kategori = webConfigList.Where(x => x.fldOptConfFlag1 == "designation" && x.fldOptConfValue == checkrollPkj.fld_Ktgpkj && x.fldDeleted == false).Select(s => s.fldOptConfDesc).FirstOrDefault();
+                        var jantina = webConfigList.Where(x => x.fldOptConfFlag1 == "jantina" && x.fldOptConfValue == checkrollPkj.fld_Kdjnt && x.fldDeleted == false).Select(s => s.fldOptConfDesc).FirstOrDefault();
+
+                        <div style="page-break-before: always;">
+                            <p style="font-size: 11px" align="right">Tarikh : @ViewBag.Date</p>
+
+                            <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px; width:1900px;" border="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th colspan="18" style="text-align: center; vertical-align: middle; border: none;">
+                                            <img src="~/Asset/Images/logo_FTPSB.jpg" height="60" width="60" />
+                                            <br />
+                                            @ViewBag.NamaSyarikat
+                                            <br />
+                                            (@ViewBag.NoSyarikat)
+                                            <br />
+                                            @ViewBag.NamaLadang
+                                            <br />
+                                            Pocket Checkroll Pekerja bagi @ViewBag.Month/@ViewBag.Year
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">ID Pekerja</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @pkj</td>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Nama Pekerja</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @checkrollPkj.fld_Nama</td>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Kod Kumpulan</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @kumpulan.fld_Keterangan</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Jawatan</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @kategori</td>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Jantina</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @jantina</td>
+                                        <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">No KP / Passport</td>
+                                        <td width="4%" style="vertical-align: middle !important; border:none;">: @checkrollPkj.fld_Nokp</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="float: left; width: 1900px; font-size: 11px; margin-bottom: 10px" class="table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red; " rowspan="2">Aktiviti</th>
+                                        <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red; " rowspan="2">Kwsn</th>
+                                        <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red;" rowspan="2">UOM</th>
+                                        <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red;" colspan="31">Tarikh</th>
+                                        <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red;" rowspan="2">Jumlah</th>
+                                        <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red;" rowspan="2">Kadar</th>
+                                        <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border-left: 1px solid red; border-bottom: 1px solid red; border-top: 1px solid red; border-right: 1px solid red; " rowspan="2">RM</th>
+                                    </tr>
+                                    <tr>
+                                        @for (int x = 1; x <= 31; x++)
+                                        {
+                                            <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important;border-left: 1px solid red;border-bottom: 1px solid red;">@x</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="2%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none; text-align: right;" colspan="3">Kehadiran</td>
+                                        @foreach (var date in datelist)
+                                        {
+                                            var attandance = kerjaHdrPkj.Where(x => x.fld_Tarikh.Value == date.Date).FirstOrDefault();
+                                            var attandancecode = attandance != null ? attandance.fld_Kdhdct : "-";
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@attandancecode</td>
+                                        }
+                                        @if (datelist.Count() <= 31)
+                                        {
+                                            var remainingdatecount = 31 - datelist.Count();
+                                            for (int x = 1; remainingdatecount >= x; x++)
+                                            {
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                            }
+                                        }
+                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="3"></td>
+                                    </tr>
+                                    @foreach (var item in kerjaPkj.Select(s => new { s.fld_KodAktvt, s.fld_KodPkt }).Distinct().ToList())
+                                    {
+                                        var activitiDetail = activiti.Where(x => x.fld_KodAktvt == item.fld_KodAktvt).FirstOrDefault();
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Desc</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@item.fld_KodPkt</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Unit</td>
+                                            @foreach (var item2 in datelist)
+                                            {
+                                                var totalDailyOutcome = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt && x.fld_Tarikh == item2.Date).Sum(s => s.fld_JumlahHasil);
+                                                if (totalDailyOutcome > 0)
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalDailyOutcome</td>
+                                                }
+                                                else
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                }
+                                            }
+                                            @if (datelist.Count() <= 31)
+                                            {
+                                                var remainingdatecount = 31 - datelist.Count();
+                                                for (int x = 1; remainingdatecount >= x; x++)
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                }
+                                            }
+                                            @{
+                                                var totalMonthlyOutcome = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_JumlahHasil);
+                                                var totalAmt = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_Amount);
+                                                totalIncomePkj += totalAmt;
+                                            }
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalMonthlyOutcome</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@activitiDetail.fld_Harga</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalAmt</td>
+                                        </tr>
+                                    }
+                                    @foreach (var item in kerjaPkj.Select(s => new { s.fld_KodAktvt, s.fld_KodPkt }).Distinct().ToList())
+                                    {
+                                        var activitiDetail = activiti.Where(x => x.fld_KodAktvt == item.fld_KodAktvt).FirstOrDefault();
+                                        var totalMonthlyOutcome = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_HrgaKwsnSkar);
+                                        var totalAmt = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_HrgaKwsnSkar);
+                                        if (totalAmt > 0)
+                                        {
+                                            <tr>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Desc - Kesukaran</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@item.fld_KodPkt</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">RM</td>
+                                                @foreach (var item2 in datelist)
+                                                {
+                                                    var totalDailyOutcome = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt && x.fld_Tarikh == item2.Date).Sum(s => s.fld_HrgaKwsnSkar);
+                                                    if (totalDailyOutcome > 0)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalDailyOutcome</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @if (datelist.Count() <= 31)
+                                                {
+                                                    var remainingdatecount = 31 - datelist.Count();
+                                                    for (int x = 1; remainingdatecount >= x; x++)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @{
+                                                    totalIncomePkj += totalAmt;
+                                                }
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalMonthlyOutcome</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalAmt</td>
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (var item in kerjaPkj.Select(s => new { s.fld_KodAktvt, s.fld_KodPkt }).Distinct().ToList())
+                                    {
+                                        var activitiDetail = activiti.Where(x => x.fld_KodAktvt == item.fld_KodAktvt).FirstOrDefault();
+                                        var totalMonthlyOutcome = kerjaPkj.Join(kerjaBonus, a => a.fld_ID, b => b.fld_KerjaID, (a, b) => new { a, b })
+                                        .Select(s => new
+                                        {
+                                            s.a.fld_KodPkt,
+                                            s.a.fld_KodAktvt,
+                                            s.a.fld_Tarikh,
+                                            s.b.fld_Bonus,
+                                            s.b.fld_Kadar,
+                                            s.b.fld_Jumlah
+                                        })
+                                        .Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_Jumlah);
+                                        if (totalMonthlyOutcome > 0)
+                                        {
+                                            <tr>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Desc - Bonus</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@item.fld_KodPkt</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">RM</td>
+                                                @foreach (var item2 in datelist)
+                                                {
+                                                    var totalDailyOutcome = kerjaPkj.Join(kerjaBonus, a => a.fld_ID, b => b.fld_KerjaID, (a, b) => new { a, b })
+                                                        .Select(s => new
+                                                        {
+                                                            s.a.fld_KodPkt,
+                                                            s.a.fld_KodAktvt,
+                                                            s.a.fld_Tarikh,
+                                                            s.b.fld_Bonus,
+                                                            s.b.fld_Kadar,
+                                                            s.b.fld_Jumlah
+                                                        })
+                                                        .Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt && x.fld_Tarikh == item2.Date).Sum(s => s.fld_Jumlah);
+                                                    if (totalDailyOutcome > 0)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalDailyOutcome</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @if (datelist.Count() <= 31)
+                                                {
+                                                    var remainingdatecount = 31 - datelist.Count();
+                                                    for (int x = 1; remainingdatecount >= x; x++)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @{
+                                                    totalIncomePkj += totalMonthlyOutcome;
+                                                }
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalMonthlyOutcome</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalMonthlyOutcome</td>
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (var item in kerjaPkj.Select(s => new { s.fld_KodAktvt, s.fld_KodPkt }).Distinct().ToList())
+                                    {
+                                        var activitiDetail = activiti.Where(x => x.fld_KodAktvt == item.fld_KodAktvt).FirstOrDefault();
+                                        var totalMonthlyOutcome = kerjaPkj.Join(kerjaOTPkj, a => a.fld_ID, b => b.fld_KerjaID, (a, b) => new { a, b })
+                                        .Select(s => new
+                                        {
+                                            s.a.fld_KodPkt,
+                                            s.a.fld_KodAktvt,
+                                            s.a.fld_Tarikh,
+                                            s.b.fld_JamOT,
+                                            s.b.fld_Kadar,
+                                            s.b.fld_Jumlah
+                                        })
+                                        .Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_Jumlah);
+                                        var totalJamOT = kerjaPkj.Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt).Sum(s => s.fld_JamOT);
+                                        if (totalJamOT > 0)
+                                        {
+                                            <tr>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@activitiDetail.fld_Desc - OT</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@item.fld_KodPkt</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">JAM</td>
+                                                @foreach (var item2 in datelist)
+                                                {
+                                                    var totalDailyOutcome = kerjaPkj.Join(kerjaOTPkj, a => a.fld_ID, b => b.fld_KerjaID, (a, b) => new { a, b })
+                                                        .Select(s => new
+                                                        {
+                                                            s.a.fld_KodPkt,
+                                                            s.a.fld_KodAktvt,
+                                                            s.a.fld_Tarikh,
+                                                            s.b.fld_JamOT,
+                                                            s.b.fld_Kadar,
+                                                            s.b.fld_Jumlah
+                                                        })
+                                                        .Where(x => x.fld_KodAktvt == item.fld_KodAktvt && x.fld_KodPkt == item.fld_KodPkt && x.fld_Tarikh == item2.Date).Sum(s => s.fld_JamOT);
+                                                    if (totalDailyOutcome > 0)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalDailyOutcome</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @if (datelist.Count() <= 31)
+                                                {
+                                                    var remainingdatecount = 31 - datelist.Count();
+                                                    for (int x = 1; remainingdatecount >= x; x++)
+                                                    {
+                                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                    }
+                                                }
+                                                @{
+                                                    totalIncomePkj += totalMonthlyOutcome;
+                                                }
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalJamOT</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalMonthlyOutcome</td>
+                                            </tr>
+                                        }
+                                    }
+                                    @if (kerjahdrCutiPkj.Count() > 0)
+                                    {
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">Cuti Berbayar</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">RM</td>
+                                            @foreach (var item2 in datelist)
+                                            {
+                                                var totalDailyOutcome = kerjahdrCutiPkj.Where(x => x.fld_Tarikh == item2.Date).Sum(s => s.fld_Jumlah);
+                                                if (totalDailyOutcome > 0)
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalDailyOutcome</td>
+                                                }
+                                                else
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                }
+                                            }
+                                            @if (datelist.Count() <= 31)
+                                            {
+                                                var remainingdatecount = 31 - datelist.Count();
+                                                for (int x = 1; remainingdatecount >= x; x++)
+                                                {
+                                                    <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                                }
+                                            }
+                                            @{
+                                                var totalMonthlyOutcome = kerjahdrCutiPkj.Sum(s => s.fld_Jumlah);
+                                                var totalAmt = kerjahdrCutiPkj.Sum(s => s.fld_Jumlah);
+                                                totalIncomePkj += totalAmt;
+                                            }
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">@totalMonthlyOutcome</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none">-</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalAmt</td>
+                                        </tr>
+                                    }
+                                    @foreach (var item in incentivePkj.Where(x => incomeIncentiveCode.Contains(x.fld_KodInsentif)).ToList())
+                                    {
+                                        var incentiveDetail = incentive.Where(x => x.fld_KodInsentif == item.fld_KodInsentif).FirstOrDefault();
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align:left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">@incentiveDetail.fld_Keterangan</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@item.fld_NilaiInsentif</td>
+                                        </tr>
+                                        totalIncomePkj += item.fld_NilaiInsentif;
+                                    }
+                                    <tr>
+                                        <td width="1%" style="font-weight: bold;    margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align: left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">Jumlah Pendapatan Kasar</td>
+                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalIncomePkj</td>
+                                    </tr>
+                                    @if (incentivePkj.Where(x => deductionIncentiveCode.Contains(x.fld_KodInsentif)).Count() > 0 || gajiPkj.fld_KWSPPkj > 0 || gajiPkj.fld_SocsoPkj > 0)
+                                    {
+                                        <tr>
+                                            <td width="1%" style="font-weight: bold; margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align: left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="37">Potongan</td>
+                                        </tr>
+                                    }
+                                    @foreach (var item in incentivePkj.Where(x => deductionIncentiveCode.Contains(x.fld_KodInsentif)).ToList())
+                                    {
+                                        var incentiveDetail = incentive.Where(x => x.fld_KodInsentif == item.fld_KodInsentif).FirstOrDefault();
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align:left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">@incentiveDetail.fld_Keterangan</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@item.fld_NilaiInsentif</td>
+                                        </tr>
+                                        totalDeductionPkj += item.fld_NilaiInsentif;
+                                    }
+                                    @if (gajiPkj.fld_KWSPPkj > 0)
+                                    {
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align:left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">KWSP</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@gajiPkj.fld_KWSPPkj</td>
+                                        </tr>
+                                        totalDeductionPkj += gajiPkj.fld_KWSPPkj;
+                                    }
+                                    @if (gajiPkj.fld_SocsoPkj > 0)
+                                    {
+                                        <tr>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align:left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">SOCSO</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@gajiPkj.fld_SocsoPkj</td>
+                                        </tr>
+                                        totalDeductionPkj += gajiPkj.fld_SocsoPkj;
+                                    }
+                                    @foreach (var item in carumanTambahanPkj)
+                                    {
+                                        if (item.fld_CarumanPekerja > 0)
+                                        {
+                                            var carumanName = jenisCarumanTambahan.Where(x => x.fld_KodCaruman == item.fld_KodCaruman).Select(s => s.fld_NamaCaruman).FirstOrDefault();
+                                            <tr>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align:left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">@carumanName</td>
+                                                <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@item.fld_CarumanPekerja</td>
+                                            </tr>
+                                            totalDeductionPkj += item.fld_CarumanPekerja;
+                                        }
+                                    }
+
+                                    @if (incentivePkj.Where(x => deductionIncentiveCode.Contains(x.fld_KodInsentif)).Count() > 0 || gajiPkj.fld_KWSPPkj > 0 || gajiPkj.fld_SocsoPkj > 0)
+                                    {
+                                        <tr>
+                                            <td width="1%" style="font-weight: bold; margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align: left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">Jumlah Potongan</td>
+                                            <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalDeductionPkj</td>
+                                        </tr>
+                                    }
+
+                                    @{
+                                        totalNetIncomePkj = totalIncomePkj - totalDeductionPkj;
+                                    }
+                                    <tr>
+                                        <td width="1%" style="font-weight: bold; margin: 2px !important; padding: 2px !important; vertical-align: middle !important; text-align: left; border-bottom: 1px dotted gray; border-right: none; border-left: none" colspan="36">Jumlah Pendapatan Bersih</td>
+                                        <td width="1%" style="margin: 2px !important; padding: 2px !important; vertical-align: middle !important; border-bottom: 1px dotted gray; border-right: none; border-left: none" align="right">@totalNetIncomePkj</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clearfix"></div>
+                        </div>
+                        <newpage />
+                    }
+
+                }
+            }
+
+        }
+    </div>
+
+    if (ViewBag.Print == "")
+    {
+        <div style="text-align:right; margin-top:10px">
+            <a class="btn btn-default btn-sm" href="#" id="printpage">
+                <span class="glyphicon glyphicon-print"> </span> Cetak
+            </a>
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> Muat Turun PDF
+            </a>
+        </div>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf").click(function () {
+            var RadioGroup = $('input[name=RadioGroup]:checked').val();
+            var MonthList = $("#MonthList").val();
+            var YearList = $("#YearList").val();
+            var StatusList = $("#StatusList").val();
+            var SelectionList = $("#SelectionList").val();
+            var WilayahList = $("#WilayahList").val();
+            var LadangList = $("#LadangList").val();
+
+            var param = '/?WilayahList=' + WilayahList + '&LadangList=' + LadangList +'&RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList;
+            PDFObject.embed("@Url.Action("PocketCheckrollPdf", "ReportPdf")" + param, "#searchResultWorkerPaySlipRptInfo", { height: "450px" });
+
+            return false;
+        });
+    });
+</script>
+
+

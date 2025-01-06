@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -17,7 +17,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVC_SYSTEM</RootNamespace>
     <AssemblyName>MVC_SYSTEM</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -29,6 +29,7 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,11 +56,14 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.5.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -92,7 +96,6 @@
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -125,6 +128,7 @@
     <Reference Include="System" />
     <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO" />
@@ -151,8 +155,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -193,9 +196,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -213,6 +214,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -825,7 +827,8 @@
     <Compile Include="Controllers\PdfCreatorController.cs" />
     <Compile Include="Controllers\PopupRemainderController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\ReportPDFController.cs" />
+    <Compile Include="Controllers\ReportPdfController.cs" />
+    <Compile Include="Controllers\_ReportPDFController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\SAPIntegrationController.cs" />
     <Compile Include="Controllers\SAPMasterDataController.cs" />
@@ -974,30 +977,61 @@
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
     <Compile Include="ModelsCustom\AuthUserLogin.cs" />
+    <Compile Include="ModelsCustom\CarumanTambahanCustomModel.cs" />
+    <Compile Include="ModelsCustom\CustMod_DateList.cs" />
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
     <Compile Include="ModelsCustom\CustMod_GajiMinima.cs" />
     <Compile Include="ModelsCustom\CustMod_HargaKesukaran.cs" />
+    <Compile Include="ModelsCustom\CustMod_PaidLeaveGenerate.cs" />
+    <Compile Include="ModelsCustom\CustMod_DataEntryReport.cs" />
+    <Compile Include="ModelsCustom\CustMod_ReverseSAP.cs" />
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
+    <Compile Include="ModelsCustom\vw_MapaCustomModel.cs" />
+    <Compile Include="ModelsDapper\DataSetFunction.cs" />
+    <Compile Include="ModelsDapper\sp_RptGajiMinima_New_Result.cs" />
+    <Compile Include="ModelsDapper\Worker.cs" />
+    <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
+    <Compile Include="ModelsDapper\CarumanTambahanCustomModel.cs" />
+    <Compile Include="ModelsDapper\DataSetFunction.cs" />
+    <Compile Include="ModelsDapper\sp_MapaReport_FPM_Result.cs" />
+    <Compile Include="ModelsDapper\vw_MapaCustomModelcs.cs" />
+    <Compile Include="ModelsDapper\sp_RptProduktiviti_Corp_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
+    <Compile Include="ModelsEstate\tbl_BuruhKontrak.cs" />
     <Compile Include="ModelsEstate\tbl_Blok.cs" />
+    <Compile Include="ModelsEstate\tbl_ByrCarumanTambahan.cs" />
+    <Compile Include="ModelsEstate\tbl_GajiBulanan.cs" />
+    <Compile Include="ModelsEstate\tbl_KerjaBonus.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerjahdr.cs" />
+    <Compile Include="ModelsEstate\tbl_Kerja.cs" />
     <Compile Include="ModelsEstate\tbl_CutiPeruntukan.cs" />
     <Compile Include="ModelsEstate\tbl_Insentif.cs" />
     <Compile Include="ModelsEstate\tbl_Kepuasan.cs" />
+    <Compile Include="ModelsEstate\tbl_KerjahdrCuti.cs" />
+    <Compile Include="ModelsEstate\tbl_KerjaKesukaran.cs" />
+    <Compile Include="ModelsEstate\tbl_KerjaOT.cs" />
+    <Compile Include="ModelsEstate\tbl_KumpulanKerja.cs" />
     <Compile Include="ModelsEstate\tbl_PkjCarumanTambahan.cs" />
     <Compile Include="ModelsEstate\tbl_PkjIncrmntSalary.cs" />
     <Compile Include="ModelsEstate\tbl_PkjIncrmntSalaryHistory.cs" />
     <Compile Include="ModelsEstate\tbl_Pkjmast.cs" />
+    <Compile Include="ModelsEstate\tbl_PktHargaKesukaran.cs" />
     <Compile Include="ModelsEstate\tbl_PktPinjam.cs" />
     <Compile Include="ModelsEstate\tbl_PktUtama.cs" />
     <Compile Include="ModelsEstate\tbl_Produktiviti.cs" />
+    <Compile Include="ModelsEstate\tbl_SAPHistory.cs" />
+    <Compile Include="ModelsEstate\tbl_SAPPostDataDetails.cs" />
+    <Compile Include="ModelsEstate\tbl_SAPPostRef.cs" />
     <Compile Include="ModelsEstate\tbl_SubPkt.cs" />
     <Compile Include="ModelsEstate\tbl_TutupUrusNiaga.cs" />
     <Compile Include="ModelsEstate\vw_KumpulanKerja.cs" />
     <Compile Include="ModelsEstate\vw_MaklumatInsentif.cs" />
+    <Compile Include="ModelsEstate\vw_PaySheetPekerja.cs" />
     <Compile Include="ModelsEstate\vw_PermitPassportDetail.cs" />
     <Compile Include="ModelsEstate\vw_RptSctran.cs" />
+    <Compile Include="ModelsEstate\vw_SAPPostData.cs" />
     <Compile Include="ModelsSAP\SAPCC.cs" />
     <Compile Include="ModelsSAP\SAPGL.cs" />
     <Compile Include="ModelsSAP\SAPIO.cs" />
@@ -1076,10 +1110,16 @@
     <Compile Include="ModelsSP\sp_RptGajiMinima_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_RptKedPkjMenWlyh_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_RptMakPekTem_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptMasterDataPkj_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_RptMasterJumPkj_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelsSP\sp_RptPermohonanIDPenggunaBaruReport_Result.cs">
@@ -3211,6 +3251,7 @@
     <Content Include="Views\Maintenance\OilPriceRangeMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveAllocationMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PaidLeaveCategoryMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\PaidLeaveGenerateMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PassportExpiryListMaintenance.cshtml" />
     <Content Include="Views\Maintenance\PayrateDelete.cshtml" />
     <Content Include="Views\Maintenance\PayrateDetail.cshtml" />
@@ -3713,8 +3754,31 @@
     <Content Include="Views\Report\_PermohonanPekerjaBaruReport.cshtml" />
     <Content Include="Views\Report\_PermohonanIDBaruReport.cshtml" />
     <Content Include="Views\Report\PermohonanIDBaruReport.cshtml" />
+    <Content Include="Views\Report\DataEntryReport.cshtml" />
     <Content Include="Views\SAPIntegration\_WBSReport.cshtml" />
     <Content Include="Views\SAPIntegration\WBSReport.cshtml" />
+    <Content Include="Views\DataEntry\BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktor.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorCreate.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorEdit.cshtml" />
+    <Content Include="Views\DataEntry\_BuruhKontraktorDelete.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateInfoMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_PaidLeaveGenerateMaintenanceCreate.cshtml" />
+    <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\KedudukanPkjMengikutWlyhReport.cshtml" />
+    <Content Include="Views\Report\MapaReport.cshtml" />
+    <Content Include="Views\Report\_MapaReport.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaBulanKeseluruhan.cshtml" />
+    <Content Include="Views\Report\RumusanPekerjaKontraktor.cshtml" />
+    <Content Include="Views\Report\_RumusanPekerjaKontraktor.cshtml" />
+    <Content Include="Views\Report\PocketCheckrollRpt.cshtml" />
+    <Content Include="Views\Report\_PocketCheckrollRptSearch.cshtml" />
+    <Content Include="Views\EstateDataManagement\ReverseSAP.cshtml" />
+    <Content Include="Views\EstateDataManagement\_ReverseSAP.cshtml" />
+    <Content Include="Views\Report\_ProductivityRptAdvanceSearch.cshtml" />
+    <Content Include="Views\Report\_ProductivityRptSearch.cshtml" />
+    <Content Include="Views\Report\ProductivityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3801,6 +3865,7 @@
     <EmbeddedResource Include="App_LocalResources\GlobalResCorp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalResCorp.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="App_LocalResources\GlobalResDataEntry.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4199,12 +4264,11 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

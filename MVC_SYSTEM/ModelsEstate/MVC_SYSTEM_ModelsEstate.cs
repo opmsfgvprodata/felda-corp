@@ -47,8 +47,26 @@ namespace MVC_SYSTEM.ModelsEstate
         public virtual DbSet<tbl_PktUtama> tbl_PktUtama { get; set; }
         public virtual DbSet<tbl_Blok> tbl_Blok { get; set; }
         public virtual DbSet<tbl_SubPkt> tbl_SubPkt { get; set; }
+        public virtual DbSet<tbl_BuruhKontrak> tbl_BuruhKontrak { get; set; } //fatin added - 17/04/2024
         //end
+        public virtual DbSet<tbl_ByrCarumanTambahan> tbl_ByrCarumanTambahan { get; set; }//Added by Shazana 15/8/2023
+        public virtual DbSet<vw_PaySheetPekerja> vw_PaySheetPekerja { get; set; } //Added by Shazana 15/8/2023
 
+        public virtual DbSet<tbl_Kerja> tbl_Kerja { get; set; }
+        public virtual DbSet<tbl_Kerjahdr> tbl_Kerjahdr { get; set; }
+
+        public virtual DbSet<tbl_PktHargaKesukaran> tbl_PktHargaKesukaran { get; set; }
+        public virtual DbSet<tbl_KumpulanKerja> tbl_KumpulanKerja { get; set; }
+        public virtual DbSet<tbl_GajiBulanan> tbl_GajiBulanan { get; set; }
+        public virtual DbSet<tbl_KerjaBonus> tbl_KerjaBonus { get; set; }
+        public virtual DbSet<tbl_KerjahdrCuti> tbl_KerjahdrCuti { get; set; }
+        public virtual DbSet<tbl_KerjaKesukaran> tbl_KerjaKesukaran { get; set; }
+        public virtual DbSet<tbl_KerjaOT> tbl_KerjaOT { get; set; }
+
+        public virtual DbSet<vw_SAPPostData> vw_SAPPostData { get; set; }
+        public virtual DbSet<tbl_SAPPostRef> tbl_SAPPostRef { get; set; }
+        public virtual DbSet<tbl_SAPPostDataDetails> tbl_SAPPostDataDetails { get; set; }
+        public virtual DbSet<tbl_SAPHistory> tbl_SAPHistory { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             

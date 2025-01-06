@@ -5,6 +5,7 @@
 
     GetLadang GetLadang = new GetLadang();
     GetWilayah GetWilayah = new GetWilayah();
+    //GetSyarikat GetSyarikat = new GetSyarikat();
 
 
 }
@@ -75,6 +76,15 @@
                                 @Html.ValidationMessageFor(model => model.fldRoleID, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        @*yana add 051023*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldSyarikatID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("fldSyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fldSyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*end here 051023*@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.fldWilayahID, "Region", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -117,15 +127,16 @@
                     $("form").removeData("unobtrusiveValidation");
                     $.validator.unobtrusive.parse("form");
 
-
+    /*yana comment 051023*/
     @* added function to display ladang in dropdown - kamalia 19 / 11 / 20 *@
     @* modified function to display ladang in dropdown based on ladang user display di atas- kamalia 27/4/2022 *@
-            if ($("#fldWilayahID").val() != 0) {
+    @*if ($("#fldWilayahID").val() != 0) {
             var WilayahIDList = {};
             var disableoption = "";
             WilayahIDList.url = "@Url.Action("GetLadang", "User")";
             WilayahIDList.type = "POST";
-                WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), LadangID: $("#fldLadangID").val()});
+                /*WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), LadangID: $("#fldLadangID").val() });*/
+                WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), LadangID: $("#fldLadangID").val(), SyarikatList: $("#fldSyarikatList").val() });
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {
@@ -137,14 +148,45 @@
             };
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);
+        }*@
+            /*end here 051023*/
+
+                        //yana added - 11/10/2023
+    $("#fldSyarikatList").change(function () {
+    debugger
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah2", "User")";
+    SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#fldSyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#fldWilayahID").empty();
+        $("#fldLadangID").empty();
+        $("#fldLadangID").append("<option value=0>All</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#fldSyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#fldWilayahID").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
         }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+ });
+//end
+
 
       $("#fldWilayahID").change(function () {
             var WilayahIDList = {};
             var disableoption = "";
             WilayahIDList.url = "@Url.Action("GetWilayahChange", "User")";
-            WilayahIDList.type = "POST";
-        WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val() });
+          WilayahIDList.type = "POST";
+            /*yana add 051023 - add syarikatlist*/
+          WilayahIDList.data = JSON.stringify({ WilayahID: $("#fldWilayahID").val(), SyarikatList: $("#fldSyarikatList").val() });
             WilayahIDList.datatype = "json";
             WilayahIDList.contentType = "application/json";
             WilayahIDList.success = function (ladanglist) {
@@ -162,7 +204,7 @@
                         }
                     }
                 }
-               
+
             };
             WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
             $.ajax(WilayahIDList);

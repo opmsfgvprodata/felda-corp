@@ -153,6 +153,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         public virtual DbSet<tbl_Customer> tbl_Customer { get; set; }
         public virtual DbSet<tbl_WBSSAP> tbl_WBSSAP { get; set; }
         public virtual DbSet<vw_SAPIODetails> vw_SAPIODetails { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_SubCarumanTambahan>()
@@ -166,7 +167,7 @@ namespace MVC_SYSTEM.ModelsCorporate
             //added by kamalia 7/10/2021
             modelBuilder.Entity<tbl_UpahAktiviti>()
               .Property(e => e.fld_Harga)
-              .HasPrecision(18, 3);
+              .HasPrecision(18, 4);
 
             modelBuilder.Entity<tbl_UpahAktiviti>()
                 .Property(e => e.fld_MaxProduktiviti)

@@ -3786,4 +3786,124 @@
   <data name="lblIncInOrp" xml:space="preserve">
     <value>Termasuk Dalam ORP?</value>
   </data>
+  <data name="lblCategory" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="titleContractLabor" xml:space="preserve">
+    <value>Maklumat Pekerja Kontraktor</value>
+  </data>
+  <data name="lblTitlePaidLeaveGenerateMaintenance" xml:space="preserve">
+    <value>Jana Cuti Berbayar Pekerja</value>
+  </data>
+  <data name="lblPaidLeaveGenerateInfo" xml:space="preserve">
+    <value>Maklumat Jana Cuti Pekerja Ladang</value>
+  </data>
+  <data name="lblAtleastChoosePaidLeaveGenerate" xml:space="preserve">
+    <value>Sila pilih syarikat, wilayah, ladang dan tahun, sekurang-kurangnya</value>
+  </data>
+  <data name="lblGenerateLeave" xml:space="preserve">
+    <value>Jana Cuti</value>
+  </data>
+  <data name="msgGenerateLeaveFail" xml:space="preserve">
+    <value>Proses Jana Cuti Gagal</value>
+  </data>
+  <data name="msgGenerateLeaveSuccess" xml:space="preserve">
+    <value>Proses Jana Cuti Berjaya</value>
+  </data>
+  <data name="titleReportTenagaKerja" xml:space="preserve">
+    <value>Laporan Kemasukan Tenaga Kerja</value>
+  </data>
+  <data name="lblBuruhKontraktor" xml:space="preserve">
+    <value>BURUH KONTRAKTOR</value>
+  </data>
+  <data name="lblJumlahBesar" xml:space="preserve">
+    <value>JUMLAH BESAR</value>
+  </data>
+  <data name="lblJumlahMasuk" xml:space="preserve">
+    <value>JUMLAH MASUK</value>
+  </data>
+  <data name="lblJumlahSemasa" xml:space="preserve">
+    <value>JUMLAH SEMASA</value>
+  </data>
+  <data name="lblJumlahTKA" xml:space="preserve">
+    <value>JUMLAH TKA</value>
+  </data>
+  <data name="lblJumlahTKT" xml:space="preserve">
+    <value>JUMLAH TKT(ARTISAN)</value>
+  </data>
+  <data name="lblJumlahTKTProduktiviti" xml:space="preserve">
+    <value>JUMLAH TKT (PRODUKTIVITI)</value>
+  </data>
+  <data name="lblKekuranganSemasa" xml:space="preserve">
+    <value>KEKURANGAN SEMASA</value>
+  </data>
+  <data name="lblKeluar" xml:space="preserve">
+    <value>KELUAR</value>
+  </data>
+  <data name="lblKemasukanBaruPindahMasuk" xml:space="preserve">
+    <value>BARU/PINDAH MASUK</value>
+  </data>
+  <data name="lblMonth1" xml:space="preserve">
+    <value>JAN</value>
+  </data>
+  <data name="lblMonth10" xml:space="preserve">
+    <value>OKT</value>
+  </data>
+  <data name="lblMonth11" xml:space="preserve">
+    <value>NOV</value>
+  </data>
+  <data name="lblMonth12" xml:space="preserve">
+    <value>DIS</value>
+  </data>
+  <data name="lblMonth2" xml:space="preserve">
+    <value>FEB</value>
+  </data>
+  <data name="lblMonth3" xml:space="preserve">
+    <value>MAC</value>
+  </data>
+  <data name="lblMonth4" xml:space="preserve">
+    <value>APR</value>
+  </data>
+  <data name="lblMonth5" xml:space="preserve">
+    <value>MEI</value>
+  </data>
+  <data name="lblMonth6" xml:space="preserve">
+    <value>JUN</value>
+  </data>
+  <data name="lblMonth7" xml:space="preserve">
+    <value>JUL</value>
+  </data>
+  <data name="lblMonth8" xml:space="preserve">
+    <value>OGOS</value>
+  </data>
+  <data name="lblMonth9" xml:space="preserve">
+    <value>SEPT</value>
+  </data>
+  <data name="lblTidakAktif/Keluar" xml:space="preserve">
+    <value>TIDAK AKTIF/KELUAR</value>
+  </data>
+  <data name="lblTKTSediaAda" xml:space="preserve">
+    <value>TKT SEDIA ADA</value>
+  </data>
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Rumusan Kedudukan Pekerja Kontraktor</value>
+  </data>
+  <data name="lblMandorAm" xml:space="preserve">
+    <value>MANDOR AM</value>
+  </data>
+  <data name="lblPekerjaAm" xml:space="preserve">
+    <value>PEKERJA AM</value>
+  </data>
+  <data name="lblPemandu" xml:space="preserve">
+    <value>PEMANDU</value>
+  </data>
+  <data name="lblPenoreh" xml:space="preserve">
+    <value>PENOREH</value>
+  </data>
+  <data name="lblPenuai" xml:space="preserve">
+    <value>PENUAI</value>
+  </data>
+  <data name="lblTapakSemaian" xml:space="preserve">
+    <value>TAPAK SEMAIAN</value>
+  </data>
 </root>
