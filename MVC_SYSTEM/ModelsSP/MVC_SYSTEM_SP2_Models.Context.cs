@@ -27,7 +27,8 @@ namespace MVC_SYSTEM.ModelsSP
         public void SetCommandTimeout(int timeout)
         {
             var objcontxt = (this as IObjectContextAdapter).ObjectContext;
-            objcontxt.CommandTimeout = this.Database.Connection.ConnectionTimeout;
+            // objcontxt.CommandTimeout = this.Database.Connection.ConnectionTimeout;
+            objcontxt.CommandTimeout = 600000;
         }
 
 
