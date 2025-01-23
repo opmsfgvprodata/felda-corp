@@ -1,0 +1,746 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@using MVC_SYSTEM.ModelsDapper
+@model IEnumerable<MVC_SYSTEM.ModelsDapper.sp_RptMakPekerjaTemStatus_Result>
+
+@{
+
+
+    GetConfig GetConfig = new GetConfig();
+    ViewBag.Title = "LocalWorkerInfoStatus";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    int? pemandupeneroka = 0;
+    int? mandurpeneroka = 0;
+    @*<a href="~/Views/Report/LocalWorkerInfoStatus.cshtml">~/Views/Report/LocalWorkerInfoStatus.cshtml</a>*@
+    int? penuaipeneroka = 0;
+    int? pekampeneroka = 0;
+    int? jumlahpeneroka = 0;
+    int? pemandupenerokawati = 0;
+    int? mandurpenerokawati = 0;
+    int? penuaipenerokawati = 0;
+    int? pekampenerokawati = 0;
+    int? jumlahpenerokawati = 0;
+    int? pemandubelia = 0;
+    int? mandurbelia = 0;
+    int? penuaibelia = 0;
+    int? pekambelia = 0;
+    int? jumlahbelia = 0;
+    int? pemandubeliawati = 0;
+    int? mandurbeliawati = 0;
+    int? penuaibeliawati = 0;
+    int? pekambeliawati = 0;
+    int? jumlahbeliawati = 0;
+    int? jumlahsemua = 0;
+    int RowNo = 1;
+    int year = ChangeTimeZone.gettimezone().Year;
+    int month = ChangeTimeZone.gettimezone().Month;
+    int day = ChangeTimeZone.gettimezone().Day;
+    int hour = ChangeTimeZone.gettimezone().Hour;
+    int minute = ChangeTimeZone.gettimezone().Minute;
+    int second = ChangeTimeZone.gettimezone().Second;
+    string uniquefilename = "LocalWorkerInfoStatus_" + ViewBag.UserID + "_" + year.ToString() + month.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    string selectionheader = "";
+
+    if (ViewBag.IncLdg2 == 1)
+    {
+        selectionheader = "";
+    }
+    else if (ViewBag.IncLdg2 == 2)
+    {
+        selectionheader = ViewBag.WilayahName;
+    }
+    else
+    {
+        selectionheader = ViewBag.WilayahName + " - (" + ViewBag.LadangCode + " - " + ViewBag.LadangName + ")";
+    }
+}
+
+<!-- Styles for Wait Messages -->
+@*<link href="~/Asset/Content/font-awesome.min.css" rel="stylesheet" />*@
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+@using (Html.BeginForm("LocalWorkerInfoStatus", "Report", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    @*<div class="submit-progress hidden">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>@GlobalResActiveWorker.WaitMsg</label>
+        </div>*@
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                @*sarah added*@
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResCorp.lblCompany)
+                    @Html.DropDownList("SyarikatList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResActiveWorker.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.Label(GlobalResActiveWorker.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResActiveWorker.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+            </div>
+        </div>
+        <div id="DataTable" class="well" style="margin-top: 7px">
+            <p style="text-align:center;"><label>LAPORAN MAKLUMAT UMUR PEKERJA TEMPATAN (STATUS)</label></p>
+            @if (Model.Count() != 0)
+            {
+                <div style="height:auto !important;max-height: 1000px !important" id="scrollArea" class="modal-body">
+                    @foreach (var costcentre in Model.Select(s => s.fld_CompCode).Distinct())
+                    {
+                        var namasyarikat = GetConfig.GetSyarikatName(costcentre);
+                        var namapenuhsyarikat = GetConfig.GetSyarikatFullName(costcentre);
+
+                        <logo />
+                        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                            <thead>
+                                <tr>
+                                    @*sarah modified *@
+                                    @*<th colspan="28" style="text-align:center;vertical-align:middle;">*@
+                                    <th colspan="29" style="text-align:center;vertical-align:middle;">
+
+
+                                        @namapenuhsyarikat
+                                        <br />
+                                        (@namasyarikat)
+                                        <br />
+                                    </th>
+                                </tr>
+                                @if (ViewBag.IncLdg2 != 0)
+                                {
+                                    <tr>
+                                        @*sarah modified*@
+                                        @*<th colspan="28" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">*@
+                                        <th colspan="24" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @selectionheader
+                                        </th>
+
+                                    </tr>
+                                }
+
+                            <tr>
+                                <th rowspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrNo</th>
+                                @if (ViewBag.Incldg2 == 0)
+                                {
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                }
+                                else
+                                {
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
+                                }
+                                <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENEROKA</th>
+                                <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENEROKAWATI</th>
+                                <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">BELIA</th>
+                                <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">BELIAWATI</th>
+                                <th rowspan="5" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH SEMUA</th>
+                            </tr>
+                                <tr>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEMANDU</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">MANDOR</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENUAI</th>
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEKERJA AM</th>
+                                    <th rowspan="2" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH PENEROKA</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEMANDU</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">MANDOR</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENUAI</th>
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEKERJA AM</th>
+                                    <th rowspan="2" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH PENEROKAWATI</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEMANDU</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">MANDOR</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENUAI</th>
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEKERJA AM</th>
+                                    <th rowspan="2" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">JUMLAH BELIA</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">PEMANDU</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">MANDOR</th>
+                                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PENUAI</th>
+                                    <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">PEKERJA AM</th>
+                                    <th rowspan="2" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black; " border="1">JUMLAH BELIAWATI</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @RowNo
+                                        </td>
+
+                                        @if (ViewBag.Incldg2 == 0)
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                        }
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pemandupeneroka)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_mandurpeneroka)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_penuaipeneroka)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pekampeneroka)
+                                        </td>
+                                        <td align="center" style="background-color: rgba(233, 165, 84, 1.0); vertical-align: middle !important; border: 1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_jumlahpeneroka)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pemandupenerokawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_mandurpenerokawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_penuaipenerokawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pekampenerokawati)
+                                        </td>
+                                        <td align="center" style="background-color: rgba(233, 165, 84, 1.0); vertical-align: middle !important; border: 1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_jumlahpenerokawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pemandubelia)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_mandurbelia)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_penuaibelia)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pekambelia)
+                                        </td>
+                                        <td align="center" style="background-color: rgba(233, 165, 84, 1.0); vertical-align: middle !important; border: 1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_jumlahbelia)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pemandubeliawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_mandurbeliawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_penuaibeliawati)
+                                        </td>
+                                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_pekambeliawati)
+                                        </td>
+                                        <td align="center" style=" background-color: rgba(233, 165, 84, 1.0); vertical-align: middle !important; border: 1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_jumlahbeliawati)
+                                        </td>
+                                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                            @GetTriager.GetDashForInt(item.fld_Jumlahsemua)
+                                        </td>
+                                    </tr>
+                                    {
+
+                                        pemandupeneroka = pemandupeneroka + item.fld_pemandupeneroka;
+                                        penuaipeneroka = penuaipeneroka + item.fld_penuaipeneroka;
+                                        mandurpeneroka = mandurpeneroka + item.fld_mandurpeneroka;
+                                        pekampeneroka = pekampeneroka + item.fld_pekampeneroka;
+                                        jumlahpeneroka = jumlahpeneroka + item.fld_jumlahpeneroka;
+                                        pemandupenerokawati = pemandupenerokawati + item.fld_pemandupenerokawati;
+                                        penuaipenerokawati = penuaipenerokawati + item.fld_penuaipenerokawati;
+                                        mandurpenerokawati = mandurpenerokawati + item.fld_mandurpenerokawati;
+                                        pekampenerokawati = pekampenerokawati + item.fld_pekampenerokawati;
+                                        jumlahpenerokawati = jumlahpenerokawati + item.fld_jumlahpenerokawati;
+                                        pemandubelia = pemandubelia + item.fld_pemandubelia;
+                                        penuaibelia = penuaibelia + item.fld_penuaibelia;
+                                        mandurbelia = mandurbelia + item.fld_mandurbelia;
+                                        pekambelia = pekambelia + item.fld_pekambelia;
+                                        jumlahbelia = jumlahbelia + item.fld_jumlahbelia;
+                                        pemandubeliawati = pemandubeliawati + item.fld_pemandubeliawati;
+                                        penuaibeliawati = penuaibeliawati + item.fld_penuaibeliawati;
+                                        mandurbeliawati = mandurbeliawati + item.fld_mandurbeliawati;
+                                        pekambeliawati = pekambeliawati + item.fld_pekambeliawati;
+                                        jumlahbeliawati = jumlahbeliawati + item.fld_jumlahbeliawati;
+                                        jumlahsemua = jumlahsemua + item.fld_Jumlahsemua;
+
+
+                                    }
+                                    RowNo++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    @if (ViewBag.Incldg == 0)
+                                    {
+                                        <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    else
+                                    {
+                                        <td colspan="2" bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTotal</td>
+                                    }
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pemandupeneroka</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@mandurpeneroka</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@penuaipeneroka</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pekampeneroka</td>
+                                    <td bgcolor="#f4a142" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@jumlahpeneroka</td> 
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pemandupenerokawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@mandurpenerokawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@penuaipenerokawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pekampenerokawati</td>
+                                    <td bgcolor="#f4a142" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@jumlahpenerokawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pemandubelia</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@mandurbelia</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@penuaibelia</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pekambelia</td>
+                                    <td bgcolor="#f4a142" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@jumlahbelia</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pemandubeliawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@mandurbeliawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@penuaibeliawati</td>
+                                    <td bgcolor="#f4a142" style="color:black; text-align: center; vertical-align:middle !important;border:1px solid black;" border="1">@pekambeliawati</td>
+                                    <td bgcolor="#f4a142" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@jumlahbeliawati</td>
+                                    <td bgcolor="#f4a142" style="background-color: #ef7d2f; color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@jumlahsemua</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+                </div>
+                <!--<a href="#" id="downloadpdf">Download PDF</a>-->
+                //farahin comment button asal
+                @*<a href="#" id="downloadpdf2">Download PDF</a>
+                    <a href="#" onclick="HTMLtoExcel('@uniquefilename')">Download Excel</a>*@
+
+                <br/>
+
+                //farahin-20012021
+                <div style="text-align:right; margin-top:10px">
+                    <a class="btn btn-default btn-sm" href="" id="printpage">
+                        <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" id="downloadpdf2">
+                        <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                    </a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                        <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                    </a>
+                </div>
+            }
+            else
+            {
+                <p style="color:red">@GlobalResActiveWorker.lblSelectionNote</p>
+            }
+        </div>
+
+        @*sarah added 10/05/2023*@
+        <div id='myModal1' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
+
+        @*sarah comment 23/10/2023*@
+        <!-- Modal -->
+        @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Lain-lain</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-hover table-bordered" style="font-size: 11px;" border="0">
+                                <thead>
+
+                                    <tr>
+
+                                        @if (ViewBag.Incldg == 0)
+                                        {
+                                            <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.lblWilayahName</th>
+                                        }
+                                        else
+                                        {
+
+                                            <th rowspan="3" width="10%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrLadangName</th>
+                                        }
+
+                                    </tr>
+
+                                    <tr>
+                                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResActiveWorker.hdrTKPH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            @if (ViewBag.Incldg == 0)
+                                            {
+                                                <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaWilayah</td>
+
+                                            }
+                                            else
+                                            {
+
+                                                <td align="center" width="10%" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_NamaLadang</td>
+                                            }
+
+                                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                                @GetTriager.GetDashForInt(item.fld_other)
+                                            </td>
+
+                                        </tr>
+                                        {
+
+                                            //tkother = tkother + item.fld_other;
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @section scripts{
+            @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+        }
+        @*sarah added*@
+    </section>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf2").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+        @*$("#downloadpdf2").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });*@
+
+        $("#SyarikatList").change(function () {
+        debugger
+        var SyarikatList = {};
+        var disableoption = "";
+        SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+        SyarikatList.type = "POST";
+        SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+        SyarikatList.datatype = "json";
+        SyarikatList.contentType = "application/json";
+        SyarikatList.success = function (wilayahlist) {
+            $("#WilayahIDList").empty();
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#SyarikatList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+
+        };
+
+        SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatList);
+    });
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+        var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                debugger
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+        });
+
+        /*sarah comment*/
+        @*if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });*@
+    });
+</script>
+<!--<script>
+    $(document).ready(function () {
+        //farahin tambah function print-23022021
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+        //farahin edit function download pdf - 23022021
+        $("#downloadpdf2").click(function () { //tukar id downloadpdf > downloadpdf2
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")', //tukar action convertpdf > convertpdf2
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename : "@uniquefilename", reportname : "ActiveWoker" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.id, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                //tambah function error
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });-->
+@*$("#downloadpdf2").click(function () {
+        var myHtml = document.getElementById('scrollArea').innerHTML;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ConvertPDF2", "Report")',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "ActiveWorker" }),
+            success: function (result) {
+                if (result.success) {
+                    var win = window.open(result.link, '_blank');
+                    win.focus();
+                } else {
+                    $.simplyToast(result.msg, result.status);
+                }
+            },
+            error: function (error) {
+                $.simplyToast('Sorry to many data', 'danger');
+            }
+        });
+        return false;
+    });*@
+
+<!--$("#SyarikatList").change(function () {
+    var SyarikatList = {};
+    var disableoption = "";
+    SyarikatList.url = "@Url.Action("GetWilayah5", "Report")";
+    SyarikatList.type = "POST";
+    SyarikatList.data = JSON.stringify({ SyarikatID: $("#SyarikatList").val() });
+    SyarikatList.datatype = "json";
+    SyarikatList.contentType = "application/json";
+    SyarikatList.success = function (wilayahlist) {
+        $("#WilayahIDList").empty();
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+        for (var i = 0; i < wilayahlist.length; i++) {
+            if ($("#SyarikatList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#WilayahIDList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+        }
+
+    };
+
+    SyarikatList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(SyarikatList);
+});
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang5", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val(), SyarikatID: $("#SyarikatList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) ;
+        $("#LadangIDList").empty();
+        $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+        for (var i = 0; i < ladanglist.length; i++) {
+            if ($("#WilayahIDList").val() == 0) {
+                disableoption = "disabled";
+            }
+            $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+        }
+    };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+    $.ajax(WilayahIDList);
+    });
+
+    /*sarah comment*/-->
+@*if ($("#WilayahIDList").val() == 0) {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0)
+                {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    }
+
+    $("#WilayahIDList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+        WilayahIDList.success = function (ladanglist) {
+            $("#LadangIDList").empty();
+            $("#LadangIDList").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+            for (var i = 0; i < ladanglist.length; i++) {
+                if ($("#WilayahIDList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });*@
+<!--</script>-->
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
