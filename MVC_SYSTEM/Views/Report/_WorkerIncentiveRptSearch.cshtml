@@ -1,0 +1,480 @@
+﻿@using Itenso.TimePeriod
+@using MVC_SYSTEM.Class
+@model IEnumerable<MVC_SYSTEM.ModelsEstate.vw_MaklumatInsentifPekerja>
+
+@{
+    int? month = ViewBag.MonthList;
+    int? year = ViewBag.YearList;
+    string worker = ViewBag.WorkerList;
+    int? radio = ViewBag.RadioGroup;
+    var workerData = ViewBag.WorkerData;
+    int incomeCount = 0;
+    int deductionCount = 0;
+
+    //farahin tambah  - 23/02/2021
+    int bill = 0;
+    decimal JumlahPendapatanPerson = 0;
+    decimal JumlahPotonganPerson = 0;
+    decimal JumlahPendapatan = 0;
+    decimal JumlahPotongan = 0;
+
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    DateTime Todaydate = ChangeTimeZone.gettimezone();
+    string uniquefilename = "IncentiveReport_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+
+}
+
+@if (radio == 2)
+{
+    if (Model != null && Model.Count() != 0)
+    {
+
+        <div id="scrollArea" class="modal-body">
+
+            <table class="table table-bordered" style="font-size: 11px; border-collapse: collapse" border="0">
+                <thead>
+                    <tr>
+                        <th colspan="9" style="text-align: center; vertical-align: middle; border: none;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            (@GlobalResCorp.lblCompanyNo : @ViewBag.NoSyarikat)
+                            @*<br />*@
+                            @*@ViewBag.InfoLadang.fld_ID - @ViewBag.InfoLadang.fld_LdgName*@
+                            <br />
+                            @GlobalResCorp.lblIncentiveReport Bagi Bulan @month/@year
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+
+            <table class="table table-bordered" style="font-size: 11px; border-collapse: collapse" border="1">
+                <thead>
+                    <tr>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;"></label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrNoPkj</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrName</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrNoKp</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblLadangDesc</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblStatus</label><br />
+                        </th>
+                        <th colspan="4" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">Insentif Pekerja</label><br />
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblEarning</label><br />
+                        </th>
+                        <th colspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblDeduction</label><br />
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var group in Model.GroupBy(x => x.insentif.fld_KodInsentif).Select(x => x))
+                    {
+                        bill = 0;
+
+                        foreach (var item in group)
+                        {
+                            bill = bill + 1;
+                            <tr>
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="2%"><label style="font-size: small; font-weight: normal;">@bill</label></td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="10%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nopkj</label></td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nama</label></td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="15%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nokp</label></td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="15%"><label style="font-size: small; font-weight: normal;">@item.ladang.fld_LdgName</label></td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="10%">
+                                    @if (item.Pkjmast.fld_Kdaktf == "1")
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">AKTIF</label>
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">TIDAK AKTIF</label>
+                                        <br />
+                                    }
+                                </td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%">
+                                    @if (@item.insentif.fld_KodInsentif.Contains("P"))
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">@item.insentif.fld_KodInsentif - @item.insentif.fld_Keterangan</label> <br />
+
+                                    }
+                                </td>
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="5%">
+                                    @if (@item.insentif.fld_KodInsentif.Contains("P"))
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">@item.insentif.fld_NilaiInsentif</label><br />
+                                        JumlahPendapatan = JumlahPendapatan + Convert.ToDecimal(@item.insentif.fld_NilaiInsentif);
+                                    }
+                                </td>
+
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%">
+                                    @if (@item.insentif.fld_KodInsentif.Contains("T"))
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">@item.insentif.fld_KodInsentif - @item.insentif.fld_Keterangan</label> <br />
+
+                                    }
+                                </td>
+                                <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="5%">
+                                    @if (@item.insentif.fld_KodInsentif.Contains("T"))
+                                    {
+                                        <label style="font-size: small; font-weight: normal;">@item.insentif.fld_NilaiInsentif</label> <br />
+                                        JumlahPotongan = JumlahPotongan + Convert.ToDecimal(@item.insentif.fld_NilaiInsentif);
+
+                                    }
+                                </td>
+
+                            </tr>
+
+                        }
+                        <tr>
+                            <td colspan="6" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <label style="font-size: small; font-weight: normal;">
+                                    @GetTriager.GetTotalForMoneyList(group.Where(x => x.insentif.fld_KodInsentif.Contains("P")).Select(s => s.insentif.fld_NilaiInsentif).ToList())
+                                </label>
+                            </td>
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <label style="font-size: small; font-weight: normal;"> @GetTriager.GetTotalForMoneyList(group.Where(x => x.insentif.fld_KodInsentif.Contains("T")).Select(s => s.insentif.fld_NilaiInsentif).ToList())</label>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black; text-align:right" border="1">
+                            <label style="font-size: small; font-weight: normal;"> @GlobalResCorp.lblTotal </label>
+                        </td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black;" border="1"></td>
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black; text-align:left" border="1">
+
+                            <label style="font-size: small; font-weight: normal;">  @Convert.ToDecimal(JumlahPendapatan)</label>
+                        </td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black; text-align:left" border="1">
+
+                            <label style="font-size: small; font-weight: normal;">  @Convert.ToDecimal(JumlahPotongan)</label>
+
+                        </td>
+
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        if (ViewBag.Print == null)
+        {
+            <div style="text-align:right; margin-top:10px">
+                <a class="btn btn-default btn-sm" href="#" id="printpage">
+                    <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                </a>
+                <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                    <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                </a>
+                @*farahin tambah uniquefilename  - 23/02/2021*@
+                <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                    <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <div id="scrollArea" class="modal-body" style="text-align: center">
+            <p style="color: red">@ViewBag.Message</p>
+
+        </div>
+    }
+}
+
+else if (radio != 2)
+{
+    if (Model != null && Model.Count() != 0)
+    {
+        //farahin tukar layout report  - 23/02/2021
+        <div id="scrollArea" class="modal-body">
+
+            <table class="table table-bordered" style="font-size: 11px; border-collapse: collapse" border="0">
+                <thead>
+                    <tr>
+                        <th colspan="9" style="text-align: center; vertical-align: middle; border: none;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            (@GlobalResCorp.lblCompanyNo : @ViewBag.NoSyarikat)
+                            <br />
+                            @GlobalResCorp.lblIncentiveReport
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+
+            <table class="table table-bordered" style="font-size: 11px; border-collapse: collapse" border="1">
+                <thead>
+                    <tr>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;"></label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrNoPkj</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrName</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.hdrNoKp</label><br />
+                        </th>
+                        <th rowspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblStatus</label><br />
+                        </th>
+                        <th colspan="4" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">Insentif Pekerja</label><br />
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblEarning</label><br />
+                        </th>
+                        <th colspan="2" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            <label style="font-size: small; font-weight: normal;">@GlobalResCorp.lblDeduction</label><br />
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+
+                    bill = bill + 1;
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="2%"><label style="font-size: small; font-weight: normal;">@bill</label></td>
+
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="10%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nopkj</label></td>
+
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nama</label></td>
+
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="15%"><label style="font-size: small; font-weight: normal;">@item.Pkjmast.fld_Nokp</label></td>
+
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="10%">
+                                @if (item.Pkjmast.fld_Kdaktf == "1")
+                                {
+                                    <label style="font-size: small; font-weight: normal;">AKTIF</label>
+                                    <br />
+                                }
+                                else
+                                {
+                                    <label style="font-size: small; font-weight: normal;">TIDAK AKTIF</label>
+                                    <br />
+                                }
+                            </td>
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%">
+                                @foreach (var insentif in item.Pendapatan)
+                                {
+                                    <label style="font-size: small; font-weight: normal;">@insentif.fld_KodInsentif - @insentif.fld_Keterangan</label> <br />
+                                }
+                            </td>
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="5%">
+                                @foreach (var insentif in item.Pendapatan)
+                                {
+
+                                    <label style="font-size: small; font-weight: normal;">@insentif.fld_NilaiInsentif</label><br />
+                                    JumlahPendapatan = JumlahPendapatan + Convert.ToDecimal(insentif.fld_NilaiInsentif);
+                                }
+                            </td>
+
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="20%">
+                                @foreach (var insentif in item.Potongan)
+                                {
+                                    <label style="font-size: small; font-weight: normal;">@insentif.fld_KodInsentif - @insentif.fld_Keterangan</label><br />
+                                }
+                            </td>
+                            <td style="vertical-align:middle !important;border:1px solid black;" border="1" width="5%">
+                                @foreach (var insentif in item.Potongan)
+                                {
+
+                                    <label style="font-size: small; font-weight: normal;">@insentif.fld_NilaiInsentif</label> <br />
+                                    JumlahPotongan = JumlahPotongan + Convert.ToDecimal(insentif.fld_NilaiInsentif);
+                                }
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="6" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+
+
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <label style="font-size: small; font-weight: normal;"> @GetTriager.GetTotalForMoneyList(item.Pendapatan.Select(s => s.fld_NilaiInsentif).ToList())</label>
+
+                            </td>
+
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+
+                            <td colspan="1" bgcolor="#FCC997" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                <label style="font-size: small; font-weight: normal;"> @GetTriager.GetTotalForMoneyList(item.Potongan.Select(s => s.fld_NilaiInsentif).ToList()) </label>
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+
+                }
+                <tfoot>
+                    <tr>
+                        <td colspan="5" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black; text-align:right" border="1">
+                            <label style="font-size: small; font-weight: normal;"> @GlobalResCorp.lblTotal </label>
+                        </td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black;" border="1"></td>
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black; text-align:left" border="1">
+
+                            <label style="font-size: small; font-weight: normal;">  @Convert.ToDecimal(JumlahPendapatan)</label>
+                        </td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="vertical-align:middle !important;border:1px solid black;" border="1"></td>
+
+                        <td colspan="1" bgcolor="#ffcc80" style="border:1px solid black; text-align:left" border="1">
+
+                            <label style="font-size: small; font-weight: normal;">  @Convert.ToDecimal(JumlahPotongan)</label>
+
+                        </td>
+
+
+                    </tr>
+                </tfoot>
+            </table>
+
+
+
+        </div>
+
+        if (ViewBag.Print == null)
+        {
+            <div style="text-align:right; margin-top:10px">
+                <a class="btn btn-default btn-sm" href="#" id="printpage">
+                    <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+                </a>
+                <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                    <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+                </a>
+                @*farahin tambah uniquefilename  - 23/02/2021*@
+                <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                    <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <div id="scrollArea" class="modal-body" style="text-align: center">
+            <p style="color: red">@ViewBag.Message</p>
+
+        </div>
+    }
+}
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+
+@*farahin- cater downloadexcel  - 23/02/2021*@
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+
+        $("#downloadpdf").click(function () {
+            //farahin - cater download pdf  - 23/02/2021
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDF2", "Report")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "IncentiveReport" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+
+            @*var RadioGroup = $('input[name=RadioGroup]:checked').val();
+            var MonthList = $("#MonthList").val();
+            var YearList = $("#YearList").val();
+            var SelectionList = $("#SelectionList").val();
+            //var StatusList = $("#StatusList").val();
+            //var WorkCategoryList = $("#WorkCategoryList").val();
+
+            var StatusList = '';
+            var WorkCategoryList = '';
+
+            var param = '/?RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&SelectionList=' + SelectionList + '&StatusList=' + StatusList + '&WorkCategoryList=' + WorkCategoryList;
+            var controller = 'Report';
+            var action = 'PrintWorkerInsentifPdf';
+
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("PDFIndetifier", "PdfCreator")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ controller: controller, action: action, param: param });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                //var win = window.open(result.link, '_blank');
+                //win.focus();
+                PDFObject.embed(result.link, "#searchResultWorkerIncentiveRptInfo", { height: "450px" });
+            };
+
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+
+            return false;
+        });*@
+    });
+</script>

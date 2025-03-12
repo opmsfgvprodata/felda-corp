@@ -229,5 +229,21 @@ namespace MVC_SYSTEM.Class
             }
             return result.ToString();
         }
+
+        public static string GetTotalForMoneyList(List<decimal?> no)
+        {
+            string result = "";
+
+            if (no.Count == 0)
+            {
+                result = "0.00";
+            }
+            else
+            {
+                result = Math.Round(no.Sum(x => Convert.ToDecimal(x)), 2).ToString("n2");
+            }
+
+            return result;
+        }
     }
 }

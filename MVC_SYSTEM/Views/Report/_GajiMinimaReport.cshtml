@@ -23,6 +23,7 @@
     //farahin tukar div id
     <div id="scrollArea" class="modal-body">
         @*Added by Shazana 1/8/2023*@
+        <p>@ViewBag.GajiMinima</p>
         @foreach (var costcentre in Model.Select(s => s.fld_CostCentre).Distinct())
         {
             var nosyarikat = GetConfig.GetSyarikatNo(costcentre);
@@ -67,46 +68,50 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             @*Modified by Shazana 1/8/2023*@
-                            @foreach (var gajiMinimaData in Model.Where(x => x.fld_LadangID == ladang && x.fld_GajiBulanan < 1500))
+                            @*@foreach (var gajiMinimaData in Model.Where(x => x.fld_LadangID == ladang && x.fld_GajiBulanan < 1500))*@
+                           
+                            @*Modified by Hazim 25/2/2025*@
+                            @foreach (var gajiMinimaData in Model.Where(x => x.fld_LadangID == ladang && x.fld_GajiBulanan < ViewBag.GajiMinima))
                             {
-                                bil += 1;
+                            bil += 1;
 
-                                <tr>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @bil
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @gajiMinimaData.fld_NoPkj
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @gajiMinimaData.fld_NoKP
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @gajiMinimaData.fld_Nama
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodWarganegara, "krytnlist", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodKategoriPekerja, "designation", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @GetConfig.getTotalOfferedWorkingDaysInAMonth(gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID, gajiMinimaData.fld_LadangID, gajiMinimaData.fld_Bulan, gajiMinimaData.fld_Tahun)
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @gajiMinimaData.fld_BilanganHariBekerjaSebenar
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @gajiMinimaData.fld_GajiBulanan
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_SebabGajiMinima, "sebabGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
-                                    </td>
-                                    <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                                        @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_TindakanGajiMinima, "tindakanGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @bil
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @gajiMinimaData.fld_NoPkj
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @gajiMinimaData.fld_NoKP
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @gajiMinimaData.fld_Nama
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodWarganegara, "krytnlist", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodKategoriPekerja, "designation", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.getTotalOfferedWorkingDaysInAMonth(gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID, gajiMinimaData.fld_LadangID, gajiMinimaData.fld_Bulan, gajiMinimaData.fld_Tahun)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @gajiMinimaData.fld_BilanganHariBekerjaSebenar
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @gajiMinimaData.fld_GajiBulanan
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_SebabGajiMinima, "sebabGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                                </td>
+                                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                    @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_TindakanGajiMinima, "tindakanGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

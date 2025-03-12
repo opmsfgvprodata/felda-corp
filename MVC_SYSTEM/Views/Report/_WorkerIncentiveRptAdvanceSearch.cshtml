@@ -1,0 +1,60 @@
+﻿@using MVC_SYSTEM.Class
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.btnSearchAdvance</h3>
+    </div>
+    @*@using (Ajax.BeginForm("_WorkerIncentiveRptSearch", "Report", null, options, new { @id = "WorkerIncentiveRptAdvSearch" }))
+        {
+            @Html.AntiForgeryToken()*@
+    <div class="modal-body">
+        <div class="form-group">
+            <label>@GlobalResCorp.lblStatus</label>
+            @Html.DropDownList("StatusList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>@GlobalResCorp.hdrWorkAktvt</label>
+            @Html.DropDownList("WorkCategoryList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="LihatRekodInsentifAdvance" class="btn btn-primary" ">@GlobalResCorp.btnView</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+    </div>
+
+    @*<div class="col-md-12 text-center">
+            <input class="btn btn-primary" type="submit" value="Tambah Kumpulan" />
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>*@
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#LihatRekodInsentifAdvance').on("click", function (e) {
+            $('#divLoading').show();
+            var Radiogrp = $('input[name=RadioGroup]:checked').val();
+            console.log(Radiogrp);
+            var month = $("#MonthList").val();
+            console.log(month);
+            var year = $("#YearList").val();
+            console.log(year);
+            var selection = $("#SelectionList").val();
+            console.log(selection);
+            var status = $("#StatusList").val();
+            console.log(status);
+            var workCategory = $("#WorkCategoryList").val();
+            console.log(workCategory);
+
+            $('#searchResultWorkerIncentiveRptInfo').load('@Url.Action("_WorkerIncentiveRptSearch", "Report")', { RadioGroup: Radiogrp, MonthList: month, YearList: year, SelectionList: selection,  StatusList: status, WorkCategoryList: workCategory});
+            $('#myModal1').modal('hide');
+            $('#divLoading').hide();
+        });
+    });
+</script>

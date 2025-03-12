@@ -79,11 +79,30 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RM 1,001 - RM 1,700
+        ///.
+        /// </summary>
+        public static string hdr10011700 {
+            get {
+                return ResourceManager.GetString("hdr10011700", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RM 1,500 KE ATAS.
         /// </summary>
         public static string hdrAts1500 {
             get {
                 return ResourceManager.GetString("hdrAts1500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RM 1,700 KE ATAS.
+        /// </summary>
+        public static string hdrAts1700 {
+            get {
+                return ResourceManager.GetString("hdrAts1700", resourceCulture);
             }
         }
         

@@ -147,9 +147,6 @@
   <data name="hdrLadangName" xml:space="preserve">
     <value>ESTATE NAME</value>
   </data>
-  <data name="hdrLoader" xml:space="preserve">
-    <value>LOADER</value>
-  </data>
   <data name="hdrNamePkj" xml:space="preserve">
     <value>WORKER NAME</value>
   </data>
@@ -209,5 +206,15 @@
   </data>
   <data name="lblSelectionNote" xml:space="preserve">
     <value>Please Select Month, Year, Region, Estate And Nationality.</value>
+  </data>
+  <data name="hdrLoader" xml:space="preserve">
+    <value>LOADER</value>
+  </data>
+  <data name="hdr10011700" xml:space="preserve">
+    <value>RM 1,001 - RM 1,700</value>
+  </data>
+  <data name="hdrAts1700" xml:space="preserve">
+    <value>RM 1,700 ABOVE
+</value>
   </data>
 </root>
