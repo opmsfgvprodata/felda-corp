@@ -180,9 +180,6 @@
   <data name="btnView" xml:space="preserve">
     <value>View</value>
   </data>
-  <data name="btnViewReport" xml:space="preserve">
-    <value>View Report</value>
-  </data>
   <data name="btnWorkerRequest" xml:space="preserve">
     <value>New Worker Request</value>
   </data>
@@ -191,9 +188,6 @@
   </data>
   <data name="btnYes" xml:space="preserve">
     <value>Yes</value>
-  </data>
-  <data name="chkAllSame" xml:space="preserve">
-    <value>Check for all same</value>
   </data>
   <data name="hdrAction" xml:space="preserve">
     <value>Action</value>
@@ -204,14 +198,8 @@
   <data name="hdrActvtCode" xml:space="preserve">
     <value>Activity Code</value>
   </data>
-  <data name="hdrAnnualLeavePayment" xml:space="preserve">
-    <value>Annual Leave Payment</value>
-  </data>
   <data name="hdrAttendance" xml:space="preserve">
     <value>Attendance</value>
-  </data>
-  <data name="hdrAttendanceType" xml:space="preserve">
-    <value>Attendance Type</value>
   </data>
   <data name="hdrBilAhli" xml:space="preserve">
     <value>No Of Members</value>
@@ -219,44 +207,14 @@
   <data name="hdrCategory" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="hdrDebit" xml:space="preserve">
-    <value>Debit</value>
-  </data>
-  <data name="hdrDeduction" xml:space="preserve">
-    <value>Deduction</value>
-  </data>
   <data name="hdrDesc" xml:space="preserve">
     <value>Description</value>
-  </data>
-  <data name="hdrEarning" xml:space="preserve">
-    <value>Earnings</value>
-  </data>
-  <data name="hdrEmployeeKwsp" xml:space="preserve">
-    <value>KWSP (Employee)</value>
-  </data>
-  <data name="hdrEmployeeSocso" xml:space="preserve">
-    <value>SOCSO (Employee)</value>
-  </data>
-  <data name="hdrEmployerKwsp" xml:space="preserve">
-    <value>KWSP (Employer)</value>
-  </data>
-  <data name="hdrEmployerSocso" xml:space="preserve">
-    <value>SOCSO (Employer)</value>
-  </data>
-  <data name="hdrExpiredMonth" xml:space="preserve">
-    <value>Expired Month</value>
-  </data>
-  <data name="hdrForMonth" xml:space="preserve">
-    <value>For Month</value>
   </data>
   <data name="hdrGrossSalary" xml:space="preserve">
     <value>Gross Salary</value>
   </data>
   <data name="hdrGroupCode" xml:space="preserve">
     <value>Group Code</value>
-  </data>
-  <data name="hdrKredit" xml:space="preserve">
-    <value>Credit</value>
   </data>
   <data name="hdrLeaveAllocation" xml:space="preserve">
     <value>Leave Allocation</value>
@@ -269,9 +227,6 @@
   </data>
   <data name="hdrLeavePayment" xml:space="preserve">
     <value>Leave Payment Time</value>
-  </data>
-  <data name="hdrLejar" xml:space="preserve">
-    <value>Ledger</value>
   </data>
   <data name="hdrMachineValue" xml:space="preserve">
     <value>Price: Machine</value>
@@ -288,9 +243,6 @@
   <data name="hdrName" xml:space="preserve">
     <value>Worker Name</value>
   </data>
-  <data name="hdrNetSalary" xml:space="preserve">
-    <value>Net Salary</value>
-  </data>
   <data name="hdrNo" xml:space="preserve">
     <value>No.</value>
   </data>
@@ -306,12 +258,6 @@
   <data name="hdrOutcome" xml:space="preserve">
     <value>Outcome</value>
   </data>
-  <data name="hdrPercent" xml:space="preserve">
-    <value>Percent</value>
-  </data>
-  <data name="hdrPercentAbsent" xml:space="preserve">
-    <value>Percent Absent</value>
-  </data>
   <data name="hdrPlant" xml:space="preserve">
     <value>Plant</value>
   </data>
@@ -323,9 +269,6 @@
   </data>
   <data name="hdrQuality" xml:space="preserve">
     <value>Quality</value>
-  </data>
-  <data name="hdrQuantity" xml:space="preserve">
-    <value>Quantity</value>
   </data>
   <data name="hdrRate" xml:space="preserve">
     <value>Rate</value>
@@ -354,12 +297,6 @@
   <data name="hdrWorkAktvt" xml:space="preserve">
     <value>Work Activity</value>
   </data>
-  <data name="hdrWorkerAnnualLeave" xml:space="preserve">
-    <value>Annual Leave Qualify</value>
-  </data>
-  <data name="hdrWorkerWorkday" xml:space="preserve">
-    <value>No Of Working Days Offered</value>
-  </data>
   <data name="hdrYield" xml:space="preserve">
     <value>Monthly Palm Yield</value>
   </data>
@@ -375,29 +312,8 @@
   <data name="lblAccType" xml:space="preserve">
     <value>Account Type</value>
   </data>
-  <data name="lblAccumulatedSalary" xml:space="preserve">
-    <value>Accumulated Salary</value>
-  </data>
-  <data name="lblAchieve" xml:space="preserve">
-    <value>Achieve</value>
-  </data>
-  <data name="lblAchievement" xml:space="preserve">
-    <value>Achievement</value>
-  </data>
-  <data name="lblActualWorkingDay" xml:space="preserve">
-    <value>No Of Actual Working Days</value>
-  </data>
   <data name="lblAddress" xml:space="preserve">
     <value>Address</value>
-  </data>
-  <data name="lblAips" xml:space="preserve">
-    <value>AIPS Incentive</value>
-  </data>
-  <data name="lblAipsReport" xml:space="preserve">
-    <value>AIPS Report</value>
-  </data>
-  <data name="lblAktvtType" xml:space="preserve">
-    <value>Activity Type</value>
   </data>
   <data name="lblAlert" xml:space="preserve">
     <value>ALERT</value>
@@ -416,27 +332,6 @@
   </data>
   <data name="lblAll" xml:space="preserve">
     <value>All</value>
-  </data>
-  <data name="lblApprovedBy" xml:space="preserve">
-    <value>Approved By</value>
-  </data>
-  <data name="lblAttend" xml:space="preserve">
-    <value>Attend</value>
-  </data>
-  <data name="lblAttendanceInfo" xml:space="preserve">
-    <value>Attendance Details</value>
-  </data>
-  <data name="lblAttendanceReport" xml:space="preserve">
-    <value>Worker Attendance Report</value>
-  </data>
-  <data name="lblAttendanceStatus" xml:space="preserve">
-    <value>Attendance Status Record</value>
-  </data>
-  <data name="lblAverage" xml:space="preserve">
-    <value>Average</value>
-  </data>
-  <data name="lblAverageMonthlySalaryReport" xml:space="preserve">
-    <value>Average Monthly Salary Report</value>
   </data>
   <data name="lblBalanceLoan" xml:space="preserve">
     <value>Balance Loan</value>
@@ -465,12 +360,6 @@
   <data name="lblBlockName" xml:space="preserve">
     <value>Block Name</value>
   </data>
-  <data name="lblBonusMultiples" xml:space="preserve">
-    <value>Bonus Price Multiples</value>
-  </data>
-  <data name="lblBonusPrice" xml:space="preserve">
-    <value>Bonus Price</value>
-  </data>
   <data name="lblBranchCode" xml:space="preserve">
     <value>Branch Code</value>
   </data>
@@ -479,9 +368,6 @@
   </data>
   <data name="lblChckAll" xml:space="preserve">
     <value>Select All</value>
-  </data>
-  <data name="lblCheckrolRpt" xml:space="preserve">
-    <value>Worker Checkrol Report For Month</value>
   </data>
   <data name="lblChoose" xml:space="preserve">
     <value>Please Select</value>
@@ -501,9 +387,6 @@
   <data name="lblCompanyNo" xml:space="preserve">
     <value>Company No</value>
   </data>
-  <data name="lblDailyBonus" xml:space="preserve">
-    <value>Daily Bonus</value>
-  </data>
   <data name="lblDate" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -513,14 +396,8 @@
   <data name="lblDateKLIA" xml:space="preserve">
     <value>KLIA / Assign Date</value>
   </data>
-  <data name="lblDay" xml:space="preserve">
-    <value>Day</value>
-  </data>
   <data name="lblDeduction" xml:space="preserve">
     <value>Deduction Details</value>
-  </data>
-  <data name="lblDetail" xml:space="preserve">
-    <value>Details</value>
   </data>
   <data name="lblDistrict" xml:space="preserve">
     <value>District</value>
@@ -540,14 +417,8 @@
   <data name="lblEmployeeShare" xml:space="preserve">
     <value>Employee Share</value>
   </data>
-  <data name="lblEmployerContribution" xml:space="preserve">
-    <value>Employer Contribution</value>
-  </data>
   <data name="lblEmployerOnly" xml:space="preserve">
     <value>Employer Share Only</value>
-  </data>
-  <data name="lblEstateAccReport" xml:space="preserve">
-    <value>Estate Bank Account Report</value>
   </data>
   <data name="lblEstateCode" xml:space="preserve">
     <value>Estate Code</value>
@@ -573,12 +444,6 @@
   <data name="lblGender" xml:space="preserve">
     <value>Gender</value>
   </data>
-  <data name="lblGenerateFile" xml:space="preserve">
-    <value>Generate File Name</value>
-  </data>
-  <data name="lblGenerateSalaryList" xml:space="preserve">
-    <value>Generate Salary List</value>
-  </data>
   <data name="lblGroup" xml:space="preserve">
     <value>Group</value>
   </data>
@@ -600,26 +465,17 @@
   <data name="lblGroupSelection" xml:space="preserve">
     <value>Group Selection</value>
   </data>
-  <data name="lblHarvestMethod" xml:space="preserve">
-    <value>Harvest Method</value>
-  </data>
   <data name="lblHarvestType" xml:space="preserve">
     <value>Harvest Type</value>
   </data>
   <data name="lblHasilEnd" xml:space="preserve">
     <value>Outcome To</value>
   </data>
-  <data name="lblHasilReport" xml:space="preserve">
-    <value>Outcome Report</value>
-  </data>
   <data name="lblHasilStart" xml:space="preserve">
     <value>Outcome From</value>
   </data>
   <data name="lblhdrPersonalInfo" xml:space="preserve">
     <value>PERSONAL INFORMATION</value>
-  </data>
-  <data name="lblID" xml:space="preserve">
-    <value>ID</value>
   </data>
   <data name="lblIncentive" xml:space="preserve">
     <value>Incentive</value>
@@ -638,9 +494,6 @@
   </data>
   <data name="lblInsentifInfo" xml:space="preserve">
     <value>WORKER INCENTIVE DETAILS</value>
-  </data>
-  <data name="lblKong" xml:space="preserve">
-    <value>Kong</value>
   </data>
   <data name="lblKwsp" xml:space="preserve">
     <value>KWSP TABLE</value>
@@ -705,9 +558,6 @@
   <data name="lblLevelName" xml:space="preserve">
     <value>Level Name</value>
   </data>
-  <data name="lblLevelSelection" xml:space="preserve">
-    <value>Level Selection</value>
-  </data>
   <data name="lblLevelsInfo" xml:space="preserve">
     <value>LEVEL BASIC INFORMATION</value>
   </data>
@@ -729,9 +579,6 @@
   <data name="lblMaintenanceListSub" xml:space="preserve">
     <value>Maintenance Information Sub Lists</value>
   </data>
-  <data name="lblManager" xml:space="preserve">
-    <value>Manager</value>
-  </data>
   <data name="lblManagerName" xml:space="preserve">
     <value>Manager Name</value>
   </data>
@@ -741,32 +588,14 @@
   <data name="lblMarriageStatus" xml:space="preserve">
     <value>Marriage Status</value>
   </data>
-  <data name="lblMaxHasil" xml:space="preserve">
-    <value>Maimum Outcome is</value>
-  </data>
-  <data name="lblMinimumWageReport" xml:space="preserve">
-    <value>Minimum Salary Report</value>
-  </data>
   <data name="lblMinWage" xml:space="preserve">
     <value>MINIMUM SALARY REASONS DETAILS</value>
   </data>
   <data name="lblMonth" xml:space="preserve">
     <value>Month</value>
   </data>
-  <data name="lblMultiples" xml:space="preserve">
-    <value>Multiples</value>
-  </data>
-  <data name="lblName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="lblNetTotal" xml:space="preserve">
-    <value>Net Total</value>
-  </data>
   <data name="lblNewLevel" xml:space="preserve">
     <value>New Level</value>
-  </data>
-  <data name="lblNoAbsent" xml:space="preserve">
-    <value>No of Absent</value>
   </data>
   <data name="lblNoAcc" xml:space="preserve">
     <value>Account No</value>
@@ -798,9 +627,6 @@
   <data name="lblNoYield" xml:space="preserve">
     <value>No current palm price information this month</value>
   </data>
-  <data name="lblOfferWorkingDay" xml:space="preserve">
-    <value>No Of Offered Working Days</value>
-  </data>
   <data name="lblOilPrice" xml:space="preserve">
     <value>CURRENT OIL PRICE TABLE</value>
   </data>
@@ -812,21 +638,6 @@
   </data>
   <data name="lblOriginatorName" xml:space="preserve">
     <value>Originator Name</value>
-  </data>
-  <data name="lblOthersDeduction" xml:space="preserve">
-    <value>Others Deductions</value>
-  </data>
-  <data name="lblOthersEarning" xml:space="preserve">
-    <value>Others Earnings</value>
-  </data>
-  <data name="lblOverall" xml:space="preserve">
-    <value>Overall</value>
-  </data>
-  <data name="lblOvertime" xml:space="preserve">
-    <value>Overtime</value>
-  </data>
-  <data name="lblOvertimeHour" xml:space="preserve">
-    <value>Overtime Hour</value>
   </data>
   <data name="lblPaidLeave" xml:space="preserve">
     <value>PAID LEAVE DETAILS</value>
@@ -840,9 +651,6 @@
   <data name="lblPassportExpiredMonth" xml:space="preserve">
     <value>Passport Expired Month</value>
   </data>
-  <data name="lblPassportReport" xml:space="preserve">
-    <value>Passport Expired Report</value>
-  </data>
   <data name="lblPassportStart" xml:space="preserve">
     <value>Date Start Passport</value>
   </data>
@@ -851,9 +659,6 @@
   </data>
   <data name="lblPasswordMsg" xml:space="preserve">
     <value>Password required</value>
-  </data>
-  <data name="lblPayer" xml:space="preserve">
-    <value>Payer</value>
   </data>
   <data name="lblPayrate" xml:space="preserve">
     <value>WAGES RATE TABLE (HARVEST)</value>
@@ -876,12 +681,6 @@
   <data name="lblPayrateMaintenance" xml:space="preserve">
     <value>WAGES RATE (HARVEST)</value>
   </data>
-  <data name="lblPaysheetReport" xml:space="preserve">
-    <value>Paysheet Report</value>
-  </data>
-  <data name="lblPayslipReport" xml:space="preserve">
-    <value>Worker Payslip Report</value>
-  </data>
   <data name="lblPeneroka" xml:space="preserve">
     <value>Settlers Family</value>
   </data>
@@ -890,9 +689,6 @@
   </data>
   <data name="lblPermitNo" xml:space="preserve">
     <value>Permit No</value>
-  </data>
-  <data name="lblPermitReport" xml:space="preserve">
-    <value>Permit Expired Report</value>
   </data>
   <data name="lblPermitStart" xml:space="preserve">
     <value>Date Start Permit</value>
@@ -912,20 +708,8 @@
   <data name="lblPlantType" xml:space="preserve">
     <value>Plant Type</value>
   </data>
-  <data name="lblPosition" xml:space="preserve">
-    <value>Position</value>
-  </data>
   <data name="lblPostcode" xml:space="preserve">
     <value>Postcode</value>
-  </data>
-  <data name="lblPreparedBy" xml:space="preserve">
-    <value>Prepared / Reviewed By</value>
-  </data>
-  <data name="lblPresentDay" xml:space="preserve">
-    <value>Present Day</value>
-  </data>
-  <data name="lblProcessName" xml:space="preserve">
-    <value>Process Name</value>
   </data>
   <data name="lblProductvt" xml:space="preserve">
     <value>PRODUCTIVITY TABLE</value>
@@ -936,23 +720,14 @@
   <data name="lblPublicHoliday" xml:space="preserve">
     <value>PUBLIC HOLIDAY DETAILS</value>
   </data>
-  <data name="lblPublicHoliday2" xml:space="preserve">
-    <value>Public Holiday</value>
-  </data>
   <data name="lblQualify" xml:space="preserve">
     <value>Qualify</value>
   </data>
   <data name="lblRace" xml:space="preserve">
     <value>Race</value>
   </data>
-  <data name="lblRaining" xml:space="preserve">
-    <value>Raining</value>
-  </data>
   <data name="lblReason" xml:space="preserve">
     <value>Reason</value>
-  </data>
-  <data name="lblRecordRead" xml:space="preserve">
-    <value>No Of Records Read</value>
   </data>
   <data name="lblRegion" xml:space="preserve">
     <value>Region</value>
@@ -968,12 +743,6 @@
   </data>
   <data name="lblRequestList" xml:space="preserve">
     <value>Request List</value>
-  </data>
-  <data name="lblSalary" xml:space="preserve">
-    <value>Salary</value>
-  </data>
-  <data name="lblSalaryPaid" xml:space="preserve">
-    <value>Total Net Salaries Paid</value>
   </data>
   <data name="lblSalaryRange" xml:space="preserve">
     <value>Salary Range</value>
@@ -1017,9 +786,6 @@
   <data name="lblStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="lblSupervisor" xml:space="preserve">
-    <value>Supervisor</value>
-  </data>
   <data name="lblSupplier" xml:space="preserve">
     <value>Supplier Name</value>
   </data>
@@ -1038,9 +804,6 @@
   <data name="lblTabLevelMain" xml:space="preserve">
     <value>Main Level Details</value>
   </data>
-  <data name="lblTarget" xml:space="preserve">
-    <value>Target</value>
-  </data>
   <data name="lblTel" xml:space="preserve">
     <value>Tel No</value>
   </data>
@@ -1050,35 +813,14 @@
   <data name="lblTotalContribution" xml:space="preserve">
     <value>Total Contributions</value>
   </data>
-  <data name="lblTotalDeduction" xml:space="preserve">
-    <value>Total Deductions</value>
-  </data>
-  <data name="lblTotalEarning" xml:space="preserve">
-    <value>Total Earnings</value>
-  </data>
   <data name="lblTotalLoan" xml:space="preserve">
     <value>Total Loans</value>
-  </data>
-  <data name="lblTotalOt" xml:space="preserve">
-    <value>Total Overtime</value>
-  </data>
-  <data name="lblTotalPaid" xml:space="preserve">
-    <value>Total Paid</value>
   </data>
   <data name="lblTotalRecord" xml:space="preserve">
     <value>Worker Details</value>
   </data>
   <data name="lblTotalRecordGroup" xml:space="preserve">
     <value>Group Details</value>
-  </data>
-  <data name="lblTransactionListingReport" xml:space="preserve">
-    <value>Transaction Listing Report</value>
-  </data>
-  <data name="lblUpdateBy" xml:space="preserve">
-    <value>Updated By</value>
-  </data>
-  <data name="lblUpdateDate" xml:space="preserve">
-    <value>Update Date</value>
   </data>
   <data name="lblUserID" xml:space="preserve">
     <value>User ID</value>
@@ -1089,23 +831,11 @@
   <data name="lblUsernameMsg" xml:space="preserve">
     <value>User name required</value>
   </data>
-  <data name="lblWeedays" xml:space="preserve">
-    <value>Weekdays</value>
-  </data>
-  <data name="lblWeekend" xml:space="preserve">
-    <value>Weekend</value>
-  </data>
   <data name="lblWeeklyLeave" xml:space="preserve">
     <value>Weekly Leave</value>
   </data>
   <data name="lblWelcome" xml:space="preserve">
     <value>Welcome to</value>
-  </data>
-  <data name="lblWitness" xml:space="preserve">
-    <value>Witness</value>
-  </data>
-  <data name="lblWork" xml:space="preserve">
-    <value>Work</value>
   </data>
   <data name="lblWorker" xml:space="preserve">
     <value>Worker</value>
@@ -1140,23 +870,11 @@
   <data name="lblWorkerReport" xml:space="preserve">
     <value>Worker Details Report</value>
   </data>
-  <data name="lblWorkerSign" xml:space="preserve">
-    <value>Worker Signature</value>
-  </data>
   <data name="lblWorkerStatus" xml:space="preserve">
     <value>Worker Status</value>
   </data>
   <data name="lblWorkerType" xml:space="preserve">
     <value>Worker Type</value>
-  </data>
-  <data name="lblWorkInfoList" xml:space="preserve">
-    <value>Work Information List</value>
-  </data>
-  <data name="lblWorkRecordEntry" xml:space="preserve">
-    <value>Work Record Registration</value>
-  </data>
-  <data name="lblWorkRecordInfo" xml:space="preserve">
-    <value>Work Record Details</value>
   </data>
   <data name="lblWorkReport" xml:space="preserve">
     <value>Daily Work Report</value>
@@ -1178,9 +896,6 @@
   </data>
   <data name="menuCloseTransaction" xml:space="preserve">
     <value>Close Transaction</value>
-  </data>
-  <data name="menuGenerateMaybankFile" xml:space="preserve">
-    <value>Generate Maybank File</value>
   </data>
   <data name="menuGenerateSalary" xml:space="preserve">
     <value>Generate Salary</value>
@@ -1215,12 +930,6 @@
   <data name="msgChooseAcc" xml:space="preserve">
     <value>Please select account status</value>
   </data>
-  <data name="msgChooseAips" xml:space="preserve">
-    <value>Please select year, group and worker</value>
-  </data>
-  <data name="msgChooseCtgri" xml:space="preserve">
-    <value>Please select category selection first</value>
-  </data>
   <data name="msgChooseGroup" xml:space="preserve">
     <value>Please select group</value>
   </data>
@@ -1229,9 +938,6 @@
   </data>
   <data name="msgChooseKwsp" xml:space="preserve">
     <value>Please select KWSP type</value>
-  </data>
-  <data name="msgChooseMonthYear" xml:space="preserve">
-    <value>Please select month and year</value>
   </data>
   <data name="msgChoosePassportExpired" xml:space="preserve">
     <value>Please select passport expired month</value>
@@ -1245,14 +951,8 @@
   <data name="msgChooseWorker" xml:space="preserve">
     <value>Please select status and worker</value>
   </data>
-  <data name="msgDataExist" xml:space="preserve">
-    <value>Information already exists</value>
-  </data>
   <data name="msgDelete" xml:space="preserve">
     <value>Are you sure to delete the following information?</value>
-  </data>
-  <data name="msgDelete2" xml:space="preserve">
-    <value>Information successfully deleted</value>
   </data>
   <data name="msgDeleteGroup" xml:space="preserve">
     <value>Group that still have members cannot be deleted</value>
@@ -1263,29 +963,11 @@
   <data name="msgError" xml:space="preserve">
     <value>System down</value>
   </data>
-  <data name="msgErrorData" xml:space="preserve">
-    <value>Please check the filled information</value>
-  </data>
   <data name="msgErrorSearch" xml:space="preserve">
     <value>No information found</value>
   </data>
   <data name="msgErrorSubmit" xml:space="preserve">
     <value>Incomplete Information</value>
-  </data>
-  <data name="msgGenerateError1" xml:space="preserve">
-    <value>Transaction was closed</value>
-  </data>
-  <data name="msgGenerateError2" xml:space="preserve">
-    <value>Month transaction before has not been close</value>
-  </data>
-  <data name="msgGenerateFailed" xml:space="preserve">
-    <value>File failed to generate</value>
-  </data>
-  <data name="msgGenerateSuccess" xml:space="preserve">
-    <value>File successfully generated</value>
-  </data>
-  <data name="msgGenMaybankFile" xml:space="preserve">
-    <value>PLEASE SURE WORKER BANK ACCOUNT INFORMATION UPDATED AND CONFIRMED. ONLY COMPLETED BANK ACCOUNT NO WILL BE DOWNLOAD.</value>
   </data>
   <data name="msgGroupNoMember" xml:space="preserve">
     <value>No group members</value>
@@ -1295,18 +977,6 @@
   </data>
   <data name="msgIncentiveValue" xml:space="preserve">
     <value>Please enter incentive value</value>
-  </data>
-  <data name="msgInfo" xml:space="preserve">
-    <value>Please click to view description</value>
-  </data>
-  <data name="msgLeaveAllocation" xml:space="preserve">
-    <value>Please enter leave allocation</value>
-  </data>
-  <data name="msgMaxVal" xml:space="preserve">
-    <value>Please enter maximum value</value>
-  </data>
-  <data name="msgMinVal" xml:space="preserve">
-    <value>Please enter minimum value</value>
   </data>
   <data name="msgNoRecord" xml:space="preserve">
     <value>No Record</value>
@@ -1331,6 +1001,12 @@
   </data>
   <data name="msgWorkerTransfer" xml:space="preserve">
     <value>Worker Not Found</value>
+  </data>
+  <data name="lblPermitReport" xml:space="preserve">
+    <value>Permit Expired Report</value>
+  </data>
+  <data name="lblPassportReport" xml:space="preserve">
+    <value>Passport Expired Report</value>
   </data>
   <data name="titleDelete" xml:space="preserve">
     <value>DELETE INFORMATION</value>
@@ -1374,6 +1050,330 @@
   <data name="WorkerAccReport" xml:space="preserve">
     <value>Worker Account Report</value>
   </data>
+  <data name="hdrAnnualLeavePayment" xml:space="preserve">
+    <value>Annual Leave Payment</value>
+  </data>
+  <data name="hdrAttendanceType" xml:space="preserve">
+    <value>Attendance Type</value>
+  </data>
+  <data name="hdrDebit" xml:space="preserve">
+    <value>Debit</value>
+  </data>
+  <data name="hdrDeduction" xml:space="preserve">
+    <value>Deduction</value>
+  </data>
+  <data name="hdrEarning" xml:space="preserve">
+    <value>Earnings</value>
+  </data>
+  <data name="hdrEmployeeKwsp" xml:space="preserve">
+    <value>KWSP (Employee)</value>
+  </data>
+  <data name="hdrEmployeeSocso" xml:space="preserve">
+    <value>SOCSO (Employee)</value>
+  </data>
+  <data name="hdrEmployerKwsp" xml:space="preserve">
+    <value>KWSP (Employer)</value>
+  </data>
+  <data name="hdrEmployerSocso" xml:space="preserve">
+    <value>SOCSO (Employer)</value>
+  </data>
+  <data name="hdrExpiredMonth" xml:space="preserve">
+    <value>Expired Month</value>
+  </data>
+  <data name="hdrForMonth" xml:space="preserve">
+    <value>For Month</value>
+  </data>
+  <data name="hdrKredit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="hdrLejar" xml:space="preserve">
+    <value>Ledger</value>
+  </data>
+  <data name="hdrNetSalary" xml:space="preserve">
+    <value>Net Salary</value>
+  </data>
+  <data name="hdrPercentAbsent" xml:space="preserve">
+    <value>Percent Absent</value>
+  </data>
+  <data name="hdrQuantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="hdrWorkerAnnualLeave" xml:space="preserve">
+    <value>Annual Leave Qualify</value>
+  </data>
+  <data name="hdrWorkerWorkday" xml:space="preserve">
+    <value>No Of Working Days Offered</value>
+  </data>
+  <data name="lblAchieve" xml:space="preserve">
+    <value>Achieve</value>
+  </data>
+  <data name="lblAchievement" xml:space="preserve">
+    <value>Achievement</value>
+  </data>
+  <data name="lblActualWorkingDay" xml:space="preserve">
+    <value>No Of Actual Working Days</value>
+  </data>
+  <data name="lblAips" xml:space="preserve">
+    <value>AIPS Incentive</value>
+  </data>
+  <data name="lblAipsReport" xml:space="preserve">
+    <value>AIPS Report</value>
+  </data>
+  <data name="lblApprovedBy" xml:space="preserve">
+    <value>Approved By</value>
+  </data>
+  <data name="lblAttendanceReport" xml:space="preserve">
+    <value>Worker Attendance Report</value>
+  </data>
+  <data name="lblAverage" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="lblAverageMonthlySalaryReport" xml:space="preserve">
+    <value>Average Monthly Salary Report</value>
+  </data>
+  <data name="lblBonusMultiples" xml:space="preserve">
+    <value>Bonus Price Multiples</value>
+  </data>
+  <data name="lblDay" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="lblDetail" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="lblEmployerContribution" xml:space="preserve">
+    <value>Employer Contribution</value>
+  </data>
+  <data name="lblEstateAccReport" xml:space="preserve">
+    <value>Estate Bank Account Report</value>
+  </data>
+  <data name="lblHasilReport" xml:space="preserve">
+    <value>Outcome Report</value>
+  </data>
+  <data name="lblID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="lblLevelSelection" xml:space="preserve">
+    <value>Level Selection</value>
+  </data>
+  <data name="lblManager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="lblMinimumWageReport" xml:space="preserve">
+    <value>Minimum Salary Report</value>
+  </data>
+  <data name="lblMultiples" xml:space="preserve">
+    <value>Multiples</value>
+  </data>
+  <data name="lblName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="lblNetTotal" xml:space="preserve">
+    <value>Net Total</value>
+  </data>
+  <data name="lblNoAbsent" xml:space="preserve">
+    <value>No of Absent</value>
+  </data>
+  <data name="lblOfferWorkingDay" xml:space="preserve">
+    <value>No Of Offered Working Days</value>
+  </data>
+  <data name="lblOthersDeduction" xml:space="preserve">
+    <value>Others Deductions</value>
+  </data>
+  <data name="lblOthersEarning" xml:space="preserve">
+    <value>Others Earnings</value>
+  </data>
+  <data name="lblOverall" xml:space="preserve">
+    <value>Overall</value>
+  </data>
+  <data name="lblPayer" xml:space="preserve">
+    <value>Payer</value>
+  </data>
+  <data name="lblPaysheetReport" xml:space="preserve">
+    <value>Paysheet Report</value>
+  </data>
+  <data name="lblPayslipReport" xml:space="preserve">
+    <value>Worker Payslip Report</value>
+  </data>
+  <data name="lblPosition" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="lblPreparedBy" xml:space="preserve">
+    <value>Prepared / Reviewed By</value>
+  </data>
+  <data name="lblPresentDay" xml:space="preserve">
+    <value>Present Day</value>
+  </data>
+  <data name="lblPublicHoliday2" xml:space="preserve">
+    <value>Public Holiday</value>
+  </data>
+  <data name="lblSalary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="lblSupervisor" xml:space="preserve">
+    <value>Supervisor</value>
+  </data>
+  <data name="lblTarget" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="lblTotalDeduction" xml:space="preserve">
+    <value>Total Deductions</value>
+  </data>
+  <data name="lblTotalEarning" xml:space="preserve">
+    <value>Total Earnings</value>
+  </data>
+  <data name="lblTotalPaid" xml:space="preserve">
+    <value>Total Paid</value>
+  </data>
+  <data name="lblTransactionListingReport" xml:space="preserve">
+    <value>Transaction Listing Report</value>
+  </data>
+  <data name="lblUpdateBy" xml:space="preserve">
+    <value>Updated By</value>
+  </data>
+  <data name="lblUpdateDate" xml:space="preserve">
+    <value>Update Date</value>
+  </data>
+  <data name="lblWeedays" xml:space="preserve">
+    <value>Weekdays</value>
+  </data>
+  <data name="lblWeekend" xml:space="preserve">
+    <value>Weekend</value>
+  </data>
+  <data name="lblWitness" xml:space="preserve">
+    <value>Witness</value>
+  </data>
+  <data name="lblWorkerSign" xml:space="preserve">
+    <value>Worker Signature</value>
+  </data>
+  <data name="msgChooseAips" xml:space="preserve">
+    <value>Please select year, group and worker</value>
+  </data>
+  <data name="msgChooseMonthYear" xml:space="preserve">
+    <value>Please select month and year</value>
+  </data>
+  <data name="msgDataExist" xml:space="preserve">
+    <value>Information already exists</value>
+  </data>
+  <data name="msgDelete2" xml:space="preserve">
+    <value>Information successfully deleted</value>
+  </data>
+  <data name="msgErrorData" xml:space="preserve">
+    <value>Please check the filled information</value>
+  </data>
+  <data name="msgLeaveAllocation" xml:space="preserve">
+    <value>Please enter leave allocation</value>
+  </data>
+  <data name="msgMaxVal" xml:space="preserve">
+    <value>Please enter maximum value</value>
+  </data>
+  <data name="msgMinVal" xml:space="preserve">
+    <value>Please enter minimum value</value>
+  </data>
+  <data name="btnViewReport" xml:space="preserve">
+    <value>View Report</value>
+  </data>
+  <data name="chkAllSame" xml:space="preserve">
+    <value>Check for all same</value>
+  </data>
+  <data name="hdrPercent" xml:space="preserve">
+    <value>Percent</value>
+  </data>
+  <data name="lblAccumulatedSalary" xml:space="preserve">
+    <value>Accumulated Salary</value>
+  </data>
+  <data name="lblAktvtType" xml:space="preserve">
+    <value>Activity Type</value>
+  </data>
+  <data name="lblAttend" xml:space="preserve">
+    <value>Attend</value>
+  </data>
+  <data name="lblAttendanceInfo" xml:space="preserve">
+    <value>Attendance Details</value>
+  </data>
+  <data name="lblAttendanceStatus" xml:space="preserve">
+    <value>Attendance Status Record</value>
+  </data>
+  <data name="lblBonusPrice" xml:space="preserve">
+    <value>Bonus Price</value>
+  </data>
+  <data name="lblCheckrolRpt" xml:space="preserve">
+    <value>Worker Checkrol Report For Month</value>
+  </data>
+  <data name="lblDailyBonus" xml:space="preserve">
+    <value>Daily Bonus</value>
+  </data>
+  <data name="lblGenerateFile" xml:space="preserve">
+    <value>Generate File Name</value>
+  </data>
+  <data name="lblGenerateSalaryList" xml:space="preserve">
+    <value>Generate Salary List</value>
+  </data>
+  <data name="lblHarvestMethod" xml:space="preserve">
+    <value>Harvest Method</value>
+  </data>
+  <data name="lblKong" xml:space="preserve">
+    <value>Kong</value>
+  </data>
+  <data name="lblMaxHasil" xml:space="preserve">
+    <value>Maimum Outcome is</value>
+  </data>
+  <data name="lblOvertime" xml:space="preserve">
+    <value>Overtime</value>
+  </data>
+  <data name="lblOvertimeHour" xml:space="preserve">
+    <value>Overtime Hour</value>
+  </data>
+  <data name="lblProcessName" xml:space="preserve">
+    <value>Process Name</value>
+  </data>
+  <data name="lblRaining" xml:space="preserve">
+    <value>Raining</value>
+  </data>
+  <data name="lblRecordRead" xml:space="preserve">
+    <value>No Of Records Read</value>
+  </data>
+  <data name="lblSalaryPaid" xml:space="preserve">
+    <value>Total Net Salaries Paid</value>
+  </data>
+  <data name="lblTotalOt" xml:space="preserve">
+    <value>Total Overtime</value>
+  </data>
+  <data name="lblWork" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="lblWorkInfoList" xml:space="preserve">
+    <value>Work Information List</value>
+  </data>
+  <data name="lblWorkRecordEntry" xml:space="preserve">
+    <value>Work Record Registration</value>
+  </data>
+  <data name="lblWorkRecordInfo" xml:space="preserve">
+    <value>Work Record Details</value>
+  </data>
+  <data name="menuGenerateMaybankFile" xml:space="preserve">
+    <value>Generate Maybank File</value>
+  </data>
+  <data name="msgChooseCtgri" xml:space="preserve">
+    <value>Please select category selection first</value>
+  </data>
+  <data name="msgGenerateError1" xml:space="preserve">
+    <value>Transaction was closed</value>
+  </data>
+  <data name="msgGenerateError2" xml:space="preserve">
+    <value>Month transaction before has not been close</value>
+  </data>
+  <data name="msgGenerateFailed" xml:space="preserve">
+    <value>File failed to generate</value>
+  </data>
+  <data name="msgGenerateSuccess" xml:space="preserve">
+    <value>File successfully generated</value>
+  </data>
+  <data name="msgGenMaybankFile" xml:space="preserve">
+    <value>PLEASE SURE WORKER BANK ACCOUNT INFORMATION UPDATED AND CONFIRMED. ONLY COMPLETED BANK ACCOUNT NO WILL BE DOWNLOAD.</value>
+  </data>
+  <data name="msgInfo" xml:space="preserve">
+    <value>Please click to view description</value>
+  </data>
   <data name="btnViewAuditTrail" xml:space="preserve">
     <value>View Audit Trail</value>
   </data>
@@ -1385,6 +1385,9 @@
   </data>
   <data name="lblSelection" xml:space="preserve">
     <value>Selection</value>
+  </data>
+  <data name="msgAddAttendance" xml:space="preserve">
+    <value>Attendance information successfully recorded</value>
   </data>
   <data name="msgAttendanceLeave" xml:space="preserve">
     <value>The remaining leave selected has been exhausted for the worker</value>
@@ -1458,17 +1461,17 @@
   <data name="msgModelValidation" xml:space="preserve">
     <value>This field is required</value>
   </data>
-  <data name="lblTitleCountryMaintenance" xml:space="preserve">
-    <value>Country Maintenance</value>
-  </data>
-  <data name="lblTitleDesignationMaintenance" xml:space="preserve">
-    <value>Worker Designation Maintenance</value>
-  </data>
   <data name="lblDesignationInfo" xml:space="preserve">
     <value>WORKER DESIGNATION INFORMATION</value>
   </data>
   <data name="lblDesignationSearch" xml:space="preserve">
     <value>Please enter designation code or designation description</value>
+  </data>
+  <data name="lblTitleCountryMaintenance" xml:space="preserve">
+    <value>Country Maintenance</value>
+  </data>
+  <data name="lblTitleDesignationMaintenance" xml:space="preserve">
+    <value>Worker Designation Maintenance</value>
   </data>
   <data name="lblCalculationMethodAdd" xml:space="preserve">
     <value>ADD CALCULATION METHOD</value>
@@ -1848,6 +1851,9 @@
   <data name="lblTitleContributionTableMaintenance" xml:space="preserve">
     <value>Contribution Table Maintenance</value>
   </data>
+  <data name="lblTitleRejectMaintenance" xml:space="preserve">
+    <value>Reject Reason Maintenance</value>
+  </data>
   <data name="lblCutOffDateDesc" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -1859,6 +1865,33 @@
   </data>
   <data name="lblCutOffDateValue" xml:space="preserve">
     <value>Cut Off Date (Day)</value>
+  </data>
+  <data name="lblIncentiveAdd" xml:space="preserve">
+    <value>ADD INCENTIVE</value>
+  </data>
+  <data name="lblIncentiveCode" xml:space="preserve">
+    <value>Incentive Code</value>
+  </data>
+  <data name="lblIncentiveCount" xml:space="preserve">
+    <value>incentive information(s)</value>
+  </data>
+  <data name="lblIncentiveDelete" xml:space="preserve">
+    <value>DELETE INCENTIVE</value>
+  </data>
+  <data name="lblIncentiveInfo" xml:space="preserve">
+    <value>INCENTIVE INFORMATION</value>
+  </data>
+  <data name="lblIncentiveKodAktvt" xml:space="preserve">
+    <value>Incentive Activity Code</value>
+  </data>
+  <data name="lblIncentiveKodGL" xml:space="preserve">
+    <value>Incentive GL Code</value>
+  </data>
+  <data name="lblIncentiveName" xml:space="preserve">
+    <value>Incentive Name</value>
+  </data>
+  <data name="lblIncentiveUpdate" xml:space="preserve">
+    <value>UPDATE INCENTIVE</value>
   </data>
   <data name="lblMinimumWageActionAdd" xml:space="preserve">
     <value>ADD MINIMUM WAGE ACTION</value>
@@ -1914,6 +1947,9 @@
   <data name="lblTitleCutOffDateMaintenance" xml:space="preserve">
     <value>Cut Off Date Maintenance</value>
   </data>
+  <data name="lblTitleIncentiveMaintenance" xml:space="preserve">
+    <value>Incentive Maintenance</value>
+  </data>
   <data name="lblTitleMinimumWageActionMaintenance" xml:space="preserve">
     <value>Minimum Wage ActionMaintenance</value>
   </data>
@@ -1922,6 +1958,30 @@
   </data>
   <data name="lblTitleMinimumWageValueMaintenance" xml:space="preserve">
     <value>Minimum Wage Value Maintenance</value>
+  </data>
+  <data name="lblTitleUnitMaintenance" xml:space="preserve">
+    <value>Unit of Measurement Maintenance</value>
+  </data>
+  <data name="lblUnitAdd" xml:space="preserve">
+    <value>ADD UNIT</value>
+  </data>
+  <data name="lblUnitCode" xml:space="preserve">
+    <value>Unit Code</value>
+  </data>
+  <data name="lblUnitCount" xml:space="preserve">
+    <value>unit information(s)</value>
+  </data>
+  <data name="lblUnitDelete" xml:space="preserve">
+    <value>DELETE UNIT</value>
+  </data>
+  <data name="lblUnitInfo" xml:space="preserve">
+    <value>UNIT INFORMATION</value>
+  </data>
+  <data name="lblUnitSearch" xml:space="preserve">
+    <value>Please enter unit code or unit description</value>
+  </data>
+  <data name="lblUnitUpdate" xml:space="preserve">
+    <value>UPDATE UNIT</value>
   </data>
   <data name="msgInvalidPDFConvert" xml:space="preserve">
     <value>Fail tidak dapat dijana sila cuba sekali lagi</value>
@@ -2013,71 +2073,14 @@
   <data name="lblCompanyGroupUpdate" xml:space="preserve">
     <value>UPDATE COMPANY GROUP</value>
   </data>
-  <data name="lblIncentiveAdd" xml:space="preserve">
-    <value>ADD INCENTIVE</value>
-  </data>
-  <data name="lblIncentiveCode" xml:space="preserve">
-    <value>Incentive Code</value>
-  </data>
-  <data name="lblIncentiveCount" xml:space="preserve">
-    <value>incentive information(s)</value>
-  </data>
-  <data name="lblIncentiveDelete" xml:space="preserve">
-    <value>DELETE INCENTIVE</value>
-  </data>
-  <data name="lblIncentiveInfo" xml:space="preserve">
-    <value>INCENTIVE INFORMATION</value>
-  </data>
-  <data name="lblIncentiveKodAktvt" xml:space="preserve">
-    <value>Incentive Activity Code</value>
-  </data>
-  <data name="lblIncentiveKodGL" xml:space="preserve">
-    <value>Incentive GL Code</value>
-  </data>
-  <data name="lblIncentiveName" xml:space="preserve">
-    <value>Incentive Name</value>
-  </data>
-  <data name="lblIncentiveUpdate" xml:space="preserve">
-    <value>UPDATE INCENTIVE</value>
-  </data>
   <data name="lblTitleBankMaintenance" xml:space="preserve">
     <value>Bank Maintenance</value>
   </data>
   <data name="lblTitleCompanyGroupMaintenance" xml:space="preserve">
     <value>Company Group Maintenance</value>
   </data>
-  <data name="lblTitleIncentiveMaintenance" xml:space="preserve">
-    <value>Incentive Maintenance</value>
-  </data>
-  <data name="lblTitleRejectMaintenance" xml:space="preserve">
-    <value>Reject Reason Maintenance</value>
-  </data>
-  <data name="lblTitleUnitMaintenance" xml:space="preserve">
-    <value>Unit of Measurement Maintenance</value>
-  </data>
-  <data name="lblUnitAdd" xml:space="preserve">
-    <value>ADD UNIT</value>
-  </data>
-  <data name="lblUnitCode" xml:space="preserve">
-    <value>Unit Code</value>
-  </data>
-  <data name="lblUnitCount" xml:space="preserve">
-    <value>unit information(s)</value>
-  </data>
-  <data name="lblUnitDelete" xml:space="preserve">
-    <value>DELETE UNIT</value>
-  </data>
-  <data name="lblUnitInfo" xml:space="preserve">
-    <value>UNIT INFORMATION</value>
-  </data>
-  <data name="lblUnitSearch" xml:space="preserve">
-    <value>Please enter unit code or unit description</value>
-  </data>
-  <data name="lblUnitUpdate" xml:space="preserve">
-    <value>UPDATE UNIT</value>
-  </data>
-  <data name="msgAddAttendance" xml:space="preserve">
-    <value>Attendance information successfully recorded</value>
+  <data name="btnUnDelete" xml:space="preserve">
+    <value>RESET / REUSE</value>
   </data>
   <data name="lblTitleKiraanMaintenance" xml:space="preserve">
     <value>Maintain Count (OT)</value>
@@ -2096,9 +2099,6 @@
   </data>
   <data name="lblharga" xml:space="preserve">
     <value>PRICE (RM)</value>
-  </data>
-  <data name="btnUnDelete" xml:space="preserve">
-    <value>RESET / REUSE</value>
   </data>
   <data name="lblCateKerja" xml:space="preserve">
     <value>GROUP WORK CATEGORY INFORMATION</value>
@@ -2160,9 +2160,6 @@
   <data name="lblGLAktivitiSearch" xml:space="preserve">
     <value>Please Key in kod GL, Paysheet or kod Aktiviti</value>
   </data>
-  <data name="lblGLcode" xml:space="preserve">
-    <value>GL Code</value>
-  </data>
   <data name="lblGLCodeGL" xml:space="preserve">
     <value>GL Code</value>
   </data>
@@ -2180,6 +2177,15 @@
   </data>
   <data name="msgKodGL" xml:space="preserve">
     <value>Please key in Kod GL</value>
+  </data>
+  <data name="lblGLCode" xml:space="preserve">
+    <value>GL Code</value>
+  </data>
+  <data name="lblCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="titleContractLabor" xml:space="preserve">
+    <value>Contract Worker Information</value>
   </data>
   <data name="titleReportTenagaKerja" xml:space="preserve">
     <value>Worker Report</value>
@@ -2265,5 +2271,10 @@
   <data name="titleReportPekerjaKontraktor" xml:space="preserve">
     <value>Contractor Worker Report</value>
 >>>>>>>>> Temporary merge branch 2
+  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
+    <value>Contractor Worker Report</value>
+  </data>
+  <data name="lblInctvOthersPayslip" xml:space="preserve">
+    <value>Included in Other Payslips?</value>
   </data>
 </root>
