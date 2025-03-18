@@ -2262,15 +2262,11 @@
   <data name="lblTKTSediaAda" xml:space="preserve">
     <value>TKT SEDIA ADA</value>
   </data>
-=========
   <data name="lblCategory" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="titleContractLabor" xml:space="preserve">
   </data>
-  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
-    <value>Contractor Worker Report</value>
->>>>>>>>> Temporary merge branch 2
   <data name="titleReportPekerjaKontraktor" xml:space="preserve">
     <value>Contractor Worker Report</value>
   </data>

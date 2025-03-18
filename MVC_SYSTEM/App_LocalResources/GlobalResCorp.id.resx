@@ -2160,13 +2160,11 @@
   </data>
   <data name="titleContractLabor" xml:space="preserve">
     <value>Maklumat Pekerja Kontraktor</value>
+    </data>
   <data name="titleReportPekerjaKontraktor" xml:space="preserve">
     <value>Rumusan Kedudukan Pekerja Kontraktor</value>
   </data>
   <data name="lblInctvOthersPayslip" xml:space="preserve">
     <value>Termasuk Dalam Lain-lain Payslip?</value>
-  </data>
-  <data name="titleReportPekerjaKontraktor" xml:space="preserve">
-    <value>Rumusan Kedudukan Pekerja Kontraktor</value>
   </data>
 </root>
