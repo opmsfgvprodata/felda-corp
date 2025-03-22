@@ -71,6 +71,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         //fatin added - 19/10/2023
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         public bool? fld_AdaORP { get; set; }
-        
+
+        public bool? fld_InclSecondPayslip { get; set; }
+
     }
 }
