@@ -1,0 +1,236 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Laporan Bayaran Melalui M2E";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResultRcmsIndividuOthersRptInfo",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Asset/select2/css/select2.min.css" rel="stylesheet" />
+<script src="~/Asset/select2/js/select2.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_rcmsIndividuOthers", "MaybankFileGen", null, options, new { @id = "rcmsIndividuOthers" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-1">
+                        <label>@GlobalResCorp.lblMonth</label>
+                        @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-1">
+                        <label>@GlobalResCorp.lblYear</label>
+                        @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-1">
+                        <label>@GlobalResRegion.lblCompany </label>
+                        @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@GlobalResCorp.lblRegion</label>
+                        @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Insentif</label>
+                        @Html.DropDownList("IncentiveList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="ClientId">Client ID</label>
+                        <input type="text" name="filter" id="filter" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Tarikh Bayaran</label>
+                        @*<div class='input-group date' id='datetimepicker1'>*@
+                        <input type="date" class="form-control" name="PaymentDate" id="PaymentDate" onkeydown="return false" required />
+                        @*</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label>Pekerja</label>
+                        <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple" id="WorkerId" name="WorkerId"></select>
+                    </div>
+                    <div class="col-sm-2" style="padding-top:25px;">
+                        <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="Lihat" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label for="NoRecord">@GlobalResCorp.lblRecordRead</label>
+                        <input type="text" name="RecordNo" id="RecordNo" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="TotalSalary">@GlobalResCorp.lblSalaryPaid (RM)</label>
+                        <input type="text" name="TotalSalary" id="TotalSalary" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="FileName">@GlobalResCorp.lblGenerateFile</label>
+                        <input type="text" name="FileName" id="FileName" class="form-control" value="" disabled />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <div class="well" style="margin-top:7px;">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Laporan Bayaran Melalui M2E</div>
+            <div class="panel-body">
+                <div id="searchResultRcmsIndividuOthersRptInfo">
+                    @Html.Action("_rcmsIndividuOthers")
+                </div>
+            </div>
+        </div>
+
+        @*<div class="modal-footer col-md-12">
+                <a href=@Url.Action("Index", "GenTextFile") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+            </div>*@
+
+    </div>
+</section>
+
+
+<!-- modal placeholder-->
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function (e) {
+            var Month = $("#MonthList").val();
+            var Year = $("#YearList").val();
+            var CompCode = $("#CompCodeList").val();
+            var Incentive = $("#IncentiveList").val();
+            var Wilayah = $("#WilayahList").val();
+            var WorkerId = $("#WorkerId").val();
+            $("#UpdateProgress1").css("display", "");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("CheckGenDataDetailOthers", "MaybankFileGen")";
+            ajxfn.type = "POST";
+            ajxfn.async = false;
+            ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode, Incentive: Incentive, Wilayah: Wilayah, WorkerId: WorkerId });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#RecordNo').val(result.totaldata);                             
+                $('#TotalSalary').val(result.salary);
+                $('#FileName').val(result.file);
+                $('#filter').val(result.clientid);
+                $.simplyToast(result.msg, result.statusmsg);
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        })
+
+    });
+
+    $("#CompCodeList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetWorkerOthers", "MaybankFileGen")";
+        WilayahIDList.type = "POST";
+        WilayahIDList.data = JSON.stringify({ CompCode: $("#CompCodeList").val(), WilayahID: $("#WilayahList").val(), Year: $("#YearList").val(), Month: $("#MonthList").val(), Incentive: $("#IncentiveList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (workerList) {
+            $("#WorkerId").empty();
+            $("#WorkerId").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < workerList.length; i++) {
+                    $("#WorkerId").append("<option value=" + workerList[i].Value + ">" + workerList[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+        $("#IncentiveList").change(function () {
+        var WilayahIDList = {};
+        var disableoption = "";
+        WilayahIDList.url = "@Url.Action("GetWorkerOthers", "MaybankFileGen")";
+        WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ CompCode: $("#CompCodeList").val(), WilayahID: $("#WilayahList").val(), Year: $("#YearList").val(), Month: $("#MonthList").val(), Incentive: $("#IncentiveList").val() });
+        WilayahIDList.datatype = "json";
+        WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (workerList) {
+            $("#WorkerId").empty();
+            $("#WorkerId").append("<option value=0>@GlobalResActiveWorker.sltAll</option>");
+                for (var i = 0; i < workerList.length; i++) {
+                    $("#WorkerId").append("<option value=" + workerList[i].Value + ">" + workerList[i].Text + "</option>");
+            }
+        };
+        WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(WilayahIDList);
+    });
+
+    $("#CompCodeList").change(function () {
+        var CompCodeList = {};
+        var disableoption = "";
+        CompCodeList.url = "@Url.Action("GetWilayah", "MaybankFileGen")";
+        CompCodeList.type = "POST";
+        CompCodeList.data = JSON.stringify({ SyarikatID: $("#CompCodeList").val() });
+        CompCodeList.datatype = "json";
+        CompCodeList.contentType = "application/json";
+        CompCodeList.success = function (wilayahlist) {
+            $("#WilayahList").empty();
+            for (var i = 0; i < wilayahlist.length; i++) {
+                if ($("#CompCodeList").val() == 0) {
+                    disableoption = "disabled";
+                }
+                $("#WilayahList").append("<option value=" + wilayahlist[i].Value + " " + disableoption + ">" + wilayahlist[i].Text + "</option>");
+            }
+        };
+
+        CompCodeList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(CompCodeList);
+    });
+
+    $(".js-example-placeholder-multiple").select2({
+        placeholder: "Sila Pilih"
+    });
+
+</script>

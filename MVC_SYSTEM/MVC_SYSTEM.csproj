@@ -1001,6 +1001,7 @@
     <Compile Include="ModelsDapper\sp_RptRumKedPkjKontraktor_Result.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
     <Compile Include="ModelsDapper\sp_RptGajiMinima_New_Result.cs" />
+    <Compile Include="ModelsDapper\sp_MaybankRcmsOthers_Result.cs" />
     <Compile Include="ModelsDapper\Worker.cs" />
     <Compile Include="ModelsDapper\CarumanTambahanCustomModel.cs" />
     <Compile Include="ModelsDapper\DataSetFunction.cs" />
@@ -3710,6 +3711,10 @@
     <Content Include="Views\Report\_ProductivityRptAdvanceSearch.cshtml" />
     <Content Include="Views\Report\_ProductivityRptSearch.cshtml" />
     <Content Include="Views\Report\ProductivityReport.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGenOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcmsOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGenIndividuOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcmsIndividuOthers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
