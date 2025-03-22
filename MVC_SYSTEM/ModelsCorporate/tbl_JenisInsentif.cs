@@ -72,6 +72,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         public bool? fld_AdaORP { get; set; }
 
+        //Hazim added - 12/03/2025
+        [Required(ErrorMessageResourceType = typeof(GlobalResCorp), ErrorMessageResourceName = "msgModelValidation")]
         public bool? fld_InclSecondPayslip { get; set; }
 
     }

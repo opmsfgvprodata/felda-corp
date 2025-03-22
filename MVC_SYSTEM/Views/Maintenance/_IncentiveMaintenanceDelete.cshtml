@@ -9,6 +9,7 @@
     var GLDesc = config.GetGLDesc(Model.fld_KodGL, Model.fld_NegaraID, Model.fld_SyarikatID);
     var workerType = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_KelayakanKepada).ToString(), "jenisKelayakanInsentif", Model.fld_NegaraID, Model.fld_SyarikatID);
     var isAdaOrp = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_AdaORP).ToString(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID); @*fatin added - 20/10/2023*@
+    var isInclScdPaySlip = config.GetWebConfigDesc(Convert.ToInt32(Model.fld_AdaORP).ToString(), "pilihanYaTidak", Model.fld_NegaraID, Model.fld_SyarikatID); @*Hazim added - 12/03/2025*@
 }
 
 <section class="content-wrapper main-content clear-fix">
@@ -90,6 +91,14 @@
                             <label class="control-label col-sm-3">@GlobalResCorp.lblIncInOrp:</label>
                             <div class="col-sm-8">
                                 @Html.TextBoxFor(model => model.fld_AdaORP, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = isAdaOrp })
+                            </div>
+                        </div>
+                        @*Hazim added - 12/03/2025*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblInctvOthersPayslip:</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_InclSecondPayslip, htmlAttributes: new { @class = "form-control", @disabled = "true", @Value = isInclScdPaySlip })
+                                @*@Html.ValidationMessageFor(model => model.fld_InclSecondPayslip, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="form-group">

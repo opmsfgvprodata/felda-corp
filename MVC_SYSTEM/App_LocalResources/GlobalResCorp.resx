@@ -484,6 +484,9 @@
     <value>Laporan Maklumat Insentif Pekerja</value>
   </data>
   <data name="lblIncentiveType" xml:space="preserve">
+    <value>Pilihan Insentif</value>
+  </data>
+  <data name="lblIncentiveSelection" xml:space="preserve">
     <value>Jenis Insentif</value>
   </data>
   <data name="lblIncentiveValue" xml:space="preserve">
@@ -3905,5 +3908,8 @@
   </data>
   <data name="lblTapakSemaian" xml:space="preserve">
     <value>TAPAK SEMAIAN</value>
+  </data>
+  <data name="lblInctvOthersPayslip" xml:space="preserve">
+    <value>Termasuk Dalam Lain-lain Payslip?</value>
   </data>
 </root>
